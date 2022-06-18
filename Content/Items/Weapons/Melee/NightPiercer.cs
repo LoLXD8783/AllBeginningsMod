@@ -66,7 +66,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
         {
             Recipe recipe = Mod.CreateRecipe(ModContent.ItemType<NightPiercer>());
             recipe.AddIngredient(ItemID.Spear);
-            recipe.AddIngredient(ModContent.ItemType<Materials.DeathEssence>(), 5);
+            recipe.AddIngredient(ModContent.ItemType<Materials.DeathBlossom>(), 5);
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
         }

@@ -12,7 +12,7 @@ namespace AllBeginningsMod.Common.Globals.NPCs
         {
             if (NPCID.Sets.Zombies[npc.type])
             {
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DeathEssence>(), 10));
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DeathBlossom>(), 10));
             }
         }
     }

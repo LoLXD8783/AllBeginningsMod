@@ -4,10 +4,8 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Materials
 {
-    public sealed class DeathEssence : ModItem
+    public sealed class DeathBlossom : ModItem
     {
-        public override string Texture { get; } = AllBeginningsMod.PlaceholderTexturePath;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Death Essence");
