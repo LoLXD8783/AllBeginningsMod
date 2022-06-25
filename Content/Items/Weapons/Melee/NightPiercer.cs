@@ -12,6 +12,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
     {
         public override void SetStaticDefaults()
         {
+            Tooltip.SetDefault("Piercing through the night sky\nCan either be used as a spear or thrown");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults()
@@ -26,7 +27,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
             Item.height = 32;
             Item.scale = 1f;
             Item.rare = ItemRarityID.Blue;
-            Item.value = Item.sellPrice(silver: 10);
+            Item.value = Item.sellPrice(silver: 10, copper: 50);
 
             Item.DamageType = DamageClass.Melee;
             Item.noMelee = true;

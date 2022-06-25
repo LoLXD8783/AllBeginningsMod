@@ -11,6 +11,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Magic
         public override void SetStaticDefaults()
         {
             Item.staff[Item.type] = true;
+            Tooltip.SetDefault("Releases a flurry of spirit butterflies");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -30,7 +31,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Magic
             Item.shootSpeed = 10f;
 
             Item.rare = ItemRarityID.Blue;
-            Item.value = Item.sellPrice(silver: 50);
+            Item.value = Item.sellPrice(silver: 13);
             Item.autoReuse = true;
         }
 
