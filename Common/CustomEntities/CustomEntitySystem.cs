@@ -3,24 +3,51 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.CustomEntities
 {
+    [Autoload(Side = ModSide.Client)]
     public abstract class CustomEntitySystem<T> : ModSystem where T : CustomEntity
     {
-        protected static List<T> Entities { get; set; } = new();
+        public abstract int MaxEntities { get; }
 
-        public override void Load() => Entities = new List<T>();
+        public static T[] Entities { get; private set; }
+        public static Queue<int> FreeIndices { get; private set; }
+
+        public override void OnModLoad()
+        {
+            Entities = new T[MaxEntities];
+            FreeIndices = new Queue<int>(MaxEntities);
+
+            for (int i = 0; i < MaxEntities; i++)
+            {
+                FreeIndices.Enqueue(i);
+            }
+        }
 
         public override void Unload()
         {
-            Entities?.Clear();
             Entities = null;
+            
+            FreeIndices?.Clear();
+            FreeIndices = null;
         }
 
         public static T Spawn(T entity)
         {
-            Entities.Add(entity);
+            if (FreeIndices.TryDequeue(out int index))
+            {
+                Entities[index] = entity;
+                Entities[index].WhoAmI = index;
+                Entities[index].OnSpawn();
+            }
+
             return entity;
         }
 
-        public static bool Kill(T entity) => Entities.Remove(entity);
+        public static void Kill(T entity)
+        {
+            Entities[entity.WhoAmI].OnKill();
+            Entities[entity.WhoAmI] = null;
+
+            FreeIndices.Enqueue(entity.WhoAmI);
+        }
     }
 }

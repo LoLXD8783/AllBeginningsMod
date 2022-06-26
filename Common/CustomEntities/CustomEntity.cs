@@ -2,8 +2,14 @@
 {
     public abstract class CustomEntity
     {
-        public virtual void Update() { }
+        public int WhoAmI { get; internal set; }
 
-        public virtual void Draw() { }
+        public virtual void OnSpawn() { }
+
+        public virtual void OnKill() { }
+
+        public virtual void OnUpdate() { }
+
+        public virtual void OnDraw() { }
     }
 }
