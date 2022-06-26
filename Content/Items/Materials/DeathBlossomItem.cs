@@ -20,7 +20,7 @@ namespace AllBeginningsMod.Content.Items.Materials
             Item.height = 42;
 
             Item.rare = ItemRarityID.Blue;
-            Item.value = Item.sellPrice(copper: 60);
+            Item.value = Item.sellPrice(silver: 8);
         }
     }
 }
