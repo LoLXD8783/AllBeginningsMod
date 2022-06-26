@@ -1,5 +1,4 @@
 ﻿using AllBeginningsMod.Common.CustomEntities.PrimitiveTrails;
-using AllBeginningsMod.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;

@@ -1,42 +1,76 @@
 ﻿using AllBeginningsMod.Common.Config;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.CustomEntities.Particles
 {
-    public sealed class ParticleSystem : CustomEntitySystem<Particle>
+    public sealed class ParticleSystem : ModSystem
     {
-        public override int MaxEntities => AllBeginningsClientConfig.Instance.MaxParticles;
+        public static Particle[] Particles { get; private set; }
+        public static Queue<int> FreeIndices { get; private set; }
 
         public override void OnModLoad()
         {
-            base.OnModLoad();
+            int maxParticles = AllBeginningsClientConfig.Instance.MaxParticles;
+
+            Particles = new Particle[maxParticles];
+            FreeIndices = new Queue<int>(maxParticles);
             
+            for (int i = 0; i < maxParticles; i++)
+            {
+                FreeIndices.Enqueue(i);
+            }
+
             On.Terraria.Main.DrawDust += Main_DrawDust;
         }
 
         public override void Unload()
         {
-            base.Unload();
-
             On.Terraria.Main.DrawDust -= Main_DrawDust;
+
+            Particles = null;
+            FreeIndices = null;
         }
 
         public override void PostUpdateDusts()
         {
-            for (int i = 0; i < Entities.Length; i++)
+            for (int i = 0; i < Particles.Length; i++)
             {
-                Entities[i]?.OnUpdate();
+                Particles[i]?.OnUpdate();
             }
+        }
+        
+        public static Particle Spawn(Particle particle)
+        {
+            if (FreeIndices.TryDequeue(out int index))
+            {
+                Particles[index] = particle;
+                Particles[index].WhoAmI = index;
+                Particles[index].OnSpawn();
+            }
+
+            return particle;
+        }
+
+        public static void Kill(Particle particle)
+        {
+            Particles[particle.WhoAmI].OnKill();
+            Particles[particle.WhoAmI] = null;
+            
+            FreeIndices.Enqueue(particle.WhoAmI);
         }
 
         private static void Main_DrawDust(On.Terraria.Main.orig_DrawDust orig, Main self)
         {
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
-            for (int i = 0; i < Entities.Length; i++)
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+            
+            for (int i = 0; i < Particles.Length; i++)
             {
-                Entities[i]?.OnDraw();
+                Particles[i]?.OnDraw();
             }
+
             Main.spriteBatch.End();
 
             orig(self);

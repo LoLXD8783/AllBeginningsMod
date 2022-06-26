@@ -6,9 +6,11 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.CustomEntities.Particles
 {
-    public abstract class Particle : CustomEntity
+    public abstract class Particle
     {
         public virtual Texture2D Texture => ModContent.Request<Texture2D>(GetType().FullName.Replace('.', '/')).Value;
+
+        public int WhoAmI;
 
         public Vector2 Position;
         public Vector2 Velocity;
@@ -22,7 +24,7 @@ namespace AllBeginningsMod.Common.CustomEntities.Particles
         public float Rotation;
         public float Alpha = 1f;
         
-        public override void OnUpdate()
+        public virtual void OnUpdate()
         {
             if (!ScreenUtils.WorldScreenRectangle.Contains(Position.ToPoint()))
             {
@@ -33,12 +35,16 @@ namespace AllBeginningsMod.Common.CustomEntities.Particles
             Position += Velocity;
         }
 
-        public override void OnDraw()
+        public virtual void OnDraw()
         {
             Vector2 position = Position - Main.screenPosition;
             Color color = Color * Alpha;
 
             Main.spriteBatch.Draw(Texture, position, Frame, color, Rotation, Origin, Scale, SpriteEffects.None, 0f);
         }
+
+        public virtual void OnSpawn() { }
+
+        public virtual void OnKill() { }
     }
 }
