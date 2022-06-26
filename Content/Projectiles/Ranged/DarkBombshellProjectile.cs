@@ -19,7 +19,7 @@ namespace AllBeginningsMod.Content.Projectiles.Ranged
         {
             DisplayName.SetDefault("Dark Bombshell");
 
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
         }
 
@@ -29,8 +29,8 @@ namespace AllBeginningsMod.Content.Projectiles.Ranged
 
             Projectile.DamageType = DamageClass.Ranged;
             
-            Projectile.width = 10;
-            Projectile.height = 10;
+            Projectile.width = 16;
+            Projectile.height = 16;
 
             Projectile.timeLeft = 180;
             Projectile.penetrate = -1;
@@ -56,7 +56,7 @@ namespace AllBeginningsMod.Content.Projectiles.Ranged
 
         public override void Kill(int timeLeft)
         {
-            Projectile.Resize(10, 10);
+            Projectile.Resize(16, 16);
 
             for (int i = 0; i < 16; i++)
             {
