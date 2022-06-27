@@ -5,10 +5,12 @@ using Terraria;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.CustomEntities.Particles
-{
+{        
+    [Autoload(Side = ModSide.Client)]
     public sealed class ParticleSystem : ModSystem
     {
         public static Particle[] Particles { get; private set; }
+
         public static Queue<int> FreeIndices { get; private set; }
 
         public override void OnModLoad()
@@ -64,11 +66,30 @@ namespace AllBeginningsMod.Common.CustomEntities.Particles
 
         private static void Main_DrawDust(On.Terraria.Main.orig_DrawDust orig, Main self)
         {
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, default, default, default, Main.GameViewMatrix.TransformationMatrix);
             
             for (int i = 0; i < Particles.Length; i++)
             {
-                Particles[i]?.OnDraw();
+                Particle particle = Particles[i];
+
+                if (particle != null && particle.IsAdditive)
+                {
+                    particle.OnDraw();
+                }
+            }
+
+            Main.spriteBatch.End();
+            
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+            
+            for (int i = 0; i < Particles.Length; i++)
+            {
+                Particle particle = Particles[i];
+
+                if (particle != null && !particle.IsAdditive)
+                {
+                    particle.OnDraw();
+                }
             }
 
             Main.spriteBatch.End();

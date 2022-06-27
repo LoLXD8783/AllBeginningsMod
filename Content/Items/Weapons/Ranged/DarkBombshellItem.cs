@@ -21,16 +21,18 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
             Item.noMelee = true;
 
             Item.DamageType = DamageClass.Ranged;
+            Item.damage = 30;
+            Item.knockBack = 8f;
 
             Item.width = 32;
             Item.height = 46;
 
-            Item.useTime = 30;
-            Item.useAnimation = 30;
+            Item.useTime = 45;
+            Item.useAnimation = 45;
             Item.useStyle = ItemUseStyleID.Swing;
 
             Item.shoot = ModContent.ProjectileType<DarkBombshellProjectile>();
-            Item.shootSpeed = 4f;
+            Item.shootSpeed = 5f;
 
             Item.rare = ItemRarityID.Blue;
         }

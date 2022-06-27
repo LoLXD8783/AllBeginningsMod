@@ -68,11 +68,10 @@ namespace AllBeginningsMod.Content.Tiles
         {
             if (Main.rand.NextBool(400))
             {
-                Vector2 position = new Vector2(i, j - 1) * 16f;
-                
-                ParticleSystem.Spawn(new DeathBlossomParticle(position + Main.rand.NextVector2Circular(32f, 32f))
+                ParticleSystem.Spawn(new DeathBlossomParticle
                 {
-                    Position = position
+                    Position = new Vector2(i, j - 1) * 16f,
+                    MovementCenter = new Vector2(i, j - 1) * 16f + Main.rand.NextVector2Circular(32f, 32f)
                 });
             }
 

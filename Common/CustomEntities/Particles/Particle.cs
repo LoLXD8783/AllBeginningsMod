@@ -23,6 +23,8 @@ namespace AllBeginningsMod.Common.CustomEntities.Particles
         
         public float Rotation;
         public float Alpha = 1f;
+
+        public bool IsAdditive = true;
         
         public virtual void OnUpdate()
         {

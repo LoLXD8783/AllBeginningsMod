@@ -10,7 +10,7 @@ namespace AllBeginningsMod.Common.Globals.Tiles
     {
         public override void RandomUpdate(int i, int j, int type)
         {
-            if (type == TileID.Tombstones)
+            if (type == TileID.Tombstones && Main.rand.NextBool(200))
             {
                 int offset = WorldGen.genRand.Next(-4, 4);
 

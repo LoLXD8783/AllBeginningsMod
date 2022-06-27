@@ -15,5 +15,9 @@ namespace AllBeginningsMod.Common.Config
         [DefaultValue(500)]
         [ReloadRequired]
         public int MaxParticles { get; set; }
+
+        [DefaultValue(500)]
+        [ReloadRequired]
+        public int MaxPrimitiveTrails { get; set; }
     }
 }

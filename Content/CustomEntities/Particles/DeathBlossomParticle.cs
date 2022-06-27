@@ -6,17 +6,17 @@ namespace AllBeginningsMod.Content.CustomEntities.Particles
 {
     public sealed class DeathBlossomParticle : Particle
     {
-        public readonly Vector2 MovementCenter;
+        public Vector2 MovementCenter;
         
         private int timeLeft = 180;
-
-        public DeathBlossomParticle(Vector2 movementCenter) => MovementCenter = movementCenter;
 
         public override void OnSpawn()
         {
             Scale = new Vector2(Main.rand.NextFloat(0.2f, 0.4f));
             Color = new Color(92, 71, 232);
+
             Origin = Texture.Size() / 2f;
+
             Alpha = 0f;
         }
 
