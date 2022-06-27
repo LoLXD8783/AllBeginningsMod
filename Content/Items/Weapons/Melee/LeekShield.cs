@@ -10,8 +10,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("I'm sure some bird would love to hold this" +
-                "\nCan either be used as a weapon or an accessory" +
-                "\nAttackers will also take damage");
+                "\nCan either be used as a weapon or an accessory");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults()
@@ -30,10 +29,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
 
             Item.defense = 5;
             Item.accessory = true;
-        }
-        public override void UpdateEquip(Player player)
-        {
-            player.thorns = 0.2f;
         }
     }
 }
