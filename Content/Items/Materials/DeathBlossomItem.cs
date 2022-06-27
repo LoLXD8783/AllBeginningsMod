@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace AllBeginningsMod.Content.Items.Materials
 {
@@ -10,6 +11,7 @@ namespace AllBeginningsMod.Content.Items.Materials
         {
             DisplayName.SetDefault("Death Blossom");
             Tooltip.SetDefault("Contains the essence of the ones who survived death");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
         }
 
         public override void SetDefaults()

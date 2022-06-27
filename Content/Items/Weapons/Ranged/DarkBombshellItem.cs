@@ -3,16 +3,16 @@ using AllBeginningsMod.Content.Projectiles.Ranged;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Ranged
 {
     public sealed class DarkBombshellItem : ModItem
     {
-        // TODO: Tooltip for this item.
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dark Bombshell");
-            Tooltip.SetDefault("");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
@@ -35,6 +35,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
             Item.shootSpeed = 5f;
 
             Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(gold: 1, silver: 80);
         }
 
         public override void AddRecipes()
