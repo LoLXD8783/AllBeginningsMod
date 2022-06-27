@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee
 {
-    public class LeekSwordProj : ModProjectile
+    public class LeekSwordProjectile : ModProjectile
     {
         public override void SetDefaults()
         {

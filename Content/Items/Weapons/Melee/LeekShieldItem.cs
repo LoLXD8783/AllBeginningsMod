@@ -5,7 +5,7 @@ using Terraria.GameContent.Creative;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Melee
 {
-    public class LeekShield : ModItem
+    public class LeekShieldItem : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -23,7 +23,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
             Item.useTime = 50;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.value = Item.sellPrice(gold: 1, silver: 80);
-            Item.shoot = ModContent.ProjectileType<Projectiles.Melee.LeekShieldProj>();
+            Item.shoot = ModContent.ProjectileType<Projectiles.Melee.LeekShieldProjectile>();
             Item.shootSpeed = 10f;
             Item.noMelee = Item.noUseGraphic = true;
 
