@@ -9,6 +9,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Leek Sword");
             Tooltip.SetDefault("I'm sure some bird would love to hold this" +
                 "\nGiving your enemies a swift death");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

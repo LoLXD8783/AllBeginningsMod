@@ -12,6 +12,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             Projectile.width = Projectile.height = 30;
             Projectile.friendly = true;
             Projectile.hostile = false;
+            Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 800;
             Projectile.aiStyle = 3;
