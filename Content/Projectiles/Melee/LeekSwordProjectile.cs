@@ -17,7 +17,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
         }
         public override void AI()
         {
-            Player player = Main.LocalPlayer;
+            Player player = Main.player[Projectile.owner];
             int acc = Projectile.timeLeft * 2;
             player.velocity = Vector2.Normalize(Main.MouseWorld - player.Center) * acc;
             player.armorEffectDrawShadow = true;
