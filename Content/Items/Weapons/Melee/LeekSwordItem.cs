@@ -20,7 +20,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
             Item.noMelee = true;
             Item.noUseGraphic = true;
             
-            Item.damage = 16;
+            Item.damage = 24;
             Item.DamageType = DamageClass.Melee;
             
             Item.knockBack = 1f;
