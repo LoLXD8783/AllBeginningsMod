@@ -26,11 +26,14 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
 
         public override void AI()
         {
-            Player player = Main.LocalPlayer;
+            Player player = Main.player[Projectile.owner];
+
             player.armorEffectDrawShadow = true;
+            player.immune = true;
+
             player.heldProj = Projectile.whoAmI;
             player.velocity = player.DirectionTo(Main.MouseWorld) * Projectile.timeLeft * 2f;
-            player.immune = true;
+
             player.immuneTime = Projectile.timeLeft;
 
             if (Projectile.timeLeft == 15)
@@ -40,11 +43,13 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
 
             Projectile.Center = player.Center;
         }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffID.DryadsWardDebuff, 120);
             target.AddBuff(BuffID.BrokenArmor, 360);
         }
+
         public override void Kill(int timeLeft)
         {
             Player player = Main.LocalPlayer;
