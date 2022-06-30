@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AllBeginningsMod.Content.Items.Placeables;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 
 namespace AllBeginningsMod.Content.Tiles
 {
@@ -12,22 +13,28 @@ namespace AllBeginningsMod.Content.Tiles
     {
         public override void SetStaticDefaults()
         {
-            Main.tileSpelunker[Type] = true;
+            Main.tileNoFail[Type] = true;
+            Main.tileLighted[Type] = true;
+            Main.tileLavaDeath[Type] = true;
             Main.tileFrameImportant[Type] = true;
 
-            TileObjectData.newTile.Height = 1;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1xX);
-            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
+
+            TileObjectData.newTile.Height = 3;
+            TileObjectData.newTile.CoordinateHeights = new int[]
+            {
+                16,
+                16,
+                16
+            };
+
             TileObjectData.addTile(Type);
 
             DustType = DustID.Shadowflame;
             HitSound = SoundID.Dig;
             MineResist = 2f;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Items.Tiles.NightmareTotemItem>());
-        }
+
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D glowmaskTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
@@ -41,5 +48,9 @@ namespace AllBeginningsMod.Content.Tiles
 
             spriteBatch.Draw(glowmaskTexture, drawPosition, frame, Color.White, 0f, default, 1f, SpriteEffects.None, 0f);
         }
+
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
+
+        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<NightmareTotemItem>());
     }
 }

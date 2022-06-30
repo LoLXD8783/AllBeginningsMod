@@ -19,9 +19,7 @@ namespace AllBeginningsMod.Content.Tiles
         {
             Main.tileCut[Type] = true;
             Main.tileNoFail[Type] = true;
-            Main.tileNoFail[Type] = true;
             Main.tileLighted[Type] = true;
-            Main.tileSpelunker[Type] = true;
             Main.tileLavaDeath[Type] = true;
             Main.tileFrameImportant[Type] = true;
 

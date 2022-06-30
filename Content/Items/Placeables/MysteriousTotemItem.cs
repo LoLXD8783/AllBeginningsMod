@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using AllBeginningsMod.Content.Tiles;
 
-namespace AllBeginningsMod.Content.Items.Tiles
+namespace AllBeginningsMod.Content.Items.Placeables
 {
     public sealed class MysteriousTotemItem : ModItem
     {
