@@ -18,7 +18,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             Projectile.width = 40;
             Projectile.height = 46;
 
-            Projectile.timeLeft = 15;            
+            Projectile.timeLeft = 20;            
             Projectile.penetrate = -1;
 
             Projectile.aiStyle = -1;

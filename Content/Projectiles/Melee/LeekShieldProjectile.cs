@@ -33,7 +33,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             {
                 Player player = Main.player[Projectile.owner];
                 Vector2 vel = new Vector2(Main.rand.Next(-6, 6), Main.rand.Next(-6, 6));
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, vel, ModContent.ProjectileType<LeekShieldReturningProjectile>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, vel, ModContent.ProjectileType<LeekShieldReturningProjectile>(), Projectile.damage/2, Projectile.knockBack, player.whoAmI);
             }
 
             for (int i = 0; i < Main.rand.Next(5, 8); i++)

@@ -29,7 +29,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
             Item.width = 32;
             Item.height = 32;
 
-            Item.useTime = 15;
+            Item.useTime = 45;
             Item.useAnimation = 15;
             Item.useStyle = ItemUseStyleID.Swing;
 
@@ -37,17 +37,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
             Item.shoot = ModContent.ProjectileType<LeekShieldProjectile>();
             
             Item.value = Item.sellPrice(gold: 1, silver: 80);
-        }
-        public override bool CanUseItem(Player player)
-        {
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<LeekShieldProjectile>()] >= 1)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
         }
     }
 }
