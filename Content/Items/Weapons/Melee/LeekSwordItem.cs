@@ -10,23 +10,33 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Leek Sword");
-            Tooltip.SetDefault("I'm sure some bird would love to hold this" +
-                "\nGiving your enemies a swift death");
+            Tooltip.SetDefault("I'm sure some bird would love to hold this" + "\n" + "Giving your enemies a swift death");
+
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
+
         public override void SetDefaults()
         {
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+            
             Item.damage = 16;
             Item.DamageType = DamageClass.Melee;
+            
             Item.knockBack = 1f;
-            Item.width = Item.height = 32;
-            Item.useTime = Item.useAnimation = 60;
+
+            Item.width = 32;
+            Item.height = 32;
+
+            Item.useTime = 60;
+            Item.useAnimation = 60;
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.shoot = ModContent.ProjectileType<Projectiles.Melee.LeekSwordProjectile>();
+
             Item.shootSpeed = 1f;
+            Item.shoot = ModContent.ProjectileType<Projectiles.Melee.LeekSwordProjectile>();
+            
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(gold: 1, silver: 20);
-            Item.noUseGraphic = Item.noMelee = true;
         }
     }
 }

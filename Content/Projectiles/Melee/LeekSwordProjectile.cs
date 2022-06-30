@@ -25,10 +25,9 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
         public override void AI()
         {
             Player player = Main.LocalPlayer;
-
             player.heldProj = Projectile.whoAmI;
-
             player.velocity = player.DirectionTo(Main.MouseWorld) * Projectile.timeLeft * 2f;
+
             player.armorEffectDrawShadow = true;
 
             if (Projectile.timeLeft == 15)
