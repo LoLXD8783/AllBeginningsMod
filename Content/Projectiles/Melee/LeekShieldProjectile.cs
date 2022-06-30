@@ -1,21 +1,26 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee
 {
-    public class LeekShieldProjectile : ModProjectile
+    public sealed class LeekShieldProjectile : ModProjectile
     {
+        public override void SetStaticDefaults() => DisplayName.SetDefault("Leek Shield");
+
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 30;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.tileCollide = false;
-            Projectile.penetrate = -1;
+
+            Projectile.width = 30;
+            Projectile.height = 30;
+
             Projectile.timeLeft = 800;
-            Projectile.aiStyle = 3;
+            Projectile.penetrate = -1;
+
+            Projectile.aiStyle = ProjAIStyleID.Boomerang;
             AIType = ProjectileID.WoodenBoomerang;
         }
     }

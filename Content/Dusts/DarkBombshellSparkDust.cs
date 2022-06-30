@@ -19,13 +19,15 @@ namespace AllBeginningsMod.Content.Dusts
             dust.position += dust.velocity;
             dust.velocity *= 0.9f;
             
-            dust.color = Color.Lerp(new Color(127, 203, 192), Color.Black, dust.alpha / 255f);
+            dust.color = Color.Lerp(new Color(73, 238, 176), new Color(102, 7, 164), dust.alpha / 255f);
             dust.alpha += 5;
 
             if (dust.alpha >= 255)
             {
                 dust.active = false;
             }
+
+            Lighting.AddLight(dust.position, 0f, 0.2f * (1f - (dust.alpha / 255f)), 0.1f * 1f - (1f - (dust.alpha / 255f)));
 
             return false;
         }

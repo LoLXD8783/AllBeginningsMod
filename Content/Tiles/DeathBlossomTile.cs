@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -16,17 +17,17 @@ namespace AllBeginningsMod.Content.Tiles
     {
         public override void SetStaticDefaults()
         {
+            Main.tileCut[Type] = true;
+            Main.tileNoFail[Type] = true;
             Main.tileNoFail[Type] = true;
             Main.tileLighted[Type] = true;
             Main.tileSpelunker[Type] = true;
             Main.tileLavaDeath[Type] = true;
             Main.tileFrameImportant[Type] = true;
 
-            TileID.Sets.SwaysInWindBasic[Type] = true;
+            TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
-
-            TileObjectData.newTile.Origin = Point16.Zero;
 
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.EmptyTile, 1, 0);
@@ -63,27 +64,27 @@ namespace AllBeginningsMod.Content.Tiles
                 Dust.NewDust(new Vector2(i, j) * 16f, 16, 32, DustType);
             }
         }
-
-        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (Main.rand.NextBool(400))
+            if (Main.rand.NextBool(200))
             {
                 ParticleSystem.Spawn(new DeathBlossomParticle
                 {
-                    Position = new Vector2(i, j - 1) * 16f,
-                    MovementCenter = new Vector2(i, j - 1) * 16f + Main.rand.NextVector2Circular(32f, 32f)
-                });
+                    Position = new Vector2(i, j + 2) * 16f + new Vector2(Main.rand.NextFloat(-20f, -20f), 0f)
+                }); 
             }
 
-            return true;
-        }
+            Texture2D glowmaskTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
 
-        public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
-        {
-            if (i % 2 == 1)
-            {
-                spriteEffects = SpriteEffects.FlipHorizontally;
-            }
+            Tile tile = Framing.GetTileSafely(i, j);
+            
+            Vector2 zero = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange); 
+            Vector2 drawPosition = new Vector2(i, j) * 16f - Main.screenPosition + zero + new Vector2(0f, TileObjectData.GetTileData(tile).DrawYOffset);
+            
+            Rectangle frame = new(tile.TileFrameX, tile.TileFrameY, 18, 18);
+
+            spriteBatch.Draw(glowmaskTexture, drawPosition, frame, Color.White, 0f, default, 1f, SpriteEffects.None, 0f);
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

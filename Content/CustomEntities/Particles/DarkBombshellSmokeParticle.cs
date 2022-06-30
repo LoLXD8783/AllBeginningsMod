@@ -8,14 +8,11 @@ namespace AllBeginningsMod.Content.CustomEntities.Particles
     {
         public override void OnSpawn()
         {
-            IsAdditive = false;
-            
             Frame = new Rectangle(0, Main.rand.Next(2) * 34, 26, 34);
             
             Origin = Frame.Value.Size() / 2f;
 
             Rotation = Main.rand.NextFloat(MathHelper.TwoPi);
-
             Alpha = 0.9f;
         }
 
@@ -31,7 +28,7 @@ namespace AllBeginningsMod.Content.CustomEntities.Particles
             Scale.X += 0.01f;
             Scale.Y += 0.01f;
 
-            Color = Color.Lerp(new Color(127, 203, 192), Color.Black, 1f - Alpha);
+            Color = Color.Lerp(new Color(73, 238, 176), new Color(102, 7, 164), 1f - Alpha);
             Alpha -= 0.01f;
 
             if (Alpha <= 0f)

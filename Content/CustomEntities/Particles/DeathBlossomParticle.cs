@@ -1,22 +1,27 @@
 ﻿using AllBeginningsMod.Common.CustomEntities.Particles;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.CustomEntities.Particles
 {
     public sealed class DeathBlossomParticle : Particle
     {
-        public Vector2 MovementCenter;
-        
-        private int timeLeft = 180;
+        private int timeLeft = 300;
+        private int sineProgress;
 
         public override void OnSpawn()
         {
-            Scale = new Vector2(Main.rand.NextFloat(0.2f, 0.4f));
-            Color = new Color(92, 71, 232);
+            IsAdditive = true;
 
+            Scale = new Vector2(Main.rand.NextFloat(0.6f, 1.2f));
+            Color = new Color(92, 71, 232);
+            
             Origin = Texture.Size() / 2f;
 
+            Rotation = Main.rand.NextFloat(MathHelper.TwoPi);
             Alpha = 0f;
         }
 
@@ -24,29 +29,50 @@ namespace AllBeginningsMod.Content.CustomEntities.Particles
         {
             base.OnUpdate();
 
-            Vector2 position = MovementCenter + Vector2.One.RotatedBy(timeLeft * 0.05f) * Main.rand.NextFloat(10f, 20f);
-            Position = Vector2.SmoothStep(Position, position, 0.1f);
+            sineProgress++;
 
-            timeLeft--;
+            Velocity.X = MathF.Sin(sineProgress * 0.075f) * 0.75f;
+            Velocity.Y -= 0.005f;
 
-            if (timeLeft <= 0)
+            if (Velocity.Y < -1f)
             {
-                Alpha -= 0.05f;
+                Velocity.Y = -1f;
+            }
+
+            if (timeLeft > 0)
+            {
+                Alpha += 0.01f;
+
+                if (Alpha >= 1f)
+                {
+                    Alpha = 1f;
+                }
+            }
+            else
+            {
+                Alpha -= 0.01f;
 
                 if (Alpha <= 0f)
                 {
                     ParticleSystem.Kill(this);
                 }
             }
-            else
-            {
-                Alpha += 0.05f;
 
-                if (Alpha > 1f)
-                {
-                    Alpha = 1f;
-                }
-            }
+            timeLeft--;
+
+            Lighting.AddLight(Position, 0.1f * (1f - Alpha), 0, 0.4f * (1f - Alpha));
+        }
+
+        public override void OnDraw()
+        {
+            Texture2D bloomTexture = ModContent.Request<Texture2D>($"{nameof(AllBeginningsMod)}/Content/CustomEntities/Particles/DeathBlossomParticle_Bloom").Value;
+
+            Vector2 position = Position - Main.screenPosition;
+            Color color = Color * Alpha;
+
+            Main.spriteBatch.Draw(bloomTexture, position, null, color, Rotation, bloomTexture.Size() / 2f, Scale, SpriteEffects.None, 0f);
+
+            base.OnDraw();
         }
     }
 }
