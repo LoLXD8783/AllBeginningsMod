@@ -1,6 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee
 {
@@ -12,7 +13,8 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
         {
             Projectile.friendly = true;
             Projectile.hostile = false;
-            
+            Projectile.tileCollide = false;
+
             Projectile.width = 40;
             Projectile.height = 46;
 
@@ -25,10 +27,11 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
         public override void AI()
         {
             Player player = Main.LocalPlayer;
+            player.armorEffectDrawShadow = true;
             player.heldProj = Projectile.whoAmI;
             player.velocity = player.DirectionTo(Main.MouseWorld) * Projectile.timeLeft * 2f;
-
-            player.armorEffectDrawShadow = true;
+            player.immune = true;
+            player.immuneTime = Projectile.timeLeft;
 
             if (Projectile.timeLeft == 15)
             {
@@ -36,6 +39,16 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             }
 
             Projectile.Center = player.Center;
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(BuffID.DryadsWardDebuff, 120);
+            target.AddBuff(BuffID.BrokenArmor, 360);
+        }
+        public override void Kill(int timeLeft)
+        {
+            Player player = Main.LocalPlayer;
+            player.velocity = Vector2.Zero;
         }
     }
 }

@@ -15,8 +15,8 @@ namespace AllBeginningsMod.Content.Tiles
             Main.tileSpelunker[Type] = true;
             Main.tileFrameImportant[Type] = true;
 
-            TileObjectData.newTile.Height = 1;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1xX);
+            TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
             TileObjectData.addTile(Type);
 
