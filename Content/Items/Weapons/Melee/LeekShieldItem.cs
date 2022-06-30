@@ -2,6 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using AllBeginningsMod.Content.Projectiles.Melee;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Melee
 {
@@ -10,7 +11,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Leek Shield");
-            Tooltip.SetDefault("I'm sure some bird would love to hold this" + "\n" + "Can either be used as a weapon or an accessory");
+            Tooltip.SetDefault("I'm sure some bird would love to hold this" + "\n" + "Splits into returning leaves");
             
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -18,11 +19,9 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
         public override void SetDefaults()
         {
             Item.noMelee = true;
-            Item.accessory = true;
             Item.noUseGraphic = true;
-            
+
             Item.damage = 18;
-            Item.defense = 5;
             Item.DamageType = DamageClass.Melee;
 
             Item.knockBack = 3f;
@@ -30,14 +29,25 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
             Item.width = 32;
             Item.height = 32;
 
-            Item.useTime = 50;
+            Item.useTime = 15;
             Item.useAnimation = 15;
             Item.useStyle = ItemUseStyleID.Swing;
 
-            Item.shootSpeed = 10f;
-            Item.shoot = ModContent.ProjectileType<Projectiles.Melee.LeekShieldProjectile>();
+            Item.shootSpeed = 14f;
+            Item.shoot = ModContent.ProjectileType<LeekShieldProjectile>();
             
             Item.value = Item.sellPrice(gold: 1, silver: 80);
+        }
+        public override bool CanUseItem(Player player)
+        {
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<LeekShieldProjectile>()] >= 1)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
