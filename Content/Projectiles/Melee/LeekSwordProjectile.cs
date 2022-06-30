@@ -32,7 +32,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
 
             if (Projectile.timeLeft == 15)
             {
-                Projectile.rotation = (Main.MouseWorld - player.Center).ToRotation() + MathHelper.ToRadians(135f);
+                Projectile.rotation = (Main.MouseWorld - player.Center).ToRotation() + MathHelper.PiOver4 + MathHelper.Pi;
             }
 
             Projectile.Center = player.Center;

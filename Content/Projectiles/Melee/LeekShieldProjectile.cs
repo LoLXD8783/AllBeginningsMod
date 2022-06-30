@@ -12,7 +12,6 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
         {
             Projectile.friendly = true;
             Projectile.hostile = false;
-            Projectile.tileCollide = false;
 
             Projectile.width = 30;
             Projectile.height = 30;
