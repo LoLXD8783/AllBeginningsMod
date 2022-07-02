@@ -35,7 +35,8 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
 
             Item.shootSpeed = 14f;
             Item.shoot = ModContent.ProjectileType<LeekShieldProjectile>();
-            
+
+            Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(gold: 1, silver: 80);
         }
     }
