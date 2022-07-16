@@ -1,5 +1,7 @@
 ﻿sampler uImage0 : register(s0);
 
+float2 uScroll;
+
 texture noiseTexture;
 sampler noise = sampler_state
 {
@@ -9,15 +11,14 @@ sampler noise = sampler_state
 float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
-    float4 noiseColor = tex2D(noise, coords);
-    float brightness = ((noiseColor.r + noiseColor.g + noiseColor.b) / 3) / 255;
-    
-    if (brightness > 0.5)
+    float4 noiseColor = tex2D(noise, coords + uScroll);
+
+    if (!any(noiseColor))
     {
-        return color;
+        return float4(0, 0, 0, 0);
     }
-    
-    return float4(0, 0, 0, 0);
+
+    return color;
 }
 
 technique Technique1

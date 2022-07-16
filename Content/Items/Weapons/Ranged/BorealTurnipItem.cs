@@ -19,7 +19,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
             Item.noUseGraphic = true;
 
             Item.DamageType = DamageClass.Ranged;
-            Item.damage = 12;
+            Item.damage = 10;
             Item.knockBack = 3f;
 
             Item.width = 32;
@@ -30,7 +30,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
             Item.useStyle = ItemUseStyleID.Swing;
 
             Item.shoot = ModContent.ProjectileType<BorealTurnipProjectile>();
-            Item.shootSpeed = 8f;
+            Item.shootSpeed = 12f;
 
             Item.rare = ItemRarityID.Blue;
         }
