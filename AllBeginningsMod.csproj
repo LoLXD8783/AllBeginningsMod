@@ -8,9 +8,11 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
+    <Compile Remove="Content\Items\Armor\**" />
+    <EmbeddedResource Remove="Content\Items\Armor\**" />
+    <None Remove="Content\Items\Armor\**" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Items\Armor\SkullReaper\" />
+    <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
 </Project>

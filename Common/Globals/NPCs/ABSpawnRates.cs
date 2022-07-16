@@ -1,14 +1,14 @@
-﻿using Terraria;
+﻿using AllBeginningsMod.Common.Globals.Players;
+using Terraria;
 using Terraria.ModLoader;
-using AllBeginningsMod.Common.Globals.Players;
 
 namespace AllBeginningsMod.Common.Globals.NPCs
 {
-    public sealed class AllBeginningsGlobalNPC : GlobalNPC
+    public sealed class ABSpawnRates : GlobalNPC
     {
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
         {
-            if (player.GetModPlayer<AllBeginningsGlobalPlayer>().DevilGift == true)
+            if (player.GetModPlayer<ABAccessoryPlayer>().DevilGift)
             {
                 spawnRate *= (int)3f;
             }

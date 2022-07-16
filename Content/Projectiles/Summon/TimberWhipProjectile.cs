@@ -8,26 +8,21 @@ using System.Collections.Generic;
 
 namespace AllBeginningsMod.Content.Projectiles.Summon
 {
-    public sealed class TimberWhipProjectile : ModProjectile
-    {
-		public override void SetStaticDefaults()
-		{
+	public sealed class TimberWhipProjectile : ModProjectile
+	{
+		private ref float Timer => ref Projectile.ai[0];
+
+		public override void SetStaticDefaults() {
 			ProjectileID.Sets.IsAWhip[Type] = true;
 		}
 
-		public override void SetDefaults()
-		{
+		public override void SetDefaults() {
 			Projectile.DefaultToWhip();
 			Projectile.WhipSettings.Segments = 16;
 			Projectile.WhipSettings.RangeMultiplier = 1f;
 		}
-		private float Timer
-		{
-			get => Projectile.ai[0];
-			set => Projectile.ai[0] = value;
-		}
-		public override bool PreDraw(ref Color lightColor)
-		{
+
+		public override bool PreDraw(ref Color lightColor) {
 			List<Vector2> list = new List<Vector2>();
 			Projectile.FillWhipControlPoints(Projectile, list);
 
@@ -38,8 +33,7 @@ namespace AllBeginningsMod.Content.Projectiles.Summon
 
 			Vector2 pos = list[0];
 
-			for (int i = 0; i < list.Count - 1; i++)
-			{
+			for (int i = 0; i < list.Count - 1; i++) {
 				// These two values are set to suit this projectile's sprite, but won't necessarily work for your own.
 				// You can change them if they don't!
 				Rectangle frame = new Rectangle(0, 0, 14, 32);
@@ -48,8 +42,7 @@ namespace AllBeginningsMod.Content.Projectiles.Summon
 
 				// These statements determine what part of the spritesheet to draw for the current segment.
 				// They can also be changed to suit your sprite.
-				if (i == list.Count - 2)
-				{
+				if (i == list.Count - 2) {
 					frame.Y = 74;
 					frame.Height = 48;
 
@@ -58,18 +51,15 @@ namespace AllBeginningsMod.Content.Projectiles.Summon
 					float t = Timer / timeToFlyOut;
 					scale = MathHelper.Lerp(0.5f, 1.5f, Utils.GetLerpValue(0.1f, 0.7f, t, true) * Utils.GetLerpValue(0.9f, 0.7f, t, true));
 				}
-				else if (i > 10)
-				{
+				else if (i > 10) {
 					frame.Y = 60;
 					frame.Height = 14;
 				}
-				else if (i > 5)
-				{
+				else if (i > 5) {
 					frame.Y = 46;
 					frame.Height = 14;
 				}
-				else if (i > 0)
-				{
+				else if (i > 0) {
 					frame.Y = 32;
 					frame.Height = 14;
 				}

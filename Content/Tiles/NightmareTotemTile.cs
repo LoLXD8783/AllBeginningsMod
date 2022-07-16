@@ -11,8 +11,7 @@ namespace AllBeginningsMod.Content.Tiles
 {
     public sealed class NightmareTotemTile : ModTile
     {
-        public override void SetStaticDefaults()
-        {
+        public override void SetStaticDefaults() {
             Main.tileNoFail[Type] = true;
             Main.tileLighted[Type] = true;
             Main.tileLavaDeath[Type] = true;
@@ -35,8 +34,7 @@ namespace AllBeginningsMod.Content.Tiles
             MineResist = 2f;
         }
 
-        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
-        {
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
             Texture2D glowmaskTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
 
             Tile tile = Framing.GetTileSafely(i, j);
@@ -49,8 +47,12 @@ namespace AllBeginningsMod.Content.Tiles
             spriteBatch.Draw(glowmaskTexture, drawPosition, frame, Color.White, 0f, default, 1f, SpriteEffects.None, 0f);
         }
 
-        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
+        public override void NumDust(int i, int j, bool fail, ref int num) {
+            num = fail ? 1 : 3;
+        }
 
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<NightmareTotemItem>());
+        public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<NightmareTotemItem>());
+        }
     }
 }

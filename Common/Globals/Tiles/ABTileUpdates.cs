@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Globals.Tiles
 {
-    public sealed class AllBeginningsGlobalTile : GlobalTile
+    public sealed class ABTileUpdates : GlobalTile
     {
         public override void RandomUpdate(int i, int j, int type)
         {

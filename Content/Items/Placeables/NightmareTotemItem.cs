@@ -1,22 +1,21 @@
-﻿using Terraria;
+﻿using AllBeginningsMod.Content.Tiles;
+using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using AllBeginningsMod.Content.Tiles;
 
 namespace AllBeginningsMod.Content.Items.Placeables
 {
     public sealed class NightmareTotemItem : ModItem
     {
-        public override void SetStaticDefaults()
-        {
+        public override void SetStaticDefaults() {
             DisplayName.SetDefault("Nightmare Totem");
             Tooltip.SetDefault("The harbinger of terror");
+
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
-        public override void SetDefaults()
-        {
+        public override void SetDefaults() {
             Item.maxStack = 999;
 
             Item.width = 26;

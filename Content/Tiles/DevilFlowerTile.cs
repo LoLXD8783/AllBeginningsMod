@@ -9,8 +9,7 @@ namespace AllBeginningsMod.Content.Tiles
 {
     public sealed class DevilFlowerTile : ModTile
     {
-        public override void SetStaticDefaults()
-        {
+        public override void SetStaticDefaults() {
             Main.tileNoFail[Type] = true;
             Main.tileLighted[Type] = true;
             Main.tileLavaDeath[Type] = true;
@@ -34,15 +33,20 @@ namespace AllBeginningsMod.Content.Tiles
             MineResist = 1f;
         }
 
-        public override void NearbyEffects(int i, int j, bool closer)
-        {
+        public override void NearbyEffects(int i, int j, bool closer) {
             Player player = Main.LocalPlayer;
-            if (!player.HasBuff(ModContent.BuffType<Buffs.DevilFlowerBuff>()))
-            {
+
+            if (!player.HasBuff(ModContent.BuffType<Buffs.DevilFlowerBuff>())) {
                 player.AddBuff(ModContent.BuffType<Buffs.DevilFlowerBuff>(), 2);
             }
         }
-        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<DevilFlowerItem>());
+
+        public override void NumDust(int i, int j, bool fail, ref int num) {
+            num = fail ? 1 : 3;
+        }
+
+        public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<DevilFlowerItem>());
+        }
     }
 }
