@@ -30,7 +30,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
             Item.useStyle = ItemUseStyleID.Swing;
 
             Item.shoot = ModContent.ProjectileType<BorealTurnipProjectile>();
-            Item.shootSpeed = 12f;
+            Item.shootSpeed = 10f;
 
             Item.rare = ItemRarityID.Blue;
         }

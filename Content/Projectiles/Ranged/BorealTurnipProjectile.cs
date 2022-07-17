@@ -51,7 +51,7 @@ namespace AllBeginningsMod.Content.Projectiles.Ranged
                         maxNPCDistance = currentNPCDistance;
 
                         Vector2 velocity = Projectile.DirectionTo(npc.Center);
-                        velocity = velocity.RotatedByRandom(MathHelper.ToRadians(10f));
+                        velocity = velocity.RotatedByRandom(MathHelper.ToRadians(5f));
                         velocity *= Projectile.velocity.Length();
                         Projectile.velocity = velocity;
                     }
