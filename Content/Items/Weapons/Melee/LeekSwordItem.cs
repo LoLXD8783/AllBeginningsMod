@@ -1,9 +1,8 @@
-﻿using AllBeginningsMod.Content.Projectiles.Melee;
-using Terraria;
+﻿using Terraria;
+using Terraria.Enums;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Enums;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Melee
 {
@@ -31,8 +30,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
             Item.useTime = 25;
             Item.useAnimation = 25;
             Item.useStyle = ItemUseStyleID.Shoot;
-
-            Item.shoot = ModContent.ProjectileType<LeekSwordProjectile>();
         }
     }
 }

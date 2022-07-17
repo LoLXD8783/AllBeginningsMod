@@ -16,7 +16,7 @@ namespace AllBeginningsMod.Content.Items.Placeables
         }
 
         public override void SetDefaults() {
-            Item.SetShopValues(ItemRarityColor.White0, Item.sellPrice(gold: 1, silver: 80));
+            Item.SetShopValues(ItemRarityColor.Blue1, Item.sellPrice(gold: 1, silver: 80));
             Item.DefaultToPlaceableTile(ModContent.TileType<DevilFlowerTile>());
         }
     }

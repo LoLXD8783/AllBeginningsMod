@@ -29,7 +29,7 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
             Owner.itemAnimation = 2;
             Owner.itemRotation = Projectile.rotation;
 
-            Projectile.Center = Owner.Center + HoldoutOffset;
+            Projectile.Center = Owner.RotatedRelativePoint(Owner.Center) + HoldoutOffset;
             Projectile.direction = Owner.direction;
             Projectile.spriteDirection = Owner.direction;
         }

@@ -23,7 +23,7 @@ namespace AllBeginningsMod.Content.Items.Consumables
             Item.width = 24;
             Item.height = 28;
 
-            Item.SetShopValues(ItemRarityColor.White0, Item.sellPrice(silver: 1));
+            Item.SetShopValues(ItemRarityColor.Blue1, Item.sellPrice(silver: 1));
         }
 
         public override bool CanRightClick() {
