@@ -1,4 +1,5 @@
-﻿using AllBeginningsMod.Content.Items.Placeables;
+﻿using AllBeginningsMod.Content.Buffs;
+using AllBeginningsMod.Content.Items.Placeables;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -36,8 +37,8 @@ namespace AllBeginningsMod.Content.Tiles
         public override void NearbyEffects(int i, int j, bool closer) {
             Player player = Main.LocalPlayer;
 
-            if (!player.HasBuff(ModContent.BuffType<Buffs.DevilFlowerBuff>())) {
-                player.AddBuff(ModContent.BuffType<Buffs.DevilFlowerBuff>(), 2);
+            if (!player.HasBuff(ModContent.BuffType<DevilFlowerBuff>())) {
+                player.AddBuff(ModContent.BuffType<DevilFlowerBuff>(), 2);
             }
         }
 

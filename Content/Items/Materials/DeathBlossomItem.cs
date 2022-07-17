@@ -1,8 +1,7 @@
 ﻿using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using AllBeginningsMod.Content.Tiles;
 
 namespace AllBeginningsMod.Content.Items.Materials
 {
@@ -23,10 +22,6 @@ namespace AllBeginningsMod.Content.Items.Materials
 
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(silver: 8);
-
-            Item.useTime = Item.useAnimation = 10;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.createTile = ModContent.TileType<DeathBlossomTile>();
         }
     }
 }

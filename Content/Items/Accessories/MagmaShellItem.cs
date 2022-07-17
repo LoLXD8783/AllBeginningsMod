@@ -14,10 +14,14 @@ namespace AllBeginningsMod.Content.Items.Accessories
         }
 
         public override void SetDefaults() {
-            Item.width = Item.height = 32;
-            Item.value = Item.sellPrice(gold: 1);
             Item.accessory = true;
+
             Item.defense = 8;
+
+            Item.width = 32;
+            Item.height = 32;
+
+            Item.value = Item.sellPrice(gold: 1);
         }
 
         public override void UpdateEquip(Player player) {

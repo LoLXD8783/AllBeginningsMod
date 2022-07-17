@@ -24,7 +24,8 @@ namespace AllBeginningsMod.Content.Items.Placeables
             Item.rare = ItemRarityID.White;
             Item.value = Item.sellPrice(silver: 6);
 
-            Item.useTime = Item.useAnimation = 10;
+            Item.useTime = 10;
+            Item.useAnimation = 10;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.createTile = ModContent.TileType<MysteriousTotemTile>();
         }

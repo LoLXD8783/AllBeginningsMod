@@ -8,7 +8,7 @@ namespace AllBeginningsMod.Common.Globals.NPCs
     {
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
         {
-            if (player.GetModPlayer<ABAccessoryPlayer>().DevilGift)
+            if (player.GetModPlayer<ABBuffPlayer>().DevilGift)
             {
                 spawnRate *= (int)3f;
             }
