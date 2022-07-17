@@ -69,7 +69,6 @@ namespace AllBeginningsMod.Content.Projectiles.Ranged
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Type]; i += 2) {
                 Vector2 position = Projectile.oldPos[i] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
                 float alpha = 0.9f - 0.2f * (i / 2f);
-
                 Main.EntitySpriteDraw(texture, position, null, lightColor * alpha, Projectile.oldRot[i], origin, Projectile.scale, effects, 0);
             }
 

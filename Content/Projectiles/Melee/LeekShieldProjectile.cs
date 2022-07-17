@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -9,6 +11,9 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
     {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Leek Shield");
+
+            ProjectileID.Sets.TrailingMode[Type] = 2;
+            ProjectileID.Sets.TrailCacheLength[Type] = 10;
         }
 
         public override void SetDefaults() {
@@ -23,8 +28,8 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
         }
 
         public override void AI() {
-            Projectile.velocity *= 0.94f;
-            Projectile.rotation += 0.2f;
+            Projectile.velocity *= 0.95f;
+            Projectile.rotation += Projectile.velocity.X * 0.1f;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
@@ -32,15 +37,32 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
         }
 
         public override void Kill(int timeLeft) {
-            for (int i = 0; i < Main.rand.Next(3, 5); i++) {
-                Player player = Main.player[Projectile.owner];
-                Vector2 vel = new Vector2(Main.rand.Next(-6, 6), Main.rand.Next(-6, 6));
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, vel, ModContent.ProjectileType<LeekShieldReturningProjectile>(), Projectile.damage / 2, Projectile.knockBack, player.whoAmI);
+            int splitCount = Main.rand.Next(3, 5);
+
+            for (int i = 0; i < splitCount; i++) {
+                Vector2 velocity = new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f));
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, velocity, ModContent.ProjectileType<LeekShieldReturningProjectile>(), Projectile.damage / splitCount, Projectile.knockBack, Projectile.owner);
             }
 
-            for (int i = 0; i < Main.rand.Next(5, 8); i++) {
-                Dust.NewDustDirect(Projectile.Center, 2, 2, DustID.Grass, Main.rand.Next(-3, 3), Main.rand.Next(-2, 2)).noGravity = true;
+            for (int i = 0; i < 10; i++) {
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Grass);
+                dust.noGravity = true;
             }
+        }
+
+        public override bool PreDraw(ref Color lightColor) {
+            SpriteEffects effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Texture2D texture = TextureAssets.Projectile[Type].Value;
+            Vector2 origin = Projectile.Hitbox.Size() / 2f;
+
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Type]; i += 2) {
+                Vector2 position = Projectile.oldPos[i] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
+                float alpha = 0.9f - 0.2f * (i / 2f);
+
+                Main.EntitySpriteDraw(texture, position, null, lightColor * alpha, Projectile.oldRot[i], origin, Projectile.scale, effects, 0);
+            }
+
+            return true;
         }
     }
 }
