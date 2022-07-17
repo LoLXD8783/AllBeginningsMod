@@ -1,7 +1,7 @@
 ﻿using AllBeginningsMod.Content.Tiles;
 using Terraria;
+using Terraria.Enums;
 using Terraria.GameContent.Creative;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Placeables
@@ -16,18 +16,8 @@ namespace AllBeginningsMod.Content.Items.Placeables
         }
 
         public override void SetDefaults() {
-            Item.maxStack = 999;
-
-            Item.width = 26;
-            Item.height = 30;
-
-            Item.rare = ItemRarityID.White;
-            Item.value = Item.sellPrice(silver: 30);
-
-            Item.useTime = 10;
-            Item.useAnimation = 10;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.createTile = ModContent.TileType<DevilFlowerTile>();
+            Item.SetShopValues(ItemRarityColor.White0, Item.sellPrice(gold: 1, silver: 80));
+            Item.DefaultToPlaceableTile(ModContent.TileType<DevilFlowerTile>());
         }
     }
 }

@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee
 {
-    public sealed class LeekShieldProjectile : ModProjectile
+    public sealed class LeekShieldThrownProjectile : ModProjectile
     {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Leek Shield");

@@ -1,5 +1,6 @@
 ﻿using AllBeginningsMod.Content.Projectiles.Summon;
 using Terraria;
+using Terraria.Enums;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,21 +16,18 @@ namespace AllBeginningsMod.Content.Items.Weapons.Summon
         }
 
         public override void SetDefaults() {
+            Item.DefaultToWhip(ModContent.ProjectileType<TimberWhipProjectile>(), 8, 2, 3, 25);
+            Item.SetWeaponValues(8, 2f);
+            Item.SetShopValues(ItemRarityColor.Blue1, Item.sellPrice(silver: 20));
+
             Item.width = 36;
             Item.height = 46;
 
             Item.DamageType = DamageClass.SummonMeleeSpeed;
-            Item.damage = 8;
-            Item.knockBack = 2f;
 
             Item.useTime = 30;
             Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Swing;
-
-            Item.rare = ItemRarityID.Blue;
-            Item.value = Item.sellPrice(silver: 20);
-
-            Item.DefaultToWhip(ModContent.ProjectileType<TimberWhipProjectile>(), 8, 2, 3, 25);
         }
 
         public override void AddRecipes() {

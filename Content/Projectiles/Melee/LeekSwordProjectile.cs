@@ -24,6 +24,10 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             Projectile.aiStyle = -1;
         }
 
+        public override void AI() {
+            base.AI();
+        }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             target.AddBuff(BuffID.DryadsWardDebuff, 120);
             target.AddBuff(BuffID.BrokenArmor, 360);

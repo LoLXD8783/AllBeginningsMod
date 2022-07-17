@@ -16,18 +16,10 @@ namespace AllBeginningsMod.Content.Items.Placeables
         }
 
         public override void SetDefaults() {
-            Item.maxStack = 999;
-
-            Item.width = 26;
-            Item.height = 64;
+            Item.DefaultToPlaceableTile(ModContent.TileType<NightmareTotemTile>());
 
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(silver: 10);
-
-            Item.useTime = 10;
-            Item.useAnimation = 10;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.createTile = ModContent.TileType<NightmareTotemTile>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.Enums;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 
@@ -14,12 +15,8 @@ namespace AllBeginningsMod.Content.Items.Accessories
         }
 
         public override void SetDefaults() {
-            Item.accessory = true;
-
-            Item.width = 32;
-            Item.height = 32;
-
-            Item.value = Item.sellPrice(silver: 80);
+            Item.DefaultToAccessory(32, 28);
+            Item.SetShopValues(ItemRarityColor.Blue1, Item.sellPrice(silver: 80));
         }
 
         public override void UpdateEquip(Player player) {
