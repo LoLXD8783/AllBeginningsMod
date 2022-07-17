@@ -15,6 +15,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
         }
 
         public override void SetDefaults() {
+            Item.channel = true;
             Item.noMelee = true;
             Item.noUseGraphic = true;
 

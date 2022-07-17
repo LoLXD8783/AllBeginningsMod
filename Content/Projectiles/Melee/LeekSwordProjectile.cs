@@ -11,6 +11,8 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
         }
 
         public override void SetDefaults() {
+            ChannelDependant = true;
+
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.tileCollide = false;
@@ -18,13 +20,8 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             Projectile.width = 40;
             Projectile.height = 46;
 
-            Projectile.timeLeft = 180;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
-        }
-
-        public override void AI() {
-
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
