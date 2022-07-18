@@ -6,10 +6,10 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Ranged
 {
-    public sealed class BorealTurnipItem : ModItem
+    public sealed class DarkBombshellItem : ModItem
     {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Boreal Turnip");
+            DisplayName.SetDefault("Dark Bombshell");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -19,18 +19,18 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
             Item.noUseGraphic = true;
 
             Item.DamageType = DamageClass.Ranged;
-            Item.damage = 10;
-            Item.knockBack = 3f;
+            Item.damage = 40;
+            Item.knockBack = 6f;
 
-            Item.width = 32;
-            Item.height = 32;
+            Item.width = 34;
+            Item.height = 46;
 
-            Item.useTime = 16;
-            Item.useAnimation = 16;
+            Item.useTime = 35;
+            Item.useAnimation = 35;
             Item.useStyle = ItemUseStyleID.Swing;
 
-            Item.shoot = ModContent.ProjectileType<BorealTurnipProjectile>();
-            Item.shootSpeed = 10f;
+            Item.shoot = ModContent.ProjectileType<DarkBombshellProjectile>();
+            Item.shootSpeed = 6f;
 
             Item.rare = ItemRarityID.Blue;
         }

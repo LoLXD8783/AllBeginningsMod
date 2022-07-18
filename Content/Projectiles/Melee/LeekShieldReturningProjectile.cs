@@ -20,8 +20,8 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             Projectile.friendly = true;
             Projectile.hostile = false;
 
-            Projectile.width = 30;
-            Projectile.height = 30;
+            Projectile.width = 16;
+            Projectile.height = 16;
 
             Projectile.penetrate = -1;
 

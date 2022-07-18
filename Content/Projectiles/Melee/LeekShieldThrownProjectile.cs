@@ -21,8 +21,8 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             Projectile.friendly = true;
             Projectile.hostile = false;
 
-            Projectile.width = 30;
-            Projectile.height = 30;
+            Projectile.width = 32;
+            Projectile.height = 32;
 
             Projectile.timeLeft = 45;
             Projectile.aiStyle = -1;

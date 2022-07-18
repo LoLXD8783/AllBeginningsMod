@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Melee
 {
-    public class LeekShieldItem : ModItem
+    public sealed class LeekShieldItem : ModItem
     {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Leek Shield");
