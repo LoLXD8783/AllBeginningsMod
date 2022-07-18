@@ -15,6 +15,10 @@ namespace AllBeginningsMod.Content.Items.Weapons.Summon
         }
 
         public override void SetDefaults() {
+            Item.noMelee = true;
+            Item.autoReuse = false;
+            Item.noUseGraphic = true;
+
             Item.width = 36;
             Item.height = 46;
 
@@ -24,12 +28,15 @@ namespace AllBeginningsMod.Content.Items.Weapons.Summon
 
             Item.useTime = 30;
             Item.useAnimation = 30;
-            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useStyle = ItemUseStyleID.Swing;   
+
+            Item.shoot = ModContent.ProjectileType<TimberWhipProjectile>();
+            Item.shootSpeed = 3f;
+
+            Item.UseSound = SoundID.Item152; 
 
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(silver: 20);
-
-            Item.DefaultToWhip(ModContent.ProjectileType<TimberWhipProjectile>(), 8, 2, 3, 25);
         }
 
         public override void AddRecipes() {
