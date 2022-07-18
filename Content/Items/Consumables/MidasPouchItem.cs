@@ -1,5 +1,4 @@
 ﻿using Terraria;
-using Terraria.Enums;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,7 +22,8 @@ namespace AllBeginningsMod.Content.Items.Consumables
             Item.width = 24;
             Item.height = 28;
 
-            Item.SetShopValues(ItemRarityColor.Blue1, Item.sellPrice(silver: 1));
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(silver: 1);
         }
 
         public override bool CanRightClick() {

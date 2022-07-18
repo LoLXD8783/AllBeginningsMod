@@ -1,6 +1,6 @@
 ﻿using Terraria;
-using Terraria.Enums;
 using Terraria.GameContent.Creative;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Accessories
@@ -15,15 +15,20 @@ namespace AllBeginningsMod.Content.Items.Accessories
         }
 
         public override void SetDefaults() {
+            Item.accessory = true;
+
             Item.defense = 8;
 
-            Item.DefaultToAccessory(62, 32);
-            Item.SetShopValues(ItemRarityColor.Blue1, Item.sellPrice(gold: 1));
+            Item.width = 62;
+            Item.height = 32;
+
+            Item.value = Item.sellPrice(gold: 1);
+            Item.rare = ItemRarityID.Blue;
         }
 
         public override void UpdateEquip(Player player) {
             player.moveSpeed -= 0.1f;
-            player.lavaCD = 7;
+            Main.NewText(player.lavaCD);
         }
     }
 }

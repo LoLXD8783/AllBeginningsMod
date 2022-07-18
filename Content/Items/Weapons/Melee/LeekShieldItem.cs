@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Enums;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Melee
 {
@@ -17,16 +16,16 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
         }
 
         public override void SetDefaults() {
-            Item.SetWeaponValues(18, 3f);
-            Item.SetShopValues(ItemRarityColor.Blue1, Item.sellPrice(gold: 1, silver: 80));
-
             Item.noMelee = true;
             Item.noUseGraphic = true;
 
+            Item.damage = 18;
             Item.DamageType = DamageClass.Melee;
 
+            Item.knockBack = 3f;
+
             Item.width = 32;
-            Item.height = 38;
+            Item.height = 32;
 
             Item.useTime = 45;
             Item.useAnimation = 15;
@@ -34,6 +33,9 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
 
             Item.shootSpeed = 14f;
             Item.shoot = ModContent.ProjectileType<LeekShieldThrownProjectile>();
+
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(gold: 1, silver: 80);
         }
     }
 }

@@ -37,17 +37,17 @@ namespace AllBeginningsMod.Content.Tiles
         public override void NearbyEffects(int i, int j, bool closer) {
             Player player = Main.LocalPlayer;
 
-            if (!player.HasBuff(ModContent.BuffType<DevilFlowerBuff>())) {
-                player.AddBuff(ModContent.BuffType<DevilFlowerBuff>(), 2);
+            if (!player.dead) {
+                player.AddBuff(ModContent.BuffType<DevilFlowerBuff>(), 90, true);
             }
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num) {
-            num = fail ? 1 : 3;
+            num = 2;
         }
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<DevilFlowerItem>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 96, 64, ModContent.ItemType<DevilFlowerItem>());
         }
     }
 }

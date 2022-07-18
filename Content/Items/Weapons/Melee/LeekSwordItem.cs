@@ -1,5 +1,4 @@
 ﻿using Terraria;
-using Terraria.Enums;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,20 +15,24 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
         }
 
         public override void SetDefaults() {
-            Item.SetWeaponValues(24, 1f);
-            Item.SetShopValues(ItemRarityColor.Blue1, Item.sellPrice(gold: 1, silver: 20));
-
             Item.channel = true;
+            Item.noMelee = true;
             Item.noUseGraphic = true;
 
+            Item.damage = 24;
             Item.DamageType = DamageClass.Melee;
 
-            Item.width = 46;
-            Item.height = 48;
+            Item.knockBack = 1f;
 
-            Item.useTime = 25;
-            Item.useAnimation = 25;
+            Item.width = 32;
+            Item.height = 32;
+
+            Item.useTime = 60;
+            Item.useAnimation = 60;
             Item.useStyle = ItemUseStyleID.Shoot;
+
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(gold: 1, silver: 20);
         }
     }
 }

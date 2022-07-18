@@ -1,6 +1,6 @@
 ﻿using Terraria;
-using Terraria.Enums;
 using Terraria.GameContent.Creative;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Materials
@@ -20,7 +20,8 @@ namespace AllBeginningsMod.Content.Items.Materials
             Item.width = 28;
             Item.height = 42;
 
-            Item.SetShopValues(ItemRarityColor.Blue1, Item.sellPrice(silver: 8));
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(silver: 8);
         }
     }
 }
