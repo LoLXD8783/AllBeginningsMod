@@ -3,7 +3,7 @@
 namespace AllBeginningsMod.Content.Projectiles.Summon
 {
     public sealed class TimberWhipProjectile : WhipProjectileBase
-	{
+    {
         public override int HandleWidth => 14;
         public override int HandleHeight => 32;
 
@@ -11,6 +11,6 @@ namespace AllBeginningsMod.Content.Projectiles.Summon
             base.SetStaticDefaults();
 
             DisplayName.SetDefault("Timber Whip");
-		}
-	}
+        }
+    }
 }

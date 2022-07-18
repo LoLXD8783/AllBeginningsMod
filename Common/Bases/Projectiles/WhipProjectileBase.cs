@@ -15,6 +15,8 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
 
         protected ref float Timer => ref Projectile.ai[0];
 
+        protected Player Owner => Main.player[Projectile.owner];
+
         public override void SetStaticDefaults() {
             ProjectileID.Sets.IsAWhip[Type] = true;
         }

@@ -26,9 +26,13 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
 
             Projectile.timeLeft = 45;
             Projectile.aiStyle = -1;
+            AIType = -1;
         }
 
         public override void AI() {
+            Projectile.direction = Projectile.velocity.X < 0f ? -1 : 1;
+            Projectile.spriteDirection = Projectile.direction;
+
             Projectile.velocity *= 0.95f;
             Projectile.rotation += Projectile.velocity.X * 0.1f;
         }
