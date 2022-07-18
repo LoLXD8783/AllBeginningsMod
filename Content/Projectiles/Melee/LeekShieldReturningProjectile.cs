@@ -19,7 +19,6 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
         public override void SetDefaults() {
             Projectile.friendly = true;
             Projectile.hostile = false;
-            Projectile.tileCollide = false;
 
             Projectile.width = 30;
             Projectile.height = 30;
@@ -28,8 +27,6 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
 
             Projectile.aiStyle = ProjAIStyleID.Boomerang;
             AIType = ProjectileID.WoodenBoomerang;
-
-            Projectile.scale = Main.rand.NextFloat(0.6f, 0.8f);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {

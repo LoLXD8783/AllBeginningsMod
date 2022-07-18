@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Accessories
 {
-    public sealed class RabitsFootItem : ModItem
+    public sealed class RabbitsFootItem : ModItem
     {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Rabit's Foot");
