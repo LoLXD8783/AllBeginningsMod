@@ -1,7 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Common.Globals.Players
+namespace AllBeginningsMod.Common.Players
 {
     public sealed class BuffPlayer : ModPlayer
     {

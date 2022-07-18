@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Common.Systems
+namespace AllBeginningsMod.Common.Systems.Recipes
 {
     public sealed class RecipeGroupSystem : ModSystem
     {
@@ -15,7 +15,7 @@ namespace AllBeginningsMod.Common.Systems
 
         public override void AddRecipeGroups() {
             PlatinumBarGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")}", new int[] {
-                ItemID.PlatinumBar, 
+                ItemID.PlatinumBar,
                 ItemID.GoldBar
             });
             RecipeGroup.RegisterGroup("AllBeginningsMod:PlatinumBar", PlatinumBarGroup);

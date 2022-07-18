@@ -1,4 +1,4 @@
-﻿using AllBeginningsMod.Common.Globals.Players;
+﻿using AllBeginningsMod.Common.Players;
 using Terraria;
 using Terraria.ModLoader;
 
