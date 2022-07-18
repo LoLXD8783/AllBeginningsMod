@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -36,7 +37,14 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             target.AddBuff(BuffID.DryadsWardDebuff, 120);
         }
 
+        public override bool OnTileCollide(Vector2 oldVelocity) {
+            Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+            return true;
+        }
+
         public override void Kill(int timeLeft) {
+            SoundEngine.PlaySound(SoundID.Grass, Projectile.position);
+
             int splitCount = Main.rand.Next(3, 5);
 
             for (int i = 0; i < splitCount; i++) {
