@@ -10,7 +10,7 @@ namespace AllBeginningsMod.Common.Globals.NPCs
         public override void SetupShop(int type, Chest shop, ref int nextSlot) {
             if (type == NPCID.BestiaryGirl) {
                 if (Main.BestiaryDB.GetCompletedPercentByMod(Mod) == -1) {
-                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<RabitsFootItem>());
+                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<RabbitsFootItem>());
                     nextSlot++;
 
                     shop.item[nextSlot].SetDefaults(ModContent.ItemType<MagmaShellItem>());
