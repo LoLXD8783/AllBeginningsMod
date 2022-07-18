@@ -28,7 +28,7 @@ namespace AllBeginningsMod.Content.Items.Accessories
 
         public override void UpdateEquip(Player player) {
             player.moveSpeed -= 0.1f;
-            Main.NewText(player.lavaCD);
+            player.lavaMax += 210;
         }
     }
 }
