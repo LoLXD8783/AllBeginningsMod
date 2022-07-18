@@ -1,7 +1,18 @@
-![total-mod-downloads](https://img.shields.io/github/downloads/AndreTheSadcat/AllBeginningsMod/total?style=flat-square)
-[![open-issues](https://img.shields.io/github/issues/AndreTheSadcat/AllBeginningsMod?style=flat-square)](https://github.com/AndreTheSadcat/AllBeginningsMod/issues) 
-[![open-prs](https://img.shields.io/github/issues-pr/AndreTheSadcat/AllBeginningsMod?style=flat-square)](https://github.com/AndreTheSadcat/AllBeginningsMod/pulls) 
-[![current-release](https://img.shields.io/github/v/release/AndreTheSadcat/AllBeginningsMod?style=flat-square)](https://github.com/AndreTheSadcat/AllBeginningsMod/releases)
+<a href="https://github.com/AndreTheSadcat/AllBeginningsMod/releases">
+  <img src="https://img.shields.io/github/downloads/AndreTheSadcat/AllBeginningsMod/total?style=flat-square">
+</a>
+
+<a href="https://github.com/AndreTheSadcat/AllBeginningsMod/issues">
+  <img src="https://img.shields.io/github/issues/AndreTheSadcat/AllBeginningsMod?style=flat-square">
+</a>
+
+<a href="https://github.com/AndreTheSadcat/AllBeginningsMod/pulls">
+  <img src="https://img.shields.io/github/issues-pr/AndreTheSadcat/AllBeginningsMod?style=flat-square">
+</a>
+
+<a href="https://github.com/AndreTheSadcat/AllBeginningsMod/releases">
+  <img src="https://img.shields.io/github/v/release/AndreTheSadcat/AllBeginningsMod?style=flat-square">
+</a>
 
 <img src="icon.png" align="right" width="100px" height="100px"/>
 
