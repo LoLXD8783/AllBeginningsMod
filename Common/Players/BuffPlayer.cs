@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Globals.Players
 {
-    public sealed class ABBuffPlayer : ModPlayer
+    public sealed class BuffPlayer : ModPlayer
     {
         public bool DevilGift { get; set; }
 

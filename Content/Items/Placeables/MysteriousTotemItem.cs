@@ -24,7 +24,7 @@ namespace AllBeginningsMod.Content.Items.Placeables
             Item.width = 24;
             Item.height = 50;
 
-            Item.rare = ItemRarityID.White;
+            Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(silver: 6);
 
             Item.useTime = 10;

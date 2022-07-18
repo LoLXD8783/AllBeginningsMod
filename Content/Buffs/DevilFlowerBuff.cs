@@ -15,7 +15,7 @@ namespace AllBeginningsMod.Content.Buffs
         }
 
         public override void Update(Player player, ref int buffIndex) {
-            if (player.TryGetModPlayer(out ABBuffPlayer buffPlayer)) {
+            if (player.TryGetModPlayer(out BuffPlayer buffPlayer)) {
                 buffPlayer.DevilGift = true;
             }
         }

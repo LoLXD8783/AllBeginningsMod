@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Globals.NPCs
 {
-    public sealed class ABShopNPC : GlobalNPC
+    public sealed class ShopGlobalNPC : GlobalNPC
     {
         public override void SetupShop(int type, Chest shop, ref int nextSlot) {
             if (type == NPCID.BestiaryGirl) {

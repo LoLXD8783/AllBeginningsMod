@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Systems
 {
-    public sealed class ABRecipeGroupSystem : ModSystem
+    public sealed class RecipeGroupSystem : ModSystem
     {
         public static RecipeGroup PlatinumBarGroup { get; private set; }
 
