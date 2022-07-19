@@ -24,14 +24,14 @@ namespace AllBeginningsMod.Content.Items.Weapons.Summon
 
             Item.DamageType = DamageClass.SummonMeleeSpeed;
             Item.damage = 8;
-            Item.knockBack = 2f;
+            Item.knockBack = 0.5f;
 
             Item.useTime = 30;
             Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Swing;   
 
+            Item.shootSpeed = 2.5f;
             Item.shoot = ModContent.ProjectileType<TimberWhipProjectile>();
-            Item.shootSpeed = 3f;
 
             Item.UseSound = SoundID.Item152; 
 

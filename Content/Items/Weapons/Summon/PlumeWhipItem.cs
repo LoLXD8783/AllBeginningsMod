@@ -23,8 +23,8 @@ namespace AllBeginningsMod.Content.Items.Weapons.Summon
             Item.height = 48;
 
             Item.DamageType = DamageClass.SummonMeleeSpeed;
-            Item.damage = 8;
-            Item.knockBack = 2f;
+            Item.damage = 10;
+            Item.knockBack = 0.5f;
 
             Item.useTime = 30;
             Item.useAnimation = 30;
