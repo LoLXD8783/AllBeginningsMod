@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,16 +7,16 @@ namespace AllBeginningsMod.Common.Systems.Generation.ChestLoot
 {
     public abstract class ChestLootSystem : ModSystem
     {
-        protected abstract int ChestFrameX { get; }
-
         protected List<ItemChestLootEntry> LootEntries { get; set; }
+
+        protected abstract int ChestFrameX { get; }
 
         public sealed override void PostWorldGen() {
             LootEntries = new List<ItemChestLootEntry>();
 
             AddLootEntries();
 
-            for (int i = 0; i < Main.maxChests; i++) {
+            for (var i = 0; i < Main.maxChests; i++) {
                 Chest chest = Main.chest[i];
 
                 if (chest == null) {
@@ -30,25 +29,24 @@ namespace AllBeginningsMod.Common.Systems.Generation.ChestLoot
                     continue;
                 }
 
-                LootEntries.ForEach(x => AddChestLoot(chest, x));
+                LootEntries.ForEach(x => AddLootToChest(chest, x));
             }
 
-            LootEntries.Clear();
+            LootEntries?.Clear();
+            LootEntries = null;
         }
 
         protected virtual void AddLootEntries() { }
 
-        private static void AddChestLoot(Chest chest, ItemChestLootEntry loot) {
-            if (chest.item.Any(x => x.type == loot.Type) || (loot.MaxAmountPerWorld >= loot.CurrentWorldAmount && !WorldGen.genRand.NextBool(loot.ExtraSpawnChance))) {
+        private static void AddLootToChest(Chest chest, ItemChestLootEntry loot) {
+            if (!WorldGen.genRand.NextBool(loot.SpawnChance)) {
                 return;
             }
 
-            for (int i = 0; i < Chest.maxItems; i++) {
+            for (var i = 0; i < Chest.maxItems; i++) {
                 Item item = chest.item[i];
 
                 if (item.IsAir) {
-                    loot.CurrentWorldAmount++;
-
                     item.SetDefaults(loot.Type);
                     item.stack = WorldGen.genRand.Next(loot.MinStack, loot.MaxStack);
                     break;
