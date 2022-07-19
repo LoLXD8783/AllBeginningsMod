@@ -37,10 +37,6 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             Projectile.rotation += Projectile.velocity.X * 0.1f;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            target.AddBuff(BuffID.DryadsWardDebuff, 120);
-        }
-
         public override bool OnTileCollide(Vector2 oldVelocity) {
             Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
             return true;

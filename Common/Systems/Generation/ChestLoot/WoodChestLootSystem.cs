@@ -10,9 +10,9 @@ namespace AllBeginningsMod.Common.Systems.Generation.ChestLoot
         protected override int ChestFrameX => 0;
 
         protected override void AddLootEntries() {
-            LootEntries.Add(new ItemChestLootEntry(ModContent.ItemType<PlumeWhipItem>(), 1, 1, 4));
-            LootEntries.Add(new ItemChestLootEntry(ModContent.ItemType<MidasPouchItem>(), 2, 6, 4));
-            LootEntries.Add(new ItemChestLootEntry(ModContent.ItemType<PegasusBootsItem>(), 1, 1, 4));
+            LootEntries.Add(new ItemChestLootEntry(ModContent.ItemType<PlumeWhipItem>(), 1, 1, 3, 4));
+            LootEntries.Add(new ItemChestLootEntry(ModContent.ItemType<MidasPouchItem>(), 3, 6, 10, 4));
+            LootEntries.Add(new ItemChestLootEntry(ModContent.ItemType<PegasusBootsItem>(), 1, 1, 5, 4));
         }
     }
 }

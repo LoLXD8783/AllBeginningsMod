@@ -29,10 +29,6 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             AIType = ProjectileID.WoodenBoomerang;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            target.AddBuff(BuffID.DryadsWardDebuff, 120);
-        }
-
         public override bool PreDraw(ref Color lightColor) {
             SpriteEffects effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Texture2D texture = TextureAssets.Projectile[Type].Value;

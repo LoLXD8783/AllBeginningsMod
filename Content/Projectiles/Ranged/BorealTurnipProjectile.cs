@@ -58,7 +58,7 @@ namespace AllBeginningsMod.Content.Projectiles.Ranged
                 }
             }
 
-            target.AddBuff(BuffID.Frostburn, 135);
+            target.AddBuff(BuffID.Frostburn, 60);
         }
 
         public override bool PreDraw(ref Color lightColor) {
