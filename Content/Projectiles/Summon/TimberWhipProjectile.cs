@@ -24,7 +24,7 @@ namespace AllBeginningsMod.Content.Projectiles.Summon
             base.SetDefaults();
 
             Projectile.WhipSettings.Segments = 12;
-            Projectile.WhipSettings.RangeMultiplier = 0.75f;
+            Projectile.WhipSettings.RangeMultiplier = 1f;
         }
     }
 }
