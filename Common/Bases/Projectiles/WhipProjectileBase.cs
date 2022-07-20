@@ -55,8 +55,7 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
         protected void DrawControlPointsBackLine(List<Vector2> controlPoints) {
             Texture2D texture = TextureAssets.FishingLine.Value;
             Rectangle frame = texture.Frame();
-            Vector2 origin = new Vector2(frame.Width / 2, 2);
-
+            Vector2 origin = new Vector2(frame.Width / 2f, 2f);
             Vector2 position = controlPoints[0];
 
             for (int i = 0; i < controlPoints.Count - 1; i++) {
@@ -65,7 +64,7 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
 
                 float rotation = diff.ToRotation() - MathHelper.PiOver2;
                 Color color = Lighting.GetColor(element.ToTileCoordinates(), BackLineColor);
-                Vector2 scale = new Vector2(1, (diff.Length() + 2) / frame.Height);
+                Vector2 scale = new Vector2(1f, (diff.Length() + 2f) / frame.Height);
 
                 Main.EntitySpriteDraw(texture, position - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0);
 

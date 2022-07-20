@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using AllBeginningsMod.Content.Projectiles.Melee;
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,17 +23,16 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
             Item.damage = 24;
             Item.DamageType = DamageClass.Melee;
 
-            Item.knockBack = 1f;
+            Item.knockBack = 2f;
 
-            Item.width = 32;
-            Item.height = 32;
+            Item.width = 46;
+            Item.height = 48;
 
-            Item.useTime = 60;
+            Item.useTime = 30;
             Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Shoot;
 
-            Item.shoot = ModContent.ProjectileType<Projectiles.Melee.LeekSwordHeldProjectile>();
-            Item.shootSpeed = 10f;
+            Item.shoot = ModContent.ProjectileType<LeekSwordProjectile>();
 
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(gold: 1, silver: 20);

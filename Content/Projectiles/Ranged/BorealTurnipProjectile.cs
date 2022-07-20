@@ -18,11 +18,10 @@ namespace AllBeginningsMod.Content.Projectiles.Ranged
         }
 
         public override void SetDefaults() {
+            Projectile.friendly = true;
+
             Projectile.width = 32;
             Projectile.height = 32;
-
-            Projectile.friendly = true;
-            Projectile.hostile = false;
 
             Projectile.penetrate = -1;
             Projectile.timeLeft = 180;
@@ -39,23 +38,10 @@ namespace AllBeginningsMod.Content.Projectiles.Ranged
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            float maxNPCDistance = 512f * 512f;
+            NPC npc = Projectile.FindTargetWithinRange(512f);
 
-            for (int i = 0; i < Main.maxNPCs; i++) {
-                NPC npc = Main.npc[i];
-                
-                if (npc != target && npc.CanBeChasedBy()) {
-                    float currentNPCDistance = npc.DistanceSQ(Projectile.Center);
-
-                    if (currentNPCDistance < maxNPCDistance) {
-                        maxNPCDistance = currentNPCDistance;
-
-                        Vector2 velocity = Projectile.DirectionTo(npc.Center);
-                        velocity = velocity.RotatedByRandom(MathHelper.ToRadians(5f));
-                        velocity *= Projectile.velocity.Length();
-                        Projectile.velocity = velocity;
-                    }
-                }
+            if (npc != null) {
+                Projectile.velocity = Projectile.DirectionTo(npc.Center) * Projectile.velocity.Length();
             }
 
             target.AddBuff(BuffID.Frostburn, 60);

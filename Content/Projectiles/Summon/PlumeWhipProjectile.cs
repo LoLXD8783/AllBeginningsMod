@@ -30,10 +30,14 @@ namespace AllBeginningsMod.Content.Projectiles.Summon
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            Player player = Main.player[Projectile.owner];
-            for (int i = 0; i < 2; i++) {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, new Vector2(Main.rand.Next(3, 5) * player.direction, Main.rand.Next(-4, 4)), ModContent.ProjectileType<PlumeWhipFeather>(), damage/2, 0);
+            int featherCount = Main.rand.Next(2, 5);
+
+            for (int i = 0; i < featherCount; i++) {
+                Vector2 velocity = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(60f));
+                Projectile.NewProjectile(Projectile.GetSource_OnHit(target), target.Center, velocity, ModContent.ProjectileType<PlumeWhipFeatherProjectile>(), (damage / featherCount) + 1, Projectile.knockBack, Projectile.owner);
             }
+
+            Projectile.netUpdate = true;
         }
     }
 }
