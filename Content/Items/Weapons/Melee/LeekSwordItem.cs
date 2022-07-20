@@ -28,8 +28,11 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee
             Item.height = 32;
 
             Item.useTime = 60;
-            Item.useAnimation = 60;
+            Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Shoot;
+
+            Item.shoot = ModContent.ProjectileType<Projectiles.Melee.LeekSwordHeldProjectile>();
+            Item.shootSpeed = 10f;
 
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(gold: 1, silver: 20);
