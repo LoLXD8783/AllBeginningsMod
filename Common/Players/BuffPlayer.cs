@@ -11,9 +11,9 @@ namespace AllBeginningsMod.Common.Players
             DevilGift = false;
         }
 
-        public override void PostUpdateEquips() {
+        public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
             if (DevilGift) {
-                Player.GetDamage(DamageClass.Generic) += 0.1f;
+                damage += 0.1f;
             }
         }
     }
