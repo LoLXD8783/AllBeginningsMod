@@ -9,7 +9,7 @@ namespace AllBeginningsMod.Content.Items.Accessories
     {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Magma Shell");
-            Tooltip.SetDefault("Allows for temporary lava immunity" + "\nHowever, the user starts to feel heavier");
+            Tooltip.SetDefault("Allows for temporary lava immunity, however decreases movement speed by 10%");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

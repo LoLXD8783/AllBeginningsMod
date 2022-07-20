@@ -28,7 +28,7 @@ namespace AllBeginningsMod.Content.Items.Accessories
 
         public override void UpdateEquip(Player player) {
             player.endurance += 0.1f;
-            player.moveSpeed -= 0.1f;
+            player.moveSpeed -= 0.2f;
         }
     }
 }
