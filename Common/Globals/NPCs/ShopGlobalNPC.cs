@@ -11,7 +11,11 @@ namespace AllBeginningsMod.Common.Globals.NPCs
         public override void SetupShop(int type, Chest shop, ref int nextSlot) {
             if (type == NPCID.BestiaryGirl) {
                 AddZoologistCritterItem(NPCID.Bunny, ModContent.ItemType<RabbitsFootItem>(), shop, ref nextSlot);
+                AddZoologistCritterItem(NPCID.Snail, ModContent.ItemType<SnailsShellItem>(), shop, ref nextSlot);
                 AddZoologistCritterItem(NPCID.MagmaSnail, ModContent.ItemType<MagmaShellItem>(), shop, ref nextSlot);
+                AddZoologistCritterItem(NPCID.DuckWhite, ModContent.ItemType<ClearFeatherWingsItem>(), shop, ref nextSlot);
+                AddZoologistCritterItem(NPCID.Duck, ModContent.ItemType<BrownFeatherWingsItem>(), shop, ref nextSlot);
+                AddZoologistCritterItem(NPCID.Grebe, ModContent.ItemType<DarkFeatherWingsItem>(), shop, ref nextSlot);
             }
         }
 
