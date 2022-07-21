@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Content.Buffs
+namespace AllBeginningsMod.Content.Buffs.Miscellaneous
 {
     public sealed class DevilFlowerBuff : ModBuff
     {

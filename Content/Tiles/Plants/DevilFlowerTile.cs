@@ -1,4 +1,4 @@
-﻿using AllBeginningsMod.Content.Buffs;
+﻿using AllBeginningsMod.Content.Buffs.Miscellaneous;
 using AllBeginningsMod.Content.Items.Placeables.Plants;
 using Terraria;
 using Terraria.DataStructures;
