@@ -58,9 +58,9 @@ namespace AllBeginningsMod.Common.Systems.Physics.Verlet
                 }
 
                 point.Velocity = velocity;
-                point.Velocity.Y += Gravity;
 
                 point.Position += point.Velocity;
+                point.Position.Y += Gravity;
             }
         }
 

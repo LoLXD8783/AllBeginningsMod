@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 
-namespace AllBeginningsMod.Content.Projectiles.Melee.Miscellaneous
+namespace AllBeginningsMod.Content.Projectiles.Melee
 {
     public sealed class LeekSwordProjectile : HeldProjectileBase
     {

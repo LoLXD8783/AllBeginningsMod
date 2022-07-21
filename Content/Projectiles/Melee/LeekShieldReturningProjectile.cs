@@ -5,7 +5,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Content.Projectiles.Melee.Miscellaneous
+namespace AllBeginningsMod.Content.Projectiles.Melee
 {
     public sealed class LeekShieldReturningProjectile : ModProjectile
     {
