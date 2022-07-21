@@ -1,4 +1,4 @@
-﻿using AllBeginningsMod.Content.Items.Accessories.Miscellaneous;
+﻿using AllBeginningsMod.Content.Items.Accessories;
 using AllBeginningsMod.Content.Items.Accessories.Wings;
 using Terraria;
 using Terraria.GameContent.Bestiary;

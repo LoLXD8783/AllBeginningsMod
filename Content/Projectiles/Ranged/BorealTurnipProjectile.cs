@@ -6,7 +6,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Content.Projectiles.Ranged.Miscellaneous
+namespace AllBeginningsMod.Content.Projectiles.Ranged
 {
     public sealed class BorealTurnipProjectile : ModProjectile
     {

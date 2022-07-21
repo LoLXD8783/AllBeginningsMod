@@ -1,13 +1,17 @@
-﻿using Terraria;
+﻿using AllBeginningsMod.Common.Bases.Items;
+using AllBeginningsMod.Common.Players;
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Content.Items.Accessories.Miscellaneous
+namespace AllBeginningsMod.Content.Items.Accessories
 {
-    public sealed class FinoftheDolphinItem : ModItem
+    public sealed class FinoftheDolphinItem : PlayerCostumeBase
     {
         public override void SetStaticDefaults() {
+            base.SetStaticDefaults();
+
             DisplayName.SetDefault("Fin of the Dolphin");
             Tooltip.SetDefault("Grants free water movement" + "\nIncreases damage while submerged in water");
 
@@ -17,7 +21,7 @@ namespace AllBeginningsMod.Content.Items.Accessories.Miscellaneous
         public override void SetDefaults() {
             Item.accessory = true;
 
-            Item.width = 10;
+            Item.width = 16;
             Item.height = 20;
 
             Item.rare = ItemRarityID.Blue;
@@ -25,10 +29,15 @@ namespace AllBeginningsMod.Content.Items.Accessories.Miscellaneous
         }
 
         public override void UpdateEquip(Player player) {
-            if (player.wet) {
-                player.GetDamage(DamageClass.Generic) += 0.05f;
+            if (player.TryGetModPlayer(out AccessoryPlayer accessoryPlayer)) {
+                accessoryPlayer.FinoftheDolphin = true;
             }
 
+            if (player.wet) {
+                player.GetDamage(DamageClass.Generic) += 0.1f;
+            }
+
+            player.accFlipper = true;
             player.ignoreWater = true;
         }
     }

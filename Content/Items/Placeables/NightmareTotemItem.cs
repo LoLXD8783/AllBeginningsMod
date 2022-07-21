@@ -1,10 +1,10 @@
-﻿using AllBeginningsMod.Content.Tiles.Miscellaneous;
+﻿using AllBeginningsMod.Content.Tiles;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Content.Items.Placeables.Miscellaneous
+namespace AllBeginningsMod.Content.Items.Placeables
 {
     public sealed class NightmareTotemItem : ModItem
     {

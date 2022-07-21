@@ -1,4 +1,4 @@
-﻿using AllBeginningsMod.Content.Projectiles.Ranged.Miscellaneous;
+﻿using AllBeginningsMod.Content.Projectiles.Ranged;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;

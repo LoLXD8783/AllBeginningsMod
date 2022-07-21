@@ -3,7 +3,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Content.Items.Accessories.Miscellaneous
+namespace AllBeginningsMod.Content.Items.Accessories
 {
     public sealed class MagmaShellItem : ModItem
     {

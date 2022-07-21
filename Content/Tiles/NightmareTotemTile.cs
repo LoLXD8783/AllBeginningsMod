@@ -1,5 +1,5 @@
 ﻿using AllBeginningsMod.Common.Systems.Physics.Verlet;
-using AllBeginningsMod.Content.Items.Placeables.Miscellaneous;
+using AllBeginningsMod.Content.Items.Placeables;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace AllBeginningsMod.Content.Tiles.Miscellaneous
+namespace AllBeginningsMod.Content.Tiles
 {
     public sealed class NightmareTotemTile : ModTile
     {

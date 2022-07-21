@@ -3,13 +3,13 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Content.Items.Accessories.Miscellaneous
+namespace AllBeginningsMod.Content.Items.Accessories
 {
-    public sealed class PegasusBootsItem : ModItem
+    public sealed class FeatherCharmItem : ModItem
     {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Pegasus Boots");
-            Tooltip.SetDefault("The wearer can run fast");
+            DisplayName.SetDefault("Feather Charm");
+            Tooltip.SetDefault("Greatly increases movement speed");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -17,16 +17,15 @@ namespace AllBeginningsMod.Content.Items.Accessories.Miscellaneous
         public override void SetDefaults() {
             Item.accessory = true;
 
-            Item.width = 32;
-            Item.height = 28;
+            Item.width = 18;
+            Item.height = 24;
 
-            Item.value = Item.sellPrice(silver: 80);
             Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(silver: 60);
         }
 
         public override void UpdateEquip(Player player) {
-            player.moveSpeed += 0.05f;
-            player.accRunSpeed = 4f;
+            player.moveSpeed += 0.1f;
         }
     }
 }

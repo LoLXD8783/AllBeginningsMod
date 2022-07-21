@@ -1,4 +1,4 @@
-﻿using AllBeginningsMod.Content.Items.Accessories.Miscellaneous;
+﻿using AllBeginningsMod.Content.Items.Accessories;
 using AllBeginningsMod.Content.Items.Consumables;
 using Terraria.ModLoader;
 

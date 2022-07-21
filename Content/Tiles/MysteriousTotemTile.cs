@@ -1,11 +1,11 @@
-﻿using AllBeginningsMod.Content.Items.Placeables.Miscellaneous;
+﻿using AllBeginningsMod.Content.Items.Placeables;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace AllBeginningsMod.Content.Tiles.Miscellaneous
+namespace AllBeginningsMod.Content.Tiles
 {
     public sealed class MysteriousTotemTile : ModTile
     {
