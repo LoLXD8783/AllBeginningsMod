@@ -17,8 +17,8 @@ namespace AllBeginningsMod.Content.Items.Accessories.Miscellaneous
         public override void SetDefaults() {
             Item.accessory = true;
 
-            Item.width = 18;
-            Item.height = 24;
+            Item.width = 10;
+            Item.height = 20;
 
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(silver: 80);
