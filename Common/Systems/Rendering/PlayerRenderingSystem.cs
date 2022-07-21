@@ -38,7 +38,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering
 
             Player player = Main.LocalPlayer;
 
-            if (player.active && !player.dead) {
+            if (player != null && player.active && !player.dead) {
                 Main.PlayerRenderer?.DrawPlayer(Main.Camera, player, player.position, player.fullRotation, player.fullRotationOrigin);
             }
 

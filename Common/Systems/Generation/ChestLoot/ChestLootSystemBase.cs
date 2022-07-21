@@ -7,9 +7,9 @@ namespace AllBeginningsMod.Common.Systems.Generation.ChestLoot
 {
     public abstract class ChestLootSystem : ModSystem
     {
-        public List<ItemChestLootEntry> LootEntries { get; private set; }
-
         public abstract int ChestFrameX { get; }
+
+        public List<ItemChestLootEntry> LootEntries { get; private set; }
 
         public sealed override void PostWorldGen() {
             LootEntries = new List<ItemChestLootEntry>();
