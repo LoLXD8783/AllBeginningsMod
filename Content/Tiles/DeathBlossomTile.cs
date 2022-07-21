@@ -54,7 +54,8 @@ namespace AllBeginningsMod.Content.Tiles
             MineResist = 1.5f;
         }
 
-        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) 
+            {
             r = 0.1f;
             b = 0.4f;
         }

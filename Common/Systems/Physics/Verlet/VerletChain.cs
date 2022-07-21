@@ -21,12 +21,14 @@ namespace AllBeginningsMod.Common.Systems.Physics.Verlet
         }
 
         public override void Update() {
-            UpdatePoints();
-            UpdateSticks();
+            for (int i = 0; i < 2; i++) {
+                UpdatePoints();
+                UpdateSticks();
+            }
         }
 
         public void SetSticks() {
-            for (int i = 0; i < Points.Length - 1; i++) {
+            for (int i = 0; i < Sticks.Length; i++) {
                 VerletPoint start = Points[i];
                 VerletPoint end = Points[i + 1];
                 Sticks[i] = new VerletStick(start, end);

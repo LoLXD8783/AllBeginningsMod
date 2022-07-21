@@ -9,8 +9,6 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
     {
         public Player Owner => Main.player[Projectile.owner];
 
-        public bool StickToOwnerCenter = true;
-
         public bool ChannelDependant;
         public bool ChangeOwnerItemData;
         public bool ChangeOwnerDirection;
@@ -34,12 +32,9 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
                 Owner.itemRotation = Projectile.rotation;
             }
 
-            if (StickToOwnerCenter) {
-                Projectile.Center = Owner.MountedCenter + HoldoutOffset;
-            }
-
             Owner.heldProj = Projectile.whoAmI;
 
+            Projectile.Center = Owner.MountedCenter + HoldoutOffset;
             Projectile.direction = Owner.direction;
             Projectile.spriteDirection = Owner.direction;
         }

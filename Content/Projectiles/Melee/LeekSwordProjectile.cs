@@ -21,6 +21,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
 
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
+            AIType = -1;
         }
 
         public override void AI() {
