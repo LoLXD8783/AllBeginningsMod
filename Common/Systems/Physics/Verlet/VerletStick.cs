@@ -4,9 +4,10 @@ namespace AllBeginningsMod.Common.Systems.Physics.Verlet
 {
     public sealed class VerletStick
     {
-        public readonly float Length;
         public readonly VerletPoint Start;
         public readonly VerletPoint End;
+
+        public readonly float Length;
 
         public VerletStick(VerletPoint start, VerletPoint end) {
             Start = start;

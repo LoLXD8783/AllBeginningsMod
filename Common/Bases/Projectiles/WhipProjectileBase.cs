@@ -11,9 +11,12 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
     public abstract class WhipProjectileBase : ModProjectile
     {
         public abstract int HeadHeight { get; }
+
         public abstract int ChainHeight { get; }
+
         public abstract int HandleWidth { get; }
         public abstract int HandleHeight { get; }
+
         public abstract Color BackLineColor { get; }
 
         public ref float Timer => ref Projectile.ai[0];

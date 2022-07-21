@@ -2,11 +2,13 @@
 
 namespace AllBeginningsMod.Common.Systems.Physics.Verlet
 {
-    public sealed class VerletChain : PhysicModule
+    public sealed class VerletChain : PhysicsModule
     {
         public readonly int Length;
+
         public readonly float Gravity;
         public readonly float Friction;
+
         public readonly VerletPoint[] Points;
         public readonly VerletStick[] Sticks;
 

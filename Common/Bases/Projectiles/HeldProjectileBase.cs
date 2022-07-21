@@ -9,10 +9,12 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
     {
         public Player Owner => Main.player[Projectile.owner];
 
+        public bool StickToOwnerCenter = true;
+
         public bool ChannelDependant;
         public bool ChangeOwnerItemData;
         public bool ChangeOwnerDirection;
-        public bool StickToOwnerCenter = true;
+
         public Vector2 HoldoutOffset;
 
         public override void AI() {

@@ -1,6 +1,6 @@
 ﻿namespace AllBeginningsMod.Common.Systems.Physics
 {
-    public abstract class PhysicModule
+    public abstract class PhysicsModule
     {
         public abstract void Update();
 

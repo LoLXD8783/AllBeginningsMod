@@ -15,13 +15,13 @@ namespace AllBeginningsMod.Common.Systems.Rendering
                 PlayerTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
             });
 
+            Main.OnResolutionChanged += ResizeTarget;
             On.Terraria.Main.CheckMonoliths += CachePlayerDraw;
-            On.Terraria.Main.SetResolution += ResizeTarget;
         }
 
         public override void OnModUnload() {
+            Main.OnResolutionChanged -= ResizeTarget;
             On.Terraria.Main.CheckMonoliths -= CachePlayerDraw;
-            On.Terraria.Main.SetResolution -= ResizeTarget;
         }
 
         private static void CachePlayerDraw(On.Terraria.Main.orig_CheckMonoliths orig) {
@@ -47,12 +47,10 @@ namespace AllBeginningsMod.Common.Systems.Rendering
             device.SetRenderTargets(oldTargets);
         }
 
-        private static void ResizeTarget(On.Terraria.Main.orig_SetResolution orig, int width, int height) {
+        private static void ResizeTarget(Vector2 resolution) {
             Main.QueueMainThreadAction(() => {
-                PlayerTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, width, height);
+                PlayerTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, (int)resolution.X, (int)resolution.Y);
             });
-
-            orig(width, height);
         }
     }
 }

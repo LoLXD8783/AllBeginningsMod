@@ -7,16 +7,16 @@ namespace AllBeginningsMod.Common.Systems.Generation.ChestLoot
 {
     public abstract class ChestLootSystem : ModSystem
     {
-        protected List<ItemChestLootEntry> LootEntries { get; set; }
-        
-        protected abstract int ChestFrameX { get; }
+        public List<ItemChestLootEntry> LootEntries { get; private set; }
+
+        public abstract int ChestFrameX { get; }
 
         public sealed override void PostWorldGen() {
             LootEntries = new List<ItemChestLootEntry>();
 
             AddLootEntries();
 
-            for (var i = 0; i < Main.maxChests; i++) {
+            for (int i = 0; i < Main.maxChests; i++) {
                 Chest chest = Main.chest[i];
 
                 if (chest == null) {
@@ -36,14 +36,14 @@ namespace AllBeginningsMod.Common.Systems.Generation.ChestLoot
             LootEntries = null;
         }
 
-        protected virtual void AddLootEntries() { }
+        public virtual void AddLootEntries() { }
 
         private static void AddLootToChest(Chest chest, ItemChestLootEntry loot) {
             if (!WorldGen.genRand.NextBool(loot.SpawnChance)) {
                 return;
             }
 
-            for (var i = 0; i < Chest.maxItems; i++) {
+            for (int i = 0; i < Chest.maxItems; i++) {
                 Item item = chest.item[i];
 
                 if (item.IsAir) {

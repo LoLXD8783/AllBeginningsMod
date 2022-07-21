@@ -5,10 +5,10 @@ namespace AllBeginningsMod.Common.Systems.Physics
 {
     public sealed class PhysicsSystem : ModSystem
     {
-        public static List<PhysicModule> Modules { get; private set; }
+        public static List<PhysicsModule> Modules { get; private set; }
 
         public override void OnModLoad() {
-            Modules = new List<PhysicModule>();
+            Modules = new List<PhysicsModule>();
         }
 
         public override void OnModUnload() {
