@@ -1,4 +1,5 @@
-﻿using AllBeginningsMod.Content.Items.Materials;
+﻿using AllBeginningsMod.Common.Systems.Physics.Verlet;
+using AllBeginningsMod.Content.Items.Materials;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -51,12 +52,6 @@ namespace AllBeginningsMod.Content.Tiles
             DustType = DustID.Enchanted_Pink;
             HitSound = SoundID.Grass;
             MineResist = 1.5f;
-        }
-
-        public override void PlaceInWorld(int i, int j, Item item) {
-            for (int k = 0; k < 8; k++) {
-                Dust.NewDust(new Vector2(i, j) * 16f, 16, 32, DustType);
-            }
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {

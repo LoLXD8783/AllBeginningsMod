@@ -6,12 +6,9 @@ namespace AllBeginningsMod.Content.Projectiles.Summon
     public sealed class TimberWhipProjectile : WhipProjectileBase
     {
         public override int HeadHeight { get; } = 48;
-
         public override int ChainHeight { get; } = 14;
-
         public override int HandleWidth { get; } = 14;
         public override int HandleHeight { get; } = 32;
-
         public override Color BackLineColor { get; } = new(102, 49, 25);
 
         public override void SetStaticDefaults() {

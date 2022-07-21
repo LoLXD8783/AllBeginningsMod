@@ -11,17 +11,14 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
     public abstract class WhipProjectileBase : ModProjectile
     {
         public abstract int HeadHeight { get; }
-
         public abstract int ChainHeight { get; }
-
         public abstract int HandleWidth { get; }
         public abstract int HandleHeight { get; }
-
         public abstract Color BackLineColor { get; }
 
-        protected ref float Timer => ref Projectile.ai[0];
+        public ref float Timer => ref Projectile.ai[0];
 
-        protected Player Owner => Main.player[Projectile.owner];
+        public Player Owner => Main.player[Projectile.owner];
 
         public override void SetStaticDefaults() {
             ProjectileID.Sets.IsAWhip[Type] = true;

@@ -7,13 +7,13 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
 {
     public abstract class HeldProjectileBase : ModProjectile
     {
-        protected Player Owner => Main.player[Projectile.owner];
+        public Player Owner => Main.player[Projectile.owner];
 
-        protected Vector2 HoldoutOffset;
-
-        protected bool ChannelDependant;
-        protected bool ChangeOwnerItemData;
-        protected bool ChangeOwnerDirection;
+        public bool ChannelDependant;
+        public bool ChangeOwnerItemData;
+        public bool ChangeOwnerDirection;
+        public bool StickToOwnerCenter = true;
+        public Vector2 HoldoutOffset;
 
         public override void AI() {
             if (ChannelDependant && !Owner.channel) {
@@ -32,9 +32,12 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
                 Owner.itemRotation = Projectile.rotation;
             }
 
+            if (StickToOwnerCenter) {
+                Projectile.Center = Owner.MountedCenter + HoldoutOffset;
+            }
+
             Owner.heldProj = Projectile.whoAmI;
 
-            Projectile.Center = Owner.MountedCenter + HoldoutOffset;
             Projectile.direction = Owner.direction;
             Projectile.spriteDirection = Owner.direction;
         }
