@@ -1,4 +1,4 @@
-﻿using AllBeginningsMod.Content.Tiles;
+﻿using AllBeginningsMod.Content.Tiles.Plants;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

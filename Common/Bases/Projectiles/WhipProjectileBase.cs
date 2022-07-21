@@ -19,9 +19,9 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
 
         public abstract Color BackLineColor { get; }
 
-        public ref float Timer => ref Projectile.ai[0];
-
         public Player Owner => Main.player[Projectile.owner];
+
+        public ref float Timer => ref Projectile.ai[0];
 
         public override void SetStaticDefaults() {
             ProjectileID.Sets.IsAWhip[Type] = true;

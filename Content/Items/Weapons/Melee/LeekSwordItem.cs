@@ -1,4 +1,4 @@
-﻿using AllBeginningsMod.Content.Projectiles.Melee;
+﻿using AllBeginningsMod.Content.Projectiles.Melee.Miscellaneous;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;

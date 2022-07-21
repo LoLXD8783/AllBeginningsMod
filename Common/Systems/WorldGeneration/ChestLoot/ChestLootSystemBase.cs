@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Common.Systems.Generation.ChestLoot
+namespace AllBeginningsMod.Common.Systems.WorldGeneration.ChestLoot
 {
     public abstract class ChestLootSystem : ModSystem
     {
@@ -16,7 +16,7 @@ namespace AllBeginningsMod.Common.Systems.Generation.ChestLoot
 
             AddLootEntries();
 
-            for (int i = 0; i < Main.maxChests; i++) {
+            for (var i = 0; i < Main.maxChests; i++) {
                 Chest chest = Main.chest[i];
 
                 if (chest == null) {
@@ -43,7 +43,7 @@ namespace AllBeginningsMod.Common.Systems.Generation.ChestLoot
                 return;
             }
 
-            for (int i = 0; i < Chest.maxItems; i++) {
+            for (var i = 0; i < Chest.maxItems; i++) {
                 Item item = chest.item[i];
 
                 if (item.IsAir) {

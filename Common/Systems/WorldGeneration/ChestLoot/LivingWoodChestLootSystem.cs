@@ -1,8 +1,9 @@
-﻿using AllBeginningsMod.Content.Items.Accessories;
+﻿using AllBeginningsMod.Common.Systems.Generation.ChestLoot;
+using AllBeginningsMod.Content.Items.Accessories.Miscellaneous;
 using AllBeginningsMod.Content.Items.Consumables;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Common.Systems.Generation.ChestLoot
+namespace AllBeginningsMod.Common.Systems.WorldGeneration.ChestLoot
 {
     public sealed class LivingWoodChestLootSystem : ChestLootSystem
     {

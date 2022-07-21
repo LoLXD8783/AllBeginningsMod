@@ -1,4 +1,4 @@
-﻿using AllBeginningsMod.Content.Projectiles.Summon;
+﻿using AllBeginningsMod.Content.Projectiles.Summon.Whips;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
