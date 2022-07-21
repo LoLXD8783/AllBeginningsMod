@@ -2,10 +2,18 @@
 
 namespace AllBeginningsMod.Common.Systems.Physics.Verlet
 {
-    public record class VerletPoint(bool Pinned)
+    public sealed class VerletPoint
     {
         public Vector2 Position;
         public Vector2 OldPosition;
         public Vector2 Velocity;
+
+        public bool Pinned;
+
+        public VerletPoint(Vector2 position, bool pinned) {
+            Position = position;
+            OldPosition = position;
+            Pinned = pinned;
+        }
     }
 }

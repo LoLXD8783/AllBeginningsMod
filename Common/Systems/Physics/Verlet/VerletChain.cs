@@ -12,7 +12,7 @@ namespace AllBeginningsMod.Common.Systems.Physics.Verlet
         public readonly VerletPoint[] Points;
         public readonly VerletStick[] Sticks;
 
-        public VerletChain(int length, float gravity = 0.3f, float friction = 0.999f) {
+        public VerletChain(int length, float gravity, float friction) {
             Length = length;
             Gravity = gravity;
             Friction = friction;
@@ -21,9 +21,13 @@ namespace AllBeginningsMod.Common.Systems.Physics.Verlet
         }
 
         public override void Update() {
-            for (int i = 0; i < 2; i++) {
-                UpdatePoints();
-                UpdateSticks();
+            UpdatePoints();
+            UpdateSticks();
+        }
+
+        public void SetPoints(params VerletPoint[] points) {
+            for (int i = 0; i < Length; i++) {
+                Points[i] = points[i];
             }
         }
 
@@ -31,6 +35,7 @@ namespace AllBeginningsMod.Common.Systems.Physics.Verlet
             for (int i = 0; i < Sticks.Length; i++) {
                 VerletPoint start = Points[i];
                 VerletPoint end = Points[i + 1];
+
                 Sticks[i] = new VerletStick(start, end);
             }
         }
@@ -53,8 +58,9 @@ namespace AllBeginningsMod.Common.Systems.Physics.Verlet
                 }
 
                 point.Velocity = velocity;
+                point.Velocity.Y += Gravity;
+
                 point.Position += point.Velocity;
-                point.Position.Y += Gravity;
             }
         }
 

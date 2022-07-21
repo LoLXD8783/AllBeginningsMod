@@ -27,6 +27,10 @@ namespace AllBeginningsMod.Common.Systems.Rendering
         private static void CachePlayerDraw(On.Terraria.Main.orig_CheckMonoliths orig) {
             orig();
 
+            if (Main.gameMenu) {
+                return;
+            }
+
             SpriteBatch spriteBatch = Main.spriteBatch;
             GraphicsDevice device = spriteBatch.GraphicsDevice;
             RenderTargetBinding[] oldTargets = device.GetRenderTargets();
@@ -38,7 +42,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering
 
             Player player = Main.LocalPlayer;
 
-            if (player != null && player.active && !player.dead) {
+            if (player.active && !player.dead) {
                 Main.PlayerRenderer?.DrawPlayer(Main.Camera, player, player.position, player.fullRotation, player.fullRotationOrigin);
             }
 

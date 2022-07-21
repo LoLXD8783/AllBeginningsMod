@@ -2,8 +2,17 @@
 
 namespace AllBeginningsMod.Common.Systems.Physics.Verlet
 {
-    public record class VerletStick(VerletPoint Start, VerletPoint End)
+    public sealed class VerletStick
     {
-        public float Length = Vector2.Distance(Start.Position, End.Position);
+        public readonly VerletPoint Start;
+        public readonly VerletPoint End;
+
+        public readonly float Length;
+
+        public VerletStick(VerletPoint start, VerletPoint end) {
+            Start = start;
+            End = end;
+            Length = Vector2.Distance(start.Position, end.Position);
+        }
     }
 }
