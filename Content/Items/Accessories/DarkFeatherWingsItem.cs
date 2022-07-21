@@ -11,7 +11,6 @@ namespace AllBeginningsMod.Content.Items.Accessories
     {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Dark Feather Wings");
-
             Tooltip.SetDefault("Allows flight and slow fall");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

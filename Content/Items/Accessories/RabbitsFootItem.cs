@@ -9,7 +9,7 @@ namespace AllBeginningsMod.Content.Items.Accessories
     {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Rabbit's Foot");
-            Tooltip.SetDefault("Increased movement speed, jump speed and luck");
+            Tooltip.SetDefault("Increases movement speed, jump speed and luck");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -25,9 +25,9 @@ namespace AllBeginningsMod.Content.Items.Accessories
         }
 
         public override void UpdateEquip(Player player) {
-            player.moveSpeed += 0.1f;
-            player.jumpSpeedBoost += 0.3f;
-            player.luck += 0.1f;
+            player.luck += 0.05f;
+            player.moveSpeed += 0.05f;
+            player.jumpSpeedBoost += 0.05f;
         }
     }
 }

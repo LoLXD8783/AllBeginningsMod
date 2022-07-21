@@ -5,11 +5,11 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Accessories
 {
-    public sealed class SnailsShellItem : ModItem
+    public sealed class FinoftheDolphinItem : ModItem
     {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Snail's Shell");
-            Tooltip.SetDefault("Increases player endurance" + "\nThe wearer starts to feel heavier");
+            DisplayName.SetDefault("Fin of the Dolphin");
+            Tooltip.SetDefault("Grants free water movement" + "\nIncreases damage while submerged in water");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -17,18 +17,20 @@ namespace AllBeginningsMod.Content.Items.Accessories
         public override void SetDefaults() {
             Item.accessory = true;
 
-            Item.defense = 8;
-
-            Item.width = 26;
+            Item.width = 18;
             Item.height = 24;
 
-            Item.value = Item.sellPrice(gold: 1);
             Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(silver: 80);
         }
 
         public override void UpdateEquip(Player player) {
-            player.endurance += 0.1f;
-            player.moveSpeed -= 0.2f;
+            player.ignoreWater = true;
+
+            if (player.wet) {
+                Main.NewText("A");
+                player.GetDamage(DamageClass.Generic) += 0.05f;
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Terraria;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Players
 {
@@ -9,12 +8,6 @@ namespace AllBeginningsMod.Common.Players
 
         public override void ResetEffects() {
             DevilGift = false;
-        }
-
-        public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
-            if (DevilGift) {
-                damage += 0.1f;
-            }
         }
     }
 }

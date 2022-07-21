@@ -18,6 +18,8 @@ namespace AllBeginningsMod.Content.Buffs
             if (player.TryGetModPlayer(out BuffPlayer buffPlayer)) {
                 buffPlayer.DevilGift = true;
             }
+
+            player.GetDamage(DamageClass.Generic) += 0.1f;
         }
     }
 }

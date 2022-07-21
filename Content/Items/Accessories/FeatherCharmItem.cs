@@ -5,11 +5,11 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Accessories
 {
-    public sealed class SnailsShellItem : ModItem
+    public sealed class FeatherCharmItem : ModItem
     {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Snail's Shell");
-            Tooltip.SetDefault("Increases player endurance" + "\nThe wearer starts to feel heavier");
+            DisplayName.SetDefault("Feather Charm");
+            Tooltip.SetDefault("Greatly increases movement speed");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -17,18 +17,15 @@ namespace AllBeginningsMod.Content.Items.Accessories
         public override void SetDefaults() {
             Item.accessory = true;
 
-            Item.defense = 8;
-
-            Item.width = 26;
+            Item.width = 18;
             Item.height = 24;
 
-            Item.value = Item.sellPrice(gold: 1);
             Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(silver: 80);
         }
 
         public override void UpdateEquip(Player player) {
-            player.endurance += 0.1f;
-            player.moveSpeed -= 0.2f;
+            player.moveSpeed += 0.1f;
         }
     }
 }
