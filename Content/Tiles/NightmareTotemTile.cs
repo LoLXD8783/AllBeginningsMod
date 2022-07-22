@@ -1,5 +1,4 @@
-﻿using AllBeginningsMod.Common.Systems.Physics.Verlet;
-using AllBeginningsMod.Content.Items.Placeables;
+﻿using AllBeginningsMod.Content.Items.Placeables;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

@@ -1,5 +1,4 @@
-﻿using AllBeginningsMod.Common.Systems.Physics.Verlet;
-using AllBeginningsMod.Content.Items.Materials;
+﻿using AllBeginningsMod.Content.Items.Materials;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
