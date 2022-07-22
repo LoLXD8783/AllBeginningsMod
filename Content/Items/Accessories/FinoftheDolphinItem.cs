@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Accessories
 {
-    public sealed class FinoftheDolphinItem : PlayerCostumeBase
+    public sealed class FinoftheDolphinItem : FullPlayerCostumeBase
     {
         public override void SetStaticDefaults() {
             base.SetStaticDefaults();
