@@ -1,5 +1,4 @@
-﻿using AllBeginningsMod.Common.Config;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
@@ -9,7 +8,8 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
     [Autoload(Side = ModSide.Client)]
     public sealed class PrimitiveRenderingSystem : ModSystem
     {
-        public static int MaxPrimitives => ModContent.GetInstance<ClientSideConfig>().MaxPrimitives;
+        public const int MaxPrimitives = 8000;
+        public const int MaxVertices = MaxPrimitives * 3;
 
         public static VertexBuffer VertexBuffer { get; private set; }
         public static RenderTarget2D PrimitiveTarget { get; private set; }
@@ -18,11 +18,11 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
 
         public override void OnModLoad() {
             Main.QueueMainThreadAction(() => {
-                VertexBuffer = new VertexBuffer(Main.graphics.GraphicsDevice, VertexPositionColorTexture.VertexDeclaration, MaxPrimitives * 3, BufferUsage.WriteOnly);
+                VertexBuffer = new VertexBuffer(Main.graphics.GraphicsDevice, VertexPositionColorTexture.VertexDeclaration, MaxVertices, BufferUsage.WriteOnly);
                 PrimitiveTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth / 2, Main.screenHeight / 2);
             });
 
-            Primitives = new PrimitiveBase[MaxPrimitives * 3];
+            Primitives = new PrimitiveBase[MaxPrimitives];
 
             Main.OnPreDraw += CachePrimitiveDraw;
             Main.OnResolutionChanged += ResizeTarget;
@@ -70,9 +70,15 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
 
                 VertexBuffer.SetData(primitive.Vertices);
 
+                int primitiveCount = primitive.Type switch {
+                    PrimitiveType.LineList or PrimitiveType.TriangleList or PrimitiveType.PointListEXT => VertexBuffer.VertexCount / 3,
+                    PrimitiveType.LineStrip or PrimitiveType.TriangleStrip => VertexBuffer.VertexCount - 2,
+                    _ => VertexBuffer.VertexCount / 3
+                };
+
                 foreach (EffectPass pass in primitive.Effect.CurrentTechnique.Passes) {
                     pass.Apply();
-                    device.DrawPrimitives(primitive.Type, 0, VertexBuffer.VertexCount / 3);
+                    device.DrawPrimitives(primitive.Type, 0, primitiveCount);
                 }
             }
 
