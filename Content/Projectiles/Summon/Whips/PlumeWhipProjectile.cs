@@ -7,11 +7,14 @@ namespace AllBeginningsMod.Content.Projectiles.Summon.Whips
 {
     public sealed class PlumeWhipProjectile : WhipProjectileBase
     {
-        public override int HeadHeight { get; } = 24;
-        public override int ChainHeight { get; } = 12;
-        public override int HandleWidth { get; } = 20;
-        public override int HandleHeight { get; } = 26;
-        public override Color BackLineColor { get; } = new(202, 151, 100);
+        public override int HeadHeight => 24;
+
+        public override int ChainHeight => 12;
+
+        public override int HandleWidth => 20;
+        public override int HandleHeight => 26;
+
+        public override Color BackLineColor => new(202, 151, 100);
 
         public override void SetStaticDefaults() {
             base.SetStaticDefaults();

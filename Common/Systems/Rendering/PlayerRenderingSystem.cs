@@ -16,11 +16,18 @@ namespace AllBeginningsMod.Common.Systems.Rendering
             });
 
             Main.OnResolutionChanged += ResizeTarget;
+
             On.Terraria.Main.CheckMonoliths += CachePlayerDraw;
         }
 
         public override void OnModUnload() {
+            Main.QueueMainThreadAction(() => {
+                PlayerTarget?.Dispose();
+                PlayerTarget = null;
+            });
+
             Main.OnResolutionChanged -= ResizeTarget;
+
             On.Terraria.Main.CheckMonoliths -= CachePlayerDraw;
         }
 
