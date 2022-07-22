@@ -24,8 +24,8 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
 
             Primitives = new PrimitiveBase[MaxPrimitives * 3];
 
-            Main.OnResolutionChanged += ResizeTarget;
             Main.OnPreDraw += CachePrimitiveDraw;
+            Main.OnResolutionChanged += ResizeTarget;
 
             On.Terraria.Main.DrawDust += DrawTarget;
         }
@@ -58,13 +58,11 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
 
             device.RasterizerState = RasterizerState.CullNone;
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-
             for (int i = 0; i < MaxPrimitives; i++) {
                 PrimitiveBase primitive = Primitives[i];
 
                 if (primitive == null) {
-                    return;
+                    continue;
                 }
 
                 primitive.SetPositions();
@@ -78,7 +76,6 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
                 }
             }
 
-            spriteBatch.End();
 
             device.SetRenderTargets(oldTargets);
         }

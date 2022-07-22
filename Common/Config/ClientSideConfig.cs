@@ -11,7 +11,6 @@ namespace AllBeginningsMod.Common.Config
 
         [DefaultValue(1000)]
         [Range(0, 2000)]
-        [Slider]
         [ReloadRequired]
         [Label("Max Primitives")]
         [Tooltip("Sets the max amount of primitive shapes that can be drawn by the mod.")]
