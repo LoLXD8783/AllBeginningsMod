@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,7 +15,8 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
         public static VertexBuffer VertexBuffer { get; private set; }
         public static RenderTarget2D PrimitiveTarget { get; private set; }
 
-        public static PrimitiveBase[] Primitives { get; private set; }
+        private static PrimitiveBase[] primitives;
+        private static int primitiveCount;
 
         public override void OnModLoad() {
             Main.QueueMainThreadAction(() => {
@@ -22,7 +24,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
                 PrimitiveTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth / 2, Main.screenHeight / 2);
             });
 
-            Primitives = new PrimitiveBase[MaxPrimitives];
+            primitives = new PrimitiveBase[MaxPrimitives];
 
             Main.OnPreDraw += CachePrimitiveDraw;
             Main.OnResolutionChanged += ResizeTarget;
@@ -39,12 +41,30 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
                 PrimitiveTarget = null;
             });
 
-            Primitives = null;
+            primitives = null;
 
             Main.OnPreDraw -= CachePrimitiveDraw;
             Main.OnResolutionChanged -= ResizeTarget;
 
             On.Terraria.Main.DrawDust -= DrawTarget;
+        }
+
+        public static PrimitiveBase Add(PrimitiveBase primitive) {
+            if (primitiveCount < MaxPrimitives) {
+                primitives[primitiveCount] = primitive;
+                primitiveCount++;
+            }
+
+            return primitive;
+        }
+
+        public static void Remove(PrimitiveBase primitive) {
+            int index = Array.IndexOf(primitives, primitive);
+
+            if (primitiveCount > 0 && index != -1) {
+                primitives[index] = null;
+                primitiveCount--;
+            }
         }
 
         private static void CachePrimitiveDraw(GameTime gameTime) {
@@ -59,7 +79,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
             device.RasterizerState = RasterizerState.CullNone;
 
             for (int i = 0; i < MaxPrimitives; i++) {
-                PrimitiveBase primitive = Primitives[i];
+                PrimitiveBase primitive = primitives[i];
 
                 if (primitive == null) {
                     continue;
@@ -81,7 +101,6 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
                     device.DrawPrimitives(primitive.Type, 0, primitiveCount);
                 }
             }
-
 
             device.SetRenderTargets(oldTargets);
         }

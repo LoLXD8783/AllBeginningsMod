@@ -6,11 +6,11 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
 {
     public abstract class PrimitiveBase 
     {
-        public readonly int VertexCount;
+        public readonly PrimitiveType Type;
 
         public readonly Effect Effect;
 
-        public readonly PrimitiveType Type;
+        public readonly int VertexCount;
 
         public readonly List<Vector2> Positions;
         public readonly VertexPositionColorTexture[] Vertices;
@@ -26,5 +26,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
         public abstract void SetPositions();
 
         public abstract void SetVertices();
+
+        public virtual void SetExtras() { }
     }
 }
