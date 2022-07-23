@@ -45,15 +45,15 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
         public override void Kill(int timeLeft) {
             SoundEngine.PlaySound(SoundID.Grass, Projectile.position);
 
-            var splitCount = Main.rand.Next(3, 5);
+            int splitCount = Main.rand.Next(3, 5);
 
-            for (var i = 0; i < splitCount; i++) {
-                var velocity = new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f));
+            for (int i = 0; i < splitCount; i++) {
+                Vector2 velocity = new(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f));
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, velocity, ModContent.ProjectileType<LeekShieldReturningProjectile>(), Projectile.damage / splitCount, Projectile.knockBack, Projectile.owner);
             }
 
-            for (var i = 0; i < 10; i++) {
-                var dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Grass);
+            for (int i = 0; i < 10; i++) {
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Grass);
                 dust.noGravity = true;
             }
         }
@@ -63,9 +63,9 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             Texture2D texture = TextureAssets.Projectile[Type].Value;
             Vector2 origin = Projectile.Hitbox.Size() / 2f;
 
-            for (var i = 0; i < ProjectileID.Sets.TrailCacheLength[Type]; i += 2) {
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Type]; i += 2) {
                 Vector2 position = Projectile.oldPos[i] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
-                var alpha = 0.8f - 0.2f * (i / 2f);
+                float alpha = 0.8f - 0.2f * (i / 2f);
 
                 Main.EntitySpriteDraw(texture, position, null, lightColor * alpha, Projectile.oldRot[i], origin, Projectile.scale, effects, 0);
             }

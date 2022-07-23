@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
 {
-    public abstract class PrimitiveBase 
+    public abstract class PrimitiveBase
     {
         public readonly PrimitiveType Type;
 

@@ -28,12 +28,12 @@ namespace AllBeginningsMod.Content.Items.Weapons.Summon
 
             Item.useTime = 30;
             Item.useAnimation = 30;
-            Item.useStyle = ItemUseStyleID.Swing;   
+            Item.useStyle = ItemUseStyleID.Swing;
 
             Item.shootSpeed = 2.5f;
             Item.shoot = ModContent.ProjectileType<TimberWhipProjectile>();
 
-            Item.UseSound = SoundID.Item152; 
+            Item.UseSound = SoundID.Item152;
 
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(silver: 20);

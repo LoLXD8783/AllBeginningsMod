@@ -43,7 +43,7 @@ namespace AllBeginningsMod.Common.Systems.WorldGeneration.ChestLoot
                 return;
             }
 
-            for (var i = 0; i < Chest.maxItems; i++) {
+            for (int i = 0; i < Chest.maxItems; i++) {
                 Item item = chest.item[i];
 
                 if (item.IsAir) {
