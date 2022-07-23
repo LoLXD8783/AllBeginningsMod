@@ -1,7 +1,7 @@
 ﻿using AllBeginningsMod.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -10,24 +10,21 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
     [Autoload(Side = ModSide.Client)]
     public sealed class PrimitiveRenderingSystem : ModSystem
     {
-        public const int MaxPrimitives = 8000;
-        public const int MaxVertices = MaxPrimitives * 3;
+        public static DynamicIndexBuffer IndexBuffer { get; private set; }
+        public static DynamicVertexBuffer VertexBuffer { get; private set; }
 
-        public static VertexBuffer VertexBuffer { get; private set; }
         public static RenderTarget2D PrimitiveTarget { get; private set; }
 
         private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
 
-        private static PrimitiveDrawData[] queuedDrawData = Array.Empty<PrimitiveDrawData>();
-        private static int queuedDrawDataCount;
+        private static List<PrimitiveDrawData> queuedDrawData;
 
         public override void OnModLoad() {
             Main.QueueMainThreadAction(() => {
-                VertexBuffer = new VertexBuffer(Device, VertexPositionColorTexture.VertexDeclaration, MaxVertices, BufferUsage.WriteOnly);
                 PrimitiveTarget = new RenderTarget2D(Device, Main.screenWidth / 2, Main.screenHeight / 2);
             });
 
-            queuedDrawData = new PrimitiveDrawData[MaxPrimitives];
+            queuedDrawData = new List<PrimitiveDrawData>();
 
             Main.OnPreDraw += CachePrimitiveDraw;
             Main.OnResolutionChanged += ResizeTarget;
@@ -37,13 +34,17 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
 
         public override void OnModUnload() {
             Main.QueueMainThreadAction(() => {
-                VertexBuffer?.Dispose();
-                VertexBuffer = null;
-
                 PrimitiveTarget?.Dispose();
                 PrimitiveTarget = null;
             });
 
+            IndexBuffer?.Dispose();
+            IndexBuffer = null;
+
+            VertexBuffer?.Dispose();
+            VertexBuffer = null;
+
+            queuedDrawData?.Clear();
             queuedDrawData = null;
 
             Main.OnPreDraw -= CachePrimitiveDraw;
@@ -52,26 +53,28 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
             On.Terraria.Main.DrawDust -= DrawTarget;
         }
 
-        public static void QueuePrimitive(VertexPositionColorTexture[] vertices, Effect effect, PrimitiveType type) {
-            queuedDrawData[queuedDrawDataCount] = new PrimitiveDrawData(vertices, effect, type);
-            queuedDrawDataCount++;
+        public static void QueuePrimitive(VertexPositionColorTexture[] vertices, ushort[] indices, Effect effect, PrimitiveType type) {
+            if (IndexBuffer?.IndexCount != indices.Length) {
+                IndexBuffer = new DynamicIndexBuffer(Device, IndexElementSize.SixteenBits, indices.Length, BufferUsage.WriteOnly);
+            }
+
+            if (VertexBuffer?.VertexCount != vertices.Length) {
+                VertexBuffer = new DynamicVertexBuffer(Device, VertexPositionColorTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+            }
+
+            queuedDrawData?.Add(new PrimitiveDrawData(vertices, indices, effect, type));
         }
 
         private static void ClearQueuedPrimitives() {
-            for (int i = 0; i < MaxPrimitives; i++) {
-                queuedDrawData[i] = default;
-            }
-
-            queuedDrawDataCount = 0;
+            queuedDrawData?.Clear();
         }
 
         private static void DrawQueuedPrimitives() {
-            for (int i = 0; i < queuedDrawDataCount; i++) {
-                PrimitiveDrawData primitive = queuedDrawData[i];
+            queuedDrawData?.ForEach(x => {
+                IndexBuffer?.SetData(x.Indices, 0, x.Indices.Length, SetDataOptions.Discard);
+                VertexBuffer?.SetData(x.Vertices, SetDataOptions.Discard);
 
-                VertexBuffer.SetData(primitive.Vertices);
-
-                int primitiveCount = primitive.Type switch {
+                int primitiveCount = x.Type switch {
                     PrimitiveType.TriangleList => VertexBuffer.VertexCount / 3,
                     PrimitiveType.TriangleStrip => VertexBuffer.VertexCount - 2,
                     PrimitiveType.LineList => VertexBuffer.VertexCount / 2,
@@ -80,11 +83,11 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
                     _ => 0
                 };
 
-                foreach (EffectPass pass in primitive.Effect.CurrentTechnique.Passes) {
+                foreach (EffectPass pass in x.Effect.CurrentTechnique.Passes) {
                     pass.Apply();
-                    Device.DrawPrimitives(primitive.Type, 0, primitiveCount);
+                    Device.DrawIndexedPrimitives(x.Type, 0, 0, VertexBuffer.VertexCount, 0, primitiveCount);
                 }
-            }
+            });
         }
 
         private static void CachePrimitiveDraw(GameTime gameTime) {
@@ -92,8 +95,10 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
             RenderTargetBinding[] oldTargets = Device.GetRenderTargets();
 
             Device.SetRenderTarget(PrimitiveTarget);
-            Device.SetVertexBuffer(VertexBuffer);
             Device.Clear(Color.Transparent);
+
+            Device.SetVertexBuffer(VertexBuffer);
+            Device.Indices = IndexBuffer;
 
             Device.RasterizerState = RasterizerState.CullNone;
 

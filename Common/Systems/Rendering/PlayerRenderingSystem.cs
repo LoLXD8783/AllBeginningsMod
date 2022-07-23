@@ -10,9 +10,11 @@ namespace AllBeginningsMod.Common.Systems.Rendering
     {
         public static RenderTarget2D PlayerTarget { get; private set; }
 
+        private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
+
         public override void OnModLoad() {
             Main.QueueMainThreadAction(() => {
-                PlayerTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
+                PlayerTarget = new RenderTarget2D(Device, Main.screenWidth, Main.screenHeight);
             });
 
             Main.OnResolutionChanged += ResizeTarget;
@@ -22,7 +24,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering
 
         public override void OnModUnload() {
             Main.QueueMainThreadAction(() => {
-                PlayerTarget?.Dispose();
+                PlayerTarget.Dispose();
                 PlayerTarget = null;
             });
 
@@ -39,11 +41,10 @@ namespace AllBeginningsMod.Common.Systems.Rendering
             }
 
             SpriteBatch spriteBatch = Main.spriteBatch;
-            GraphicsDevice device = spriteBatch.GraphicsDevice;
-            RenderTargetBinding[] oldTargets = device.GetRenderTargets();
+            RenderTargetBinding[] oldTargets = Device.GetRenderTargets();
 
-            device.SetRenderTarget(PlayerTarget);
-            device.Clear(Color.Transparent);
+            Device.SetRenderTarget(PlayerTarget);
+            Device.Clear(Color.Transparent);
 
             spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
 
@@ -55,12 +56,12 @@ namespace AllBeginningsMod.Common.Systems.Rendering
 
             spriteBatch.End();
 
-            device.SetRenderTargets(oldTargets);
+            Device.SetRenderTargets(oldTargets);
         }
 
         private static void ResizeTarget(Vector2 resolution) {
             Main.QueueMainThreadAction(() => {
-                PlayerTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, (int)resolution.X, (int)resolution.Y);
+                PlayerTarget = new RenderTarget2D(Device, (int)resolution.X, (int)resolution.Y);
             });
         }
     }
