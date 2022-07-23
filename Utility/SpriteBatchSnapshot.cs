@@ -82,6 +82,8 @@ namespace AllBeginningsMod.Utility
             }
 
             public override void Unload() {
+                Initialized = false;
+
                 sortMode = null;
                 blendState = null;
                 samplerState = null;

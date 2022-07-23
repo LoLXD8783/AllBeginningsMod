@@ -54,11 +54,13 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
         }
 
         public static void QueuePrimitive(VertexPositionColorTexture[] vertices, ushort[] indices, Effect effect, PrimitiveType type) {
-            if (IndexBuffer?.IndexCount != indices.Length) {
+            if (IndexBuffer == null || IndexBuffer.IndexCount < indices.Length) {
+                IndexBuffer?.Dispose();
                 IndexBuffer = new DynamicIndexBuffer(Device, IndexElementSize.SixteenBits, indices.Length, BufferUsage.WriteOnly);
             }
 
-            if (VertexBuffer?.VertexCount != vertices.Length) {
+            if (IndexBuffer == null || VertexBuffer.VertexCount < vertices.Length) {
+                VertexBuffer?.Dispose();
                 VertexBuffer = new DynamicVertexBuffer(Device, VertexPositionColorTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
             }
 
@@ -70,13 +72,13 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
         }
 
         private static void DrawQueuedPrimitives() {
-            queuedDrawData?.ForEach(x => {
-                IndexBuffer?.SetData(x.Indices, 0, x.Indices.Length, SetDataOptions.Discard);
-                VertexBuffer?.SetData(x.Vertices, SetDataOptions.Discard);
+            queuedDrawData?.ForEach(drawData => {
+                IndexBuffer?.SetData(drawData.Indices, 0, drawData.Indices.Length, SetDataOptions.Discard);
+                VertexBuffer?.SetData(drawData.Vertices, SetDataOptions.Discard);
 
-                foreach (EffectPass pass in x.Effect.CurrentTechnique.Passes) {
+                foreach (EffectPass pass in drawData.Effect.CurrentTechnique.Passes) {
                     pass.Apply();
-                    Device.DrawIndexedPrimitives(x.Type, 0, 0, VertexBuffer.VertexCount, 0, DrawUtils.GetPrimitiveCount(VertexBuffer.VertexCount, x.Type));
+                    Device.DrawIndexedPrimitives(drawData.Type, 0, 0, VertexBuffer.VertexCount, 0, DrawUtils.GetPrimitiveCount(VertexBuffer.VertexCount, drawData.Type));
                 }
             });
         }
