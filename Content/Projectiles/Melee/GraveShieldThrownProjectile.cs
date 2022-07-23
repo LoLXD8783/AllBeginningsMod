@@ -47,8 +47,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
                 IEntitySource source = new EntitySource_OnHit(Projectile, target);
                 Vector2 velocity = new(Main.rand.Next(-3, 3), Main.rand.Next(-5, -1));
 
-                Projectile projectile = Projectile.NewProjectileDirect(source, Projectile.Center, velocity, ModContent.ProjectileType<GraveShieldBoulderProjectile>(), Projectile.damage, Projectile.knockBack * 2f, Projectile.owner);
-                projectile.frame = Main.rand.Next(3);
+                Projectile.NewProjectile(source, Projectile.Center, velocity, ModContent.ProjectileType<GraveShieldBoulderProjectile>(), Projectile.damage, Projectile.knockBack * 2f, Projectile.owner);
             }
         }
 

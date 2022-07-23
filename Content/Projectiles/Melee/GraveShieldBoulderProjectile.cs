@@ -22,6 +22,8 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             Projectile.penetrate = -1;
             Projectile.timeLeft = 50;
             Projectile.aiStyle = ProjAIStyleID.ThrownProjectile;
+
+            Projectile.frame = Main.rand.Next(3);
         }
 
         public override void Kill(int timeLeft) {

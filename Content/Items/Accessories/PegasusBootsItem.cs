@@ -25,8 +25,8 @@ namespace AllBeginningsMod.Content.Items.Accessories
         }
 
         public override void UpdateEquip(Player player) {
-            player.moveSpeed += 0.05f;
             player.accRunSpeed = 4f;
+            player.moveSpeed += 0.05f;
         }
     }
 }
