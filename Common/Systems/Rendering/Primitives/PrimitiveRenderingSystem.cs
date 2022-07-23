@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AllBeginningsMod.Utility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -15,16 +16,18 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
         public static VertexBuffer VertexBuffer { get; private set; }
         public static RenderTarget2D PrimitiveTarget { get; private set; }
 
-        private static PrimitiveBase[] primitives;
-        private static int primitiveCount;
+        private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
+
+        private static PrimitiveDrawData[] queuedDrawData = Array.Empty<PrimitiveDrawData>();
+        private static int queuedDrawDataCount;
 
         public override void OnModLoad() {
             Main.QueueMainThreadAction(() => {
-                VertexBuffer = new VertexBuffer(Main.graphics.GraphicsDevice, VertexPositionColorTexture.VertexDeclaration, MaxVertices, BufferUsage.WriteOnly);
-                PrimitiveTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth / 2, Main.screenHeight / 2);
+                VertexBuffer = new VertexBuffer(Device, VertexPositionColorTexture.VertexDeclaration, MaxVertices, BufferUsage.WriteOnly);
+                PrimitiveTarget = new RenderTarget2D(Device, Main.screenWidth / 2, Main.screenHeight / 2);
             });
 
-            primitives = new PrimitiveBase[MaxPrimitives];
+            queuedDrawData = new PrimitiveDrawData[MaxPrimitives];
 
             Main.OnPreDraw += CachePrimitiveDraw;
             Main.OnResolutionChanged += ResizeTarget;
@@ -41,7 +44,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
                 PrimitiveTarget = null;
             });
 
-            primitives = null;
+            queuedDrawData = null;
 
             Main.OnPreDraw -= CachePrimitiveDraw;
             Main.OnResolutionChanged -= ResizeTarget;
@@ -49,60 +52,59 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
             On.Terraria.Main.DrawDust -= DrawTarget;
         }
 
-        public static PrimitiveBase Add(PrimitiveBase primitive) {
-            if (primitiveCount < MaxPrimitives) {
-                primitives[primitiveCount] = primitive;
-                primitiveCount++;
-            }
-
-            return primitive;
+        public static void QueuePrimitive(VertexPositionColorTexture[] vertices, Effect effect, PrimitiveType type) {
+            queuedDrawData[queuedDrawDataCount] = new PrimitiveDrawData(vertices, effect, type);
+            queuedDrawDataCount++;
         }
 
-        public static void Remove(PrimitiveBase primitive) {
-            int index = Array.IndexOf(primitives, primitive);
+        private static void ClearQueuedPrimitives() {
+            for (int i = 0; i < MaxPrimitives; i++) {
+                queuedDrawData[i] = default;
+            }
 
-            if (primitiveCount > 0 && index != -1) {
-                primitives[index] = null;
-                primitiveCount--;
+            queuedDrawDataCount = 0;
+        }
+
+        private static void DrawQueuedPrimitives() {
+            for (int i = 0; i < queuedDrawDataCount; i++) {
+                PrimitiveDrawData primitive = queuedDrawData[i];
+
+                VertexBuffer.SetData(primitive.Vertices);
+
+                int primitiveCount = primitive.Type switch {
+                    PrimitiveType.TriangleList => VertexBuffer.VertexCount / 3,
+                    PrimitiveType.TriangleStrip => VertexBuffer.VertexCount - 2,
+                    PrimitiveType.LineList => VertexBuffer.VertexCount / 2,
+                    PrimitiveType.LineStrip => VertexBuffer.VertexCount - 1,
+                    PrimitiveType.PointListEXT => VertexBuffer.VertexCount / 3,
+                    _ => 0
+                };
+
+                foreach (EffectPass pass in primitive.Effect.CurrentTechnique.Passes) {
+                    pass.Apply();
+                    Device.DrawPrimitives(primitive.Type, 0, primitiveCount);
+                }
             }
         }
 
         private static void CachePrimitiveDraw(GameTime gameTime) {
             SpriteBatch spriteBatch = Main.spriteBatch;
-            GraphicsDevice device = spriteBatch.GraphicsDevice;
-            RenderTargetBinding[] oldTargets = device.GetRenderTargets();
+            RenderTargetBinding[] oldTargets = Device.GetRenderTargets();
 
-            device.SetRenderTarget(PrimitiveTarget);
-            device.SetVertexBuffer(VertexBuffer);
-            device.Clear(Color.Transparent);
+            Device.SetRenderTarget(PrimitiveTarget);
+            Device.SetVertexBuffer(VertexBuffer);
+            Device.Clear(Color.Transparent);
 
-            device.RasterizerState = RasterizerState.CullNone;
+            Device.RasterizerState = RasterizerState.CullNone;
 
-            for (int i = 0; i < MaxPrimitives; i++) {
-                PrimitiveBase primitive = primitives[i];
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, default, default, Main.GameViewMatrix.TransformationMatrix);
 
-                if (primitive == null) {
-                    continue;
-                }
+            DrawQueuedPrimitives();
+            ClearQueuedPrimitives();
 
-                primitive.SetPositions();
-                primitive.SetVertices();
+            spriteBatch.End();
 
-                VertexBuffer.SetData(primitive.Vertices);
-
-                int primitiveCount = primitive.Type switch {
-                    PrimitiveType.LineList or PrimitiveType.TriangleList or PrimitiveType.PointListEXT => VertexBuffer.VertexCount / 3,
-                    PrimitiveType.LineStrip or PrimitiveType.TriangleStrip => VertexBuffer.VertexCount - 2,
-                    _ => VertexBuffer.VertexCount / 3
-                };
-
-                foreach (EffectPass pass in primitive.Effect.CurrentTechnique.Passes) {
-                    pass.Apply();
-                    device.DrawPrimitives(primitive.Type, 0, primitiveCount);
-                }
-            }
-
-            device.SetRenderTargets(oldTargets);
+            Device.SetRenderTargets(oldTargets);
         }
 
         private static void DrawTarget(On.Terraria.Main.orig_DrawDust orig, Main self) {
@@ -111,7 +113,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
             SpriteBatch spriteBatch = Main.spriteBatch;
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-            spriteBatch.Draw(PrimitiveTarget, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White);
+            spriteBatch.Draw(PrimitiveTarget, DrawUtils.ScreenRectangle, Color.White);
             spriteBatch.End();
         }
 
