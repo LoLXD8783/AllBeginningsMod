@@ -28,6 +28,7 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
         }
 
         public override void SetDefaults() {
+            Projectile.DefaultToWhip();
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.ownerHitCheck = true;

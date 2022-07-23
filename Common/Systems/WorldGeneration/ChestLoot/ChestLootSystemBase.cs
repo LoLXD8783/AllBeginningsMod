@@ -29,7 +29,7 @@ namespace AllBeginningsMod.Common.Systems.WorldGeneration.ChestLoot
                     continue;
                 }
 
-                LootEntries.ForEach(x => AddLootToChest(chest, x));
+                LootEntries.ForEach(lootEntry => AddLootToChest(chest, lootEntry));
             }
 
             LootEntries?.Clear();
