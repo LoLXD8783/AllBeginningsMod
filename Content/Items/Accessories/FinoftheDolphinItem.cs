@@ -13,7 +13,7 @@ namespace AllBeginningsMod.Content.Items.Accessories
             base.SetStaticDefaults();
 
             DisplayName.SetDefault("Fin of the Dolphin");
-            Tooltip.SetDefault("Grants free water movement" + "\nIncreases damage while submerged in water");
+            Tooltip.SetDefault("Lets you move swiftly in water" + "\nIncreases damage while submerged in water" + "\nTurns the user into a dolphin");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
