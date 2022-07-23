@@ -74,18 +74,9 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
                 IndexBuffer?.SetData(x.Indices, 0, x.Indices.Length, SetDataOptions.Discard);
                 VertexBuffer?.SetData(x.Vertices, SetDataOptions.Discard);
 
-                int primitiveCount = x.Type switch {
-                    PrimitiveType.TriangleList => VertexBuffer.VertexCount / 3,
-                    PrimitiveType.TriangleStrip => VertexBuffer.VertexCount - 2,
-                    PrimitiveType.LineList => VertexBuffer.VertexCount / 2,
-                    PrimitiveType.LineStrip => VertexBuffer.VertexCount - 1,
-                    PrimitiveType.PointListEXT => VertexBuffer.VertexCount / 3,
-                    _ => 0
-                };
-
                 foreach (EffectPass pass in x.Effect.CurrentTechnique.Passes) {
                     pass.Apply();
-                    Device.DrawIndexedPrimitives(x.Type, 0, 0, VertexBuffer.VertexCount, 0, primitiveCount);
+                    Device.DrawIndexedPrimitives(x.Type, 0, 0, VertexBuffer.VertexCount, 0, DrawUtils.GetPrimitiveCount(VertexBuffer.VertexCount, x.Type));
                 }
             });
         }
