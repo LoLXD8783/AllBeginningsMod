@@ -25,15 +25,8 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
 
             Projectile.frame = Main.rand.Next(3);
         }
-
-        public override void Kill(int timeLeft) {
-            int dustCount = Main.rand.Next(2, 5);
-
-            for (int i = 0; i < dustCount; i++) {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Stone);
-            }
-
-            Projectile.netUpdate = true;
+        public override void AI() {
+            Projectile.alpha += 4;
         }
     }
 }
