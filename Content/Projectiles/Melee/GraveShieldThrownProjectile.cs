@@ -1,8 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using AllBeginningsMod.Utility;
+using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -36,18 +34,10 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            for (int i = 0; i < 30; i++) {
-                float rotation = MathHelper.TwoPi * i / 30f;
-                Vector2 velocity = rotation.ToRotationVector2() * 5f;
-
-                Dust.NewDustPerfect(Projectile.Center, DustID.AmberBolt, velocity).noGravity = true;
-            }
+            DustUtils.SpawnCircle(Projectile.Center, DustID.AmberBolt, 30, 5f);
 
             for (int i = 0; i < 3; i++) {
-                IEntitySource source = new EntitySource_OnHit(Projectile, target);
-                Vector2 velocity = new(Main.rand.Next(-3, 3), Main.rand.Next(-5, -1));
-
-                Projectile.NewProjectile(source, Projectile.Center, velocity, ModContent.ProjectileType<GraveShieldBoulderProjectile>(), Projectile.damage, Projectile.knockBack * 2f, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_OnHit(target), Projectile.Center, new Vector2(Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-5f, -1f)), ModContent.ProjectileType<GraveShieldBoulderProjectile>(), Projectile.damage, Projectile.knockBack * 2f, Projectile.owner);
             }
         }
 
@@ -57,16 +47,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
         }
 
         public override bool PreDraw(ref Color lightColor) {
-            SpriteEffects effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Texture2D texture = TextureAssets.Projectile[Type].Value;
-            Vector2 origin = Projectile.Hitbox.Size() / 2f;
-
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Type]; i += 2) {
-                Vector2 position = Projectile.oldPos[i] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
-                float alpha = 0.8f - 0.2f * (i / 2f);
-
-                Main.EntitySpriteDraw(texture, position, null, lightColor * alpha, Projectile.oldRot[i], origin, Projectile.scale, effects, 0);
-            }
+            ProjectileUtils.DrawAfterimage(Projectile, lightColor, Projectile.Hitbox.Size() / 2f, 0.8f, 0.1f, 2);
             return true;
         }
     }

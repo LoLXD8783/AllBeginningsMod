@@ -1,8 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using AllBeginningsMod.Utility;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -48,16 +47,7 @@ namespace AllBeginningsMod.Content.Projectiles.Ranged
         }
 
         public override bool PreDraw(ref Color lightColor) {
-            SpriteEffects effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Texture2D texture = TextureAssets.Projectile[Type].Value;
-            Vector2 origin = Projectile.Hitbox.Size() / 2f;
-
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Type]; i += 2) {
-                Vector2 position = Projectile.oldPos[i] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
-                float alpha = 0.8f - 0.2f * (i / 2f);
-
-                Main.EntitySpriteDraw(texture, position, null, lightColor * alpha, Projectile.oldRot[i], origin, Projectile.scale, effects, 0);
-            }
+            ProjectileUtils.DrawAfterimage(Projectile, lightColor, Projectile.Hitbox.Size() / 2f, 0.8f, 0.1f, 2);
             return true;
         }
     }

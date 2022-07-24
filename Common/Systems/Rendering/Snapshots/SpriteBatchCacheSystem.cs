@@ -32,7 +32,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Snapshots
             TransformMatrix = null;
         }
 
-        public static void EnsureInitialized() {
+        internal static void EnsureInitialized() {
             if (Initialized) {
                 return;
             }

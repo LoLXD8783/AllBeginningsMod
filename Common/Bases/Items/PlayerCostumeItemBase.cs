@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Bases.Items
 {
-    public abstract class FullPlayerCostumeBase : ModItem
+    public abstract class PlayerCostumeItemBase : ModItem
     {
         public override void Load() {
             if (Main.dedServ) {
