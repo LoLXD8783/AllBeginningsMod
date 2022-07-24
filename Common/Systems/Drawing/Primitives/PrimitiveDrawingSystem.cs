@@ -67,10 +67,6 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
             queuedDrawData?.Add(new PrimitiveDrawData(vertices, indices, effect, type));
         }
 
-        private static void ClearQueuedPrimitives() {
-            queuedDrawData?.Clear();
-        }
-
         private static void DrawQueuedPrimitives() {
             queuedDrawData?.ForEach(drawData => {
                 IndexBuffer?.SetData(drawData.Indices, 0, drawData.Indices.Length, SetDataOptions.Discard);
@@ -95,14 +91,13 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
 
             Device.RasterizerState = RasterizerState.CullNone;
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
             DrawQueuedPrimitives();
-            ClearQueuedPrimitives();
-
             spriteBatch.End();
 
             Device.SetRenderTargets(oldTargets);
+
+            queuedDrawData?.Clear();
         }
 
         private static void DrawTarget(On.Terraria.Main.orig_DrawDust orig, Main self) {
@@ -110,7 +105,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
 
             SpriteBatch spriteBatch = Main.spriteBatch;
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
             spriteBatch.Draw(PrimitiveTarget, DrawUtils.ScreenRectangle, Color.White);
             spriteBatch.End();
         }
