@@ -1,66 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using ReLogic.Content;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace AllBeginningsMod.Utility
 {
     public static class ThreadUtils
     {
-        public static bool IsMainThread => ReLogic.Content.AssetRepository.IsMainThread;
+        public static bool IsMainThread => AssetRepository.IsMainThread;
 
-        /// <summary>
-        /// Queues the specified action to the main thread and blocks until its complete.<br />
-        /// If the current thread is the main thread, the action is invoked directly.
-        /// </summary>
-        /// <param name="action">The action to invoke</param>
-        /// <param name="cancellationToken">The CancellationToken to observe</param>
-        /// <exception cref="AggregateException"></exception>
-        /// <exception cref="OperationCanceledException"></exception>
         public static void RunOnMainThread(Action action, CancellationToken cancellationToken = default) {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (IsMainThread) {
                 action();
                 return;
             }
 
-            using (var manualresetevent = new ManualResetEventSlim(false)) {
-                Exception error = null;
-                Main.QueueMainThreadAction(() => {
-                    try {
-                        if (!cancellationToken.IsCancellationRequested) {
-                            action();
-                        }
+            using ManualResetEventSlim manualresetevent = new(false);
+            Exception error = null;
+
+            Main.QueueMainThreadAction(() => {
+                try {
+                    if (!cancellationToken.IsCancellationRequested) {
+                        action();
                     }
-                    catch (Exception e) {
-                        error = e;
-                    }
-                    finally {
-                        manualresetevent.Set();
-                    }
+                }
+                catch (Exception exception) {
+                    error = exception;
+                }
+                finally {
+                    manualresetevent.Set();
+                }
+            });
+
+            manualresetevent.Wait(cancellationToken);
+
+            if (error != null) {
+                throw new AggregateException(new Exception[] { 
+                    error 
                 });
-                manualresetevent.Wait(cancellationToken);
-                if (error != null)
-                    throw new AggregateException(new Exception[] { error });
             }
         }
 
-        /// <summary>
-        /// Queues the specified action to the main thread and returns a task that waits until its complete
-        /// </summary>
-        /// <param name="action"></param>
-        /// <param name="cancellationToken"></param>
-        /// <exception cref="ArgumentNullException"></exception>
         public static Task RunOnMainThreadAsync(Action action, CancellationToken cancellationToken = default) {
             cancellationToken.ThrowIfCancellationRequested();
-            if (action == null)
+
+            if (action == null) {
                 throw new ArgumentNullException(nameof(action));
+            }
 
             if (IsMainThread) {
                 if (cancellationToken.IsCancellationRequested) {
@@ -69,12 +58,11 @@ namespace AllBeginningsMod.Utility
                 try {
                     action();
                 }
-                catch (Exception e) {
-                    return Task.FromException(e);
+                catch (Exception exception) {
+                    return Task.FromException(exception);
                 }
                 return Task.CompletedTask;
             }
-
 
             TaskCompletionSource source = new();
 
@@ -85,14 +73,13 @@ namespace AllBeginningsMod.Utility
                 try {
                     action();
                 }
-                catch (Exception e) {
-                    source.SetException(e);
+                catch (Exception exception) {
+                    source.SetException(exception);
                 }
                 finally {
                     source.SetResult();
                 }
             });
-
             return source.Task;
         }
     }

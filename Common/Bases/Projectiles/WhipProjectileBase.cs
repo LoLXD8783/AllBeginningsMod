@@ -10,6 +10,10 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
 {
     public abstract class WhipProjectileBase : ModProjectile
     {
+        public Player Owner => Main.player[Projectile.owner];
+
+        public ref float Timer => ref Projectile.ai[0];
+
         public abstract int HeadHeight { get; }
 
         public abstract int ChainHeight { get; }
@@ -19,16 +23,11 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
 
         public abstract Color BackLineColor { get; }
 
-        public ref float Timer => ref Projectile.ai[0];
-
-        public Player Owner => Main.player[Projectile.owner];
-
         public override void SetStaticDefaults() {
             ProjectileID.Sets.IsAWhip[Type] = true;
         }
 
         public override void SetDefaults() {
-            Projectile.DefaultToWhip();
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.ownerHitCheck = true;
@@ -49,7 +48,6 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
 
             DrawControlPointsBackLine(controlPoints);
             DrawControlPoints(controlPoints);
-
             return false;
         }
 

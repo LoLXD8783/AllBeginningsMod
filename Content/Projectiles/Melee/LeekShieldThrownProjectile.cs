@@ -69,7 +69,6 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
 
                 Main.EntitySpriteDraw(texture, position, null, lightColor * alpha, Projectile.oldRot[i], origin, Projectile.scale, effects, 0);
             }
-
             return true;
         }
     }

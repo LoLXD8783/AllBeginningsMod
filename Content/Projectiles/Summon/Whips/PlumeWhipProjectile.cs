@@ -30,9 +30,9 @@ namespace AllBeginningsMod.Content.Projectiles.Summon.Whips
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            var featherCount = Main.rand.Next(2, 5);
+            int featherCount = Main.rand.Next(2, 5);
 
-            for (var i = 0; i < featherCount; i++) {
+            for (int i = 0; i < featherCount; i++) {
                 Vector2 velocity = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(60f));
                 Projectile.NewProjectile(Projectile.GetSource_OnHit(target), target.Center, velocity, ModContent.ProjectileType<PlumeWhipFeatherProjectile>(), damage / featherCount + 1, Projectile.knockBack, Projectile.owner);
             }

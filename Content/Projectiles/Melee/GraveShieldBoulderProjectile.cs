@@ -25,6 +25,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
 
             Projectile.frame = Main.rand.Next(3);
         }
+
         public override void AI() {
             Projectile.alpha += 4;
         }
