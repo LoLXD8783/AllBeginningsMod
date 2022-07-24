@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
 {
     [Autoload(Side = ModSide.Client)]
-    public sealed class PrimitiveRenderingSystem : ModSystem
+    public sealed class PrimitiveDrawingSystem : ModSystem
     {
         public static DynamicIndexBuffer IndexBuffer { get; private set; }
         public static DynamicVertexBuffer VertexBuffer { get; private set; }

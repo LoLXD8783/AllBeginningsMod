@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace AllBeginningsMod.Common.Systems.Rendering
 {
     [Autoload(Side = ModSide.Client)]
-    public sealed class PlayerRenderingSystem : ModSystem
+    public sealed class PlayerDrawingSystem : ModSystem
     {
         public static RenderTarget2D PlayerTarget { get; private set; }
 
