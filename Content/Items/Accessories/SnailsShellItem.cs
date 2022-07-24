@@ -9,7 +9,7 @@ namespace AllBeginningsMod.Content.Items.Accessories
     {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Snail's Shell");
-            Tooltip.SetDefault("Increases endurance by 10%, however decreases movement speed by 10%");
+            Tooltip.SetDefault("Increases player endurance" + "\nThe wearer starts to feel heavier");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

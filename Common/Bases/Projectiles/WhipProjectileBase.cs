@@ -10,6 +10,10 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
 {
     public abstract class WhipProjectileBase : ModProjectile
     {
+        public Player Owner => Main.player[Projectile.owner];
+
+        public ref float Timer => ref Projectile.ai[0];
+
         public abstract int HeadHeight { get; }
 
         public abstract int ChainHeight { get; }
@@ -18,10 +22,6 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
         public abstract int HandleHeight { get; }
 
         public abstract Color BackLineColor { get; }
-
-        protected ref float Timer => ref Projectile.ai[0];
-
-        protected Player Owner => Main.player[Projectile.owner];
 
         public override void SetStaticDefaults() {
             ProjectileID.Sets.IsAWhip[Type] = true;
@@ -43,20 +43,18 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
         }
 
         public override bool PreDraw(ref Color lightColor) {
-            List<Vector2> controlPoints = new List<Vector2>();
+            List<Vector2> controlPoints = new();
             Projectile.FillWhipControlPoints(Projectile, controlPoints);
 
             DrawControlPointsBackLine(controlPoints);
             DrawControlPoints(controlPoints);
-            
             return false;
         }
 
         protected void DrawControlPointsBackLine(List<Vector2> controlPoints) {
             Texture2D texture = TextureAssets.FishingLine.Value;
             Rectangle frame = texture.Frame();
-            Vector2 origin = new Vector2(frame.Width / 2, 2);
-
+            Vector2 origin = new(frame.Width / 2f, 2f);
             Vector2 position = controlPoints[0];
 
             for (int i = 0; i < controlPoints.Count - 1; i++) {
@@ -65,7 +63,7 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
 
                 float rotation = diff.ToRotation() - MathHelper.PiOver2;
                 Color color = Lighting.GetColor(element.ToTileCoordinates(), BackLineColor);
-                Vector2 scale = new Vector2(1, (diff.Length() + 2) / frame.Height);
+                Vector2 scale = new(1f, (diff.Length() + 2f) / frame.Height);
 
                 Main.EntitySpriteDraw(texture, position - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0);
 

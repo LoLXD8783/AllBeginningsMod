@@ -10,14 +10,16 @@ namespace AllBeginningsMod.Content.Buffs
             DisplayName.SetDefault("Devil's Gift");
             Description.SetDefault("Increased damage and monster spawns. Enjoy the gift");
 
-            Main.buffNoTimeDisplay[Type] = true;
             Main.buffNoSave[Type] = true;
+            Main.buffNoTimeDisplay[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex) {
             if (player.TryGetModPlayer(out BuffPlayer buffPlayer)) {
                 buffPlayer.DevilGift = true;
             }
+
+            player.GetDamage(DamageClass.Generic) += 0.1f;
         }
     }
 }

@@ -18,7 +18,6 @@ namespace AllBeginningsMod.Content.Tiles
             Main.tileFrameImportant[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1xX);
-
             TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.CoordinateHeights = new int[]
             {
@@ -26,7 +25,6 @@ namespace AllBeginningsMod.Content.Tiles
                 16,
                 16
             };
-
             TileObjectData.addTile(Type);
 
             DustType = DustID.Shadowflame;

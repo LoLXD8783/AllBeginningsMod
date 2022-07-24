@@ -7,13 +7,13 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
 {
     public abstract class HeldProjectileBase : ModProjectile
     {
-        protected Player Owner => Main.player[Projectile.owner];
+        public Player Owner => Main.player[Projectile.owner];
 
-        protected Vector2 HoldoutOffset;
+        public bool ChannelDependant;
+        public bool ChangeOwnerItemData;
+        public bool ChangeOwnerDirection;
 
-        protected bool ChannelDependant;
-        protected bool ChangeOwnerItemData;
-        protected bool ChangeOwnerDirection;
+        public Vector2 HoldoutOffset;
 
         public override void AI() {
             if (ChannelDependant && !Owner.channel) {

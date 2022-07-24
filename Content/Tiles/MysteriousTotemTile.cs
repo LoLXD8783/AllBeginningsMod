@@ -16,9 +16,7 @@ namespace AllBeginningsMod.Content.Tiles
             Main.tileFrameImportant[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
-
             TileObjectData.newTile.DrawYOffset = 2;
-
             TileObjectData.addTile(Type);
 
             DustType = DustID.Iron;

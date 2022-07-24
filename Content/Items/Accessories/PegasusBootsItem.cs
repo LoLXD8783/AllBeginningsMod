@@ -7,7 +7,7 @@ namespace AllBeginningsMod.Content.Items.Accessories
 {
     public sealed class PegasusBootsItem : ModItem
     {
-        public override void SetStaticDefaults() {  
+        public override void SetStaticDefaults() {
             DisplayName.SetDefault("Pegasus Boots");
             Tooltip.SetDefault("The wearer can run fast");
 
@@ -25,8 +25,8 @@ namespace AllBeginningsMod.Content.Items.Accessories
         }
 
         public override void UpdateEquip(Player player) {
-            player.moveSpeed += 0.05f;
             player.accRunSpeed = 4f;
+            player.moveSpeed += 0.05f;
         }
     }
 }

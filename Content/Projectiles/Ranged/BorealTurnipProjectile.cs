@@ -1,8 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using AllBeginningsMod.Utility;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -18,11 +17,10 @@ namespace AllBeginningsMod.Content.Projectiles.Ranged
         }
 
         public override void SetDefaults() {
+            Projectile.friendly = true;
+
             Projectile.width = 32;
             Projectile.height = 32;
-
-            Projectile.friendly = true;
-            Projectile.hostile = false;
 
             Projectile.penetrate = -1;
             Projectile.timeLeft = 180;
@@ -39,39 +37,17 @@ namespace AllBeginningsMod.Content.Projectiles.Ranged
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            float maxNPCDistance = 512f * 512f;
+            NPC npc = Projectile.FindTargetWithinRange(512f);
 
-            for (int i = 0; i < Main.maxNPCs; i++) {
-                NPC npc = Main.npc[i];
-                
-                if (npc != target && npc.CanBeChasedBy()) {
-                    float currentNPCDistance = npc.DistanceSQ(Projectile.Center);
-
-                    if (currentNPCDistance < maxNPCDistance) {
-                        maxNPCDistance = currentNPCDistance;
-
-                        Vector2 velocity = Projectile.DirectionTo(npc.Center);
-                        velocity = velocity.RotatedByRandom(MathHelper.ToRadians(5f));
-                        velocity *= Projectile.velocity.Length();
-                        Projectile.velocity = velocity;
-                    }
-                }
+            if (npc != null) {
+                Projectile.velocity = Projectile.DirectionTo(npc.Center) * Projectile.velocity.Length();
             }
 
             target.AddBuff(BuffID.Frostburn, 60);
         }
 
         public override bool PreDraw(ref Color lightColor) {
-            SpriteEffects effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Texture2D texture = TextureAssets.Projectile[Type].Value;
-            Vector2 origin = Projectile.Hitbox.Size() / 2f;
-
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Type]; i += 2) {
-                Vector2 position = Projectile.oldPos[i] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
-                float alpha = 0.8f - 0.2f * (i / 2f);
-                Main.EntitySpriteDraw(texture, position, null, lightColor * alpha, Projectile.oldRot[i], origin, Projectile.scale, effects, 0);
-            }
-
+            ProjectileUtils.DrawAfterimage(Projectile, lightColor, Projectile.Hitbox.Size() / 2f, 0.8f, 0.1f, 2);
             return true;
         }
     }

@@ -48,8 +48,15 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             int splitCount = Main.rand.Next(3, 5);
 
             for (int i = 0; i < splitCount; i++) {
-                Vector2 velocity = new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f));
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, velocity, ModContent.ProjectileType<LeekShieldReturningProjectile>(), Projectile.damage / splitCount, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(
+                    Projectile.GetSource_Death(), 
+                    Projectile.Center,
+                    new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f)), 
+                    ModContent.ProjectileType<LeekShieldReturningProjectile>(), 
+                    Projectile.damage / splitCount, 
+                    Projectile.knockBack, 
+                    Projectile.owner
+                );
             }
 
             for (int i = 0; i < 10; i++) {
@@ -69,7 +76,6 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
 
                 Main.EntitySpriteDraw(texture, position, null, lightColor * alpha, Projectile.oldRot[i], origin, Projectile.scale, effects, 0);
             }
-
             return true;
         }
     }

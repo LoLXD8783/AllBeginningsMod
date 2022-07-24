@@ -9,7 +9,7 @@ namespace AllBeginningsMod.Common.Systems.Recipes
     {
         public static RecipeGroup PlatinumBarGroup { get; private set; }
 
-        public override void Unload() {
+        public override void OnModUnload() {
             PlatinumBarGroup = null;
         }
 
@@ -18,6 +18,7 @@ namespace AllBeginningsMod.Common.Systems.Recipes
                 ItemID.PlatinumBar,
                 ItemID.GoldBar
             });
+
             RecipeGroup.RegisterGroup("AllBeginningsMod:PlatinumBar", PlatinumBarGroup);
         }
     }
