@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AllBeginningsMod.Utility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
@@ -13,7 +14,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering
         private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
 
         public override void OnModLoad() {
-            Main.QueueMainThreadAction(() => {
+            ThreadUtils.RunOnMainThread(() => {
                 PlayerTarget = new RenderTarget2D(Device, Main.screenWidth, Main.screenHeight);
             });
 
@@ -23,7 +24,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering
         }
 
         public override void OnModUnload() {
-            Main.QueueMainThreadAction(() => {
+            ThreadUtils.RunOnMainThread(() => {
                 PlayerTarget.Dispose();
                 PlayerTarget = null;
             });
@@ -60,7 +61,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering
         }
 
         private static void ResizeTarget(Vector2 resolution) {
-            Main.QueueMainThreadAction(() => {
+            ThreadUtils.RunOnMainThread(() => {
                 PlayerTarget = new RenderTarget2D(Device, (int)resolution.X, (int)resolution.Y);
             });
         }

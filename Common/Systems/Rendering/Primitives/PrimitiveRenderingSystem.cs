@@ -20,7 +20,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
         private static List<PrimitiveDrawData> queuedDrawData;
 
         public override void OnModLoad() {
-            Main.QueueMainThreadAction(() => {
+            ThreadUtils.RunOnMainThread(() => {
                 PrimitiveTarget = new RenderTarget2D(Device, Main.screenWidth / 2, Main.screenHeight / 2);
             });
 
@@ -33,7 +33,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
         }
 
         public override void OnModUnload() {
-            Main.QueueMainThreadAction(() => {
+            ThreadUtils.RunOnMainThread(() => {
                 PrimitiveTarget?.Dispose();
                 PrimitiveTarget = null;
             });
@@ -116,7 +116,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
         }
 
         private static void ResizeTarget(Vector2 resolution) {
-            Main.QueueMainThreadAction(() => {
+            ThreadUtils.RunOnMainThread(() => {
                 PrimitiveTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, (int)(resolution.X / 2f), (int)(resolution.Y / 2f));
             });
         }

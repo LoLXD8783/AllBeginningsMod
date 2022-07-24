@@ -18,7 +18,7 @@ namespace AllBeginningsMod.Utility
                 return;
             }
 
-            using ManualResetEventSlim manualresetevent = new(false);
+            using ManualResetEventSlim manualResetEvent = new(false);
             Exception error = null;
 
             Main.QueueMainThreadAction(() => {
@@ -31,11 +31,11 @@ namespace AllBeginningsMod.Utility
                     error = exception;
                 }
                 finally {
-                    manualresetevent.Set();
+                    manualResetEvent.Set();
                 }
             });
 
-            manualresetevent.Wait(cancellationToken);
+            manualResetEvent.Wait(cancellationToken);
 
             if (error != null) {
                 throw new AggregateException(new Exception[] { 
