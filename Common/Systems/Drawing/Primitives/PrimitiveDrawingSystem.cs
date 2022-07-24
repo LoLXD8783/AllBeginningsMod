@@ -59,7 +59,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering.Primitives
                 IndexBuffer = new DynamicIndexBuffer(Device, IndexElementSize.SixteenBits, indices.Length, BufferUsage.WriteOnly);
             }
 
-            if (IndexBuffer == null || VertexBuffer.VertexCount < vertices.Length) {
+            if (VertexBuffer == null || VertexBuffer.VertexCount < vertices.Length) {
                 VertexBuffer?.Dispose();
                 VertexBuffer = new DynamicVertexBuffer(Device, VertexPositionColorTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
             }

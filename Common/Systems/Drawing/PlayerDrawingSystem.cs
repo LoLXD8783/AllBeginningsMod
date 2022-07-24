@@ -47,7 +47,7 @@ namespace AllBeginningsMod.Common.Systems.Rendering
             Device.SetRenderTarget(PlayerTarget);
             Device.Clear(Color.Transparent);
 
-            spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(default, default, default, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
 
             Player player = Main.LocalPlayer;
 

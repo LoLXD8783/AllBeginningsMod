@@ -1,5 +1,4 @@
 ﻿using AllBeginningsMod.Common.Config;
-using AllBeginningsMod.Utility;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -15,7 +14,7 @@ namespace AllBeginningsMod.Common.Systems.Particles
         public static List<Particle> Particles { get; private set; }
 
         public override void OnModLoad() {
-            Particles = new List<Particle>(MaxParticles);
+            Particles = new List<Particle>();
 
             On.Terraria.Main.DrawDust += DrawParticles;
         }
@@ -27,19 +26,22 @@ namespace AllBeginningsMod.Common.Systems.Particles
             On.Terraria.Main.DrawDust -= DrawParticles;
         }
 
-        public override void PostUpdateDusts() {
+        public override void OnWorldUnload() {
+            Particles?.Clear();
+        }
+
+        public override void PostUpdateDusts() { 
             for (int i = 0; i < Particles.Count; i++) {
                 if (Particles[i] is not Particle particle) {
                     continue;
                 }
                
-                particle.Position += particle.Velocity;
                 particle.Update();
             }
         }
 
         public static Particle SpawnParticle(Particle particle) {
-            if (MaxParticles == -1 || MaxParticles >= Particles.Capacity) {
+            if (MaxParticles == -1 || Particles.Count < MaxParticles) {
                 particle.OnSpawn();
                 Particles.Add(particle);
             }
@@ -55,10 +57,10 @@ namespace AllBeginningsMod.Common.Systems.Particles
             orig(self);
 
             SpriteBatch spriteBatch = Main.spriteBatch;
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
 
             for (int i = 0; i < Particles.Count; i++) {
-                if (Particles[i] is not Particle particle || !DrawUtils.WorldOnScreen(particle.Position)) {
+                if (Particles[i] is not Particle particle) {
                     continue;
                 } 
 

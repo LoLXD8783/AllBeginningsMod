@@ -11,7 +11,7 @@ namespace AllBeginningsMod.Common.Config
 
         public override ConfigScope Mode => ConfigScope.ClientSide;
         
-        [Header("Visuals [i:237]")]
+        [Header("Visuals [i:237]")] 
 
         [DefaultValue(-1)]
         [Range(-1, 4000)]
