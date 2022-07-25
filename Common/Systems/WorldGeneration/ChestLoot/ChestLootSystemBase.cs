@@ -3,54 +3,50 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Common.Systems.WorldGeneration.ChestLoot
+namespace AllBeginningsMod.Common.Systems.WorldGeneration.ChestLoot;
+
+public abstract class ChestLootSystem : ModSystem
 {
-    public abstract class ChestLootSystem : ModSystem
-    {
-        public static List<ItemChestLootEntry> LootEntries { get; private set; }
+    public static List<ItemChestLootEntry> LootEntries { get; private set; }
 
-        public abstract int ChestFrameX { get; }
+    public abstract int ChestFrameX { get; }
 
-        public sealed override void PostWorldGen() {
-            LootEntries = new List<ItemChestLootEntry>();
+    public sealed override void PostWorldGen() {
+        LootEntries = new List<ItemChestLootEntry>();
 
-            AddLootEntries();
+        AddLootEntries();
 
-            for (var i = 0; i < Main.maxChests; i++) {
-                Chest chest = Main.chest[i];
+        for (int i = 0; i < Main.maxChests; i++) {
+            Chest chest = Main.chest[i];
 
-                if (chest == null) {
-                    continue;
-                }
+            if (chest == null)
+                continue;
 
-                Tile tile = Framing.GetTileSafely(chest.x, chest.y);
+            Tile tile = Framing.GetTileSafely(chest.x, chest.y);
 
-                if (!tile.HasTile || tile.TileType != TileID.Containers || tile.TileFrameX != ChestFrameX) {
-                    continue;
-                }
+            if (!tile.HasTile || tile.TileType != TileID.Containers || tile.TileFrameX != ChestFrameX)
+                continue;
 
-                LootEntries.ForEach(lootEntry => AddLootToChest(chest, lootEntry));
-            }
-
-            LootEntries?.Clear();
-            LootEntries = null;
+            LootEntries.ForEach(lootEntry => AddLootToChest(chest, lootEntry));
         }
 
-        public virtual void AddLootEntries() { }
+        LootEntries?.Clear();
+        LootEntries = null;
+    }
 
-        private static void AddLootToChest(Chest chest, ItemChestLootEntry loot) {
-            if (!WorldGen.genRand.NextBool(loot.SpawnChance)) {
-                return;
-            }
+    public virtual void AddLootEntries() { }
 
-            for (int i = 0; i < Chest.maxItems; i++) {
-                Item item = chest.item[i];
+    private static void AddLootToChest(Chest chest, ItemChestLootEntry loot) {
+        if (!WorldGen.genRand.NextBool(loot.SpawnChance))
+            return;
 
-                if (item.IsAir) {
-                    item.SetDefaults(loot.Type);
-                    item.stack = WorldGen.genRand.Next(loot.MinStack, loot.MaxStack);
-                    break;
-                }
+        for (int i = 0; i < Chest.maxItems; i++) {
+            Item item = chest.item[i];
+
+            if (item.IsAir) {
+                item.SetDefaults(loot.Type);
+                item.stack = WorldGen.genRand.Next(loot.MinStack, loot.MaxStack);
+                break;
             }
         }
     }

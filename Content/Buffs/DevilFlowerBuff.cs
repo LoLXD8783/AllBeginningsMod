@@ -2,24 +2,22 @@
 using Terraria;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Content.Buffs
+namespace AllBeginningsMod.Content.Buffs;
+
+public sealed class DevilFlowerBuff : ModBuff
 {
-    public sealed class DevilFlowerBuff : ModBuff
-    {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Devil's Gift");
-            Description.SetDefault("Increased damage and monster spawns. Enjoy the gift");
+    public override void SetStaticDefaults() {
+        DisplayName.SetDefault("Devil's Gift");
+        Description.SetDefault("Increased damage and monster spawns. Enjoy the gift");
 
-            Main.buffNoSave[Type] = true;
-            Main.buffNoTimeDisplay[Type] = true;
-        }
+        Main.buffNoSave[Type] = true;
+        Main.buffNoTimeDisplay[Type] = true;
+    }
 
-        public override void Update(Player player, ref int buffIndex) {
-            if (player.TryGetModPlayer(out BuffPlayer buffPlayer)) {
-                buffPlayer.DevilGift = true;
-            }
+    public override void Update(Player player, ref int buffIndex) {
+        if (player.TryGetModPlayer(out BuffPlayer buffPlayer))
+            buffPlayer.DevilGift = true;
 
-            player.GetDamage(DamageClass.Generic) += 0.1f;
-        }
+        player.GetDamage(DamageClass.Generic) += 0.1f;
     }
 }
