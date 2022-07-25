@@ -13,7 +13,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 10;
+            Projectile.timeLeft = 800;
             Projectile.penetrate = -1;
             Projectile.aiStyle = 3;
         }
