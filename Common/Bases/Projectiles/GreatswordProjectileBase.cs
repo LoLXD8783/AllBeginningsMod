@@ -5,18 +5,20 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Projectiles.Melee;
 
-public abstract class BaseSwingableGreatswordProjectile : ModProjectile
+public abstract class GreatswordProjectileBase : ModProjectile
 {
+    // public override string Texture => $"{GetType().Namespace.Replace(".", "/").Replace("Common", "Assets")}/{GetType().Name}";
+
     private readonly Func<float, float> EaseOut = value => (float) Math.Log(2 * value + 1);
 
     //From end to beginning
     private readonly Func<float, float> InvertedEaseIn = value => (float) Math.Cos(1.5f * Math.Pow(value, 2));
 
     private Vector2 swingStartVelocity;
-
-
     private float transitionAngle;
     protected Player player => Main.player[Projectile.owner];
+    public int ItemTypeAssociated { get; set; }
+    public int TotalAnimationTime => MaxChargeTimer + MaxAttackTimer + MaxCooldownTimer;
 
     //Variables to tweak motion
     protected float ChargeUpBehindHeadAngle { get; set; } = MathHelper.Pi / 6f; //30deg
@@ -54,9 +56,7 @@ public abstract class BaseSwingableGreatswordProjectile : ModProjectile
         player.heldProj = Projectile.whoAmI;
         Projectile.active = true;
 
-        float angle = player.direction == -1
-            ? MathHelper.Pi
-            : 0f;
+        float angle = player.direction == -1 ? MathHelper.Pi : 0f;
         Vector2 swingVelocity = Vector2.Zero;
 
         //Rotating here because we want the rotation axis at (-1,-1) to be 0
@@ -72,8 +72,6 @@ public abstract class BaseSwingableGreatswordProjectile : ModProjectile
                 swingStartVelocity = Main.MouseWorld - player.Center;
 
                 float tempSwingStartRotation = swingStartVelocity.RotatedBy(rotationFixUpwards * -1).ToRotation();
-                // Console.WriteLine($"{tempSwingStartRotation} {-ChargeUpBehindHeadAngle * player.direction}");
-                // Console.WriteLine($"{MathHelper.ToDegrees(tempSwingStartRotation)} {MathHelper.ToDegrees(-ChargeUpBehindHeadAngle * player.direction)}");
 
                 if (player.direction == 1 && tempSwingStartRotation <= -ChargeUpBehindHeadAngle &&
                     tempSwingStartRotation >= -MathHelper.PiOver2
@@ -162,6 +160,7 @@ public abstract class BaseSwingableGreatswordProjectile : ModProjectile
                     CurrentState = State.Holding;
                     Timer = 0;
 
+                    //Saving swing start again so that it doesn't "blink" into the holding position
                     swingStartVelocity = swingVelocity;
                 }
 
@@ -178,6 +177,13 @@ public abstract class BaseSwingableGreatswordProjectile : ModProjectile
         Vector2 rotationCenter = player.Center + new Vector2(-18f * player.direction, -2f);
         Projectile.Center = rotationCenter + swingVelocity * HoldingRadius;
         Projectile.rotation = swingVelocity.ToRotation() + angle + MathHelper.PiOver4 * player.direction;
+        
+        TryKillProjectile();
+    }
+
+    private void TryKillProjectile() {
+        if (player.HeldItem.type != ItemTypeAssociated)
+            Projectile.Kill();
     }
 
     protected enum State
