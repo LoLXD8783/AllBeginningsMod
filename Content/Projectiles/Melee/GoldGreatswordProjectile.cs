@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee;
 
-public class GoldGreatswordProjectile : BaseSwingableGreatswordProjectile
+public class GoldGreatswordProjectile : GreatswordProjectileBase
 {
     public override void SetStaticDefaults() => DisplayName.SetDefault("Gold Greatsword");
 
@@ -13,8 +13,6 @@ public class GoldGreatswordProjectile : BaseSwingableGreatswordProjectile
 
         Projectile.width = 46;
         Projectile.height = 46;
-        Projectile.DamageType = DamageClass.Melee;
-        Projectile.damage = 22;
 
         //Greatsword properties
         ChargeUpBehindHeadAngle = MathHelper.Pi / 6f; //30deg
