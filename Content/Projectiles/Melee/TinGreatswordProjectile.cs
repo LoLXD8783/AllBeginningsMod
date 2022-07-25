@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee;
 
-public class TinGreatswordProjectile : BaseSwingableGreatswordProjectile
+public class TinGreatswordProjectile : GreatswordProjectileBase
 {
     public override void SetStaticDefaults() => DisplayName.SetDefault("Tin Greatsword");
 

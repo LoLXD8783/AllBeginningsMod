@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee;
 
-public class LeadGreatswordProjectile : BaseSwingableGreatswordProjectile
+public class LeadGreatswordProjectile : GreatswordProjectileBase
 {
     public override void SetStaticDefaults() => DisplayName.SetDefault("Lead Greatsword");
 

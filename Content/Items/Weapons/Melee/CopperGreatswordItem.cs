@@ -56,7 +56,7 @@ public class CopperGreatswordItem : ModItem
 
     public override bool? UseItem(Player player) {
         if (player.whoAmI == Main.myPlayer)
-            (heldProj.ModProjectile as BaseSwingableGreatswordProjectile).DoAttack();
+            (heldProj.ModProjectile as GreatswordProjectileBase).DoAttack();
 
         return false;
     }
