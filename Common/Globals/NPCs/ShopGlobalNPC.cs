@@ -14,7 +14,8 @@ public sealed class ShopGlobalNPC : GlobalNPC
             void AddZoologistCritterItem(int critterType, int itemType, ref int nextSlot) {
                 BestiaryEntry critterEntry = Main.BestiaryDB.FindEntryByNPCID(NPCID.FromNetId(critterType));
 
-                if (critterEntry.UIInfoProvider.GetEntryUICollectionInfo().UnlockState == BestiaryEntryUnlockState.CanShowDropsWithDropRates_4) {
+                if (critterEntry.UIInfoProvider.GetEntryUICollectionInfo().UnlockState ==
+                    BestiaryEntryUnlockState.CanShowDropsWithDropRates_4) {
                     shop.item[nextSlot].SetDefaults(itemType);
                     nextSlot++;
                 }

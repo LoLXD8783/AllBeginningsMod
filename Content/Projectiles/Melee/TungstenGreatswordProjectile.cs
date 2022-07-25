@@ -6,9 +6,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee;
 
 public class TungstenGreatswordProjectile : BaseSwingableGreatswordProjectile
 {
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Tungsten Greatsword");
-    }
+    public override void SetStaticDefaults() => DisplayName.SetDefault("Tungsten Greatsword");
 
     public override void SetDefaults() {
         base.SetDefaults();

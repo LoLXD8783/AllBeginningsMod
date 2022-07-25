@@ -6,9 +6,7 @@ namespace AllBeginningsMod.Content.Items.Armor.Scavenger;
 
 public sealed class ScavengerSkullItem : ModItem
 {
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Scavenger Skull");
-    }
+    public override void SetStaticDefaults() => DisplayName.SetDefault("Scavenger Skull");
 
     public override void SetDefaults() {
         Item.defense = 3;

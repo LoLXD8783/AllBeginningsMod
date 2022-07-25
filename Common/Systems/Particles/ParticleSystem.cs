@@ -26,9 +26,7 @@ public sealed class ParticleSystem : ModSystem
         On.Terraria.Main.DrawDust -= DrawParticles;
     }
 
-    public override void OnWorldUnload() {
-        Particles?.Clear();
-    }
+    public override void OnWorldUnload() => Particles?.Clear();
 
     public override void PostUpdateDusts() {
         for (int i = 0; i < Particles.Count; i++) {
@@ -57,7 +55,8 @@ public sealed class ParticleSystem : ModSystem
         orig(self);
 
         SpriteBatch spriteBatch = Main.spriteBatch;
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, default, Main.Rasterizer, default,
+            Main.GameViewMatrix.TransformationMatrix);
 
         for (int i = 0; i < Particles.Count; i++) {
             if (Particles[i] is not Particle particle)

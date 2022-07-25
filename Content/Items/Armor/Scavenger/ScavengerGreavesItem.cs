@@ -6,9 +6,7 @@ namespace AllBeginningsMod.Content.Items.Armor.Scavenger;
 
 public sealed class ScavengerGreavesItem : ModItem
 {
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Scavenger Greaves");
-    }
+    public override void SetStaticDefaults() => DisplayName.SetDefault("Scavenger Greaves");
 
     public override void SetDefaults() {
         Item.defense = 3;

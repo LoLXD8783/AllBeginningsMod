@@ -11,13 +11,7 @@ public sealed class ClientSideConfig : ModConfig
 
     public override ConfigScope Mode => ConfigScope.ClientSide;
 
-    [Header("Visuals [i:237]")]
-    [DefaultValue(-1)]
-    [Range(-1, 4000)]
-    [Slider]
-    [SliderColor(255, 236, 134)]
-    [BackgroundColor(211, 47, 74)]
-    [Label("Max Particles")]
-    [Tooltip("Sets the max amount of particles created by the mod. Set to -1 to have unlimited particles.")]
+    [Header("Visuals [i:237]"), DefaultValue(-1), Range(-1, 4000), Slider, SliderColor(255, 236, 134), BackgroundColor(211, 47, 74),
+     Label("Max Particles"), Tooltip("Sets the max amount of particles created by the mod. Set to -1 to have unlimited particles.")]
     public int MaxParticles { get; set; }
 }

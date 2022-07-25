@@ -6,9 +6,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee;
 
 public class GoldGreatswordProjectile : BaseSwingableGreatswordProjectile
 {
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Gold Greatsword");
-    }
+    public override void SetStaticDefaults() => DisplayName.SetDefault("Gold Greatsword");
 
     public override void SetDefaults() {
         base.SetDefaults();

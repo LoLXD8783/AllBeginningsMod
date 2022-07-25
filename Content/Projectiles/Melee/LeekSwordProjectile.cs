@@ -6,9 +6,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee;
 
 public sealed class LeekSwordProjectile : HeldProjectileBase
 {
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Leek Sword");
-    }
+    public override void SetStaticDefaults() => DisplayName.SetDefault("Leek Sword");
 
     public override void SetDefaults() {
         Projectile.friendly = true;
@@ -43,7 +41,5 @@ public sealed class LeekSwordProjectile : HeldProjectileBase
         Projectile.Center = Owner.Center;
     }
 
-    public override void Kill(int timeLeft) {
-        Owner.velocity = Vector2.Zero;
-    }
+    public override void Kill(int timeLeft) => Owner.velocity = Vector2.Zero;
 }

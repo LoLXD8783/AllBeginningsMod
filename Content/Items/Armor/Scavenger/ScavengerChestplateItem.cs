@@ -6,9 +6,7 @@ namespace AllBeginningsMod.Content.Items.Armor.Scavenger;
 
 public sealed class ScavengerChestplateItem : ModItem
 {
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Scavenger Chestplate");
-    }
+    public override void SetStaticDefaults() => DisplayName.SetDefault("Scavenger Chestplate");
 
     public override void SetDefaults() {
         Item.defense = 5;

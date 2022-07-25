@@ -19,11 +19,7 @@ public sealed class NightmareTotemTile : ModTile
 
         TileObjectData.newTile.CopyFrom(TileObjectData.Style1xX);
         TileObjectData.newTile.Height = 3;
-        TileObjectData.newTile.CoordinateHeights = new[] {
-            16,
-            16,
-            16
-        };
+        TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
         TileObjectData.addTile(Type);
 
         DustType = DustID.Shadowflame;
@@ -39,20 +35,18 @@ public sealed class NightmareTotemTile : ModTile
         Vector2 zero = Main.drawToScreen
             ? Vector2.Zero
             : new Vector2(Main.offScreenRange);
-        Vector2 drawPosition = new Vector2(i, j) * 16f - Main.screenPosition + zero + new Vector2(0f, TileObjectData.GetTileData(tile).DrawYOffset);
+        Vector2 drawPosition = new Vector2(i, j) * 16f - Main.screenPosition + zero +
+            new Vector2(0f, TileObjectData.GetTileData(tile).DrawYOffset);
 
         Rectangle frame = new(tile.TileFrameX, tile.TileFrameY, 18, 18);
 
         spriteBatch.Draw(glowmaskTexture, drawPosition, frame, Color.White, 0f, default, 1f, SpriteEffects.None, 0f);
     }
 
-    public override void NumDust(int i, int j, bool fail, ref int num) {
-        num = fail
-            ? 1
-            : 3;
-    }
+    public override void NumDust(int i, int j, bool fail, ref int num) => num = fail
+        ? 1
+        : 3;
 
-    public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-        Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<NightmareTotemItem>());
-    }
+    public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16,
+        16, 32, ModContent.ItemType<NightmareTotemItem>());
 }

@@ -6,9 +6,7 @@ namespace AllBeginningsMod.Content.Projectiles.Melee;
 
 public class LeadGreatswordProjectile : BaseSwingableGreatswordProjectile
 {
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Lead Greatsword");
-    }
+    public override void SetStaticDefaults() => DisplayName.SetDefault("Lead Greatsword");
 
     public override void SetDefaults() {
         base.SetDefaults();

@@ -14,11 +14,7 @@ public sealed class PlayerDrawingSystem : ModSystem
     private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
 
     public override void OnModLoad() {
-        ThreadUtils.RunOnMainThread(
-            () => {
-                PlayerTarget = new RenderTarget2D(Device, Main.screenWidth, Main.screenHeight);
-            }
-        );
+        ThreadUtils.RunOnMainThread(() => { PlayerTarget = new RenderTarget2D(Device, Main.screenWidth, Main.screenHeight); });
 
         Main.OnResolutionChanged += ResizeTarget;
 
@@ -26,12 +22,10 @@ public sealed class PlayerDrawingSystem : ModSystem
     }
 
     public override void OnModUnload() {
-        ThreadUtils.RunOnMainThread(
-            () => {
-                PlayerTarget.Dispose();
-                PlayerTarget = null;
-            }
-        );
+        ThreadUtils.RunOnMainThread(() => {
+            PlayerTarget.Dispose();
+            PlayerTarget = null;
+        });
 
         Main.OnResolutionChanged -= ResizeTarget;
 
@@ -62,11 +56,7 @@ public sealed class PlayerDrawingSystem : ModSystem
         Device.SetRenderTargets(oldTargets);
     }
 
-    private static void ResizeTarget(Vector2 resolution) {
-        ThreadUtils.RunOnMainThread(
-            () => {
-                PlayerTarget = new RenderTarget2D(Device, (int)resolution.X, (int)resolution.Y);
-            }
-        );
-    }
+    private static void ResizeTarget(Vector2 resolution) => ThreadUtils.RunOnMainThread(() => {
+        PlayerTarget = new RenderTarget2D(Device, (int) resolution.X, (int) resolution.Y);
+    });
 }

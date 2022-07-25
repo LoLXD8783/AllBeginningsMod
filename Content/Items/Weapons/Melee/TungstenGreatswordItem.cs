@@ -13,9 +13,7 @@ public class TungstenGreatswordItem : ModItem
 
     private bool holdingProjectile;
 
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Tungsten Greatsword");
-    }
+    public override void SetStaticDefaults() => DisplayName.SetDefault("Tungsten Greatsword");
 
     public override void SetDefaults() {
         Item.noMelee = true;
@@ -38,15 +36,8 @@ public class TungstenGreatswordItem : ModItem
             return;
 
         if (heldProj == null || holdingProjectile == false) {
-            heldProj = Projectile.NewProjectileDirect(
-                player.GetSource_FromThis(),
-                player.Center,
-                Vector2.Zero,
-                ModContent.ProjectileType<TungstenGreatswordProjectile>(),
-                Item.damage,
-                1f,
-                player.whoAmI
-            );
+            heldProj = Projectile.NewProjectileDirect(player.GetSource_FromThis(), player.Center, Vector2.Zero,
+                ModContent.ProjectileType<TungstenGreatswordProjectile>(), Item.damage, 1f, player.whoAmI);
             holdingProjectile = true;
         }
     }

@@ -34,13 +34,13 @@ public readonly struct SpriteBatchSnapshot
     public static SpriteBatchSnapshot Capture(SpriteBatch spriteBatch) {
         ReflectionCache.EnsureInitialized();
 
-        SpriteSortMode sortMode = (SpriteSortMode)ReflectionCache.SortMode.GetValue(spriteBatch);
-        BlendState blendState = (BlendState)ReflectionCache.BlendState.GetValue(spriteBatch);
-        SamplerState samplerState = (SamplerState)ReflectionCache.SamplerState.GetValue(spriteBatch);
-        DepthStencilState depthStencilState = (DepthStencilState)ReflectionCache.DepthStencilState.GetValue(spriteBatch);
-        RasterizerState rasterizerState = (RasterizerState)ReflectionCache.RasterizerState.GetValue(spriteBatch);
-        Effect effect = (Effect)ReflectionCache.Effect.GetValue(spriteBatch);
-        Matrix transformMatrix = (Matrix)ReflectionCache.TransformMatrix.GetValue(spriteBatch);
+        SpriteSortMode sortMode = (SpriteSortMode) ReflectionCache.SortMode.GetValue(spriteBatch);
+        BlendState blendState = (BlendState) ReflectionCache.BlendState.GetValue(spriteBatch);
+        SamplerState samplerState = (SamplerState) ReflectionCache.SamplerState.GetValue(spriteBatch);
+        DepthStencilState depthStencilState = (DepthStencilState) ReflectionCache.DepthStencilState.GetValue(spriteBatch);
+        RasterizerState rasterizerState = (RasterizerState) ReflectionCache.RasterizerState.GetValue(spriteBatch);
+        Effect effect = (Effect) ReflectionCache.Effect.GetValue(spriteBatch);
+        Matrix transformMatrix = (Matrix) ReflectionCache.TransformMatrix.GetValue(spriteBatch);
 
         return new SpriteBatchSnapshot(sortMode, blendState, samplerState, depthStencilState, rasterizerState, effect, transformMatrix);
     }

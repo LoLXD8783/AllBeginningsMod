@@ -10,15 +10,7 @@ public static class DustUtils
             float rotation = MathHelper.TwoPi * i / dustCount;
             Vector2 velocity = rotation.ToRotationVector2() * radius;
 
-            Dust dust = Dust.NewDustPerfect(
-                fadeOut
-                    ? position
-                    : position + velocity,
-                dustType,
-                fadeOut
-                    ? velocity
-                    : null
-            );
+            Dust dust = Dust.NewDustPerfect(fadeOut ? position : position + velocity, dustType, fadeOut ? velocity : null);
             dust.noGravity = true;
         }
     }

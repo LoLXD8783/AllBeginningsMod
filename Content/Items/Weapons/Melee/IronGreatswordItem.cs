@@ -13,9 +13,7 @@ public class IronGreatswordItem : ModItem
 
     private bool holdingProjectile;
 
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Iron Greatsword");
-    }
+    public override void SetStaticDefaults() => DisplayName.SetDefault("Iron Greatsword");
 
     public override void SetDefaults() {
         Item.noMelee = true;
@@ -38,7 +36,8 @@ public class IronGreatswordItem : ModItem
             return;
 
         if (heldProj == null || holdingProjectile == false) {
-            heldProj = Projectile.NewProjectileDirect(player.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<IronGreatswordProjectile>(), Item.damage, 1f, player.whoAmI);
+            heldProj = Projectile.NewProjectileDirect(player.GetSource_FromThis(), player.Center, Vector2.Zero,
+                ModContent.ProjectileType<IronGreatswordProjectile>(), Item.damage, 1f, player.whoAmI);
             holdingProjectile = true;
         }
     }

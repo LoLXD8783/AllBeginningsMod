@@ -26,9 +26,7 @@ public sealed class MidasPouchItem : ModItem
         Item.value = Item.sellPrice(silver: 1);
     }
 
-    public override bool CanRightClick() {
-        return true;
-    }
+    public override bool CanRightClick() => true;
 
     public override void RightClick(Player player) {
         int coinType = Main.rand.Next(100) switch {

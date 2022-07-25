@@ -19,11 +19,7 @@ public sealed class PrimitiveDrawingSystem : ModSystem
     private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
 
     public override void OnModLoad() {
-        ThreadUtils.RunOnMainThread(
-            () => {
-                PrimitiveTarget = new RenderTarget2D(Device, Main.screenWidth / 2, Main.screenHeight / 2);
-            }
-        );
+        ThreadUtils.RunOnMainThread(() => { PrimitiveTarget = new RenderTarget2D(Device, Main.screenWidth / 2, Main.screenHeight / 2); });
 
         queuedDrawData = new List<PrimitiveDrawData>();
 
@@ -34,12 +30,10 @@ public sealed class PrimitiveDrawingSystem : ModSystem
     }
 
     public override void OnModUnload() {
-        ThreadUtils.RunOnMainThread(
-            () => {
-                PrimitiveTarget?.Dispose();
-                PrimitiveTarget = null;
-            }
-        );
+        ThreadUtils.RunOnMainThread(() => {
+            PrimitiveTarget?.Dispose();
+            PrimitiveTarget = null;
+        });
 
         IndexBuffer?.Dispose();
         IndexBuffer = null;
@@ -64,25 +58,23 @@ public sealed class PrimitiveDrawingSystem : ModSystem
 
         if (VertexBuffer == null || VertexBuffer.VertexCount < vertices.Length) {
             VertexBuffer?.Dispose();
-            VertexBuffer = new DynamicVertexBuffer(Device, VertexPositionColorTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+            VertexBuffer = new DynamicVertexBuffer(Device, VertexPositionColorTexture.VertexDeclaration, vertices.Length,
+                BufferUsage.WriteOnly);
         }
 
         queuedDrawData?.Add(new PrimitiveDrawData(vertices, indices, effect, type));
     }
 
-    private static void DrawQueuedPrimitives() {
-        queuedDrawData?.ForEach(
-            drawData => {
-                IndexBuffer?.SetData(drawData.Indices, 0, drawData.Indices.Length, SetDataOptions.Discard);
-                VertexBuffer?.SetData(drawData.Vertices, SetDataOptions.Discard);
+    private static void DrawQueuedPrimitives() => queuedDrawData?.ForEach(drawData => {
+        IndexBuffer?.SetData(drawData.Indices, 0, drawData.Indices.Length, SetDataOptions.Discard);
+        VertexBuffer?.SetData(drawData.Vertices, SetDataOptions.Discard);
 
-                foreach (EffectPass pass in drawData.Effect.CurrentTechnique.Passes) {
-                    pass.Apply();
-                    Device.DrawIndexedPrimitives(drawData.Type, 0, 0, VertexBuffer.VertexCount, 0, DrawUtils.GetPrimitiveCount(VertexBuffer.VertexCount, drawData.Type));
-                }
-            }
-        );
-    }
+        foreach (EffectPass pass in drawData.Effect.CurrentTechnique.Passes) {
+            pass.Apply();
+            Device.DrawIndexedPrimitives(drawData.Type, 0, 0, VertexBuffer.VertexCount, 0,
+                DrawUtils.GetPrimitiveCount(VertexBuffer.VertexCount, drawData.Type));
+        }
+    });
 
     private static void CachePrimitiveDraw(GameTime gameTime) {
         SpriteBatch spriteBatch = Main.spriteBatch;
@@ -96,7 +88,8 @@ public sealed class PrimitiveDrawingSystem : ModSystem
 
         Device.RasterizerState = RasterizerState.CullNone;
 
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default,
+            Main.GameViewMatrix.TransformationMatrix);
         DrawQueuedPrimitives();
         spriteBatch.End();
 
@@ -110,16 +103,13 @@ public sealed class PrimitiveDrawingSystem : ModSystem
 
         SpriteBatch spriteBatch = Main.spriteBatch;
 
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default,
+            Main.GameViewMatrix.TransformationMatrix);
         spriteBatch.Draw(PrimitiveTarget, DrawUtils.ScreenRectangle, Color.White);
         spriteBatch.End();
     }
 
-    private static void ResizeTarget(Vector2 resolution) {
-        ThreadUtils.RunOnMainThread(
-            () => {
-                PrimitiveTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, (int)(resolution.X / 2f), (int)(resolution.Y / 2f));
-            }
-        );
-    }
+    private static void ResizeTarget(Vector2 resolution) => ThreadUtils.RunOnMainThread(() => {
+        PrimitiveTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, (int) (resolution.X / 2f), (int) (resolution.Y / 2f));
+    });
 }

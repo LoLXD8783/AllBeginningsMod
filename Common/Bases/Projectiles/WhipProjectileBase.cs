@@ -23,9 +23,7 @@ public abstract class WhipProjectileBase : ModProjectile
 
     public abstract Color BackLineColor { get; }
 
-    public override void SetStaticDefaults() {
-        ProjectileID.Sets.IsAWhip[Type] = true;
-    }
+    public override void SetStaticDefaults() => ProjectileID.Sets.IsAWhip[Type] = true;
 
     public override void SetDefaults() {
         Projectile.friendly = true;

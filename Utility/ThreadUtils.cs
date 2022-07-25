@@ -20,20 +20,14 @@ public static class ThreadUtils
         ManualResetEventSlim manualResetEvent = new(false);
         Exception error = null;
 
-        Main.QueueMainThreadAction(
-            () => {
-                try {
-                    if (!cancellationToken.IsCancellationRequested)
-                        action();
-                }
-                catch (Exception exception) {
-                    error = exception;
-                }
-                finally {
-                    manualResetEvent.Set();
-                }
+        Main.QueueMainThreadAction(() => {
+            try {
+                if (!cancellationToken.IsCancellationRequested)
+                    action();
             }
-        );
+            catch (Exception exception) { error = exception; }
+            finally { manualResetEvent.Set(); }
+        });
 
         manualResetEvent.Wait(cancellationToken);
 

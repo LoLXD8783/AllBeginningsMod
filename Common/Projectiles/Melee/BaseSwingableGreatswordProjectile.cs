@@ -7,10 +7,10 @@ namespace AllBeginningsMod.Common.Projectiles.Melee;
 
 public abstract class BaseSwingableGreatswordProjectile : ModProjectile
 {
-    private readonly Func<float, float> EaseOut = value => (float)Math.Log(2 * value + 1);
+    private readonly Func<float, float> EaseOut = value => (float) Math.Log(2 * value + 1);
 
     //From end to beginning
-    private readonly Func<float, float> InvertedEaseIn = value => (float)Math.Cos(1.5f * Math.Pow(value, 2));
+    private readonly Func<float, float> InvertedEaseIn = value => (float) Math.Cos(1.5f * Math.Pow(value, 2));
 
     private Vector2 swingStartVelocity;
 
@@ -28,8 +28,8 @@ public abstract class BaseSwingableGreatswordProjectile : ModProjectile
     protected int HoldingRadius { get; set; } = 14;
 
     protected State CurrentState {
-        get => (State)Projectile.ai[0];
-        set => Projectile.ai[0] = (float)value;
+        get => (State) Projectile.ai[0];
+        set => Projectile.ai[0] = (float) value;
     }
 
     protected float Timer {
@@ -75,12 +75,20 @@ public abstract class BaseSwingableGreatswordProjectile : ModProjectile
                 // Console.WriteLine($"{tempSwingStartRotation} {-ChargeUpBehindHeadAngle * player.direction}");
                 // Console.WriteLine($"{MathHelper.ToDegrees(tempSwingStartRotation)} {MathHelper.ToDegrees(-ChargeUpBehindHeadAngle * player.direction)}");
 
-                if ((player.direction == 1 && tempSwingStartRotation <= -ChargeUpBehindHeadAngle && tempSwingStartRotation >= -MathHelper.PiOver2)
-                    || (player.direction == -1 && tempSwingStartRotation >= ChargeUpBehindHeadAngle && tempSwingStartRotation <= MathHelper.PiOver2))
-                    swingStartVelocity = (-ChargeUpBehindHeadAngle * player.direction).ToRotationVector2().RotatedBy(rotationFixUpwards * player.direction + angle);
-                else if ((player.direction == 1 && tempSwingStartRotation >= -MathHelper.Pi + HoldingAngleArmDown && tempSwingStartRotation <= -MathHelper.PiOver2)
-                    || (player.direction == -1 && tempSwingStartRotation <= MathHelper.Pi - HoldingAngleArmDown && tempSwingStartRotation >= MathHelper.PiOver2))
-                    swingStartVelocity = (MathHelper.Pi + HoldingAngleArmDown * player.direction).ToRotationVector2().RotatedBy(rotationFixUpwards * player.direction + angle);
+                if (player.direction == 1 && tempSwingStartRotation <= -ChargeUpBehindHeadAngle &&
+                    tempSwingStartRotation >= -MathHelper.PiOver2
+                    || player.direction == -1 && tempSwingStartRotation >= ChargeUpBehindHeadAngle &&
+                    tempSwingStartRotation <= MathHelper.PiOver2) {
+                    swingStartVelocity = (-ChargeUpBehindHeadAngle * player.direction).ToRotationVector2()
+                        .RotatedBy(rotationFixUpwards * player.direction + angle);
+                }
+                else if (player.direction == 1 && tempSwingStartRotation >= -MathHelper.Pi + HoldingAngleArmDown &&
+                         tempSwingStartRotation <= -MathHelper.PiOver2
+                         || player.direction == -1 && tempSwingStartRotation <= MathHelper.Pi - HoldingAngleArmDown &&
+                         tempSwingStartRotation >= MathHelper.PiOver2) {
+                    swingStartVelocity = (MathHelper.Pi + HoldingAngleArmDown * player.direction).ToRotationVector2()
+                        .RotatedBy(rotationFixUpwards * player.direction + angle);
+                }
 
                 swingStartVelocity.Normalize();
                 swingVelocity = swingStartVelocity;

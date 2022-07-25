@@ -35,14 +35,9 @@ public sealed class DeathBlossomTile : ModTile
         TileObjectData.newTile.DrawYOffset = 2;
         TileObjectData.newTile.RandomStyleRange = 2;
 
-        TileObjectData.newTile.AnchorValidTiles = new int[] {
-            TileID.Grass
-        };
+        TileObjectData.newTile.AnchorValidTiles = new int[] { TileID.Grass };
 
-        TileObjectData.newTile.AnchorAlternateTiles = new int[] {
-            TileID.ClayPot,
-            TileID.PlanterBox
-        };
+        TileObjectData.newTile.AnchorAlternateTiles = new int[] { TileID.ClayPot, TileID.PlanterBox };
 
         TileObjectData.addTile(Type);
 
@@ -56,11 +51,8 @@ public sealed class DeathBlossomTile : ModTile
         b = 0.4f;
     }
 
-    public override void NumDust(int i, int j, bool fail, ref int num) {
-        num = 2;
-    }
+    public override void NumDust(int i, int j, bool fail, ref int num) => num = 2;
 
-    public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-        Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 32), ModContent.ItemType<DeathBlossomItem>());
-    }
+    public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j),
+        new Rectangle(i * 16, j * 16, 16, 32), ModContent.ItemType<DeathBlossomItem>());
 }

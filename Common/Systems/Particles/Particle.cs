@@ -23,9 +23,7 @@ public abstract class Particle
     public Vector2 Velocity;
     public virtual string TexturePath => GetType().FullName.Replace('.', '/');
 
-    public virtual void Update() {
-        Position += Velocity;
-    }
+    public virtual void Update() => Position += Velocity;
 
     public virtual void Draw() {
         if (!DrawUtils.WorldOnScreen(Position))

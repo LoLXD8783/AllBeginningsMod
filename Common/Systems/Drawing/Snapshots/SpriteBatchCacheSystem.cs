@@ -16,9 +16,7 @@ public sealed class ReflectionCache : ModSystem
     public static FieldInfo Effect { get; private set; }
     public static FieldInfo TransformMatrix { get; private set; }
 
-    public override void OnModLoad() {
-        EnsureInitialized();
-    }
+    public override void OnModLoad() => EnsureInitialized();
 
     public override void OnModUnload() {
         Initialized = false;

@@ -24,7 +24,5 @@ public sealed class FeatherCharmItem : ModItem
         Item.value = Item.sellPrice(silver: 60);
     }
 
-    public override void UpdateEquip(Player player) {
-        player.moveSpeed += 0.1f;
-    }
+    public override void UpdateEquip(Player player) => player.moveSpeed += 0.1f;
 }
