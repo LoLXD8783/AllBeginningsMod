@@ -5,10 +5,9 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Items.Melee;
 
-public abstract class GreatswordItemBase : ModItem
+public abstract class GreatswordItemBase<T> : ModItem where T : GreatswordProjectileBase
 {
-    protected Projectile HeldProjectile { get; private set; }
-    public abstract int HeldProjectileType { get; }
+    private T HeldProjectile { get; set; }
 
     public override void SetDefaults() {
         //Kirtle: useTime and useAnimation must be manually tailored for each greatsword..
@@ -21,22 +20,22 @@ public abstract class GreatswordItemBase : ModItem
         if (player.whoAmI != Main.myPlayer)
             return;
 
-        if (HeldProjectile == null || HeldProjectile?.active == false)
-            HeldProjectile = NewGreatswordProjectile(player, HeldProjectileType, Item.damage, Item.knockBack, player.whoAmI, Type);
+        if (HeldProjectile == null || HeldProjectile?.Projectile.active == false)
+            HeldProjectile = NewGreatswordProjectile(player, ModContent.ProjectileType<T>(), Item.damage, Item.knockBack, player.whoAmI, Type);
     }
 
     public override bool? UseItem(Player player) {
         if (player.whoAmI == Main.myPlayer)
-            (HeldProjectile.ModProjectile as GreatswordProjectileBase).DoAttack();
+            HeldProjectile.TryAttacking();
 
         return false;
     }
     
-    private static Projectile NewGreatswordProjectile(Player player, int type, int damage, float knockback, int owner,
-        int itemTypeAssociated) {
+    private static T NewGreatswordProjectile(Player player, int type, int damage, float knockback, int owner, int itemType) {
         Projectile projectile = Projectile.NewProjectileDirect(player.GetSource_FromThis(), player.Center, Vector2.Zero, type, damage, knockback, owner);
-        (projectile.ModProjectile as GreatswordProjectileBase).ItemTypeAssociated = itemTypeAssociated;
-
-        return projectile;
+        T greatswordProjectile = projectile.ModProjectile as T;
+        greatswordProjectile?.SetAssociatedItemType(itemType);
+        
+        return greatswordProjectile;
     }
 }
