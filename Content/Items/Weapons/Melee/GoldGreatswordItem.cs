@@ -9,9 +9,8 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Melee;
 
-public class GoldGreatswordItem : GreatswordItemBase
+public class GoldGreatswordItem : GreatswordItemBase<GoldGreatswordProjectile>
 {
-    public override int HeldProjectileType => ModContent.ProjectileType<GoldGreatswordProjectile>();
     public override void SetStaticDefaults() => DisplayName.SetDefault("Gold Greatsword");
     public override void SetDefaults() {
         base.SetDefaults();

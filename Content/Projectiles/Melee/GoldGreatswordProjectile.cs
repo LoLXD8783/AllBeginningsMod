@@ -1,4 +1,5 @@
 ﻿using AllBeginningsMod.Common.Projectiles.Melee;
+using AllBeginningsMod.Content.Items.Weapons.Melee;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 
@@ -18,10 +19,10 @@ public class GoldGreatswordProjectile : GreatswordProjectileBase
         ChargeUpBehindHeadAngle = MathHelper.Pi / 6f; //30deg
         HoldingAngleArmDown = MathHelper.Pi / 12f; //15deg
         SwingArc = 4 * MathHelper.Pi / 3f; //240deg
+        HoldingRadius = 14;
         MaxChargeTimer = 45;
         MaxAttackTimer = 15;
         MaxCooldownTimer = 15;
-        HoldingRadius = 14;
     }
 
     public override void AI() {
@@ -29,9 +30,5 @@ public class GoldGreatswordProjectile : GreatswordProjectileBase
         DrawOriginOffsetY = -14;
 
         base.AI();
-    }
-
-    public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-        //Change depending on arm rotation.. or projectile rotation
     }
 }

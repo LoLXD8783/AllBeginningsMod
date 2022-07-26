@@ -1,4 +1,5 @@
 ﻿using System;
+using AllBeginningsMod.Common.Bases.Projectiles;
 using AllBeginningsMod.Common.Items.Melee;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -6,10 +7,8 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Projectiles.Melee;
 
-public abstract class GreatswordProjectileBase : ModProjectile
+public abstract class GreatswordProjectileBase : ModProjectileBase
 {
-    // public override string Texture => $"{GetType().Namespace.Replace(".", "/").Replace("Common", "Assets")}/{GetType().Name}";
-
     private readonly Func<float, float> EaseOut = value => (float) Math.Log(2 * value + 1);
 
     //From end to beginning
@@ -212,7 +211,7 @@ public abstract class GreatswordProjectileBase : ModProjectile
     }
     
     public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-        
+
     }
 
     private void TryKillProjectile() {
