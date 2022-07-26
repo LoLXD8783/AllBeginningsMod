@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using AllBeginningsMod.Common.Bases.Items;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -7,7 +8,7 @@ using Terraria.ModLoader;
 namespace AllBeginningsMod.Content.Items.Accessories.Wings;
 
 [AutoloadEquip(EquipType.Wings)]
-public sealed class ClearFeatherWingsItem : ModItem
+public sealed class ClearFeatherWingsItem : ModItemBase
 {
     public override void SetStaticDefaults() {
         DisplayName.SetDefault("Clear Feather Wings");

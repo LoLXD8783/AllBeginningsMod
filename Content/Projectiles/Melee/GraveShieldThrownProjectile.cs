@@ -1,4 +1,5 @@
-﻿using AllBeginningsMod.Utility;
+﻿using AllBeginningsMod.Common.Bases.Projectiles;
+using AllBeginningsMod.Utility;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -6,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee;
 
-public sealed class GraveShieldThrownProjectile : ModProjectile
+public sealed class GraveShieldThrownProjectile : ModProjectileBase
 {
     public override void SetStaticDefaults() {
         DisplayName.SetDefault("Grave Shield");

@@ -1,4 +1,5 @@
-﻿using AllBeginningsMod.Content.Items.Placeables;
+﻿using AllBeginningsMod.Common.Bases.Tiles;
+using AllBeginningsMod.Content.Items.Placeables;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -9,7 +10,7 @@ using Terraria.ObjectData;
 
 namespace AllBeginningsMod.Content.Tiles;
 
-public sealed class NightmareTotemTile : ModTile
+public sealed class NightmareTotemTile : ModTileBase
 {
     public override void SetStaticDefaults() {
         Main.tileNoFail[Type] = true;
@@ -43,9 +44,7 @@ public sealed class NightmareTotemTile : ModTile
         spriteBatch.Draw(glowmaskTexture, drawPosition, frame, Color.White, 0f, default, 1f, SpriteEffects.None, 0f);
     }
 
-    public override void NumDust(int i, int j, bool fail, ref int num) => num = fail
-        ? 1
-        : 3;
+    public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 
     public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16,
         16, 32, ModContent.ItemType<NightmareTotemItem>());

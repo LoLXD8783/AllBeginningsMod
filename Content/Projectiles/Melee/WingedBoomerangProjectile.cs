@@ -1,10 +1,11 @@
-﻿using AllBeginningsMod.Content.Dusts;
+﻿using AllBeginningsMod.Common.Bases.Projectiles;
+using AllBeginningsMod.Content.Dusts;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee;
 
-public sealed class WingedBoomerangProjectile : ModProjectile
+public sealed class WingedBoomerangProjectile : ModProjectileBase
 {
     public override void SetDefaults() {
         Projectile.width = 16;

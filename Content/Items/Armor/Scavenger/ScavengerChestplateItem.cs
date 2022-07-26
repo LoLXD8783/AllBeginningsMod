@@ -1,10 +1,11 @@
-﻿using Terraria;
+﻿using AllBeginningsMod.Common.Bases.Items;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Armor.Scavenger;
 
-public sealed class ScavengerChestplateItem : ModItem
+public sealed class ScavengerChestplateItem : ModItemBase
 {
     public override void SetStaticDefaults() => DisplayName.SetDefault("Scavenger Chestplate");
 

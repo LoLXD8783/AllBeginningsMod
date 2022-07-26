@@ -1,11 +1,12 @@
-﻿using Terraria;
+﻿using AllBeginningsMod.Common.Bases.Items;
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Accessories;
 
-public sealed class MagmaShellItem : ModItem
+public sealed class MagmaShellItem : ModItemBase
 {
     public override void SetStaticDefaults() {
         DisplayName.SetDefault("Magma Shell");

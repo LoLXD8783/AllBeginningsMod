@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AllBeginningsMod.Common.Bases.Projectiles;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Summon.Whips;
 
-public sealed class PlumeWhipFeatherProjectile : ModProjectile
+public sealed class PlumeWhipFeatherProjectile : ModProjectileBase
 {
     public override void SetStaticDefaults() => DisplayName.SetDefault("Plume Whip Feather");
 

@@ -1,10 +1,11 @@
-﻿using Terraria;
+﻿using AllBeginningsMod.Common.Bases.Projectiles;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee;
 
-public sealed class GraveShieldBoulderProjectile : ModProjectile
+public sealed class GraveShieldBoulderProjectile : ModProjectileBase
 {
     public override void SetStaticDefaults() {
         DisplayName.SetDefault("Grave Boulder");

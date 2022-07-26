@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AllBeginningsMod.Common.Bases.Projectiles;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -8,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee;
 
-public sealed class LeekShieldThrownProjectile : ModProjectile
+public sealed class LeekShieldThrownProjectile : ModProjectileBase
 {
     public override void SetStaticDefaults() {
         DisplayName.SetDefault("Leek Shield");

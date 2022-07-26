@@ -1,4 +1,5 @@
-﻿using AllBeginningsMod.Content.Buffs;
+﻿using AllBeginningsMod.Common.Bases.Tiles;
+using AllBeginningsMod.Content.Buffs;
 using AllBeginningsMod.Content.Items.Placeables.Plants;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,7 +9,7 @@ using Terraria.ObjectData;
 
 namespace AllBeginningsMod.Content.Tiles.Plants;
 
-public sealed class DevilFlowerTile : ModTile
+public sealed class DevilFlowerTile : ModTileBase
 {
     public override void SetStaticDefaults() {
         Main.tileNoFail[Type] = true;

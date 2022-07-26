@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Bases.Projectiles;
 
-public abstract class HeldProjectileBase : ModProjectile
+public abstract class HeldProjectileBase : ModProjectileBase
 {
     public bool ChangeOwnerDirection;
     public bool ChangeOwnerItemData;

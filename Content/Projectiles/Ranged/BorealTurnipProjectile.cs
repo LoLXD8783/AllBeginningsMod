@@ -1,4 +1,5 @@
-﻿using AllBeginningsMod.Utility;
+﻿using AllBeginningsMod.Common.Bases.Projectiles;
+using AllBeginningsMod.Utility;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -7,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Ranged;
 
-public sealed class BorealTurnipProjectile : ModProjectile
+public sealed class BorealTurnipProjectile : ModProjectileBase
 {
     public override void SetStaticDefaults() {
         DisplayName.SetDefault("Boreal Turnip");

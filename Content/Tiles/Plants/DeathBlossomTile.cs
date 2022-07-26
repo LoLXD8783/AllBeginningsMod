@@ -1,4 +1,5 @@
-﻿using AllBeginningsMod.Content.Items.Materials;
+﻿using AllBeginningsMod.Common.Bases.Tiles;
+using AllBeginningsMod.Content.Items.Materials;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -10,7 +11,7 @@ using Terraria.ObjectData;
 
 namespace AllBeginningsMod.Content.Tiles.Plants;
 
-public sealed class DeathBlossomTile : ModTile
+public sealed class DeathBlossomTile : ModTileBase
 {
     public override void SetStaticDefaults() {
         Main.tileCut[Type] = true;

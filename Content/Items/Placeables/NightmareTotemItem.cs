@@ -1,4 +1,5 @@
-﻿using AllBeginningsMod.Content.Tiles;
+﻿using AllBeginningsMod.Common.Bases.Items;
+using AllBeginningsMod.Content.Tiles;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -6,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Placeables;
 
-public sealed class NightmareTotemItem : ModItem
+public sealed class NightmareTotemItem : ModItemBase
 {
     public override void SetStaticDefaults() {
         DisplayName.SetDefault("Nightmare Totem");

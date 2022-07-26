@@ -19,9 +19,9 @@ public abstract class RelicTileBase : ModTile
     public const int HorizontalFrames = 1;
     public const int VerticalFrames = 1;
 
-    public virtual string RelicTexturePath => GetType().FullName.Replace('.', '/');
+    public virtual string RelicTexturePath => GetType().FullName.Replace('.', '/').Replace("Content", "Assets");
 
-    public sealed override string Texture => "AllBeginningsMod/Content/Tiles/Relics/RelicPedestalTile";
+    public sealed override string Texture => "AllBeginningsMod/Assets/Tiles/Relics/RelicPedestalTile";
 
     public override void SetStaticDefaults() {
         Main.tileShine[Type] = 400;

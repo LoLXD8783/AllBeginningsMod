@@ -1,4 +1,5 @@
-﻿using AllBeginningsMod.Content.Projectiles.Summon.Whips;
+﻿using AllBeginningsMod.Common.Bases.Items;
+using AllBeginningsMod.Content.Projectiles.Summon.Whips;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -6,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Summon;
 
-public sealed class TimberWhipItem : ModItem
+public sealed class TimberWhipItem : ModItemBase
 {
     public override void SetStaticDefaults() {
         DisplayName.SetDefault("Timber Whip");

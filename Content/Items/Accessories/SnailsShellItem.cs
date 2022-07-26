@@ -1,11 +1,12 @@
-﻿using Terraria;
+﻿using AllBeginningsMod.Common.Bases.Items;
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Accessories;
 
-public sealed class SnailsShellItem : ModItem
+public sealed class SnailsShellItem : ModItemBase
 {
     public override void SetStaticDefaults() {
         DisplayName.SetDefault("Snail's Shell");

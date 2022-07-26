@@ -1,4 +1,5 @@
-﻿using AllBeginningsMod.Content.Tiles.Plants;
+﻿using AllBeginningsMod.Common.Bases.Items;
+using AllBeginningsMod.Content.Tiles.Plants;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -6,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Placeables.Plants;
 
-public sealed class DevilFlowerItem : ModItem
+public sealed class DevilFlowerItem : ModItemBase
 {
     public override void SetStaticDefaults() {
         DisplayName.SetDefault("Devil Flower");

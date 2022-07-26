@@ -1,4 +1,5 @@
-﻿using AllBeginningsMod.Content.Projectiles.Melee;
+﻿using AllBeginningsMod.Common.Bases.Items;
+using AllBeginningsMod.Content.Projectiles.Melee;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -6,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Melee;
 
-public sealed class GraveShieldItem : ModItem
+public sealed class GraveShieldItem : ModItemBase
 {
     public override void SetStaticDefaults() {
         DisplayName.SetDefault("Grave Shield");

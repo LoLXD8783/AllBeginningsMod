@@ -1,4 +1,5 @@
-﻿using AllBeginningsMod.Content.Tiles.Relics;
+﻿using AllBeginningsMod.Common.Bases.Items;
+using AllBeginningsMod.Content.Tiles.Relics;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -6,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Placeables.Relics;
 
-public sealed class NightgauntRelicItem : ModItem
+public sealed class NightgauntRelicItem : ModItemBase
 {
     public override void SetStaticDefaults() {
         DisplayName.SetDefault("Nightgaunt Relic");

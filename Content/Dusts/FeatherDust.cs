@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AllBeginningsMod.Common.Bases.Dusts;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Dusts;
 
-public sealed class FeatherDust : ModDust
+public sealed class FeatherDust : ModDustBase
 {
     private const int FrameHeight = 14;
 

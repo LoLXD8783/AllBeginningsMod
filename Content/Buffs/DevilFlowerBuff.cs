@@ -1,10 +1,11 @@
-﻿using AllBeginningsMod.Common.Players;
+﻿using AllBeginningsMod.Common.Bases.Buffs;
+using AllBeginningsMod.Common.Players;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Buffs;
 
-public sealed class DevilFlowerBuff : ModBuff
+public sealed class DevilFlowerBuff : ModBuffBase
 {
     public override void SetStaticDefaults() {
         DisplayName.SetDefault("Devil's Gift");

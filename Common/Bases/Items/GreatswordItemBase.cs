@@ -1,12 +1,17 @@
-﻿using AllBeginningsMod.Common.Projectiles.Melee;
+﻿using AllBeginningsMod.Common.Bases.Items;
+using AllBeginningsMod.Common.Projectiles.Melee;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Items.Melee;
 
-public abstract class GreatswordItemBase<T> : ModItem where T : GreatswordProjectileBase
+public abstract class GreatswordItemBase<T> : ModItemBase where T : GreatswordProjectileBase
 {
+    public override string Texture => base.Texture
+            .Replace("/Items/Weapons/", "/Projectiles/")
+            .Replace("GreatswordItem", "GreatswordProjectile");
+
     private T HeldProjectile { get; set; }
 
     public override void SetDefaults() {

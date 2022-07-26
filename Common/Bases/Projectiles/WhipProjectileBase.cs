@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Bases.Projectiles;
 
-public abstract class WhipProjectileBase : ModProjectile
+public abstract class WhipProjectileBase : ModProjectileBase
 {
     public Player Owner => Main.player[Projectile.owner];
 
