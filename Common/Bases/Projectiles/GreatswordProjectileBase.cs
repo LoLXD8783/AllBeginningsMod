@@ -1,4 +1,5 @@
 ﻿using System;
+using AllBeginningsMod.Common.Items.Melee;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -16,18 +17,47 @@ public abstract class GreatswordProjectileBase : ModProjectile
 
     private Vector2 swingStartVelocity;
     private float transitionAngle;
+    private int associatedItemType = -1;
+    
     protected Player player => Main.player[Projectile.owner];
-    public int ItemTypeAssociated { get; set; }
     public int TotalAnimationTime => MaxChargeTimer + MaxAttackTimer + MaxCooldownTimer;
-
+    
     //Variables to tweak motion
+    
+    /// <summary>
+    /// /// The maximum upper angle (in radians) the arm will bend backwards when holding the projectile above its head.
+    /// </summary>
     protected float ChargeUpBehindHeadAngle { get; set; } = MathHelper.Pi / 6f; //30deg
+    
+    /// <summary>
+    /// The maximum lower angle (in radians) the arm will bend backwards when holding the projectile down.
+    /// </summary>
     protected float HoldingAngleArmDown { get; set; } = MathHelper.Pi / 12f; //15deg
+    
+    /// <summary>
+    /// The swing arc in radians. The swing starts wherever <see cref="ChargeUpBehindHeadAngle"/> is defined at.
+    /// </summary>
     protected float SwingArc { get; set; } = 4 * MathHelper.Pi / 3f; //240deg
-    protected int MaxChargeTimer { get; set; } = 45;
-    protected int MaxAttackTimer { get; set; } = 15;
-    protected int MaxCooldownTimer { get; set; } = 15;
+    
+    /// <summary>
+    /// How far should the projectile be from the player
+    /// </summary>
     protected int HoldingRadius { get; set; } = 14;
+    
+    /// <summary>
+    /// How long the charge up animation will last
+    /// </summary>
+    protected int MaxChargeTimer { get; set; } = 45;
+    
+    /// <summary>
+    /// How long the attack animation will last
+    /// </summary>
+    protected int MaxAttackTimer { get; set; } = 15;
+    
+    /// <summary>
+    /// How long the cooldown animation will last
+    /// </summary>
+    protected int MaxCooldownTimer { get; set; } = 15;
 
     protected State CurrentState {
         get => (State) Projectile.ai[0];
@@ -47,7 +77,7 @@ public abstract class GreatswordProjectileBase : ModProjectile
         Projectile.aiStyle = -1;
     }
 
-    public void DoAttack() {
+    public void TryAttacking() {
         if (CurrentState == State.Holding)
             CurrentState = State.ChargingUp;
     }
@@ -59,8 +89,8 @@ public abstract class GreatswordProjectileBase : ModProjectile
         float angle = player.direction == -1 ? MathHelper.Pi : 0f;
         Vector2 swingVelocity = Vector2.Zero;
 
-        //Rotating here because we want the rotation axis at (-1,-1) to be 0
-        //This means that at, i.e., (0, 1) we have 90deg regardless of direction
+        //Rotating here because we want the rotation axis at (0,-1) to be 0
+        //This means that at, i.e., (1, 0) we have 90deg regardless of direction
         float rotationFixUpwards = MathHelper.PiOver2 * -player.direction + angle;
 
         Projectile.spriteDirection = -player.direction;
@@ -112,7 +142,7 @@ public abstract class GreatswordProjectileBase : ModProjectile
                 float chargeProgress = EaseOut(Timer / MaxChargeTimer);
                 swingVelocity = swingStartVelocity.RotatedBy(transitionAngle * chargeProgress - MathHelper.PiOver2);
 
-                if (Timer++ == MaxChargeTimer) {
+                if (Timer++ >= MaxChargeTimer) {
                     swingStartVelocity = swingVelocity;
                     CurrentState = State.Attacking;
                     Timer = 0;
@@ -124,7 +154,7 @@ public abstract class GreatswordProjectileBase : ModProjectile
                 float attackProgress = InvertedEaseIn((MaxAttackTimer - Timer) / MaxAttackTimer);
                 swingVelocity = swingStartVelocity.RotatedBy(SwingArc * attackProgress * player.direction);
 
-                if (Timer++ == MaxAttackTimer) {
+                if (Timer++ >= MaxAttackTimer) {
                     CurrentState = State.CooldownToMouse;
                     Timer = 0;
 
@@ -156,7 +186,7 @@ public abstract class GreatswordProjectileBase : ModProjectile
                 float cooldownProgress = Timer / MaxCooldownTimer;
                 swingVelocity = swingStartVelocity.RotatedBy(transitionAngle * cooldownProgress);
 
-                if (Timer++ == MaxCooldownTimer) {
+                if (Timer++ >= MaxCooldownTimer) {
                     CurrentState = State.Holding;
                     Timer = 0;
 
@@ -177,14 +207,23 @@ public abstract class GreatswordProjectileBase : ModProjectile
         Vector2 rotationCenter = player.Center + new Vector2(-18f * player.direction, -2f);
         Projectile.Center = rotationCenter + swingVelocity * HoldingRadius;
         Projectile.rotation = swingVelocity.ToRotation() + angle + MathHelper.PiOver4 * player.direction;
-        
+
         TryKillProjectile();
+    }
+    
+    public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+        
     }
 
     private void TryKillProjectile() {
-        if (player.HeldItem.type != ItemTypeAssociated)
+        if (player.HeldItem.type != associatedItemType)
             Projectile.Kill();
     }
+
+    /// <summary>
+    /// Item type required by the player to be held to not despawn the projectile
+    /// </summary>
+    public void SetAssociatedItemType(int itemType) => associatedItemType = itemType;
 
     protected enum State
     {
