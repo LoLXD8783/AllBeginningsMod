@@ -4,5 +4,5 @@ namespace AllBeginningsMod.Common.Bases.Dusts;
 
 public abstract class ModDustBase : ModDust
 {
-    public override string Texture => $"{GetType().Namespace.Replace(".", "/").Replace("Content", "Assets")}/{GetType().Name}";
+    public override string Texture => GetType().FullName.Replace('.', '/').Replace("Content", "Assets");
 }
