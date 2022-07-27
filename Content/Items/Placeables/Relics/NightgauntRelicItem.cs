@@ -9,11 +9,7 @@ namespace AllBeginningsMod.Content.Items.Placeables.Relics;
 
 public sealed class NightgauntRelicItem : ModItemBase
 {
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Nightgaunt Relic");
-
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
-    }
+    public override void SetStaticDefaults() => DisplayName.SetDefault("Nightgaunt Relic");
 
     public override void SetDefaults() {
         Item.consumable = true;

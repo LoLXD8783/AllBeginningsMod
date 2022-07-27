@@ -1,25 +1,41 @@
 ﻿using AllBeginningsMod.Common.Bases.Items;
 using AllBeginningsMod.Content.Projectiles.Melee;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Melee;
 
-public class GoldGreatswordItem : GreatswordItemBase<GoldGreatswordProjectile>
+public sealed class GoldGreatswordItem : GreatswordItemBase<GoldGreatswordProjectile>
 {
-    public override void SetStaticDefaults() => DisplayName.SetDefault("Gold Greatsword");
+    public override void SetStaticDefaults() {
+        base.SetStaticDefaults();
+        
+        DisplayName.SetDefault("Gold Greatsword");
+    }
+    
     public override void SetDefaults() {
         base.SetDefaults();
+        
+        Item.autoReuse = true;
 
         Item.width = 46;
         Item.height = 46;
 
         Item.useTime = 75;
         Item.useAnimation = 75;
-        Item.autoReuse = true;
         Item.useStyle = ItemUseStyleID.Shoot;
 
-        Item.damage = 20;
+        Item.damage = 16;
+        Item.knockBack = 8f;
         Item.DamageType = DamageClass.Melee;
+    }
+
+    public override void AddRecipes() {
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ItemID.GoldBar, 12);
+        recipe.AddIngredient(ItemID.Wood, 4);
+        recipe.AddTile(TileID.Anvils);
+        recipe.Register();
     }
 }

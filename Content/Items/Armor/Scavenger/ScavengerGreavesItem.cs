@@ -1,12 +1,17 @@
 ﻿using AllBeginningsMod.Common.Bases.Items;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 
 namespace AllBeginningsMod.Content.Items.Armor.Scavenger;
 
 public sealed class ScavengerGreavesItem : ModItemBase
 {
-    public override void SetStaticDefaults() => DisplayName.SetDefault("Scavenger Greaves");
+    public override void SetStaticDefaults() {
+        DisplayName.SetDefault("Scavenger Greaves");
+
+        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+    }
 
     public override void SetDefaults() {
         Item.defense = 3;

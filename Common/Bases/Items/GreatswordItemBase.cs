@@ -1,17 +1,18 @@
 ﻿using AllBeginningsMod.Common.Bases.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Bases.Items;
 
 public abstract class GreatswordItemBase<T> : ModItemBase where T : GreatswordProjectileBase
 {
-    public override string Texture => base.Texture
-        .Replace("/Items/Weapons/", "/Projectiles/")
-        .Replace("GreatswordItem", "GreatswordProjectile");
-
     private T HeldProjectile { get; set; }
+    
+    public override string Texture => base.Texture.Replace("/Items/Weapons/", "/Projectiles/").Replace("GreatswordItem", "GreatswordProjectile");
+
+    public override void SetStaticDefaults() => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 
     public override void SetDefaults() {
         //Kirtle: useTime and useAnimation must be manually tailored for each greatsword..

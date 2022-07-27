@@ -1,12 +1,17 @@
 ﻿using AllBeginningsMod.Common.Bases.Items;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 
 namespace AllBeginningsMod.Content.Items.Armor.Scavenger;
 
 public sealed class ScavengerChestplateItem : ModItemBase
 {
-    public override void SetStaticDefaults() => DisplayName.SetDefault("Scavenger Chestplate");
+    public override void SetStaticDefaults() {
+        DisplayName.SetDefault("Scavenger Chestplate");
+
+        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+    }
 
     public override void SetDefaults() {
         Item.defense = 5;
