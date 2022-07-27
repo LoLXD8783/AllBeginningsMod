@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using AllBeginningsMod.Core.Drawing.Primitives;
+using AllBeginningsMod.Utility;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
+using Terraria.ID;
 
 namespace AllBeginningsMod.Common.Bases.Projectiles;
 
@@ -63,6 +69,11 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
     protected float Timer {
         get => Projectile.ai[1];
         set => Projectile.ai[1] = value;
+    }
+
+    public override void SetStaticDefaults() {
+        ProjectileID.Sets.TrailingMode[Type] = 2;
+        ProjectileID.Sets.TrailCacheLength[Type] = 5;
     }
 
     public override void SetDefaults() {
@@ -221,7 +232,7 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
 
         hitbox = new Rectangle((int) position.X, (int) position.Y, (int) size.X, (int) size.Y);
     }
-
+    
     private void TryKillProjectile() {
         if (player.HeldItem.type != associatedItemType && Projectile.active)
             Projectile.Kill();
