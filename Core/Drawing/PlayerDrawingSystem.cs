@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Common.Systems.Drawing;
+namespace AllBeginningsMod.Core.Drawing;
 
 [Autoload(Side = ModSide.Client)]
 public sealed class PlayerDrawingSystem : ModSystem
@@ -14,7 +14,9 @@ public sealed class PlayerDrawingSystem : ModSystem
     private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
 
     public override void OnModLoad() {
-        ThreadUtils.RunOnMainThread(() => { PlayerTarget = new RenderTarget2D(Device, Main.screenWidth, Main.screenHeight); });
+        ThreadUtils.RunOnMainThread(() => {
+            PlayerTarget = new RenderTarget2D(Device, Main.screenWidth, Main.screenHeight);
+        });
 
         Main.OnResolutionChanged += ResizeTarget;
 
@@ -23,7 +25,7 @@ public sealed class PlayerDrawingSystem : ModSystem
 
     public override void OnModUnload() {
         ThreadUtils.RunOnMainThread(() => {
-            PlayerTarget.Dispose();
+            PlayerTarget?.Dispose();
             PlayerTarget = null;
         });
 

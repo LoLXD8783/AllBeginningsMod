@@ -1,6 +1,5 @@
 ﻿using System;
-using AllBeginningsMod.Common.Items.Melee;
-using AllBeginningsMod.Common.Projectiles.Melee;
+using AllBeginningsMod.Common.Bases.Items;
 using AllBeginningsMod.Content.Projectiles.Melee;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -14,7 +13,7 @@ public class GoldGreatswordItem : GreatswordItemBase<GoldGreatswordProjectile>
     public override void SetStaticDefaults() => DisplayName.SetDefault("Gold Greatsword");
     public override void SetDefaults() {
         base.SetDefaults();
-        
+
         Item.width = 46;
         Item.height = 46;
 

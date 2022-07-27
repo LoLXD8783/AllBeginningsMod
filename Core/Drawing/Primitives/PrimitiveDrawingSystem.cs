@@ -5,12 +5,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Common.Systems.Drawing.Primitives;
+namespace AllBeginningsMod.Core.Drawing.Primitives;
 
 [Autoload(Side = ModSide.Client)]
 public sealed class PrimitiveDrawingSystem : ModSystem
 {
-    private static List<PrimitiveDrawData> queuedDrawData;
     public static DynamicIndexBuffer IndexBuffer { get; private set; }
     public static DynamicVertexBuffer VertexBuffer { get; private set; }
 
@@ -18,8 +17,12 @@ public sealed class PrimitiveDrawingSystem : ModSystem
 
     private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
 
+    private static List<PrimitiveDrawData> queuedDrawData;
+
     public override void OnModLoad() {
-        ThreadUtils.RunOnMainThread(() => { PrimitiveTarget = new RenderTarget2D(Device, Main.screenWidth / 2, Main.screenHeight / 2); });
+        ThreadUtils.RunOnMainThread(() => {
+            PrimitiveTarget = new RenderTarget2D(Device, Main.screenWidth / 2, Main.screenHeight / 2);
+        });
 
         queuedDrawData = new List<PrimitiveDrawData>();
 
@@ -31,15 +34,15 @@ public sealed class PrimitiveDrawingSystem : ModSystem
 
     public override void OnModUnload() {
         ThreadUtils.RunOnMainThread(() => {
+            IndexBuffer?.Dispose();
+            IndexBuffer = null;
+
+            VertexBuffer?.Dispose();
+            VertexBuffer = null;
+
             PrimitiveTarget?.Dispose();
             PrimitiveTarget = null;
         });
-
-        IndexBuffer?.Dispose();
-        IndexBuffer = null;
-
-        VertexBuffer?.Dispose();
-        VertexBuffer = null;
 
         queuedDrawData?.Clear();
         queuedDrawData = null;
@@ -51,15 +54,17 @@ public sealed class PrimitiveDrawingSystem : ModSystem
     }
 
     public static void QueuePrimitive(VertexPositionColorTexture[] vertices, ushort[] indices, Effect effect, PrimitiveType type) {
-        if (IndexBuffer == null || IndexBuffer.IndexCount < indices.Length) {
-            IndexBuffer?.Dispose();
-            IndexBuffer = new DynamicIndexBuffer(Device, IndexElementSize.SixteenBits, indices.Length, BufferUsage.WriteOnly);
-        }
+        if (vertices.Length <= 0 || indices.Length <= 0)
+            return;
 
         if (VertexBuffer == null || VertexBuffer.VertexCount < vertices.Length) {
             VertexBuffer?.Dispose();
-            VertexBuffer = new DynamicVertexBuffer(Device, VertexPositionColorTexture.VertexDeclaration, vertices.Length,
-                BufferUsage.WriteOnly);
+            VertexBuffer = new DynamicVertexBuffer(Device, VertexPositionColorTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+        }
+
+        if (IndexBuffer == null || IndexBuffer.IndexCount < indices.Length) {
+            IndexBuffer?.Dispose();
+            IndexBuffer = new DynamicIndexBuffer(Device, IndexElementSize.SixteenBits, indices.Length, BufferUsage.WriteOnly);
         }
 
         queuedDrawData?.Add(new PrimitiveDrawData(vertices, indices, effect, type));
@@ -71,8 +76,7 @@ public sealed class PrimitiveDrawingSystem : ModSystem
 
         foreach (EffectPass pass in drawData.Effect.CurrentTechnique.Passes) {
             pass.Apply();
-            Device.DrawIndexedPrimitives(drawData.Type, 0, 0, VertexBuffer.VertexCount, 0,
-                DrawUtils.GetPrimitiveCount(VertexBuffer.VertexCount, drawData.Type));
+            Device.DrawIndexedPrimitives(drawData.Type, 0, 0, VertexBuffer.VertexCount, 0, DrawUtils.GetPrimitiveCount(VertexBuffer.VertexCount, drawData.Type));
         }
     });
 
@@ -88,8 +92,7 @@ public sealed class PrimitiveDrawingSystem : ModSystem
 
         Device.RasterizerState = RasterizerState.CullNone;
 
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default,
-            Main.GameViewMatrix.TransformationMatrix);
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, default, RasterizerState.CullNone, default, Main.GameViewMatrix.TransformationMatrix);
         DrawQueuedPrimitives();
         spriteBatch.End();
 
@@ -103,8 +106,7 @@ public sealed class PrimitiveDrawingSystem : ModSystem
 
         SpriteBatch spriteBatch = Main.spriteBatch;
 
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default,
-            Main.GameViewMatrix.TransformationMatrix);
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, default, RasterizerState.CullNone, default, Main.GameViewMatrix.TransformationMatrix);
         spriteBatch.Draw(PrimitiveTarget, DrawUtils.ScreenRectangle, Color.White);
         spriteBatch.End();
     }

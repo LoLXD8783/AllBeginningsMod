@@ -1,7 +1,5 @@
-﻿using AllBeginningsMod.Common.Projectiles.Melee;
-using AllBeginningsMod.Content.Items.Weapons.Melee;
+﻿using AllBeginningsMod.Common.Bases.Projectiles;
 using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee;
 

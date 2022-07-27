@@ -11,6 +11,14 @@ public static class DrawUtils
 
     public static Rectangle ScreenRectangle => new(0, 0, Main.screenWidth, Main.screenHeight);
 
+    public static Matrix World => Matrix.CreateTranslation(new Vector3(-Main.screenPosition, 0f));
+
+    public static Matrix View => Main.GameViewMatrix.TransformationMatrix;
+
+    public static Matrix Projection => Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1f, 1f);
+
+    public static Matrix WorldViewProjection => World * View * Projection;
+
     public static int GetPrimitiveCount(int vertexCount, PrimitiveType type) => type switch {
         PrimitiveType.TriangleList => vertexCount / 3,
         PrimitiveType.TriangleStrip => vertexCount - 2,

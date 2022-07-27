@@ -1,16 +1,15 @@
-﻿using AllBeginningsMod.Common.Bases.Items;
-using AllBeginningsMod.Common.Projectiles.Melee;
+﻿using AllBeginningsMod.Common.Bases.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Common.Items.Melee;
+namespace AllBeginningsMod.Common.Bases.Items;
 
 public abstract class GreatswordItemBase<T> : ModItemBase where T : GreatswordProjectileBase
 {
     public override string Texture => base.Texture
-            .Replace("/Items/Weapons/", "/Projectiles/")
-            .Replace("GreatswordItem", "GreatswordProjectile");
+        .Replace("/Items/Weapons/", "/Projectiles/")
+        .Replace("GreatswordItem", "GreatswordProjectile");
 
     private T HeldProjectile { get; set; }
 
@@ -35,12 +34,12 @@ public abstract class GreatswordItemBase<T> : ModItemBase where T : GreatswordPr
 
         return false;
     }
-    
+
     private static T NewGreatswordProjectile(Player player, int type, int damage, float knockback, int owner, int itemType) {
         Projectile projectile = Projectile.NewProjectileDirect(player.GetSource_FromThis(), player.Center, Vector2.Zero, type, damage, knockback, owner);
         T greatswordProjectile = projectile.ModProjectile as T;
         greatswordProjectile?.SetAssociatedItemType(itemType);
-        
+
         return greatswordProjectile;
     }
 }

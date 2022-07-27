@@ -25,8 +25,15 @@ public static class ProjectileUtils
         for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i += stepSize) {
             Vector2 position = projectile.oldPos[i] - Main.screenPosition + origin + new Vector2(0f, projectile.gfxOffY);
             float alpha = initialOpacity - opacityDegrade * (i / (float) stepSize);
-            Main.EntitySpriteDraw(texture, position, null, projectile.GetAlpha(color) * alpha, projectile.oldRot[i], origin, projectile.scale,
-                effects, 0);
+            Main.EntitySpriteDraw(texture,
+                position,
+                null,
+                projectile.GetAlpha(color) * alpha,
+                projectile.oldRot[i],
+                origin,
+                projectile.scale,
+                effects,
+                0);
         }
     }
 }

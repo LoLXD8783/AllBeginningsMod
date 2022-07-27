@@ -86,9 +86,15 @@ public abstract class RelicTileBase : ModTile
         effectColor = effectColor * 0.1f * scale;
 
         for (float k = 0f; k < 1f; k += 355f / (678f * MathHelper.Pi)) {
-            Main.EntitySpriteDraw(texture, drawPos + (MathHelper.TwoPi * k).ToRotationVector2() * (6f + offset * 2f), frame, effectColor, 0f,
-                origin, 1f,
-                effects, 0);
+            Main.EntitySpriteDraw(texture,
+                drawPos + (MathHelper.TwoPi * k).ToRotationVector2() * (6f + offset * 2f),
+                frame,
+                effectColor,
+                0f,
+                origin,
+                1f,
+                effects,
+                0);
         }
     }
 }
