@@ -1,8 +1,5 @@
-﻿using System;
-using AllBeginningsMod.Common.Bases.Items;
+﻿using AllBeginningsMod.Common.Bases.Items;
 using AllBeginningsMod.Content.Projectiles.Melee;
-using Microsoft.Xna.Framework;
-using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 

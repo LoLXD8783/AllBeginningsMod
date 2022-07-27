@@ -1,7 +1,6 @@
 ﻿using AllBeginningsMod.Common.Bases.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Summon.Whips;
 

@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Ranged;
 
@@ -46,6 +45,7 @@ public sealed class BorealTurnipProjectile : ModProjectileBase
 
     public override bool PreDraw(ref Color lightColor) {
         ProjectileUtils.DrawAfterimage(Projectile, lightColor, Projectile.Hitbox.Size() / 2f, 0.8f, 0.1f, 2);
+        
         return true;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using AllBeginningsMod.Common.Bases.Items;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Armor.Scavenger;
 

@@ -7,7 +7,7 @@ namespace AllBeginningsMod.Utility;
 
 public static class ThreadUtils
 {
-    private static bool IsMainThread => AssetRepository.IsMainThread;
+    public static bool IsMainThread => AssetRepository.IsMainThread;
 
     public static void RunOnMainThread(Action action, CancellationToken cancellationToken = default) {
         cancellationToken.ThrowIfCancellationRequested();

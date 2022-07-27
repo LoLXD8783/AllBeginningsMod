@@ -17,14 +17,13 @@ public static class ProjectileUtils
         int stepSize = 1,
         Texture2D texture = null
     ) {
-        SpriteEffects effects = projectile.spriteDirection == -1
-            ? SpriteEffects.None
-            : SpriteEffects.FlipHorizontally;
+        SpriteEffects effects = projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         texture ??= TextureAssets.Projectile[projectile.type].Value;
 
         for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i += stepSize) {
             Vector2 position = projectile.oldPos[i] - Main.screenPosition + origin + new Vector2(0f, projectile.gfxOffY);
             float alpha = initialOpacity - opacityDegrade * (i / (float) stepSize);
+
             Main.EntitySpriteDraw(texture,
                 position,
                 null,

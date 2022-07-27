@@ -1,7 +1,6 @@
 ﻿using AllBeginningsMod.Common.Bases.Projectiles;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee;
 

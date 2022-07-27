@@ -49,11 +49,13 @@ public sealed class GraveShieldThrownProjectile : ModProjectileBase
 
     public override bool OnTileCollide(Vector2 oldVelocity) {
         Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+        
         return true;
     }
 
     public override bool PreDraw(ref Color lightColor) {
         ProjectileUtils.DrawAfterimage(Projectile, lightColor, Projectile.Hitbox.Size() / 2f, 0.8f, 0.1f, 2);
+        
         return true;
     }
 }

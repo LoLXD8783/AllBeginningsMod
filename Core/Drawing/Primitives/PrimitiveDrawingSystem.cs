@@ -10,14 +10,13 @@ namespace AllBeginningsMod.Core.Drawing.Primitives;
 [Autoload(Side = ModSide.Client)]
 public sealed class PrimitiveDrawingSystem : ModSystem
 {
+    private static List<PrimitiveDrawData> queuedDrawData;
     public static DynamicIndexBuffer IndexBuffer { get; private set; }
     public static DynamicVertexBuffer VertexBuffer { get; private set; }
 
     public static RenderTarget2D PrimitiveTarget { get; private set; }
 
     private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
-
-    private static List<PrimitiveDrawData> queuedDrawData;
 
     public override void OnModLoad() {
         ThreadUtils.RunOnMainThread(() => {

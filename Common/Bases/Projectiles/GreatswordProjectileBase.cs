@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using AllBeginningsMod.Core.Drawing.Primitives;
-using AllBeginningsMod.Utility;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
-using Terraria.ID;
 
 namespace AllBeginningsMod.Common.Bases.Projectiles;
 
@@ -212,7 +206,7 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
 
         TryKillProjectile();
     }
-    
+
     private void TryKillProjectile() {
         if (player.HeldItem.type != associatedItemType)
             Projectile.Kill();
