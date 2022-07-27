@@ -20,7 +20,7 @@ public static class DrawUtils
     public static Matrix WorldViewProjection => World * View * Projection;
 
     public static int GetPrimitiveCount(int vertexCount, PrimitiveType type) => type switch {
-        PrimitiveType.TriangleList => vertexCount / 3,
+        PrimitiveType.TriangleList => vertexCount / 2,
         PrimitiveType.TriangleStrip => vertexCount - 2,
         PrimitiveType.LineList => vertexCount / 2,
         PrimitiveType.LineStrip => vertexCount - 1,
