@@ -21,7 +21,7 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
     //Variables to tweak motion
 
     /// <summary>
-    ///     /// The maximum upper angle (in radians) the arm will bend backwards when holding the projectile above its head.
+    ///     The maximum upper angle (in radians) the arm will bend backwards when holding the projectile above its head.
     /// </summary>
     protected float ChargeUpBehindHeadAngle { get; set; } = MathHelper.Pi / 6f; //30deg
 
@@ -207,8 +207,23 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
         TryKillProjectile();
     }
 
+    public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+        //Only want to have a hitbox in the Attacking State
+        if (CurrentState != State.Attacking) {
+            hitbox = Rectangle.Empty;
+            return;
+        }
+
+        //Lots of magic values.. for now?
+        Vector2 size = new Vector2(Projectile.width, Projectile.height);
+        Vector2 position = player.Center + (Projectile.rotation - 1.2f * MathHelper.PiOver2).ToRotationVector2() * HoldingRadius * 2;
+        position += new Vector2(-20f, -35f);
+
+        hitbox = new Rectangle((int) position.X, (int) position.Y, (int) size.X, (int) size.Y);
+    }
+
     private void TryKillProjectile() {
-        if (player.HeldItem.type != associatedItemType)
+        if (player.HeldItem.type != associatedItemType && Projectile.active)
             Projectile.Kill();
     }
 
