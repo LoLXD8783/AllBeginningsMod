@@ -17,5 +17,5 @@ public static class DrawUtils
     
     public static Matrix Projection => Matrix.CreateOrthographicOffCenter(0f, Main.screenWidth, Main.screenHeight, 0f, -1f, 1f);
 
-    public static Matrix WorldViewProjection => Projection;
+    public static Matrix WorldViewProjection => World * View * Projection;
 }
