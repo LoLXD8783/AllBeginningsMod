@@ -4,12 +4,12 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 
-namespace AllBeginningsMod.Utility;
+namespace AllBeginningsMod.Utility.Extensions;
 
-public static class ProjectileUtils
+public static class ProjectileExtensions
 {
     public static void DrawAfterimage(
-        Projectile projectile,
+        this Projectile projectile,
         Color color,
         Vector2 origin = default,
         float initialOpacity = 0.8f,
@@ -24,15 +24,7 @@ public static class ProjectileUtils
             Vector2 position = projectile.oldPos[i] - Main.screenPosition + origin + new Vector2(0f, projectile.gfxOffY);
             float alpha = initialOpacity - opacityDegrade * (i / (float) stepSize);
 
-            Main.EntitySpriteDraw(texture,
-                position,
-                null,
-                projectile.GetAlpha(color) * alpha,
-                projectile.oldRot[i],
-                origin,
-                projectile.scale,
-                effects,
-                0);
+            Main.EntitySpriteDraw(texture, position, null, projectile.GetAlpha(color) * alpha, projectile.oldRot[i], origin, projectile.scale, effects, 0);
         }
     }
 }

@@ -10,13 +10,13 @@ public sealed class GoldGreatswordItem : GreatswordItemBase<GoldGreatswordProjec
 {
     public override void SetStaticDefaults() {
         base.SetStaticDefaults();
-        
+
         DisplayName.SetDefault("Gold Greatsword");
     }
-    
+
     public override void SetDefaults() {
         base.SetDefaults();
-        
+
         Item.autoReuse = true;
 
         Item.width = 46;

@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Core.Drawing.Snapshots;
 
-public sealed class ReflectionCache : ModSystem
+public sealed class ReflectionCache : ILoadable
 {
     public static bool Initialized { get; private set; }
 
@@ -16,9 +16,9 @@ public sealed class ReflectionCache : ModSystem
     public static FieldInfo Effect { get; private set; }
     public static FieldInfo TransformMatrix { get; private set; }
 
-    public override void OnModLoad() => EnsureInitialized();
+    void ILoadable.Load(Mod mod) => EnsureInitialized();
 
-    public override void OnModUnload() {
+    void ILoadable.Unload() {
         Initialized = false;
 
         SortMode = null;

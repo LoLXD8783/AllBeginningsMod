@@ -1,10 +1,10 @@
 matrix worldViewProjection;
 
-texture primitiveTexture;
+texture sampleTexture;
 
-sampler primitiveSampler = sampler_state
+sampler sampleTextureSampler = sampler_state
 {
-    texture = primitiveTexture;
+    texture = sampleTexture;
 };
 
 struct VertexShaderOutput
@@ -34,13 +34,13 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
-     float4 color = tex2D(primitiveSampler, input.TextureCoordinates);
+     float4 color = tex2D(sampleTextureSampler, input.TextureCoordinates);
      return input.Color * color;
 }
 
 technique Technique1
 {
-    pass PrimitivesPass
+    pass SampledPrimitivePass
     {
         VertexShader = compile vs_2_0 VertexShaderFunction();
         PixelShader = compile ps_2_0 PixelShaderFunction();

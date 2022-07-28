@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using AllBeginningsMod.Core.Drawing.Primitives;
 using AllBeginningsMod.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -226,13 +225,13 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
         }
 
         //Lots of magic values.. for now?
-        Vector2 size = new Vector2(Projectile.width, Projectile.height);
+        Vector2 size = new(Projectile.width, Projectile.height);
         Vector2 position = player.Center + (Projectile.rotation - 1.2f * MathHelper.PiOver2).ToRotationVector2() * HoldingRadius * 2;
         position += new Vector2(-20f, -35f);
 
         hitbox = new Rectangle((int) position.X, (int) position.Y, (int) size.X, (int) size.Y);
     }
-    
+
     private void TryKillProjectile() {
         if (player.HeldItem.type != associatedItemType && Projectile.active)
             Projectile.Kill();

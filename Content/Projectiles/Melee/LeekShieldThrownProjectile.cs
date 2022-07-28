@@ -1,5 +1,6 @@
 ﻿using AllBeginningsMod.Common.Bases.Projectiles;
 using AllBeginningsMod.Utility;
+using AllBeginningsMod.Utility.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -41,7 +42,7 @@ public sealed class LeekShieldThrownProjectile : ModProjectileBase
 
     public override bool OnTileCollide(Vector2 oldVelocity) {
         Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
-        
+
         return true;
     }
 
@@ -67,7 +68,7 @@ public sealed class LeekShieldThrownProjectile : ModProjectileBase
     }
 
     public override bool PreDraw(ref Color lightColor) {
-        ProjectileUtils.DrawAfterimage(Projectile, lightColor, default, 0.8f, 0.1f, 2);
+        Projectile.DrawAfterimage(lightColor, Projectile.Hitbox.Size() / 2f, 0.8f, 0.1f, 2);
 
         return true;
     }

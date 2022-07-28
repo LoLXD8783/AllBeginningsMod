@@ -1,5 +1,6 @@
 ﻿using AllBeginningsMod.Common.Bases.Projectiles;
 using AllBeginningsMod.Utility;
+using AllBeginningsMod.Utility.Extensions;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -29,8 +30,8 @@ public sealed class LeekShieldReturningProjectile : ModProjectileBase
     }
 
     public override bool PreDraw(ref Color lightColor) {
-        ProjectileUtils.DrawAfterimage(Projectile, lightColor, Projectile.Hitbox.Size() / 2f, 0.8f, 0.1f, 2);
-        
+        Projectile.DrawAfterimage(lightColor, Projectile.Hitbox.Size() / 2f, 0.8f, 0.1f, 2);
+
         return true;
     }
 }

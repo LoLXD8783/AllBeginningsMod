@@ -7,7 +7,7 @@ public class GoldGreatswordProjectile : GreatswordProjectileBase
 {
     public override void SetStaticDefaults() {
         base.SetStaticDefaults();
-        
+
         DisplayName.SetDefault("Gold Greatsword");
     }
 
@@ -29,7 +29,7 @@ public class GoldGreatswordProjectile : GreatswordProjectileBase
 
     public override void AI() {
         base.AI();
-        
+
         DrawOriginOffsetX = 14 * player.direction;
         DrawOriginOffsetY = -14;
     }

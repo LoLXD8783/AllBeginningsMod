@@ -9,7 +9,7 @@ namespace AllBeginningsMod.Common.Bases.Items;
 public abstract class GreatswordItemBase<T> : ModItemBase where T : GreatswordProjectileBase
 {
     private T HeldProjectile { get; set; }
-    
+
     public override string Texture => base.Texture.Replace("/Items/Weapons/", "/Projectiles/").Replace("GreatswordItem", "GreatswordProjectile");
 
     public override void SetStaticDefaults() => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

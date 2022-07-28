@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AllBeginningsMod.Utility;
+using AllBeginningsMod.Utility.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -75,7 +76,7 @@ public sealed class PrimitiveDrawingSystem : ModSystem
 
         foreach (EffectPass pass in drawData.Effect.CurrentTechnique.Passes) {
             pass.Apply();
-            Device.DrawIndexedPrimitives(drawData.Type, 0, 0, VertexBuffer.VertexCount, 0, DrawUtils.GetPrimitiveCount(VertexBuffer.VertexCount, drawData.Type));
+            Device.DrawIndexedPrimitives(drawData.Type, 0, 0, VertexBuffer.VertexCount, 0, VertexBuffer.GetPrimitiveCount(drawData.Type));
         }
     });
 

@@ -45,7 +45,7 @@ public abstract class WhipProjectileBase : ModProjectileBase
 
         DrawControlPointsBackLine(controlPoints);
         DrawControlPoints(controlPoints);
-        
+
         return false;
     }
 
@@ -71,7 +71,7 @@ public abstract class WhipProjectileBase : ModProjectileBase
 
     protected void DrawControlPoints(List<Vector2> controlPoints) {
         SpriteEffects effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-        
+
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 position = controlPoints[0];
 

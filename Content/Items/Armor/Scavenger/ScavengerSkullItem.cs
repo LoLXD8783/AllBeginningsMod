@@ -11,8 +11,8 @@ public sealed class ScavengerSkullItem : ModItemBase
         DisplayName.SetDefault("Scavenger Skull");
 
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-    } 
-        
+    }
+
     public override void SetDefaults() {
         Item.defense = 3;
 
