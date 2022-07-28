@@ -17,7 +17,7 @@ public sealed class PrimitiveDrawing : ILoadable
     public static RenderTarget2D PrimitiveTarget { get; private set; }
 
     private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
-    
+
     private static List<PrimitiveDrawData> queuedDrawData;
 
     void ILoadable.Load(Mod mod) {
