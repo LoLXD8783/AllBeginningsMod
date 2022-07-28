@@ -9,17 +9,18 @@ using Terraria.ModLoader;
 namespace AllBeginningsMod.Core.Drawing.Primitives;
 
 [Autoload(Side = ModSide.Client)]
-public sealed class PrimitiveDrawingSystem : ModSystem
+public sealed class PrimitiveDrawing : ILoadable
 {
-    private static List<PrimitiveDrawData> queuedDrawData;
     public static DynamicIndexBuffer IndexBuffer { get; private set; }
     public static DynamicVertexBuffer VertexBuffer { get; private set; }
 
     public static RenderTarget2D PrimitiveTarget { get; private set; }
 
     private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
+    
+    private static List<PrimitiveDrawData> queuedDrawData;
 
-    public override void OnModLoad() {
+    void ILoadable.Load(Mod mod) {
         ThreadUtils.RunOnMainThread(() => {
             PrimitiveTarget = new RenderTarget2D(Device, Main.screenWidth / 2, Main.screenHeight / 2);
         });
@@ -32,7 +33,7 @@ public sealed class PrimitiveDrawingSystem : ModSystem
         On.Terraria.Main.DrawDust += DrawTarget;
     }
 
-    public override void OnModUnload() {
+    void ILoadable.Unload() {
         ThreadUtils.RunOnMainThread(() => {
             IndexBuffer?.Dispose();
             IndexBuffer = null;
