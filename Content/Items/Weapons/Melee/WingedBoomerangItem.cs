@@ -18,6 +18,7 @@ public sealed class WingedBoomerangItem : ModItemBase
     public override void SetDefaults() {
         Item.noUseGraphic = true;
         Item.noMelee = true;
+        Item.channel = true;
 
         Item.damage = 12;
         Item.DamageType = DamageClass.MeleeNoSpeed;
