@@ -42,10 +42,7 @@ public sealed class WingedBoomerangProjectile : ModProjectileBase
         }
 
         if (!player.channel) {
-            Projectile.velocity = Projectile.DirectionTo(player.MountedCenter) * 10;
-            if (Main.player[Projectile.owner].getRect().Intersects(Projectile.getRect())) {
-                Projectile.Kill();
-            }
+            Projectile.Kill();
         }
     }
 
