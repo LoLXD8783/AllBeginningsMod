@@ -14,24 +14,9 @@ public sealed class PrimitiveDrawing : ILoadable
     public static DynamicIndexBuffer IndexBuffer { get; private set; }
     public static DynamicVertexBuffer VertexBuffer { get; private set; }
 
-    public static RenderTarget2D PrimitiveTarget { get; private set; }
-
     private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
 
-    private static List<PrimitiveDrawData> queuedDrawData;
-
-    void ILoadable.Load(Mod mod) {
-        ThreadUtils.RunOnMainThread(() => {
-            PrimitiveTarget = new RenderTarget2D(Device, Main.screenWidth / 2, Main.screenHeight / 2);
-        });
-
-        queuedDrawData = new List<PrimitiveDrawData>();
-
-        Main.OnPreDraw += CachePrimitiveDraw;
-        Main.OnResolutionChanged += ResizeTarget;
-
-        On.Terraria.Main.DrawDust += DrawTarget;
-    }
+    void ILoadable.Load(Mod mod) { }
 
     void ILoadable.Unload() {
         ThreadUtils.RunOnMainThread(() => {
@@ -40,22 +25,11 @@ public sealed class PrimitiveDrawing : ILoadable
 
             VertexBuffer?.Dispose();
             VertexBuffer = null;
-
-            PrimitiveTarget?.Dispose();
-            PrimitiveTarget = null;
         });
-
-        queuedDrawData?.Clear();
-        queuedDrawData = null;
-
-        Main.OnPreDraw -= CachePrimitiveDraw;
-        Main.OnResolutionChanged -= ResizeTarget;
-
-        On.Terraria.Main.DrawDust -= DrawTarget;
     }
 
-    public static void QueuePrimitive(VertexPositionColorTexture[] vertices, ushort[] indices, Effect effect, PrimitiveType type) {
-        if (vertices.Length <= 0 || indices.Length <= 0)
+    public static void DrawPrimitive(VertexPositionColorTexture[] vertices, short[] indices, Effect effect, PrimitiveType type) {
+        if (vertices.Length <= 0 || indices.Length <= 0 || effect == null)
             return;
 
         if (VertexBuffer == null || VertexBuffer.VertexCount < vertices.Length) {
@@ -67,52 +41,18 @@ public sealed class PrimitiveDrawing : ILoadable
             IndexBuffer?.Dispose();
             IndexBuffer = new DynamicIndexBuffer(Device, IndexElementSize.SixteenBits, indices.Length, BufferUsage.WriteOnly);
         }
-
-        queuedDrawData?.Add(new PrimitiveDrawData(vertices, indices, effect, type));
-    }
-
-    private static void DrawQueuedPrimitives() => queuedDrawData?.ForEach(drawData => {
-        IndexBuffer?.SetData(drawData.Indices, 0, drawData.Indices.Length, SetDataOptions.Discard);
-        VertexBuffer?.SetData(drawData.Vertices, SetDataOptions.Discard);
-
-        foreach (EffectPass pass in drawData.Effect.CurrentTechnique.Passes) {
-            pass.Apply();
-            Device.DrawIndexedPrimitives(drawData.Type, 0, 0, VertexBuffer.VertexCount, 0, VertexBuffer.GetPrimitiveCount(drawData.Type));
-        }
-    });
-
-    private static void CachePrimitiveDraw(GameTime gameTime) {
-        SpriteBatch spriteBatch = Main.spriteBatch;
-        RenderTargetBinding[] oldTargets = Device.GetRenderTargets();
-
-        Device.SetRenderTarget(PrimitiveTarget);
-        Device.Clear(Color.Transparent);
-
+        
+        VertexBuffer.SetData(vertices, SetDataOptions.Discard);
+        IndexBuffer.SetData(indices, 0, indices.Length, SetDataOptions.Discard);
+        
         Device.SetVertexBuffer(VertexBuffer);
         Device.Indices = IndexBuffer;
-
+        
         Device.RasterizerState = RasterizerState.CullNone;
 
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, default, RasterizerState.CullNone, default, Main.GameViewMatrix.TransformationMatrix);
-        DrawQueuedPrimitives();
-        spriteBatch.End();
-
-        Device.SetRenderTargets(oldTargets);
-
-        queuedDrawData?.Clear();
+        foreach (EffectPass pass in effect.CurrentTechnique.Passes) {
+            pass.Apply();
+            Device.DrawIndexedPrimitives(type, 0, 0, VertexBuffer.VertexCount, 0, VertexBuffer.GetPrimitiveCount(type));
+        }
     }
-
-    private static void DrawTarget(On.Terraria.Main.orig_DrawDust orig, Main self) {
-        orig(self);
-
-        SpriteBatch spriteBatch = Main.spriteBatch;
-
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, default, RasterizerState.CullNone, default, Main.GameViewMatrix.TransformationMatrix);
-        spriteBatch.Draw(PrimitiveTarget, DrawUtils.ScreenRectangle, Color.White);
-        spriteBatch.End();
-    }
-
-    private static void ResizeTarget(Vector2 resolution) => ThreadUtils.RunOnMainThread(() => {
-        PrimitiveTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, (int) (resolution.X / 2f), (int) (resolution.Y / 2f));
-    });
 }
