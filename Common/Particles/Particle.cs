@@ -1,17 +1,22 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AllBeginningsMod.Utility;
+using AllBeginningsMod.Utility.Extensions;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Systems.Particles;
 
 public abstract class Particle
 {
-    public virtual Texture2D Texture => ModContent.Request<Texture2D>(GetType().FullName.Replace('.', '/')).Value;
+    public string TexturePath => GetType().FullName.Replace('.', '/').Replace("Content", "Assets");
 
     public Color Color = Color.White;
 
     public SpriteEffects Effects;
 
+    public Rectangle? Frame;
+    
     public Vector2 Position;
     public Vector2 Velocity;
     public Vector2 Origin;
@@ -24,9 +29,18 @@ public abstract class Particle
 
     public virtual void OnKill() { }
 
-    public virtual void Update() { }
+    public virtual void Update() {
+        Position += Velocity;
+    }
 
-    public virtual void Draw() { }
+    public virtual void Draw() {
+        if (!Position.IsWorldOnScreen())
+            return;
+
+        Texture2D texture = ModContent.Request<Texture2D>(TexturePath).Value;
+        
+        Main.EntitySpriteDraw(texture, Position - Main.screenPosition, Frame, Color, Rotation, Origin, Scale, Effects, 0);
+    }
 
     public bool Kill() {
         return ParticleManager.Kill(this);

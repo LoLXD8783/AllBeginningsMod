@@ -5,11 +5,11 @@ namespace AllBeginningsMod.Utility.Extensions;
 
 public static class Vector2Extensions
 {
-    public static bool IsOnScreen(Vector2 position) {
+    public static bool IsOnScreen(this Vector2 position) {
         return position.X > 0f && position.X < Main.screenWidth && position.Y > 0f && position.Y < Main.screenHeight;
     }
 
-    public static bool WorldIsOnScreen(Vector2 position) {
+    public static bool IsWorldOnScreen(this Vector2 position) {
         return position.X > Main.screenPosition.X &&
             position.X < Main.screenPosition.X + Main.screenWidth &&
             position.Y > Main.screenPosition.Y &&
