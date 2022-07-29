@@ -11,46 +11,53 @@ namespace AllBeginningsMod.Core.Drawing.Primitives;
 [Autoload(Side = ModSide.Client)]
 public sealed class PrimitiveDrawing : ILoadable
 {
-    public static DynamicIndexBuffer IndexBuffer { get; private set; }
-    public static DynamicVertexBuffer VertexBuffer { get; private set; }
-
     private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
+    
+    private static DynamicIndexBuffer indexBuffer;
+    private static DynamicVertexBuffer vertexBuffer;
 
     void ILoadable.Load(Mod mod) { }
 
     void ILoadable.Unload() => ThreadUtils.RunOnMainThread(() => {
-        IndexBuffer?.Dispose();
-        IndexBuffer = null;
+        indexBuffer?.Dispose();
+        indexBuffer = null;
 
-        VertexBuffer?.Dispose();
-        VertexBuffer = null;
+        vertexBuffer?.Dispose();
+        vertexBuffer = null;
     });
 
-    public static void DrawPrimitive(VertexPositionColorTexture[] vertices, short[] indices, Effect effect, PrimitiveType type) {
-        if (vertices.Length <= 0 || indices.Length <= 0 || effect == null)
+    public static void DrawPrimitive(PrimitiveType type, VertexPositionColorTexture[] vertices, short[] indices, Effect effect = null) {
+        if (vertices.Length <= 0 || indices.Length <= 0)
             return;
 
-        if (VertexBuffer == null || VertexBuffer.VertexCount < vertices.Length) {
-            VertexBuffer?.Dispose();
-            VertexBuffer = new DynamicVertexBuffer(Device, VertexPositionColorTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+        if (vertexBuffer == null || vertexBuffer.VertexCount < vertices.Length) {
+            vertexBuffer?.Dispose();
+            vertexBuffer = new DynamicVertexBuffer(Device, VertexPositionColorTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
         }
 
-        if (IndexBuffer == null || IndexBuffer.IndexCount < indices.Length) {
-            IndexBuffer?.Dispose();
-            IndexBuffer = new DynamicIndexBuffer(Device, IndexElementSize.SixteenBits, indices.Length, BufferUsage.WriteOnly);
+        if (indexBuffer == null || indexBuffer.IndexCount < indices.Length) {
+            indexBuffer?.Dispose();
+            indexBuffer = new DynamicIndexBuffer(Device, IndexElementSize.SixteenBits, indices.Length, BufferUsage.WriteOnly);
         }
 
-        VertexBuffer.SetData(vertices, SetDataOptions.Discard);
-        IndexBuffer.SetData(indices, 0, indices.Length, SetDataOptions.Discard);
+        vertexBuffer.SetData(vertices, SetDataOptions.Discard);
+        indexBuffer.SetData(indices, 0, indices.Length, SetDataOptions.Discard);
 
-        Device.SetVertexBuffer(VertexBuffer);
-        Device.Indices = IndexBuffer;
+        Device.SetVertexBuffer(vertexBuffer);
+        Device.Indices = indexBuffer;
 
         Device.RasterizerState = RasterizerState.CullNone;
 
+        int primitiveCount = vertexBuffer.GetPrimitiveCount(type);
+
+        if (effect == null) {
+            Device.DrawIndexedPrimitives(type, 0, 0, vertexBuffer.VertexCount, 0, primitiveCount);
+            return;
+        }
+
         foreach (EffectPass pass in effect.CurrentTechnique.Passes) {
             pass.Apply();
-            Device.DrawIndexedPrimitives(type, 0, 0, VertexBuffer.VertexCount, 0, VertexBuffer.GetPrimitiveCount(type));
+            Device.DrawIndexedPrimitives(type, 0, 0, vertexBuffer.VertexCount, 0, primitiveCount);
         }
     }
 }
