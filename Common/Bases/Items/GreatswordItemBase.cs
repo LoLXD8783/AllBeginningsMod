@@ -12,7 +12,9 @@ public abstract class GreatswordItemBase<T> : ModItemBase where T : GreatswordPr
 
     public override string Texture => base.Texture.Replace("/Items/Weapons/", "/Projectiles/").Replace("GreatswordItem", "GreatswordProjectile");
 
-    public override void SetStaticDefaults() => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+    public override void SetStaticDefaults() {
+        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+    }
 
     public override void SetDefaults() {
         //Kirtle: useTime and useAnimation must be manually tailored for each greatsword..

@@ -13,8 +13,11 @@ public sealed class FinoftheDolphinItem : PlayerCostumeItemBase
         base.SetStaticDefaults();
 
         DisplayName.SetDefault("Fin of the Dolphin");
-        Tooltip.SetDefault("Lets you move swiftly in water" + "\nIncreases damage while submerged in water" +
-            "\nTurns the user into a dolphin");
+        Tooltip.SetDefault(
+            "Lets you move swiftly in water" +
+            "\nIncreases damage while submerged in water" +
+            "\nTurns the user into a dolphin"
+        );
 
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }

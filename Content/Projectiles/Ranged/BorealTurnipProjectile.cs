@@ -37,7 +37,9 @@ public sealed class BorealTurnipProjectile : ModProjectileBase
         return true;
     }
 
-    public override void Kill(int timeLeft) => SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
+    public override void Kill(int timeLeft) {
+        SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
+    }
 
     public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
         NPC npc = Projectile.FindTargetWithinRange(512f);

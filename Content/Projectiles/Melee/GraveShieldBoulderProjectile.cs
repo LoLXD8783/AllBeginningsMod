@@ -26,5 +26,7 @@ public sealed class GraveShieldBoulderProjectile : ModProjectileBase
         Projectile.frame = Main.rand.Next(3);
     }
 
-    public override void AI() => Projectile.alpha += 4;
+    public override void AI() {
+        Projectile.alpha += 4;
+    }
 }

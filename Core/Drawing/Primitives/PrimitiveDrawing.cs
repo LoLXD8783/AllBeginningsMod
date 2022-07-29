@@ -12,19 +12,23 @@ namespace AllBeginningsMod.Core.Drawing.Primitives;
 public sealed class PrimitiveDrawing : ILoadable
 {
     private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
-    
+
     private static DynamicIndexBuffer indexBuffer;
     private static DynamicVertexBuffer vertexBuffer;
 
     void ILoadable.Load(Mod mod) { }
 
-    void ILoadable.Unload() => ThreadUtils.RunOnMainThread(() => {
-        indexBuffer?.Dispose();
-        indexBuffer = null;
+    void ILoadable.Unload() {
+        ThreadUtils.RunOnMainThread(
+            () => {
+                indexBuffer?.Dispose();
+                indexBuffer = null;
 
-        vertexBuffer?.Dispose();
-        vertexBuffer = null;
-    });
+                vertexBuffer?.Dispose();
+                vertexBuffer = null;
+            }
+        );
+    }
 
     public static void DrawPrimitive(PrimitiveType type, VertexPositionColorTexture[] vertices, short[] indices, Effect effect = null) {
         if (vertices.Length <= 0 || indices.Length <= 0)

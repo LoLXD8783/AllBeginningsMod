@@ -51,15 +51,16 @@ public sealed class LeekShieldThrownProjectile : ModProjectileBase
 
         int splitCount = Main.rand.Next(3, 5);
 
-        for (int i = 0; i < splitCount; i++) {
-            Projectile.NewProjectile(Projectile.GetSource_Death(),
+        for (int i = 0; i < splitCount; i++)
+            Projectile.NewProjectile(
+                Projectile.GetSource_Death(),
                 Projectile.Center,
                 new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-6f, 6f)),
                 ModContent.ProjectileType<LeekShieldReturningProjectile>(),
                 Projectile.damage / splitCount,
                 Projectile.knockBack,
-                Projectile.owner);
-        }
+                Projectile.owner
+            );
 
         for (int i = 0; i < 10; i++) {
             Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Grass);

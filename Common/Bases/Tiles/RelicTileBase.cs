@@ -42,9 +42,16 @@ public abstract class RelicTileBase : ModTile
         AddMapEntry(new Color(233, 207, 94), Language.GetText("MapObject.Relic"));
     }
 
-    public override bool CreateDust(int i, int j, ref int type) => false;
+    public override bool CreateDust(int i, int j, ref int type) {
+        return false;
+    }
 
-    public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX,
+    public override void SetDrawPositions(int i,
+        int j,
+        ref int width,
+        ref int offsetY,
+        ref int height,
+        ref short tileFrameX,
         ref short tileFrameY) {
         tileFrameX %= FrameWidth;
         tileFrameY %= FrameHeight * 2;
@@ -85,8 +92,9 @@ public abstract class RelicTileBase : ModTile
         effectColor.A = 0;
         effectColor = effectColor * 0.1f * scale;
 
-        for (float k = 0f; k < 1f; k += 355f / (678f * MathHelper.Pi)) {
-            Main.EntitySpriteDraw(texture,
+        for (float k = 0f; k < 1f; k += 355f / (678f * MathHelper.Pi))
+            Main.EntitySpriteDraw(
+                texture,
                 drawPos + (MathHelper.TwoPi * k).ToRotationVector2() * (6f + offset * 2f),
                 frame,
                 effectColor,
@@ -94,7 +102,7 @@ public abstract class RelicTileBase : ModTile
                 origin,
                 1f,
                 effects,
-                0);
-        }
+                0
+            );
     }
 }

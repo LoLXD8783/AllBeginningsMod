@@ -109,20 +109,22 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
 
                 float tempSwingStartRotation = swingStartVelocity.RotatedBy(rotationFixUpwards * -1).ToRotation();
 
-                if (player.direction == 1 && tempSwingStartRotation <= -ChargeUpBehindHeadAngle &&
-                    tempSwingStartRotation >= -MathHelper.PiOver2
-                    || player.direction == -1 && tempSwingStartRotation >= ChargeUpBehindHeadAngle &&
-                    tempSwingStartRotation <= MathHelper.PiOver2) {
+                if ((player.direction == 1 &&
+                        tempSwingStartRotation <= -ChargeUpBehindHeadAngle &&
+                        tempSwingStartRotation >= -MathHelper.PiOver2) ||
+                    (player.direction == -1 &&
+                        tempSwingStartRotation >= ChargeUpBehindHeadAngle &&
+                        tempSwingStartRotation <= MathHelper.PiOver2))
                     swingStartVelocity = (-ChargeUpBehindHeadAngle * player.direction).ToRotationVector2()
                         .RotatedBy(rotationFixUpwards * player.direction + angle);
-                }
-                else if (player.direction == 1 && tempSwingStartRotation >= -MathHelper.Pi + HoldingAngleArmDown &&
-                         tempSwingStartRotation <= -MathHelper.PiOver2
-                         || player.direction == -1 && tempSwingStartRotation <= MathHelper.Pi - HoldingAngleArmDown &&
-                         tempSwingStartRotation >= MathHelper.PiOver2) {
+                else if ((player.direction == 1 &&
+                        tempSwingStartRotation >= -MathHelper.Pi + HoldingAngleArmDown &&
+                        tempSwingStartRotation <= -MathHelper.PiOver2) ||
+                    (player.direction == -1 &&
+                        tempSwingStartRotation <= MathHelper.Pi - HoldingAngleArmDown &&
+                        tempSwingStartRotation >= MathHelper.PiOver2))
                     swingStartVelocity = (MathHelper.Pi + HoldingAngleArmDown * player.direction).ToRotationVector2()
                         .RotatedBy(rotationFixUpwards * player.direction + angle);
-                }
 
                 swingStartVelocity.Normalize();
                 swingVelocity = swingStartVelocity;
@@ -240,7 +242,9 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
     /// <summary>
     ///     Item type required by the player to be held to not despawn the projectile
     /// </summary>
-    public void SetAssociatedItemType(int itemType) => associatedItemType = itemType;
+    public void SetAssociatedItemType(int itemType) {
+        associatedItemType = itemType;
+    }
 
     protected enum State
     {

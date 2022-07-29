@@ -7,7 +7,9 @@ public sealed class AccessoryPlayer : ModPlayer
 {
     public bool FinoftheDolphin { get; set; }
 
-    public override void ResetEffects() => FinoftheDolphin = false;
+    public override void ResetEffects() {
+        FinoftheDolphin = false;
+    }
 
     public override void FrameEffects() {
         if (FinoftheDolphin) {

@@ -16,7 +16,9 @@ public sealed class ReflectionCache : ILoadable
     public static FieldInfo Effect { get; private set; }
     public static FieldInfo TransformMatrix { get; private set; }
 
-    void ILoadable.Load(Mod mod) => EnsureInitialized();
+    void ILoadable.Load(Mod mod) {
+        EnsureInitialized();
+    }
 
     void ILoadable.Unload() {
         Initialized = false;
