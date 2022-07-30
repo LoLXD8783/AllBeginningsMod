@@ -33,9 +33,6 @@ public sealed class ParticleManager : ILoadable
     public static T Spawn<T>(Vector2 position, Vector2 velocity = default, Color? color = null, Vector2? scale = null, float rotation = 0f, float alpha = 1f) where T : Particle, new() {
         T particle = new();
 
-        if (Particles.Count >= MaxParticles)
-            return particle;
-
         particle.Position = position;
         particle.Velocity = velocity;
         particle.Color = color ?? Color.White;
@@ -44,7 +41,10 @@ public sealed class ParticleManager : ILoadable
         particle.Alpha = alpha;
 
         particle.OnSpawn();
-
+        
+        if (Particles.Count >= MaxParticles)
+            return particle;
+        
         Particles.Add(particle);
 
         return particle;

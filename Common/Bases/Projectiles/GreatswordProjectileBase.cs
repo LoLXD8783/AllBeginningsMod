@@ -69,6 +69,8 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
         get => Projectile.ai[1];
         set => Projectile.ai[1] = value;
     }
+    
+    public override string Texture => base.Texture.Replace("/Projectiles/", "/Items/Weapons/").Replace("Projectile", "Item");
 
     public override void SetStaticDefaults() {
         ProjectileID.Sets.TrailingMode[Type] = 2;
