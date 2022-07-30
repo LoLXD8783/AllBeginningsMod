@@ -18,6 +18,7 @@ public class GoldGreatswordProjectile : GreatswordProjectileBase
         Projectile.height = 46;
 
         //Greatsword properties
+        
         ChargeUpBehindHeadAngle = MathHelper.Pi / 6f; //30deg
         HoldingAngleArmDown = MathHelper.Pi / 12f; //15deg
         SwingArc = 4 * MathHelper.Pi / 3f; //240deg
