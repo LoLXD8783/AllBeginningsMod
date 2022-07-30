@@ -40,7 +40,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
 technique Technique1
 {
-    pass SampledPrimitivePass
+    pass TexturePrimitivePass
     {
         VertexShader = compile vs_2_0 VertexShaderFunction();
         PixelShader = compile ps_2_0 PixelShaderFunction();

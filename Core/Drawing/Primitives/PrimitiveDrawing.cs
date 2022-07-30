@@ -30,8 +30,8 @@ public sealed class PrimitiveDrawing : ILoadable
         );
     }
 
-    public static void DrawPrimitive(PrimitiveType type, VertexPositionColorTexture[] vertices, short[] indices, Effect effect = null) {
-        if (vertices.Length <= 0 || indices.Length <= 0)
+    public static void DrawPrimitive(PrimitiveType type, VertexPositionColorTexture[] vertices, short[] indices, Effect effect) {
+        if (vertices.Length <= 0 || indices.Length <= 0 || effect == null)
             return;
 
         if (vertexBuffer == null || vertexBuffer.VertexCount < vertices.Length) {
@@ -53,11 +53,6 @@ public sealed class PrimitiveDrawing : ILoadable
         Device.RasterizerState = RasterizerState.CullNone;
 
         int primitiveCount = vertexBuffer.GetPrimitiveCount(type);
-
-        if (effect == null) {
-            Device.DrawIndexedPrimitives(type, 0, 0, vertexBuffer.VertexCount, 0, primitiveCount);
-            return;
-        }
 
         foreach (EffectPass pass in effect.CurrentTechnique.Passes) {
             pass.Apply();

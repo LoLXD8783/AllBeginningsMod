@@ -7,7 +7,7 @@ namespace AllBeginningsMod.Common.Systems.Recipes;
 
 public sealed class RecipeGroupSystem : ModSystem
 {
-    public const string PlatinumBar = AllBeginningsMod.ModPrefix + ":PlatinumBar";
+    public const string PlatinumBar = AllBeginningsMod.ModName + ":PlatinumBar";
     
     public static RecipeGroup PlatinumBarGroup { get; private set; }
 
@@ -15,9 +15,9 @@ public sealed class RecipeGroupSystem : ModSystem
         PlatinumBarGroup = null;
     }
 
-    public override void AddRecipeGroups() {
-        PlatinumBarGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")}", ItemID.PlatinumBar, ItemID.GoldBar);
+    public override void AddRecipeGroups() {    
+        PlatinumBarGroup = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37"), ItemID.PlatinumBar, ItemID.GoldBar);
 
-        RecipeGroup.RegisterGroup("AllBeginningsMod:PlatinumBar", PlatinumBarGroup);
+        RecipeGroup.RegisterGroup(PlatinumBar, PlatinumBarGroup);
     }
 }
