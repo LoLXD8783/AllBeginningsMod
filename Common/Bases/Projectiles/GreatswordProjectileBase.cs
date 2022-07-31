@@ -9,6 +9,8 @@ namespace AllBeginningsMod.Common.Bases.Projectiles;
 
 public abstract class GreatswordProjectileBase : ModProjectileBase
 {
+    public override string Texture => base.Texture.Replace("/Projectiles/", "/Items/Weapons/").Replace("GreatswordProjectile", "GreatswordItem");
+
     private readonly Func<float, float> EaseOut = value => (float) Math.Log10(9f * value + 1);
 
     // private readonly Func<float, float> EaseIn = value => (float) Math.Exp(0.7f * Math.Pow(value, 6)) - 1f;
