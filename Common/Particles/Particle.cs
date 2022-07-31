@@ -25,6 +25,8 @@ public abstract class Particle
     public float Alpha = 1f;
     public float Rotation;
 
+    public bool IsAdditive;
+
     public virtual void OnSpawn() { }
 
     public virtual void OnKill() { }
@@ -35,8 +37,8 @@ public abstract class Particle
 
     public virtual void Draw() {
         Texture2D texture = ModContent.Request<Texture2D>(TexturePath).Value;
-    
-        Main.EntitySpriteDraw(texture, Position - Main.screenPosition, Frame, Color, Rotation, Origin, Scale, Effects, 0);
+        
+        Main.EntitySpriteDraw(texture, Position - Main.screenPosition, Frame, Color * Alpha, Rotation, Origin, Scale, Effects, 0);
     }
 
     public bool Kill() {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AllBeginningsMod.Utility.Extensions;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
@@ -70,8 +71,20 @@ public sealed class ParticleManager : ILoadable
     private static void DrawParticles(On.Terraria.Main.orig_DrawDust orig, Main self) {
         orig(self);
 
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+        
         for (int i = 0; i < Particles.Count; i++) 
-            if (Particles[i] != null && Particles[i].Position.IsWorldOnScreen())
+            if (Particles[i] != null && !Particles[i].IsAdditive && Particles[i].Position.IsWorldOnScreen())
                 Particles[i].Draw();
+        
+        Main.spriteBatch.End();
+        
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+
+        for (int i = 0; i < Particles.Count; i++) 
+            if (Particles[i] != null && Particles[i].IsAdditive && Particles[i].Position.IsWorldOnScreen())
+                Particles[i].Draw();
+        
+        Main.spriteBatch.End();
     }
 }
