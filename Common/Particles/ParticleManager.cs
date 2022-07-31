@@ -72,18 +72,28 @@ public sealed class ParticleManager : ILoadable
         orig(self);
 
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-        
-        for (int i = 0; i < Particles.Count; i++) 
-            if (Particles[i] != null && !Particles[i].IsAdditive && Particles[i].Position.IsWorldOnScreen())
-                Particles[i].Draw();
-        
+
+        for (int i = 0; i < Particles.Count; i++) {
+            Particle particle = Particles[i];
+
+            if (particle == null || particle.IsAdditive || !particle.Position.IsWorldOnScreen(particle.Width, particle.Height))
+                continue;
+
+            particle.Draw();            
+        }
+
         Main.spriteBatch.End();
         
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
 
-        for (int i = 0; i < Particles.Count; i++) 
-            if (Particles[i] != null && Particles[i].IsAdditive && Particles[i].Position.IsWorldOnScreen())
-                Particles[i].Draw();
+        for (int i = 0; i < Particles.Count; i++) {
+            Particle particle = Particles[i];
+
+            if (particle == null || !particle.IsAdditive || !particle.Position.IsWorldOnScreen(particle.Width, particle.Height))
+                continue;
+
+            particle.Draw();            
+        }
         
         Main.spriteBatch.End();
     }

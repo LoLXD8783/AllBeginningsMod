@@ -17,13 +17,8 @@ public abstract class ParallaxParticle : Particle
 
         SpawnPosition = Position; 
         ParallaxOffset = 2f * (SpawnPosition - Main.screenPosition) * Parallax;
-        Position -= ParallaxOffset; // one time for spawn
-    }  
-
-    public override void Update() { 
-        base.Update();
         
-        // ok wait im confused nwo bc to me the parallax was the offset OH WAIT i think i get it
+        Position -= ParallaxOffset;
     }
 
     public override void Draw() {

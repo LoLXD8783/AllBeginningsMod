@@ -25,6 +25,9 @@ public abstract class Particle
     public float Alpha = 1f;
     public float Rotation;
 
+    public int Width = 16;
+    public int Height = 16;
+
     public bool IsAdditive;
 
     public virtual void OnSpawn() { }

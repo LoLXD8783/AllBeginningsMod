@@ -14,7 +14,7 @@ public sealed class AllBeginningsMod : Mod
     public const string EffectsPath = AssetsPath + "Effects/";
     public const string ScreenEffectsPath = EffectsPath + "Screen/";
 
-    public const string SamplesPath = ExtrasPath + "Samples/";
+    public const string SamplesPath = ExtrasPath + "Samples/";      
     public const string BossChecklistPath = ExtrasPath + "BossChecklist/";
 
     public static AllBeginningsMod Instance => ModContent.GetInstance<AllBeginningsMod>();

@@ -23,7 +23,7 @@ public sealed class GraveyardScreenParticle : ParallaxParticle
     public override void Update() {
         base.Update();
 
-        Velocity.Y -= (0.005f - (Velocity.Y * 0.005f));
+        Velocity.Y -= 0.005f - Velocity.Y * 0.005f;
 
         if (!fadeOut) {
             Alpha += 0.0025f;
