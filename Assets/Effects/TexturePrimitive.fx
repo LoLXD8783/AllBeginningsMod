@@ -1,5 +1,7 @@
 matrix worldViewProjection;
 
+float uOpacity;
+
 texture sampleTexture;
 
 sampler sampleTextureSampler = sampler_state
@@ -35,7 +37,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
      float4 color = tex2D(sampleTextureSampler, input.TextureCoordinates);
-     return input.Color * color;
+     return (input.Color * color) * uOpacity;
 }
 
 technique Technique1

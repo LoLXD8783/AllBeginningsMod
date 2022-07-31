@@ -1,11 +1,6 @@
 ﻿using AllBeginningsMod.Common.Bases.Projectiles;
-using AllBeginningsMod.Core.Drawing.Primitives;
-using AllBeginningsMod.Core.Drawing.Snapshots;
-using AllBeginningsMod.Utility;
 using AllBeginningsMod.Utility.Extensions;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

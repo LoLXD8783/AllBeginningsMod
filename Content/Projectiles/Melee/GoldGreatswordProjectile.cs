@@ -1,6 +1,5 @@
 ﻿using AllBeginningsMod.Common.Bases.Projectiles;
 using Microsoft.Xna.Framework;
-using Terraria;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee;
 
