@@ -34,11 +34,8 @@ public abstract class Particle
     }
 
     public virtual void Draw() {
-        if (!Position.IsWorldOnScreen())
-            return;
-
         Texture2D texture = ModContent.Request<Texture2D>(TexturePath).Value;
-        
+    
         Main.EntitySpriteDraw(texture, Position - Main.screenPosition, Frame, Color, Rotation, Origin, Scale, Effects, 0);
     }
 

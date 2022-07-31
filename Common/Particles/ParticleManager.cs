@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AllBeginningsMod.Utility.Extensions;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent;
@@ -69,7 +70,8 @@ public sealed class ParticleManager : ILoadable
     private static void DrawParticles(On.Terraria.Main.orig_DrawDust orig, Main self) {
         orig(self);
 
-        for (int i = 0; i < Particles.Count; i++)
-            Particles[i]?.Draw();
+        for (int i = 0; i < Particles.Count; i++) 
+            if (Particles[i] != null && Particles[i].Position.IsWorldOnScreen())
+                Particles[i].Draw();
     }
 }

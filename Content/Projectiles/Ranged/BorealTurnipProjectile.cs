@@ -3,6 +3,7 @@ using AllBeginningsMod.Utility.Extensions;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace AllBeginningsMod.Content.Projectiles.Ranged;

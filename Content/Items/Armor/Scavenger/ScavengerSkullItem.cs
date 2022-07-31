@@ -2,9 +2,11 @@
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Armor.Scavenger;
 
+[AutoloadEquip(EquipType.Head)]
 public sealed class ScavengerSkullItem : ModItemBase
 {
     public override void SetStaticDefaults() {

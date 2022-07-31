@@ -7,7 +7,7 @@ namespace AllBeginningsMod.Common.Systems.Recipes;
 
 public sealed class RecipeGroupSystem : ModSystem
 {
-    public const string PlatinumBar = AllBeginningsMod.ModName + ":PlatinumBar";
+    public const string PlatinumBar = AllBeginningsMod.ModPrefix + "PlatinumBar";
     
     public static RecipeGroup PlatinumBarGroup { get; private set; }
 
