@@ -17,13 +17,13 @@ public sealed class ScreenShaderLoader : ILoadable
 {
     void ILoadable.Load(Mod mod) {
         MethodInfo info = typeof(Mod).GetProperty("File", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true);
-        TmodFile file = (TmodFile)info.Invoke(mod, null);
+        TmodFile file = (TmodFile) info.Invoke(mod, null);
 
         IEnumerable<TmodFile.FileEntry> shaders = file.Where(entry => entry.Name.StartsWith("Assets/Effects/Screen/") && entry.Name.EndsWith(".xnb"));
 
         foreach (TmodFile.FileEntry entry in shaders) {
             string name = Path.GetFileNameWithoutExtension(entry.Name);
-            
+
             LoadScreenShader(name);
         }
     }

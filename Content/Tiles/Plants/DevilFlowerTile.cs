@@ -1,6 +1,7 @@
 ﻿using AllBeginningsMod.Common.Bases.Tiles;
 using AllBeginningsMod.Content.Buffs;
 using AllBeginningsMod.Content.Items.Placeables.Plants;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -24,6 +25,8 @@ public sealed class DevilFlowerTile : ModTileBase
 
         TileObjectData.addTile(Type);
 
+        AddMapEntry(new Color(141, 147, 57));
+
         DustType = DustID.JunglePlants;
         HitSound = SoundID.Grass;
         MineResist = 1f;
@@ -32,7 +35,7 @@ public sealed class DevilFlowerTile : ModTileBase
     public override void NearbyEffects(int i, int j, bool closer) {
         Player player = Main.LocalPlayer;
 
-        if (!player.dead)
+        if (player.active)
             player.AddBuff(ModContent.BuffType<DevilFlowerBuff>(), 90);
     }
 
@@ -41,13 +44,6 @@ public sealed class DevilFlowerTile : ModTileBase
     }
 
     public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-        Item.NewItem(
-            new EntitySource_TileBreak(i, j),
-            i * 16,
-            j * 16,
-            96,
-            64,
-            ModContent.ItemType<DevilFlowerItem>()
-        );
+        Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 96, 64, ModContent.ItemType<DevilFlowerItem>());
     }
 }

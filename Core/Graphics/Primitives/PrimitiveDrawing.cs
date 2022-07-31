@@ -32,7 +32,7 @@ public sealed class PrimitiveDrawing : ILoadable
 
     public static void DrawPrimitiveShape(PrimitiveShape shape, Effect effect) {
         shape.SetShape(out VertexPositionColorTexture[] vertices, out short[] indices);
-        
+
         DrawPrimitive(shape.Type, vertices, indices, effect);
     }
 

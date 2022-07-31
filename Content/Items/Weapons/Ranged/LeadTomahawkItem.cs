@@ -21,11 +21,11 @@ public sealed class LeadTomahawkItem : ModItemBase
         Item.noUseGraphic = true;
 
         Item.maxStack = 999;
-        
+
         Item.DamageType = DamageClass.Ranged;
         Item.damage = 13;
         Item.knockBack = 1f;
-        
+
         Item.width = 24;
         Item.height = 28;
 
@@ -38,7 +38,7 @@ public sealed class LeadTomahawkItem : ModItemBase
 
         Item.value = Item.sellPrice(copper: 10);
         Item.rare = ItemRarityID.White;
-        
+
         Item.UseSound = SoundID.Item1;
     }
 

@@ -8,7 +8,7 @@ public class GoldGreatswordProjectile : GreatswordProjectileBase
     protected override float ChargeUpBehindHeadAngle => MathHelper.Pi / 6f;
     protected override float SwingArc => 4 * MathHelper.Pi / 3f;
     protected override int HoldingRadius => 14;
-    protected override Vector2 RotationOrigin => new Vector2(10f, 38f);
+    protected override Vector2 RotationOrigin => new(10f, 38f);
     protected override int MaxChargeTimer => 30;
     protected override int MaxAttackTimer => 10;
     protected override int MaxCooldownTimer => 15;

@@ -12,7 +12,7 @@ public static class VertexBufferExtensions
             PrimitiveType.LineList => buffer.VertexCount / 2,
             PrimitiveType.LineStrip => buffer.VertexCount - 1,
             PrimitiveType.PointListEXT => buffer.VertexCount / 3,
-            var _ => 0 // throw new ArgumentException($"Unsupported primitive type: {type}", nameof(type))
+            _ => 0 // throw new ArgumentException($"Unsupported primitive type: {type}", nameof(type))
         };
     }
 }

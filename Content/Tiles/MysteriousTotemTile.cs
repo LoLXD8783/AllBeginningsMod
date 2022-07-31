@@ -1,5 +1,6 @@
 ﻿using AllBeginningsMod.Common.Bases.Tiles;
 using AllBeginningsMod.Content.Items.Placeables;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -20,6 +21,8 @@ public sealed class MysteriousTotemTile : ModTileBase
         TileObjectData.newTile.DrawYOffset = 2;
         TileObjectData.addTile(Type);
 
+        AddMapEntry(new Color(167, 217, 198));
+
         DustType = DustID.Iron;
         HitSound = SoundID.Dig;
         MineResist = 2f;
@@ -30,13 +33,6 @@ public sealed class MysteriousTotemTile : ModTileBase
     }
 
     public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-        Item.NewItem(
-            new EntitySource_TileBreak(i, j),
-            i * 16,
-            j * 16,
-            16,
-            32,
-            ModContent.ItemType<MysteriousTotemItem>()
-        );
+        Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<MysteriousTotemItem>());
     }
 }

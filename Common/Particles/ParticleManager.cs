@@ -43,10 +43,10 @@ public sealed class ParticleManager : ILoadable
         particle.Alpha = alpha;
 
         particle.OnSpawn();
-        
+
         if (Particles.Count >= MaxParticles)
             return particle;
-        
+
         Particles.Add(particle);
 
         return particle;
@@ -71,7 +71,7 @@ public sealed class ParticleManager : ILoadable
     private static void DrawParticles(On.Terraria.Main.orig_DrawDust orig, Main self) {
         orig(self);
 
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
 
         for (int i = 0; i < Particles.Count; i++) {
             Particle particle = Particles[i];
@@ -79,12 +79,12 @@ public sealed class ParticleManager : ILoadable
             if (particle == null || particle.IsAdditive || !particle.Position.IsWorldOnScreen(particle.Width, particle.Height))
                 continue;
 
-            particle.Draw();            
+            particle.Draw();
         }
 
         Main.spriteBatch.End();
-        
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
 
         for (int i = 0; i < Particles.Count; i++) {
             Particle particle = Particles[i];
@@ -92,9 +92,9 @@ public sealed class ParticleManager : ILoadable
             if (particle == null || !particle.IsAdditive || !particle.Position.IsWorldOnScreen(particle.Width, particle.Height))
                 continue;
 
-            particle.Draw();            
+            particle.Draw();
         }
-        
+
         Main.spriteBatch.End();
     }
 }

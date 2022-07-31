@@ -18,7 +18,7 @@ public sealed class TinTomahawkProjectile : ModProjectileBase
 
     public override void SetDefaults() {
         Projectile.friendly = true;
-        
+
         Projectile.width = 24;
         Projectile.height = 24;
 
@@ -33,7 +33,7 @@ public sealed class TinTomahawkProjectile : ModProjectileBase
 
         if (Main.rand.NextBool(5))
             Item.NewItem(Projectile.GetSource_Death(), Projectile.position, ModContent.ItemType<TinTomahawkItem>());
-        
+
         return true;
     }
 }

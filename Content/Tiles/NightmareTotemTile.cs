@@ -29,21 +29,18 @@ public sealed class NightmareTotemTile : ModTileBase
     }
 
     public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-        Texture2D glowmaskTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
-
         Tile tile = Framing.GetTileSafely(i, j);
+        TileObjectData data = TileObjectData.GetTileData(tile);
 
-        Vector2 zero = Main.drawToScreen
-            ? Vector2.Zero
-            : new Vector2(Main.offScreenRange);
-        Vector2 drawPosition = new Vector2(i, j) * 16f -
-            Main.screenPosition +
-            zero +
-            new Vector2(0f, TileObjectData.GetTileData(tile).DrawYOffset);
+        Texture2D texture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+
+        Vector2 offset = new(data.DrawXOffset, data.DrawYOffset);
+        Vector2 offScreen = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
+        Vector2 drawPosition = new Vector2(i, j) * 16f - Main.screenPosition + offScreen + offset;
 
         Rectangle frame = new(tile.TileFrameX, tile.TileFrameY, 18, 18);
 
-        spriteBatch.Draw(glowmaskTexture, drawPosition, frame, Color.White, 0f, default, 1f, SpriteEffects.None, 0f);
+        spriteBatch.Draw(texture, drawPosition, frame, Color.White, 0f, default, 1f, SpriteEffects.None, 0f);
     }
 
     public override void NumDust(int i, int j, bool fail, ref int num) {
@@ -51,13 +48,6 @@ public sealed class NightmareTotemTile : ModTileBase
     }
 
     public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-        Item.NewItem(
-            new EntitySource_TileBreak(i, j),
-            i * 16,
-            j * 16,
-            16,
-            32,
-            ModContent.ItemType<NightmareTotemItem>()
-        );
+        Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<NightmareTotemItem>());
     }
 }

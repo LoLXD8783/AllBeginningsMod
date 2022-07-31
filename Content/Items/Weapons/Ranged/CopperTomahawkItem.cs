@@ -21,11 +21,11 @@ public sealed class CopperTomahawkItem : ModItemBase
         Item.noUseGraphic = true;
 
         Item.maxStack = 999;
-        
+
         Item.DamageType = DamageClass.Ranged;
         Item.damage = 11;
         Item.knockBack = 1f;
-        
+
         Item.width = 24;
         Item.height = 28;
 

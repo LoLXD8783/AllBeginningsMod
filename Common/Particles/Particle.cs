@@ -9,14 +9,16 @@ namespace AllBeginningsMod.Common.Systems.Particles;
 
 public abstract class Particle
 {
-    public string TexturePath => GetType().FullName.Replace('.', '/').Replace("Content", "Assets");
+    public virtual string TexturePath => GetType().FullName.Replace('.', '/').Replace("Content", "Assets");
+
+    public Texture2D Texture => ModContent.Request<Texture2D>(TexturePath).Value;
 
     public Color Color = Color.White;
 
     public SpriteEffects Effects;
 
     public Rectangle? Frame;
-    
+
     public Vector2 Position;
     public Vector2 Velocity;
     public Vector2 Origin;
@@ -39,9 +41,7 @@ public abstract class Particle
     }
 
     public virtual void Draw() {
-        Texture2D texture = ModContent.Request<Texture2D>(TexturePath).Value;
-        
-        Main.EntitySpriteDraw(texture, Position - Main.screenPosition, Frame, Color * Alpha, Rotation, Origin, Scale, Effects, 0);
+        Main.EntitySpriteDraw(Texture, Position - Main.screenPosition, Frame, Color * Alpha, Rotation, Origin, Scale, Effects, 0);
     }
 
     public bool Kill() {

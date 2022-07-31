@@ -9,14 +9,14 @@ namespace AllBeginningsMod.Content.Particles;
 public sealed class GraveyardScreenParticle : ParallaxParticle
 {
     private bool fadeOut;
-    
+
     public override void OnSpawn() {
         base.OnSpawn();
 
-        Origin = ModContent.Request<Texture2D>(TexturePath).Value.Size() / 2f;
-        
+        Origin = Texture.Size() / 2f;
+
         IsAdditive = true;
-        
+
         Alpha = 0f;
     }
 
@@ -26,18 +26,16 @@ public sealed class GraveyardScreenParticle : ParallaxParticle
         Velocity.Y -= 0.005f - Velocity.Y * 0.005f;
 
         if (!fadeOut) {
-            Alpha += 0.0025f;
+            Alpha += 0.01f;
 
-            if (Alpha >= 0.75f) {
+            if (Alpha >= 0.75f)
                 fadeOut = true;
-            }
         }
         else {
             Alpha -= 0.0025f;
 
-            if (Alpha <= 0f) {
+            if (Alpha <= 0f)
                 Kill();
-            }
         }
     }
 }

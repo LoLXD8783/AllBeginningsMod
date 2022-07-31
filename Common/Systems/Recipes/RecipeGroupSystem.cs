@@ -8,14 +8,14 @@ namespace AllBeginningsMod.Common.Systems.Recipes;
 public sealed class RecipeGroupSystem : ModSystem
 {
     public const string PlatinumBar = AllBeginningsMod.ModPrefix + "PlatinumBar";
-    
+
     public static RecipeGroup PlatinumBarGroup { get; private set; }
 
     public override void OnModUnload() {
         PlatinumBarGroup = null;
     }
 
-    public override void AddRecipeGroups() {    
+    public override void AddRecipeGroups() {
         PlatinumBarGroup = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37"), ItemID.PlatinumBar, ItemID.GoldBar);
 
         RecipeGroup.RegisterGroup(PlatinumBar, PlatinumBarGroup);

@@ -87,8 +87,10 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
         get => Projectile.ai[1];
         set => Projectile.ai[1] = value;
     }
-    
-    public override bool PreAI() => !TryKillProjectile();
+
+    public override bool PreAI() {
+        return !TryKillProjectile();
+    }
 
     public override void AI() {
         player.heldProj = Projectile.whoAmI;
@@ -108,10 +110,8 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
                 break;
 
             case State.ChargingUp:
-                if (Timer == 0) {
-                    //Angle between holding position and the target ChargeUpBehindHeadAngle value
+                if (Timer == 0) //Angle between holding position and the target ChargeUpBehindHeadAngle value
                     transitionAngle = -ChargeUpBehindHeadAngle * direction - MathHelper.WrapAngle(shiftedRotation + rotationFix + angleFix);
-                }
 
                 float chargeProgress = EaseOut(Timer / MaxChargeTimer);
                 shiftedRotation = unitVectorToMouse.ToRotation() + transitionAngle * chargeProgress;
@@ -123,6 +123,7 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
                     //Setting the fixed direction vector to match the rotation of the last frame of the charge up animation
                     unitVectorToMouse = shiftedRotation.ToRotationVector2();
                 }
+
                 break;
 
             case State.Attacking:
@@ -136,6 +137,7 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
                     //Setting the fixed direction vector to match the rotation of the last frame of the charge up animation
                     unitVectorToMouse = shiftedRotation.ToRotationVector2();
                 }
+
                 break;
 
             case State.Cooldown:
@@ -150,6 +152,7 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
                     unitVectorToMouse = player.MountedCenter.DirectionTo(Main.MouseWorld).RotatedBy(rotationFix).SafeNormalize(Vector2.UnitY);
                     shiftedRotation = unitVectorToMouse.ToRotation();
                 }
+
                 break;
         }
 
@@ -199,26 +202,38 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
         Asset<Texture2D> texture = ModContent.Request<Texture2D>(Texture);
         Rectangle sourceRect = new(0, 0, texture.Width(), texture.Height());
         Color color = Projectile.GetAlpha(lightColor);
-        
+
         Vector2 rotationOrigin = new(direction == 1 ? RotationOrigin.X : Projectile.width - RotationOrigin.X, RotationOrigin.Y);
         //I'm not sure why this is required? Maybe some bias to the left side
         if (direction == 1)
             rotationOrigin += Vector2.One;
 
-        Main.EntitySpriteDraw(texture.Value, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
-            sourceRect, color, Projectile.rotation, rotationOrigin, Projectile.scale, spriteEffects, 0);
+        Main.EntitySpriteDraw(
+            texture.Value,
+            Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
+            sourceRect,
+            color,
+            Projectile.rotation,
+            rotationOrigin,
+            Projectile.scale,
+            spriteEffects,
+            0
+        );
 
         return false;
     }
-    
+
     public void TryAttacking() {
         if (CurrentState == State.Holding)
             CurrentState = State.ChargingUp;
     }
 
     private bool TryKillProjectile() {
-        if (player.HeldItem.type != associatedItemType && Projectile.active ||
-            !player.active || player.dead || player.noItems || player.CCed) {
+        if ((player.HeldItem.type != associatedItemType && Projectile.active) ||
+            !player.active ||
+            player.dead ||
+            player.noItems ||
+            player.CCed) {
             Projectile.Kill();
             return true;
         }

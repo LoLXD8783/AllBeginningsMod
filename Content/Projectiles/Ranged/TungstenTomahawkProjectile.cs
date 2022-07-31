@@ -18,7 +18,7 @@ public sealed class TungstenTomahawkProjectile : ModProjectileBase
 
     public override void SetDefaults() {
         Projectile.friendly = true;
-        
+
         Projectile.width = 24;
         Projectile.height = 24;
 
@@ -28,12 +28,12 @@ public sealed class TungstenTomahawkProjectile : ModProjectileBase
 
     public override bool OnTileCollide(Vector2 oldVelocity) {
         SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
-        
+
         Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
 
         if (Main.rand.NextBool(5))
             Item.NewItem(Projectile.GetSource_Death(), Projectile.position, ModContent.ItemType<TungstenTomahawkItem>());
-        
+
         return true;
     }
 }
