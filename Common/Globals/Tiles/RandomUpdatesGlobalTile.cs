@@ -16,9 +16,8 @@ public sealed class RandomUpdatesGlobalTile : GlobalTile
             NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<DeathBlossomTile>(), 0, 0, -1, -1);
         }
 
-        if (type == TileID.Tombstones) {
+        if (type == TileID.Tombstones && Main.rand.NextBool(10)) {
             Particle.Spawn<GraveyardScreenParticle>(new Vector2(i, j) * 16f);
-            Particle.Spawn<GraveyardScreenParticle>(Main.MouseWorld);
         }
     }
 }
