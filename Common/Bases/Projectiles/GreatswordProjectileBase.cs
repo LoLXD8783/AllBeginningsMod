@@ -1,80 +1,76 @@
 ﻿using System;
-using System.Collections.Generic;
-using AllBeginningsMod.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
-using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Bases.Projectiles;
 
 public abstract class GreatswordProjectileBase : ModProjectileBase
 {
-    private readonly Func<float, float> EaseOut = value => (float) Math.Log(2 * value + 1);
+    private readonly Func<float, float> EaseOut = value => (float) Math.Log10(9f * value + 1);
 
-    //From end to beginning
-    private readonly Func<float, float> InvertedEaseIn = value => (float) Math.Cos(1.5f * Math.Pow(value, 2));
+    // private readonly Func<float, float> EaseIn = value => (float) Math.Exp(0.7f * Math.Pow(value, 6)) - 1f;
+    private readonly Func<float, float> EaseIn = value => (float) Math.Pow(value, 3); //x^3 or x^6?
+
+    private readonly Func<float, float> CooldownSmoothCurve = value => (float) Math.Sin(Math.PI * value / 2f);
+
     private int associatedItemType = -1;
-
-    private Vector2 swingStartVelocity;
-    private float transitionAngle;
+    private Vector2 unitVectorToMouse;
+    private float shiftedRotation = 0f;
+    private float transitionAngle = 0f;
+    private int direction;
+    private int oldDirection = 0;
 
     protected Player player => Main.player[Projectile.owner];
-    public int TotalAnimationTime => MaxChargeTimer + MaxAttackTimer + MaxCooldownTimer;
 
-    //Variables to tweak motion
+    //Variables to tweak motion -> abstract because I don't want to give it 'default' values
 
     /// <summary>
     ///     The maximum upper angle (in radians) the arm will bend backwards when holding the projectile above its head.
     /// </summary>
-    protected float ChargeUpBehindHeadAngle { get; set; } = MathHelper.Pi / 6f; //30deg
-
-    /// <summary>
-    ///     The maximum lower angle (in radians) the arm will bend backwards when holding the projectile down.
-    /// </summary>
-    protected float HoldingAngleArmDown { get; set; } = MathHelper.Pi / 12f; //15deg
+    protected abstract float ChargeUpBehindHeadAngle { get; }
 
     /// <summary>
     ///     The swing arc in radians. The swing starts wherever <see cref="ChargeUpBehindHeadAngle" /> is defined at.
     /// </summary>
-    protected float SwingArc { get; set; } = 4 * MathHelper.Pi / 3f; //240deg
+    protected abstract float SwingArc { get; }
 
     /// <summary>
-    ///     How far should the projectile be from the player
+    ///     How far should the projectile be from the player.
     /// </summary>
-    protected int HoldingRadius { get; set; } = 14;
+    protected abstract int HoldingRadius { get; }
 
     /// <summary>
-    ///     How long the charge up animation will last
+    ///     The point which the texture should rotate around.
     /// </summary>
-    protected int MaxChargeTimer { get; set; } = 45;
+    protected abstract Vector2 RotationOrigin { get; }
 
     /// <summary>
-    ///     How long the attack animation will last
+    ///     How long the charge up animation will last.
     /// </summary>
-    protected int MaxAttackTimer { get; set; } = 15;
+    protected abstract int MaxChargeTimer { get; }
 
     /// <summary>
-    ///     How long the cooldown animation will last
+    ///     How long the attack animation will last.
     /// </summary>
-    protected int MaxCooldownTimer { get; set; } = 15;
+    protected abstract int MaxAttackTimer { get; }
+
+    /// <summary>
+    ///     How long the cooldown animation will last.
+    /// </summary>
+    protected abstract int MaxCooldownTimer { get; }
+
+    /// <summary>
+    ///     How long the smooth animation will last.
+    /// </summary>
+    protected abstract int MaxSmoothTimer { get; }
+
 
     protected State CurrentState {
         get => (State) Projectile.ai[0];
         set => Projectile.ai[0] = (float) value;
-    }
-
-    protected float Timer {
-        get => Projectile.ai[1];
-        set => Projectile.ai[1] = value;
-    }
-    
-    public override string Texture => base.Texture.Replace("/Projectiles/", "/Items/Weapons/").Replace("Projectile", "Item");
-
-    public override void SetStaticDefaults() {
-        ProjectileID.Sets.TrailingMode[Type] = 2;
-        ProjectileID.Sets.TrailCacheLength[Type] = 5;
     }
 
     public override void SetDefaults() {
@@ -85,160 +81,147 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
         Projectile.aiStyle = -1;
     }
 
-    public void TryAttacking() {
-        if (CurrentState == State.Holding)
-            CurrentState = State.ChargingUp;
+    protected float Timer {
+        get => Projectile.ai[1];
+        set => Projectile.ai[1] = value;
     }
+    
+    public override bool PreAI() => !TryKillProjectile();
 
     public override void AI() {
         player.heldProj = Projectile.whoAmI;
         Projectile.active = true;
 
-        float angle = player.direction == -1 ? MathHelper.Pi : 0f;
-        Vector2 swingVelocity = Vector2.Zero;
+        //TODO: Change timers to reflect relevant player multipliers such as attack speed, damage..
 
-        //Rotating here because we want the rotation axis at (0,-1) to be 0
-        //This means that at, i.e., (1, 0) we have 90deg regardless of direction
-        float rotationFixUpwards = MathHelper.PiOver2 * -player.direction + angle;
-
-        Projectile.spriteDirection = -player.direction;
-        // DrawOriginOffsetX = 14 * player.direction;
-        // DrawOriginOffsetY = -14;
+        float rotationFix = MathHelper.PiOver2 * direction;
+        float angleFix = direction == -1 ? MathHelper.Pi : 0f;
 
         switch (CurrentState) {
             case State.Holding:
-                swingStartVelocity = Main.MouseWorld - player.Center;
-
-                float tempSwingStartRotation = swingStartVelocity.RotatedBy(rotationFixUpwards * -1).ToRotation();
-
-                if ((player.direction == 1 &&
-                        tempSwingStartRotation <= -ChargeUpBehindHeadAngle &&
-                        tempSwingStartRotation >= -MathHelper.PiOver2) ||
-                    (player.direction == -1 &&
-                        tempSwingStartRotation >= ChargeUpBehindHeadAngle &&
-                        tempSwingStartRotation <= MathHelper.PiOver2))
-                    swingStartVelocity = (-ChargeUpBehindHeadAngle * player.direction).ToRotationVector2()
-                        .RotatedBy(rotationFixUpwards * player.direction + angle);
-                else if ((player.direction == 1 &&
-                        tempSwingStartRotation >= -MathHelper.Pi + HoldingAngleArmDown &&
-                        tempSwingStartRotation <= -MathHelper.PiOver2) ||
-                    (player.direction == -1 &&
-                        tempSwingStartRotation <= MathHelper.Pi - HoldingAngleArmDown &&
-                        tempSwingStartRotation >= MathHelper.PiOver2))
-                    swingStartVelocity = (MathHelper.Pi + HoldingAngleArmDown * player.direction).ToRotationVector2()
-                        .RotatedBy(rotationFixUpwards * player.direction + angle);
-
-                swingStartVelocity.Normalize();
-                swingVelocity = swingStartVelocity;
+                //Unit vector from player's center to mouse rotated by 90deg (rotationFix) so that (0,-1) is 0deg
+                unitVectorToMouse = Vector2.Lerp(unitVectorToMouse, player.MountedCenter.DirectionTo(Main.MouseWorld).RotatedBy(rotationFix).SafeNormalize(Vector2.UnitY), 0.25f);
+                shiftedRotation = unitVectorToMouse.ToRotation();
+                FixDirection();
                 break;
 
             case State.ChargingUp:
                 if (Timer == 0) {
-                    swingStartVelocity = swingStartVelocity.RotatedBy(rotationFixUpwards * -1);
-                    swingStartVelocity.Normalize();
-
-                    //In case the click is in the opposite direction the player is facing
-                    float rotationValue = swingStartVelocity.ToRotation();
-
-                    float value = 0f;
-                    if (player.direction == 1 && rotationValue < -MathHelper.PiOver2)
-                        value = -MathHelper.Pi + swingStartVelocity.ToRotation();
-                    else if (player.direction == -1 && rotationValue > MathHelper.PiOver2)
-                        value = MathHelper.Pi + swingStartVelocity.ToRotation();
-
-                    transitionAngle = -ChargeUpBehindHeadAngle * player.direction - rotationValue + value;
+                    //Angle between holding position and the target ChargeUpBehindHeadAngle value
+                    transitionAngle = -ChargeUpBehindHeadAngle * direction - MathHelper.WrapAngle(shiftedRotation + rotationFix + angleFix);
                 }
 
                 float chargeProgress = EaseOut(Timer / MaxChargeTimer);
-                swingVelocity = swingStartVelocity.RotatedBy(transitionAngle * chargeProgress - MathHelper.PiOver2);
+                shiftedRotation = unitVectorToMouse.ToRotation() + transitionAngle * chargeProgress;
 
                 if (Timer++ >= MaxChargeTimer) {
-                    swingStartVelocity = swingVelocity;
                     CurrentState = State.Attacking;
                     Timer = 0;
-                }
 
+                    //Setting the fixed direction vector to match the rotation of the last frame of the charge up animation
+                    unitVectorToMouse = shiftedRotation.ToRotationVector2();
+                }
                 break;
 
             case State.Attacking:
-                float attackProgress = InvertedEaseIn((MaxAttackTimer - Timer) / MaxAttackTimer);
-                swingVelocity = swingStartVelocity.RotatedBy(SwingArc * attackProgress * player.direction);
+                float attackProgress = EaseIn(Timer / MaxAttackTimer);
+                shiftedRotation = unitVectorToMouse.ToRotation() + SwingArc * attackProgress * direction;
 
                 if (Timer++ >= MaxAttackTimer) {
-                    CurrentState = State.CooldownToMouse;
+                    CurrentState = State.Cooldown;
                     Timer = 0;
 
-                    //Saving end of swing vector
-                    swingStartVelocity = swingVelocity;
-                    swingStartVelocity.Normalize();
+                    //Setting the fixed direction vector to match the rotation of the last frame of the charge up animation
+                    unitVectorToMouse = shiftedRotation.ToRotationVector2();
                 }
-
                 break;
 
-            case State.CooldownToMouse:
-                if (Timer == 0) {
-                    float mouseRotation = (Main.MouseWorld - player.Center).RotatedBy(rotationFixUpwards).ToRotation();
-                    float endOfSwingRotation = swingStartVelocity.RotatedBy(rotationFixUpwards).ToRotation();
-
-                    transitionAngle = mouseRotation - endOfSwingRotation;
-
-                    //In case the arm was going to rotate in a non natural way (behind the player's back)
-                    if (player.direction == 1 && mouseRotation > MathHelper.PiOver2)
-                        transitionAngle = (mouseRotation - endOfSwingRotation + MathHelper.PiOver2) * -1;
-                    else if (player.direction == 1 && mouseRotation < MathHelper.PiOver2 && mouseRotation > 0)
-                        transitionAngle = -0.15f;
-                    else if (player.direction == -1 && mouseRotation < -MathHelper.PiOver2)
-                        transitionAngle = (mouseRotation - endOfSwingRotation - MathHelper.PiOver2) * -1;
-                    else if (player.direction == -1 && mouseRotation > -MathHelper.PiOver2 && mouseRotation < 0)
-                        transitionAngle = 0.15f;
-                }
-
-                float cooldownProgress = Timer / MaxCooldownTimer;
-                swingVelocity = swingStartVelocity.RotatedBy(transitionAngle * cooldownProgress);
+            case State.Cooldown:
+                float cooldownProgress = CooldownSmoothCurve(Timer / MaxCooldownTimer);
+                shiftedRotation = unitVectorToMouse.ToRotation() + MathHelper.ToRadians(5) * cooldownProgress * direction;
 
                 if (Timer++ >= MaxCooldownTimer) {
                     CurrentState = State.Holding;
                     Timer = 0;
 
-                    //Saving swing start again so that it doesn't "blink" into the holding position
-                    swingStartVelocity = swingVelocity;
+                    FixDirection();
+                    unitVectorToMouse = player.MountedCenter.DirectionTo(Main.MouseWorld).RotatedBy(rotationFix).SafeNormalize(Vector2.UnitY);
+                    shiftedRotation = unitVectorToMouse.ToRotation();
                 }
-
                 break;
         }
 
-        //Arm + Projectile rotation based on current swing velocity
-        float frontArmRotation = swingVelocity.RotatedBy(MathHelper.PiOver2 * -player.direction).ToRotation() + angle;
-        float backArmRotation = swingVelocity.RotatedBy(MathHelper.PiOver2 / 2f * -player.direction).ToRotation() + angle;
+        //Revert rotation shift before drawing
+        shiftedRotation -= rotationFix;
+
+        //Arm rotation
+        float frontArmRotation = shiftedRotation - MathHelper.PiOver2 * direction + angleFix;
+        float backArmRotation = shiftedRotation - MathHelper.PiOver4 * direction + angleFix;
 
         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, frontArmRotation);
         player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.ThreeQuarters, backArmRotation);
 
-        Vector2 rotationCenter = player.Center + new Vector2(-18f * player.direction, -2f);
-        Projectile.Center = rotationCenter + swingVelocity * HoldingRadius;
-        Projectile.rotation = swingVelocity.ToRotation() + angle + MathHelper.PiOver4 * player.direction;
+        //Torso position and rotation?
 
-        TryKillProjectile();
+        //Projectile position and rotation
+        Vector2 armRotationOrigin = new(-4f * direction, -2f);
+        Projectile.Center = player.MountedCenter + armRotationOrigin + shiftedRotation.ToRotationVector2() * HoldingRadius;
+
+        //Projectile rotation is rotated by 45deg to compensate for the 45deg tilt the sprite has
+        Projectile.rotation = shiftedRotation - MathHelper.PiOver4 * direction + angleFix;
+
+        void FixDirection() {
+            direction = (Main.MouseWorld.X >= player.Center.X).ToDirectionInt();
+
+            player.ChangeDir(direction);
+            if (direction != oldDirection) {
+                oldDirection = direction;
+
+                rotationFix = MathHelper.PiOver2 * direction;
+                angleFix = direction == -1 ? MathHelper.Pi : 0f;
+
+                unitVectorToMouse = player.MountedCenter.DirectionTo(Main.MouseWorld).RotatedBy(rotationFix).SafeNormalize(Vector2.UnitY);
+                shiftedRotation = unitVectorToMouse.ToRotation();
+            }
+        }
     }
 
-    public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-        //Only want to have a hitbox in the Attacking State
-        if (CurrentState != State.Attacking) {
-            hitbox = Rectangle.Empty;
-            return;
+    public override bool PreDraw(ref Color lightColor) {
+        //Making sure movement keys don't take precedence over our desired direction for the player's direction
+        player.ChangeDir(direction);
+
+        SpriteEffects spriteEffects = SpriteEffects.None;
+        if (direction == -1)
+            spriteEffects = SpriteEffects.FlipHorizontally;
+
+        Asset<Texture2D> texture = ModContent.Request<Texture2D>(Texture);
+        Rectangle sourceRect = new(0, 0, texture.Width(), texture.Height());
+        Color color = Projectile.GetAlpha(lightColor);
+        
+        Vector2 rotationOrigin = new(direction == 1 ? RotationOrigin.X : Projectile.width - RotationOrigin.X, RotationOrigin.Y);
+        //I'm not sure why this is required? Maybe some bias to the left side
+        if (direction == 1)
+            rotationOrigin += Vector2.One;
+
+        Main.EntitySpriteDraw(texture.Value, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
+            sourceRect, color, Projectile.rotation, rotationOrigin, Projectile.scale, spriteEffects, 0);
+
+        return false;
+    }
+    
+    public void TryAttacking() {
+        if (CurrentState == State.Holding)
+            CurrentState = State.ChargingUp;
+    }
+
+    private bool TryKillProjectile() {
+        if (player.HeldItem.type != associatedItemType && Projectile.active ||
+            !player.active || player.dead || player.noItems || player.CCed) {
+            Projectile.Kill();
+            return true;
         }
 
-        //Lots of magic values.. for now?
-        Vector2 size = new(Projectile.width, Projectile.height);
-        Vector2 position = player.Center + (Projectile.rotation - 1.2f * MathHelper.PiOver2).ToRotationVector2() * HoldingRadius * 2;
-        position += new Vector2(-20f, -35f);
-
-        hitbox = new Rectangle((int) position.X, (int) position.Y, (int) size.X, (int) size.Y);
-    }
-
-    private void TryKillProjectile() {
-        if (player.HeldItem.type != associatedItemType && Projectile.active)
-            Projectile.Kill();
+        return false;
     }
 
     /// <summary>
@@ -253,6 +236,6 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
         Holding,
         ChargingUp,
         Attacking,
-        CooldownToMouse
+        Cooldown
     }
 }

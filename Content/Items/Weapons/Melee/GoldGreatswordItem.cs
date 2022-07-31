@@ -22,8 +22,8 @@ public sealed class GoldGreatswordItem : GreatswordItemBase<GoldGreatswordProjec
         Item.width = 46;
         Item.height = 46;
 
-        Item.useTime = 75;
-        Item.useAnimation = 75;
+        Item.useTime = 50;
+        Item.useAnimation = 50;
         Item.useStyle = ItemUseStyleID.Shoot;
 
         Item.damage = 16;

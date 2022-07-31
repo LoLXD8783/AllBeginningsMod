@@ -19,6 +19,7 @@ public abstract class GreatswordItemBase<T> : ModItemBase where T : GreatswordPr
         //Reading TotalAnimationTime from the projectile doesn't seem to work
         Item.noMelee = true;
         Item.noUseGraphic = true;
+        Item.useTurn = false;
     }
 
     public override void HoldItem(Player player) {

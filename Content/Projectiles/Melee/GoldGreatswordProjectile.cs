@@ -1,10 +1,20 @@
 ﻿using AllBeginningsMod.Common.Bases.Projectiles;
 using Microsoft.Xna.Framework;
+using Terraria;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee;
 
 public class GoldGreatswordProjectile : GreatswordProjectileBase
 {
+    protected override float ChargeUpBehindHeadAngle => MathHelper.Pi / 6f;
+    protected override float SwingArc => 4 * MathHelper.Pi / 3f;
+    protected override int HoldingRadius => 14;
+    protected override Vector2 RotationOrigin => new Vector2(10f, 38f);
+    protected override int MaxChargeTimer => 30;
+    protected override int MaxAttackTimer => 10;
+    protected override int MaxCooldownTimer => 15;
+    protected override int MaxSmoothTimer => 10;
+
     public override void SetStaticDefaults() {
         base.SetStaticDefaults();
 
@@ -16,22 +26,9 @@ public class GoldGreatswordProjectile : GreatswordProjectileBase
 
         Projectile.width = 46;
         Projectile.height = 46;
-
-        //Greatsword properties
-        
-        ChargeUpBehindHeadAngle = MathHelper.Pi / 6f; //30deg
-        HoldingAngleArmDown = MathHelper.Pi / 12f; //15deg
-        SwingArc = 4 * MathHelper.Pi / 3f; //240deg
-        HoldingRadius = 14;
-        MaxChargeTimer = 45;
-        MaxAttackTimer = 15;
-        MaxCooldownTimer = 15;
     }
 
     public override void AI() {
         base.AI();
-
-        DrawOriginOffsetX = 14 * player.direction;
-        DrawOriginOffsetY = -14;
     }
 }
