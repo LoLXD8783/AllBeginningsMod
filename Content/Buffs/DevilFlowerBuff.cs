@@ -8,9 +8,6 @@ namespace AllBeginningsMod.Content.Buffs;
 public sealed class DevilFlowerBuff : ModBuffBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Devil's Gift");
-        Description.SetDefault("Increased damage and monster spawns. Enjoy the gift");
-
         Main.buffNoSave[Type] = true;
         Main.buffNoTimeDisplay[Type] = true;
     }

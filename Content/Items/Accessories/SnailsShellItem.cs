@@ -8,9 +8,6 @@ namespace AllBeginningsMod.Content.Items.Accessories;
 public sealed class SnailsShellItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Snail's Shell");
-        Tooltip.SetDefault("Increases player endurance" + "\nThe wearer starts to feel heavier");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

@@ -8,9 +8,6 @@ namespace AllBeginningsMod.Content.Items.Accessories;
 public sealed class FeatherCharmItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Feather Charm");
-        Tooltip.SetDefault("Greatly increases movement speed");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

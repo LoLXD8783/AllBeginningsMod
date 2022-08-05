@@ -1,20 +1,39 @@
 ﻿Mods: {
     AllBeginnings: {
         Configuration: {
+        
         }
     
         ItemName: {
-            
+            BrownFeatherWingsItem: "Brown Feather Wings"
+            ClearFeatherWingsItem: "Clear Feather Wings"
+            DarkFeatherWingsItem: "Dark Feather Wings"
+            FeatherCharmItem: "Feather Charm"
+            FinoftheDolphinItem: "Fin of the Dolphin"
+            MagmaShellItem: "Magma Shell"
+            PegasusBootsItem: "Pegasus Boots"
+            RabbitsFootItem: "Rabbit's Foot"
+            SnailsShellItem: "Snail's Shell"
         }
         
         ItemTooltip: {
+            BrownFeatherWingsItem: "Allows flight and slow fall"
+            ClearFeatherWingsItem: "Allows flight and slow fall"
+            DarkFeatherWingsItem: "Allows flight and slow fall"
+            FeatherCharmItem: "Greatly increases movement speed"
+            FinoftheDolphinItem: "Lets you move swiftly in water \n Increases damage while submerged in water \n Turns the user into a dolphin"
+            MagmaShellItem: "Allows for temporary lava immunity \n The wearer starts to feel heavier"
+            PegasusBootsItem: "The wearer can run fast" 
+            RabbitsFootItem: "Increases movement speed, jump speed and luck"
+            SnailsShellItem: "Increases player endurance \n The wearer starts to feel heavier"
         }
         
         BuffName: { 
+            DevilFlowerBuff: "Devil's Gift"
         }
         
         BuffDescription: {
-            
+            DevilFlowerBuff: "Increased damage and monster spawns. Enjoy the gift"
         }
     }
 }

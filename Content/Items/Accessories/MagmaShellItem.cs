@@ -8,9 +8,6 @@ namespace AllBeginningsMod.Content.Items.Accessories;
 public sealed class MagmaShellItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Magma Shell");
-        Tooltip.SetDefault("Allows for temporary lava immunity" + "\nThe wearer starts to feel heavier");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

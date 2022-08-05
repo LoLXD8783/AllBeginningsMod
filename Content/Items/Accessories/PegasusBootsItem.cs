@@ -8,9 +8,6 @@ namespace AllBeginningsMod.Content.Items.Accessories;
 public sealed class PegasusBootsItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Pegasus Boots");
-        Tooltip.SetDefault("The wearer can run fast");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

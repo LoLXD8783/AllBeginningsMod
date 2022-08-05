@@ -8,9 +8,6 @@ namespace AllBeginningsMod.Content.Items.Accessories;
 public sealed class RabbitsFootItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Rabbit's Foot");
-        Tooltip.SetDefault("Increases movement speed, jump speed and luck");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

@@ -11,9 +11,6 @@ namespace AllBeginningsMod.Content.Items.Accessories.Wings;
 public sealed class DarkFeatherWingsItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Dark Feather Wings");
-        Tooltip.SetDefault("Allows flight and slow fall");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 
         ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(30);
