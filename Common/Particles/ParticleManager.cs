@@ -71,7 +71,7 @@ public sealed class ParticleManager : ILoadable
     private static void DrawParticles(On.Terraria.Main.orig_DrawDust orig, Main self) {
         orig(self);
 
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
+        Main.spriteBatch.Begin(SpriteSortMode.Texture, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
 
         for (int i = 0; i < Particles.Count; i++) {
             Particle particle = Particles[i];
@@ -84,7 +84,7 @@ public sealed class ParticleManager : ILoadable
 
         Main.spriteBatch.End();
 
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
+        Main.spriteBatch.Begin(SpriteSortMode.Texture, BlendState.NonPremultiplied, SamplerState.PointClamp, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
 
         for (int i = 0; i < Particles.Count; i++) {
             Particle particle = Particles[i];

@@ -1,0 +1,20 @@
+﻿Mods: {
+    AllBeginnings: {
+        Configuration: {
+        }
+    
+        ItemName: {
+            
+        }
+        
+        ItemTooltip: {
+        }
+        
+        BuffName: { 
+        }
+        
+        BuffDescription: {
+            
+        }
+    }
+}
