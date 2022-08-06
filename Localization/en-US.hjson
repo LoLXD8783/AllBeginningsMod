@@ -1,10 +1,18 @@
 ﻿Mods: {
-    AllBeginnings: {
+    AllBeginningsMod: {
         Configuration: {
+            # Headers
+            VisualsHeader: "Visuals [i:237]"
             
+            # Settings
+            MaxParticles: {
+                Label: "Max Particles"
+                Tooltip: "Sets the max amount of particles created by the mod"
+            }
         }
     
         ItemName: {
+            # Accessories
             BrownFeatherWingsItem: "Brown Feather Wings"
             ClearFeatherWingsItem: "Clear Feather Wings"
             DarkFeatherWingsItem: "Dark Feather Wings"
@@ -14,19 +22,29 @@
             PegasusBootsItem: "Pegasus Boots"
             RabbitsFootItem: "Rabbit's Foot"
             SnailsShellItem: "Snail's Shell"
+            
+            # Armor
             ScavengerChestplateItem: "Scavenger Chestplate"
             ScavengerGreavesItem: "ScavengerGreaves"
             ScavengerSkullItem: "Scavenger Skull"
+            
+            # Consumables
             MidasPouchItem: "Midas Pouch"
+            
+            # Placeables
             DeathBlossomItem: "Death Blossom"
             DevilFlowerItem: "Devil Flower"
             NightgauntRelicItem: "Nightgaunt Relic"
             MysteriousTotemItem: "Mysterious Totem"
             NightmareTotemItem: "Nightmare Totem"
+            
+            # Melee
             GoldGreatswordItem: "Gold Greatsword"
             GraveShieldItem: "Grave Shield"
             LeekShieldItem: "Leek Shield"
             LeekSwordItem: "Leek Sword"
+            
+            # Ranged
             WingedBoomerangItem: "Winged Boomerang"
             BorealTurnipItem: "Boreal Turnip"
             CopperTomahawkItem: "Copper Tomahawk"
@@ -37,11 +55,14 @@
             SilverTomahawkItem: "Silver Tomahawk"
             TinTomahawkItem: "Tin Tomahawk"
             TungstenTomahawkItem: "Tungsten Tomahawk"
+            
+            # Summon
             PlumeWhipItem: "Plume Whip"
             TimberWhipItem: "Timber Whip"
         }
         
         ItemTooltip: {
+            # Accessories
             BrownFeatherWingsItem: "Allows flight and slow fall"
             ClearFeatherWingsItem: "Allows flight and slow fall"
             DarkFeatherWingsItem: "Allows flight and slow fall"
@@ -51,11 +72,17 @@
             PegasusBootsItem: "The wearer can run fast" 
             RabbitsFootItem: "Increases movement speed, jump speed and luck"
             SnailsShellItem: "Increases player endurance \n The wearer starts to feel heavier"
+            
+            # Consumables
             MidasPouchItem: "{$CommonItemTooltip.RightClickToOpen}"
+            
+            # Placeables
             DeathBlossomItem: "Contains the essence of the ones who survived death"
             DevilFlowerItem: "Flower gifted of an aggressive aroma \n Increases damage and enemy spawns when nearby"
             MysteriousTotemItem: "Ancient relic of unknown origins"
             NightmareTotemItem: "The harbinger of terror"
+            
+            # Melee
             GraveShieldItem: "Throwing this shield causes unstable energy to leak"
             LeekShieldItem: "I'm sure some bird would love to hold this \n Splits into returning leaves"
             LeekSwordItem: "I'm sure some bird would love to hold this \n Giving your enemies a swift death"
@@ -70,12 +97,15 @@
         }
         
         ProjectileName: {
+            # Melee
             GoldGreatswordProjectile: "Gold Greatsword"
             GraveShieldBoulderProjectile: "Grave Shield Boulder"
             GraveShieldThrownProjectile: "Grave Shield"
             LeekShieldReturningProjectile: "Leek Shield"
             LeekShieldThrownProjectile: "Leek Shield"
             LeekSwordProjectile: "Leek Sword"
+            
+            # Ranged
             WingedBoomerangProjectile: "Winged Boomerang"
             BorealTurnipProjectile: "Boreal Turnip"
             CopperTomahawkProjectile: "Copper Tomahawk"
@@ -86,6 +116,8 @@
             SilverTomahawkProjectile: "Silver Tomahawk"
             TinTomahawkProjectile: "Tin Tomahawk"
             TungstenTomahawkProjectile: "Tungsten Tomahawk"
+            
+            # Summon
             PlumeWhipFeatherProjectile: "Plume Whip Feather"
             PlumeWhipProjectile: "Plume Whip"
             TimberWhipProjectile: "Timber Whip"

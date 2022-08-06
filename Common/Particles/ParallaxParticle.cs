@@ -13,8 +13,6 @@ public abstract class ParallaxParticle : Particle
     public float Parallax = 0.1f;
 
     public override void OnSpawn() {
-        base.OnSpawn();
-
         SpawnPosition = Position;
         ParallaxOffset = 2f * (SpawnPosition - Main.screenPosition) * Parallax;
 

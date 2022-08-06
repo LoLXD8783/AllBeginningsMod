@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AllBeginningsMod.Common.Configuration;
 using AllBeginningsMod.Utility.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,9 +13,8 @@ namespace AllBeginningsMod.Common.Systems.Particles;
 [Autoload(Side = ModSide.Client)]
 public sealed class ParticleManager : ILoadable
 {
-    // TODO: Config setting for max particles.
-    public const int MaxParticles = 4000;
-
+    public static int MaxParticles => ClientSideConfiguration.Instance.MaxParticles;
+    
     public static List<Particle> Particles { get; private set; }
 
     void ILoadable.Load(Mod mod) {
