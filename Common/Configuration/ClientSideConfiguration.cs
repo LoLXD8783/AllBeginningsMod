@@ -13,6 +13,7 @@ public sealed class ClientSideConfiguration : ModConfig
     public override ConfigScope Mode => ConfigScope.ClientSide;
 
     [Header($"$Mods.{AllBeginningsMod.ModName}.Configuration.VisualsHeader")]
+    
     [DefaultValue(1000)]
     [Range(0, 8000)]
     [Increment(100)]
@@ -22,4 +23,10 @@ public sealed class ClientSideConfiguration : ModConfig
     [Label($"$Mods.{AllBeginningsMod.ModName}.Configuration.MaxParticles.Label")]
     [Tooltip($"$Mods.{AllBeginningsMod.ModName}.Configuration.MaxParticles.Tooltip")]
     public int MaxParticles;
+
+    [DefaultValue(true)]
+    [BackgroundColor(255, 69, 103)]
+    [Label($"$Mods.{AllBeginningsMod.ModName}.Configuration.CustomWindowTitles.Label")]
+    [Tooltip($"$Mods.{AllBeginningsMod.ModName}.Configuration.CustomWindowTitles.Tooltip")]
+    public bool CustomWindowTitles;
 }

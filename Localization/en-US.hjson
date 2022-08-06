@@ -9,6 +9,10 @@
                 Label: "Max Particles"
                 Tooltip: "Sets the max amount of particles created by the mod"
             }
+            CustomWindowTitles: {
+                Label: "Custom Window Titles"
+                Tooltip: "Toggles custom window titles added by the mod"
+            }
         }
     
         ItemName: {
