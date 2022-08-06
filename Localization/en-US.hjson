@@ -122,5 +122,17 @@
             PlumeWhipProjectile: "Plume Whip"
             TimberWhipProjectile: "Timber Whip"
         }
+		
+		CustomWindowTitles: {
+			Title0: "Honestly a skill issue"
+			Title1: "Very cool, but I don't recall asking"
+			Title2: "musicman"
+			Title3: "Also try Calamity!"
+			Title4: "Don't try Tremor!"
+			Title5: "How is this mod even running?"
+			Title6: "Whose idea was this?"
+			Title7: "Fogbound"
+			Title8: "It's not that shrimple, rather clamplicated situation"
+		}
     }
 }
