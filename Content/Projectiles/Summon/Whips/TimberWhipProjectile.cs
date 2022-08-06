@@ -14,12 +14,6 @@ public sealed class TimberWhipProjectile : WhipProjectileBase
 
     public override Color BackLineColor => new(102, 49, 25);
 
-    public override void SetStaticDefaults() {
-        base.SetStaticDefaults();
-
-        DisplayName.SetDefault("Timber Whip");
-    }
-
     public override void SetDefaults() {
         base.SetDefaults();
 

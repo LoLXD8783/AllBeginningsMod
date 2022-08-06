@@ -10,8 +10,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee;
 public sealed class WingedBoomerangItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Winged Boomerang");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

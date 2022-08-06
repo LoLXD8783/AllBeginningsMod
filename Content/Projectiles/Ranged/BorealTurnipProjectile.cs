@@ -11,8 +11,6 @@ namespace AllBeginningsMod.Content.Projectiles.Ranged;
 public sealed class BorealTurnipProjectile : ModProjectileBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Boreal Turnip");
-
         ProjectileID.Sets.TrailingMode[Type] = 2;
         ProjectileID.Sets.TrailCacheLength[Type] = 10;
     }

@@ -8,8 +8,6 @@ namespace AllBeginningsMod.Content.Items.Armor.Scavenger;
 public sealed class ScavengerGreavesItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Scavenger Greaves");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

@@ -10,9 +10,6 @@ namespace AllBeginningsMod.Content.Items.Placeables;
 public sealed class MysteriousTotemItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Mysterious Totem");
-        Tooltip.SetDefault("Ancient relic of unknown origins");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
     }
 

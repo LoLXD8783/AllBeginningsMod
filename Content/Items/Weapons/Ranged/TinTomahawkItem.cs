@@ -10,8 +10,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged;
 public sealed class TinTomahawkItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Tin Tomahawk");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
     }
 

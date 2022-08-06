@@ -10,8 +10,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged;
 public sealed class CopperTomahawkItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Copper Tomahawk");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
     }
 

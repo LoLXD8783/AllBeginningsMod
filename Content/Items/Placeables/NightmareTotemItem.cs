@@ -10,9 +10,6 @@ namespace AllBeginningsMod.Content.Items.Placeables;
 public sealed class NightmareTotemItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Nightmare Totem");
-        Tooltip.SetDefault("The harbinger of terror");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
     }
 

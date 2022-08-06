@@ -10,9 +10,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee;
 public sealed class LeekSwordItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Leek Sword");
-        Tooltip.SetDefault("I'm sure some bird would love to hold this" + "\n" + "Giving your enemies a swift death");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

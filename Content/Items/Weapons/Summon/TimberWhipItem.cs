@@ -10,8 +10,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Summon;
 public sealed class TimberWhipItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Timber Whip");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

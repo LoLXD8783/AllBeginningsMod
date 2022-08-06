@@ -10,9 +10,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee;
 public sealed class LeekShieldItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Leek Shield");
-        Tooltip.SetDefault("I'm sure some bird would love to hold this" + "\n" + "Splits into returning leaves");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

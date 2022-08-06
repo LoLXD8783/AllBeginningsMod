@@ -12,10 +12,6 @@ public sealed class SilverTomahawkProjectile : ModProjectileBase
 {
     public override string Texture => base.Texture.Replace("/Projectiles/", "/Items/Weapons/").Replace("Projectile", "Item");
 
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Silver Tomahawk");
-    }
-
     public override void SetDefaults() {
         Projectile.friendly = true;
 

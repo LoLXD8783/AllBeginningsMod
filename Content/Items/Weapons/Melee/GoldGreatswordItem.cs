@@ -8,12 +8,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee;
 
 public sealed class GoldGreatswordItem : GreatswordItemBase<GoldGreatswordProjectile>
 {
-    public override void SetStaticDefaults() {
-        base.SetStaticDefaults();
-
-        DisplayName.SetDefault("Gold Greatsword");
-    }
-
     public override void SetDefaults() {
         base.SetDefaults();
 

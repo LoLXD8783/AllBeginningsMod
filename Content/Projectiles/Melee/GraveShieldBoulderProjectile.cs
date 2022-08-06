@@ -7,8 +7,6 @@ namespace AllBeginningsMod.Content.Projectiles.Melee;
 public sealed class GraveShieldBoulderProjectile : ModProjectileBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Grave Boulder");
-
         Main.projFrames[Projectile.type] = 3;
     }
 

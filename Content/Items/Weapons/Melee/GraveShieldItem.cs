@@ -10,9 +10,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Melee;
 public sealed class GraveShieldItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Grave Shield");
-        Tooltip.SetDefault("Throwing this shield causes unstable energy to leak");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

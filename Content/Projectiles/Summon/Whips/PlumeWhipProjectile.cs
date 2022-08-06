@@ -16,12 +16,6 @@ public sealed class PlumeWhipProjectile : WhipProjectileBase
 
     public override Color BackLineColor => new(202, 151, 100);
 
-    public override void SetStaticDefaults() {
-        base.SetStaticDefaults();
-
-        DisplayName.SetDefault("Plume Whip");
-    }
-
     public override void SetDefaults() {
         base.SetDefaults();
 

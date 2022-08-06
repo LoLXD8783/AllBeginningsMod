@@ -8,9 +8,6 @@ namespace AllBeginningsMod.Content.Items.Materials;
 public sealed class DeathBlossomItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Death Blossom");
-        Tooltip.SetDefault("Contains the essence of the ones who survived death");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
     }
 

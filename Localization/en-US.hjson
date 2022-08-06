@@ -1,7 +1,7 @@
 ﻿Mods: {
     AllBeginnings: {
         Configuration: {
-        
+            
         }
     
         ItemName: {
@@ -14,6 +14,31 @@
             PegasusBootsItem: "Pegasus Boots"
             RabbitsFootItem: "Rabbit's Foot"
             SnailsShellItem: "Snail's Shell"
+            ScavengerChestplateItem: "Scavenger Chestplate"
+            ScavengerGreavesItem: "ScavengerGreaves"
+            ScavengerSkullItem: "Scavenger Skull"
+            MidasPouchItem: "Midas Pouch"
+            DeathBlossomItem: "Death Blossom"
+            DevilFlowerItem: "Devil Flower"
+            NightgauntRelicItem: "Nightgaunt Relic"
+            MysteriousTotemItem: "Mysterious Totem"
+            NightmareTotemItem: "Nightmare Totem"
+            GoldGreatswordItem: "Gold Greatsword"
+            GraveShieldItem: "Grave Shield"
+            LeekShieldItem: "Leek Shield"
+            LeekSwordItem: "Leek Sword"
+            WingedBoomerangItem: "Winged Boomerang"
+            BorealTurnipItem: "Boreal Turnip"
+            CopperTomahawkItem: "Copper Tomahawk"
+            GoldTomahawkItem: "Gold Tomahawk"
+            IronTomahawkItem: "Iron Tomahawk"
+            LeadTomahawkItem: "Lead Tomahawk"
+            PlatinumTomahawkItem: "Platinum Tomahawk"
+            SilverTomahawkItem: "Silver Tomahawk"
+            TinTomahawkItem: "Tin Tomahawk"
+            TungstenTomahawkItem: "Tungsten Tomahawk"
+            PlumeWhipItem: "Plume Whip"
+            TimberWhipItem: "Timber Whip"
         }
         
         ItemTooltip: {
@@ -26,6 +51,14 @@
             PegasusBootsItem: "The wearer can run fast" 
             RabbitsFootItem: "Increases movement speed, jump speed and luck"
             SnailsShellItem: "Increases player endurance \n The wearer starts to feel heavier"
+            MidasPouchItem: "{$CommonItemTooltip.RightClickToOpen}"
+            DeathBlossomItem: "Contains the essence of the ones who survived death"
+            DevilFlowerItem: "Flower gifted of an aggressive aroma \n Increases damage and enemy spawns when nearby"
+            MysteriousTotemItem: "Ancient relic of unknown origins"
+            NightmareTotemItem: "The harbinger of terror"
+            GraveShieldItem: "Throwing this shield causes unstable energy to leak"
+            LeekShieldItem: "I'm sure some bird would love to hold this \n Splits into returning leaves"
+            LeekSwordItem: "I'm sure some bird would love to hold this \n Giving your enemies a swift death"
         }
         
         BuffName: { 
@@ -34,6 +67,28 @@
         
         BuffDescription: {
             DevilFlowerBuff: "Increased damage and monster spawns. Enjoy the gift"
+        }
+        
+        ProjectileName: {
+            GoldGreatswordProjectile: "Gold Greatsword"
+            GraveShieldBoulderProjectile: "Grave Shield Boulder"
+            GraveShieldThrownProjectile: "Grave Shield"
+            LeekShieldReturningProjectile: "Leek Shield"
+            LeekShieldThrownProjectile: "Leek Shield"
+            LeekSwordProjectile: "Leek Sword"
+            WingedBoomerangProjectile: "Winged Boomerang"
+            BorealTurnipProjectile: "Boreal Turnip"
+            CopperTomahawkProjectile: "Copper Tomahawk"
+            GoldTomahawkProjectile: "Gold Tomahawk"
+            IronTomahawkProjectile: "Iron Tomahawk"
+            LeadTomahawkProjectile: "Lead Tomahawk"
+            PlatinumTomahawkProjectile: "Platinum Tomahawk"
+            SilverTomahawkProjectile: "Silver Tomahawk"
+            TinTomahawkProjectile: "Tin Tomahawk"
+            TungstenTomahawkProjectile: "Tungsten Tomahawk"
+            PlumeWhipFeatherProjectile: "Plume Whip Feather"
+            PlumeWhipProjectile: "Plume Whip"
+            TimberWhipProjectile: "Timber Whip"
         }
     }
 }

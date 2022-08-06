@@ -10,8 +10,6 @@ namespace AllBeginningsMod.Content.Projectiles.Melee;
 public sealed class LeekShieldReturningProjectile : ModProjectileBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Leek Shield");
-
         ProjectileID.Sets.TrailingMode[Type] = 2;
         ProjectileID.Sets.TrailCacheLength[Type] = 10;
     }

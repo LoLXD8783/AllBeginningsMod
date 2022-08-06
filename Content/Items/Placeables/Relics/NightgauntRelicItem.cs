@@ -9,10 +9,6 @@ namespace AllBeginningsMod.Content.Items.Placeables.Relics;
 
 public sealed class NightgauntRelicItem : ModItemBase
 {
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Nightgaunt Relic");
-    }
-
     public override void SetDefaults() {
         Item.consumable = true;
         Item.useTurn = true;

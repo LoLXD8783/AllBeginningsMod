@@ -10,8 +10,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged;
 public sealed class PlatinumTomahawkItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Platinum Tomahawk");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
     }
 

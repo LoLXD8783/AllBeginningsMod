@@ -6,10 +6,6 @@ namespace AllBeginningsMod.Content.Projectiles.Summon.Whips;
 
 public sealed class PlumeWhipFeatherProjectile : ModProjectileBase
 {
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Plume Whip Feather");
-    }
-
     public override void SetDefaults() {
         Projectile.friendly = true;
         Projectile.tileCollide = false;

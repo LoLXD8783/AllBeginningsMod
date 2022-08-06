@@ -10,9 +10,6 @@ namespace AllBeginningsMod.Content.Items.Placeables.Plants;
 public sealed class DevilFlowerItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Devil Flower");
-        Tooltip.SetDefault("Flower gifted of an aggressive aroma" + "\nIncreases damage and enemy spawns when nearby");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
     }
 

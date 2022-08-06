@@ -10,8 +10,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Summon;
 public sealed class PlumeWhipItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Plume Whip");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

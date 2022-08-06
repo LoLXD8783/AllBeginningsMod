@@ -31,7 +31,7 @@ public sealed class ScreenShaderLoader : ILoadable
     void ILoadable.Unload() { }
 
     private static void LoadScreenShader(string name) {
-        Ref<Effect> effect = new(ModContent.Request<Effect>(AllBeginningsMod.ScreenEffectsPath + name, AssetRequestMode.ImmediateLoad).Value);
+        Ref<Effect> effect = new(ModContent.Request<Effect>($"{AllBeginningsMod.ModName}/Assets/Effects/Screen/" + name, AssetRequestMode.ImmediateLoad).Value);
         Filter filter = new(new ScreenShaderData(effect, name + "Pass"), EffectPriority.High);
         filter.Load();
 

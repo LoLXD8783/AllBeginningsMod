@@ -14,12 +14,6 @@ public class GoldGreatswordProjectile : GreatswordProjectileBase
     protected override int MaxCooldownTimer => 15;
     protected override int MaxSmoothTimer => 10;
 
-    public override void SetStaticDefaults() {
-        base.SetStaticDefaults();
-
-        DisplayName.SetDefault("Gold Greatsword");
-    }
-
     public override void SetDefaults() {
         base.SetDefaults();
 

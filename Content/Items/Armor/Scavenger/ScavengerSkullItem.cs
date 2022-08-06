@@ -10,8 +10,6 @@ namespace AllBeginningsMod.Content.Items.Armor.Scavenger;
 public sealed class ScavengerSkullItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Scavenger Skull");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

@@ -11,8 +11,6 @@ namespace AllBeginningsMod.Content.Projectiles.Melee;
 public sealed class GraveShieldThrownProjectile : ModProjectileBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Grave Shield");
-
         ProjectileID.Sets.TrailingMode[Type] = 2;
         ProjectileID.Sets.TrailCacheLength[Type] = 10;
     }

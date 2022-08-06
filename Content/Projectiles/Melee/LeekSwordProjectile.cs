@@ -6,10 +6,6 @@ namespace AllBeginningsMod.Content.Projectiles.Melee;
 
 public sealed class LeekSwordProjectile : HeldProjectileBase
 {
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Leek Sword");
-    }
-
     public override void SetDefaults() {
         Projectile.friendly = true;
         Projectile.tileCollide = false;

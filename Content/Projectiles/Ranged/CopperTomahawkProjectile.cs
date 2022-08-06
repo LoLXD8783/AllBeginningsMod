@@ -11,11 +11,7 @@ namespace AllBeginningsMod.Content.Projectiles.Ranged;
 public sealed class CopperTomahawkProjectile : ModProjectileBase
 {
     public override string Texture => base.Texture.Replace("/Projectiles/", "/Items/Weapons/").Replace("Projectile", "Item");
-
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Copper Tomahawk");
-    }
-
+    
     public override void SetDefaults() {
         Projectile.friendly = true;
 

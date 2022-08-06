@@ -9,8 +9,6 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged;
 public sealed class BorealTurnipItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Boreal Turnip");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

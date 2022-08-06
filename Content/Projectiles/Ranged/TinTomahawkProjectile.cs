@@ -12,10 +12,6 @@ public sealed class TinTomahawkProjectile : ModProjectileBase
 {
     public override string Texture => base.Texture.Replace("/Projectiles/", "/Items/Weapons/").Replace("Projectile", "Item");
 
-    public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Tin Tomahawk");
-    }
-
     public override void SetDefaults() {
         Projectile.friendly = true;
 

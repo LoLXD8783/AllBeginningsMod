@@ -8,9 +8,6 @@ namespace AllBeginningsMod.Content.Items.Consumables;
 public sealed class MidasPouchItem : ModItemBase
 {
     public override void SetStaticDefaults() {
-        DisplayName.SetDefault("Midas Pouch");
-        Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
-
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
     }
 
