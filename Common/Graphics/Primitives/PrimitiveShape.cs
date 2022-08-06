@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace AllBeginningsMod.Core.Drawing.Primitives;
+namespace AllBeginningsMod.Common.Graphics.Primitives;
 
 public abstract class PrimitiveShape
 {

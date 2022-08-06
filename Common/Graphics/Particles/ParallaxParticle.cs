@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.ModLoader;
 using Terraria;
 
-namespace AllBeginningsMod.Common.Systems.Particles;
+namespace AllBeginningsMod.Common.Graphics.Particles;
 
 public abstract class ParallaxParticle : Particle
 {

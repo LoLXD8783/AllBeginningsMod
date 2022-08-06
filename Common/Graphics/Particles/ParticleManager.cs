@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AllBeginningsMod.Common.Configuration;
 using AllBeginningsMod.Utility.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Common.Systems.Particles;
+namespace AllBeginningsMod.Common.Graphics.Particles;
 
 [Autoload(Side = ModSide.Client)]
 public sealed class ParticleManager : ILoadable
 {
     public static int MaxParticles => ClientSideConfiguration.Instance.MaxParticles;
-    
+
     public static List<Particle> Particles { get; private set; }
 
     void ILoadable.Load(Mod mod) {

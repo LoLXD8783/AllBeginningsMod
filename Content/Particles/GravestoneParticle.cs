@@ -1,4 +1,4 @@
-﻿using AllBeginningsMod.Common.Systems.Particles;
+﻿using AllBeginningsMod.Common.Graphics.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

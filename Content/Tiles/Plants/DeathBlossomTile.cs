@@ -1,6 +1,6 @@
 ﻿using System;
 using AllBeginningsMod.Common.Bases.Tiles;
-using AllBeginningsMod.Common.Systems.Particles;
+using AllBeginningsMod.Common.Graphics.Particles;
 using AllBeginningsMod.Content.Items.Materials;
 using AllBeginningsMod.Content.Particles;
 using AllBeginningsMod.Utility;

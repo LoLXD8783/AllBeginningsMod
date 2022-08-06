@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Core.Drawing.Snapshots;
+namespace AllBeginningsMod.Common.Graphics.Snapshots;
 
 public sealed class ReflectionCache : ILoadable
 {

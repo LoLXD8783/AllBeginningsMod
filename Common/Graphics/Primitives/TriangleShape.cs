@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace AllBeginningsMod.Core.Drawing.Primitives;
+namespace AllBeginningsMod.Common.Graphics.Primitives;
 
 // TODO: Add rotation support with the tip as its rotation origin.
 public sealed class TriangleShape : PrimitiveShape

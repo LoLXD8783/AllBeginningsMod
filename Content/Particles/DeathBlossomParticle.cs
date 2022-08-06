@@ -1,5 +1,5 @@
 ﻿using System;
-using AllBeginningsMod.Common.Systems.Particles;
+using AllBeginningsMod.Common.Graphics.Particles;
 using Microsoft.Xna.Framework;
 using Terraria;
 

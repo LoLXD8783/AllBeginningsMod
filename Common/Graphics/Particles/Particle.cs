@@ -1,11 +1,9 @@
-﻿using AllBeginningsMod.Utility;
-using AllBeginningsMod.Utility.Extensions;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Common.Systems.Particles;
+namespace AllBeginningsMod.Common.Graphics.Particles;
 
 public abstract class Particle
 {

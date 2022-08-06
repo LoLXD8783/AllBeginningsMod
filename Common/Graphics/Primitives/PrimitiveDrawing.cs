@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using AllBeginningsMod.Utility;
+﻿using AllBeginningsMod.Utility;
 using AllBeginningsMod.Utility.Extensions;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Core.Drawing.Primitives;
+namespace AllBeginningsMod.Common.Graphics.Primitives;
 
 [Autoload(Side = ModSide.Client)]
 public sealed class PrimitiveDrawing : ILoadable

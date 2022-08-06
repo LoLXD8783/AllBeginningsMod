@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace AllBeginningsMod.Core.Drawing.Snapshots;
+namespace AllBeginningsMod.Common.Graphics.Snapshots;
 
 public readonly struct SpriteBatchSnapshot
 {

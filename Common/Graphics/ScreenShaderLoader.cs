@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.Graphics.Effects;
@@ -10,7 +10,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 
-namespace AllBeginningsMod.Core.Graphics;
+namespace AllBeginningsMod.Common.Graphics;
 
 [Autoload(Side = ModSide.Client)]
 public sealed class ScreenShaderLoader : ILoadable

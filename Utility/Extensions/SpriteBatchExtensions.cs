@@ -1,4 +1,4 @@
-﻿using AllBeginningsMod.Core.Drawing.Snapshots;
+﻿using AllBeginningsMod.Common.Graphics.Snapshots;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace AllBeginningsMod.Utility.Extensions;

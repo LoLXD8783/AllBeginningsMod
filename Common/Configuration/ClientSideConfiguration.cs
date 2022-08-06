@@ -9,11 +9,10 @@ namespace AllBeginningsMod.Common.Configuration;
 public sealed class ClientSideConfiguration : ModConfig
 {
     public static ClientSideConfiguration Instance => ModContent.GetInstance<ClientSideConfiguration>();
-    
+
     public override ConfigScope Mode => ConfigScope.ClientSide;
 
     [Header($"$Mods.{AllBeginningsMod.ModName}.Configuration.VisualsHeader")]
-    
     [DefaultValue(1000)]
     [Range(0, 8000)]
     [Increment(100)]
