@@ -5,5 +5,5 @@ namespace AllBeginningsMod.Common.Bases.Items;
 
 public abstract class ModItemBase : ModItem
 {
-    public override string Texture => GetType().FullName.GetTexturePath();
+    public override string Texture => GetType().FullName.Replace('.', '/').Replace("Content", "Assets");
 }

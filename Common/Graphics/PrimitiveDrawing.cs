@@ -28,12 +28,6 @@ public sealed class PrimitiveDrawing : ILoadable
         );
     }
 
-    public static void DrawPrimitiveShape(PrimitiveShape shape, Effect effect) {
-        shape.SetShape();
-
-        DrawPrimitive(shape.Type, shape.Vertices.ToArray(), shape.Indices.ToArray(), effect);
-    }
-
     public static void DrawPrimitive(PrimitiveType type, VertexPositionColorTexture[] vertices, short[] indices, Effect effect) {
         if (vertices.Length <= 0 || indices.Length <= 0 || effect == null)
             return;
