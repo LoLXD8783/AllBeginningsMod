@@ -15,8 +15,8 @@ public abstract class GreatswordItemBase<T> : ModItemBase where T : GreatswordPr
     }
 
     public override void SetDefaults() {
-        //Kirtle: useTime and useAnimation must be manually tailored for each greatsword..
-        //Reading TotalAnimationTime from the projectile doesn't seem to work
+        // Kirtle: useTime and useAnimation must be manually tailored for each greatsword..
+        // Reading TotalAnimationTime from the projectile doesn't seem to work
         Item.noMelee = true;
         Item.noUseGraphic = true;
         Item.useTurn = false;
@@ -37,8 +37,8 @@ public abstract class GreatswordItemBase<T> : ModItemBase where T : GreatswordPr
         return false;
     }
 
-    private static T NewGreatswordProjectile(Player player, int type, int damage, float knockback, int owner, int itemType) {
-        Projectile projectile = Projectile.NewProjectileDirect(player.GetSource_FromThis(), player.Center, Vector2.Zero, type, damage, knockback, owner);
+    private static T NewGreatswordProjectile(Player player, int type, int damage, float knockBack, int owner, int itemType) {
+        Projectile projectile = Projectile.NewProjectileDirect(player.GetSource_FromThis(), player.Center, Vector2.Zero, type, damage, knockBack, owner);
         T greatswordProjectile = projectile.ModProjectile as T;
         greatswordProjectile?.SetAssociatedItemType(itemType);
 

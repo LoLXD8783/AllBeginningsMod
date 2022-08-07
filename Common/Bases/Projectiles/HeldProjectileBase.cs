@@ -6,14 +6,15 @@ namespace AllBeginningsMod.Common.Bases.Projectiles;
 
 public abstract class HeldProjectileBase : ModProjectileBase
 {
+    public Player Owner => Main.player[Projectile.owner];
+    
     public bool ChangeOwnerDirection;
     public bool ChangeOwnerItemData;
 
     public bool ChannelDependant;
 
     public Vector2 HoldoutOffset;
-    public Player Owner => Main.player[Projectile.owner];
-
+    
     public override void AI() {
         if (ChannelDependant && !Owner.channel) {
             Projectile.Kill();

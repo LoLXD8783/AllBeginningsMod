@@ -14,7 +14,7 @@ public class GoldGreatswordProjectile : GreatswordProjectileBase
     public override Vector2 RotationOrigin => new(10f, 38f);
     
     public override int MaxChargeTimer => 30;
-    public override int MaxAttackTimer => 15;
+    public override int MaxAttackTimer => 10;
     public override int MaxCooldownTimer => 15;
     public override int MaxSmoothTimer => 15;
 
