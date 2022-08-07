@@ -20,13 +20,13 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
     public const float ChargingUpState = 1f;
     public const float AttackingState = 2f;
     public const float CooldownState = 3f;
-    
+
     public ref float CurrentState => ref Projectile.ai[0];
-    
+
     public ref float Timer => ref Projectile.ai[1];
-    
+
     public abstract float ChargeUpBehindHeadAngle { get; }
-    
+
     public abstract float SwingArc { get; }
 
     public abstract int HoldingRadius { get; }
@@ -41,49 +41,49 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
     private static readonly SoundStyle swingSound = new($"{AllBeginningsMod.ModName}/Assets/Sounds/Item/GreatswordSwing") {
         PitchVariance = 0.5f
     };
-    
+
+    // TODO: Setup for public use, other content sets could benefit from easing as well.
     private readonly Func<float, float> easeOut = value => MathF.Log10(9f * value + 1f);
 
     private readonly Func<float, float> easeIn = value => MathF.Pow(value, 3); //x^3 or x^6?
 
     private readonly Func<float, float> cooldownSmoothCurve = value => MathF.Sin(MathHelper.Pi * value / 2f);
-    
+
     private Vector2 unitVectorToMouse;
-    
+
     private float shiftedRotation;
     private float transitionAngle;
-    
+
     private int direction;
     private int oldDirection;
-    
+
     private int associatedItemType = -1;
-    
+
     public override string Texture => base.Texture.Replace("/Projectiles/", "/Items/Weapons/").Replace("GreatswordProjectile", "GreatswordItem");
 
     public override void SetDefaults() {
         Projectile.tileCollide = false;
-        
+
         Projectile.penetrate = -1;
         Projectile.aiStyle = -1;
     }
 
     public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-        if (CurrentState != AttackingState) {
+        if (CurrentState != AttackingState)
             return;
-        }    
     }
 
     public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
         hitDirection = direction;
     }
-    
+
     public override bool PreAI() {
         return !TryKillProjectile();
     }
 
     public override void AI() {
         // TODO: Change timers to reflect relevant player multipliers such as attack speed, damage..
-        
+
         Projectile.friendly = CurrentState == AttackingState;
 
         float rotationFix = MathHelper.PiOver2 * direction;
@@ -99,7 +99,7 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
 
             case ChargingUpState:
                 // Angle between holding position and the target ChargeUpBehindHeadAngle value.
-                if (Timer == 0f) 
+                if (Timer == 0f)
                     transitionAngle = -ChargeUpBehindHeadAngle * direction - MathHelper.WrapAngle(shiftedRotation + rotationFix + angleFix);
 
                 float chargeProgress = easeOut(Timer / MaxChargeTimer);
@@ -111,7 +111,7 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
 
                     // Setting the fixed direction vector to match the rotation of the last frame of the charge up animation.
                     unitVectorToMouse = shiftedRotation.ToRotationVector2();
-                    
+
                     SoundEngine.PlaySound(swingSound, Projectile.Center);
                 }
 
@@ -163,9 +163,9 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
 
         // Projectile rotation is rotated by 45deg to compensate for the 45deg tilt the sprite has.
         Projectile.rotation = shiftedRotation - MathHelper.PiOver4 * direction + angleFix;
-        
+
         direction = (Main.MouseWorld.X >= Owner.Center.X).ToDirectionInt();
-            
+
         Owner.ChangeDir(direction);
 
         if (direction != oldDirection) {
@@ -177,10 +177,10 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
             unitVectorToMouse = Owner.MountedCenter.DirectionTo(Main.MouseWorld).RotatedBy(rotationFix).SafeNormalize(Vector2.UnitY);
             shiftedRotation = unitVectorToMouse.ToRotation();
         }
-        
+
         base.AI();
     }
-    
+
     public override bool PreDraw(ref Color lightColor) {
         SpriteEffects spriteEffects = direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
@@ -189,7 +189,7 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
         Color color = Projectile.GetAlpha(lightColor);
 
         Vector2 rotationOrigin = new(direction == 1 ? RotationOrigin.X : Projectile.width - RotationOrigin.X, RotationOrigin.Y);
-        
+
         // I'm not sure why this is required? Maybe some bias to the left side.
         if (direction == 1)
             rotationOrigin += Vector2.One;
@@ -208,11 +208,11 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
 
         return false;
     }
-    
+
     public void SetAssociatedItemType(int itemType) {
         associatedItemType = itemType;
     }
-    
+
     public void TryAttacking() {
         if (CurrentState == HoldingState)
             CurrentState = ChargingUpState;
