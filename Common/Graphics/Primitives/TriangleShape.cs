@@ -15,7 +15,7 @@ public sealed class TriangleShape : PrimitiveShape
 
     public readonly float Width;
     public readonly float Height;
-
+    
     public TriangleShape(Vector2 position, Color color, float width, float height) {
         Position = position;
         Color = color;
@@ -23,13 +23,11 @@ public sealed class TriangleShape : PrimitiveShape
         Height = height;
     }
 
-    public override void SetVertices() {
+    public override void SetShape() {
         Vertices.Add(new VertexPositionColorTexture(new Vector3(Position - new Vector2(Width, 0f), 0f), Color, new Vector2(0f, 1f)));
         Vertices.Add(new VertexPositionColorTexture(new Vector3(Position - new Vector2(0f, Height), 0f), Color, new Vector2(0.5f, 0f)));
         Vertices.Add(new VertexPositionColorTexture(new Vector3(Position + new Vector2(Width, 0f), 0f), Color, Vector2.One));
-    }
-
-    public override void SetIndices() {
+        
         Indices.Add((short) Vertices.Count);
         Indices.Add((short) (Vertices.Count + 1));
         Indices.Add((short) (Vertices.Count + 2));

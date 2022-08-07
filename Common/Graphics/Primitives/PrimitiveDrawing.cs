@@ -29,8 +29,7 @@ public sealed class PrimitiveDrawing : ILoadable
     }
 
     public static void DrawPrimitiveShape(PrimitiveShape shape, Effect effect) {
-        shape.SetVertices();
-        shape.SetIndices();
+        shape.SetShape();
 
         DrawPrimitive(shape.Type, shape.Vertices.ToArray(), shape.Indices.ToArray(), effect);
     }

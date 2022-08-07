@@ -1,4 +1,8 @@
 ﻿using System;
+using AllBeginningsMod.Common.Graphics.Primitives;
+using AllBeginningsMod.Utility;
+using AllBeginningsMod.Utility.Extensions;
+using IL.Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -9,7 +13,7 @@ namespace AllBeginningsMod.Common.Bases.Projectiles;
 
 public abstract class GreatswordProjectileBase : ModProjectileBase
 {
-    public override string Texture => base.Texture.Replace("/Projectiles/", "/Items/Weapons/").Replace("GreatswordProjectile", "GreatswordItem");
+    public override string Texture => GetType().FullName.GetAssetPath().Replace("/Projectiles/", "/Items/Weapons/").Replace("GreatswordProjectile", "GreatswordItem");
 
     private readonly Func<float, float> EaseOut = value => (float) Math.Log10(9f * value + 1);
 
@@ -190,8 +194,18 @@ public abstract class GreatswordProjectileBase : ModProjectileBase
             }
         }
     }
-
+    
     public override bool PreDraw(ref Color lightColor) {
+        // Arc slash drawing
+        TriangleShape shape = new(Projectile.Center, Color.White, 64f, 64f);
+
+        Effect effect = Mod.Assets.Request<Effect>("Assets/Effects/TexturePrimitive", AssetRequestMode.ImmediateLoad).Value;
+        
+        effect.Parameters["worldViewProjection"].SetValue(DrawUtils.WorldViewProjection);
+        effect.Parameters["sampleTexture"].SetValue(Mod.Assets.Request<Texture2D>("Assets/Extras/Samples/GreatswordSlash", AssetRequestMode.ImmediateLoad).Value);
+        
+        PrimitiveDrawing.DrawPrimitiveShape(shape, effect);
+        
         //Making sure movement keys don't take precedence over our desired direction for the player's direction
         player.ChangeDir(direction);
 
