@@ -23,19 +23,15 @@ public sealed class TriangleShape : PrimitiveShape
         Height = height;
     }
 
-    public override void SetShape(out VertexPositionColorTexture[] vertices, out short[] indices) {
-        List<VertexPositionColorTexture> vertexList = new();
-        List<short> indexList = new();
+    public override void SetVertices() {
+        Vertices.Add(new VertexPositionColorTexture(new Vector3(Position - new Vector2(Width, 0f), 0f), Color, new Vector2(0f, 1f)));
+        Vertices.Add(new VertexPositionColorTexture(new Vector3(Position - new Vector2(0f, Height), 0f), Color, new Vector2(0.5f, 0f)));
+        Vertices.Add(new VertexPositionColorTexture(new Vector3(Position + new Vector2(Width, 0f), 0f), Color, Vector2.One));
+    }
 
-        vertexList.Add(new VertexPositionColorTexture(new Vector3(Position - new Vector2(Width, 0f), 0f), Color, new Vector2(0f, 1f)));
-        vertexList.Add(new VertexPositionColorTexture(new Vector3(Position - new Vector2(0f, Height), 0f), Color, new Vector2(0.5f, 0f)));
-        vertexList.Add(new VertexPositionColorTexture(new Vector3(Position + new Vector2(Width, 0f), 0f), Color, Vector2.One));
-
-        indexList.Add((short) vertexList.Count);
-        indexList.Add((short) (vertexList.Count + 1));
-        indexList.Add((short) (vertexList.Count + 2));
-
-        vertices = vertexList.ToArray();
-        indices = indexList.ToArray();
+    public override void SetIndices() {
+        Indices.Add((short) Vertices.Count);
+        Indices.Add((short) (Vertices.Count + 1));
+        Indices.Add((short) (Vertices.Count + 2));
     }
 }
