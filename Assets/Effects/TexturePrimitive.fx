@@ -29,6 +29,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     
     output.Position = mul(input.Position, worldViewProjection);
     output.Color = input.Color;
+    output.Color.a = uOpacity;
     output.TextureCoordinates = input.TextureCoordinates;
 
     return output;
@@ -37,7 +38,10 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
      float4 color = tex2D(sampleTextureSampler, input.TextureCoordinates);
-     return (input.Color * color) * uOpacity;
+     color.a = uOpacity;
+     input.Color.a = uOpacity;
+
+     return input.Color * color;
 }
 
 technique Technique1
