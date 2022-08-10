@@ -1,7 +1,11 @@
 ﻿using System;
 using AllBeginningsMod.Common.Graphics.Particles;
+using AllBeginningsMod.Common.Graphics.Snapshots;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using AllBeginningsMod.Utility.Extensions;
+using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Particles;
 
@@ -19,7 +23,7 @@ public sealed class DeathBlossomParticle : Particle
 
         Frame = new Rectangle(0, Main.rand.Next(3) * 10, 10, 10);
         Scale = new Vector2(Main.rand.NextFloat(0.5f, 1f));
-        Origin = Texture.Size() / 2f;
+        Origin = Frame.Value.GetCenterOrigin();
     }
 
     public override void Update() {

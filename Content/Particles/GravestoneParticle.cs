@@ -1,4 +1,5 @@
 ﻿using AllBeginningsMod.Common.Graphics.Particles;
+using AllBeginningsMod.Utility.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -13,7 +14,7 @@ public sealed class GraveyardScreenParticle : ParallaxParticle
     public override void OnSpawn() {
         base.OnSpawn();
 
-        Origin = Texture.Size() / 2f;
+        Origin = Texture.GetCenterOrigin();
 
         IsAdditive = true;
 

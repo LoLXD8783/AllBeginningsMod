@@ -42,9 +42,6 @@ public sealed class ParticleManager : ILoadable
 
         particle.OnSpawn();
 
-        if (Particles.Count >= MaxParticles)
-            return particle;
-
         Particles.Add(particle);
 
         return particle;
@@ -61,6 +58,9 @@ public sealed class ParticleManager : ILoadable
 
     private static void UpdateParticles(On.Terraria.Dust.orig_UpdateDust orig) {
         orig();
+
+        if (Particles.Count >= MaxParticles)
+            Particles.RemoveAt(0);
 
         for (int i = 0; i < Particles.Count; i++)
             Particles[i]?.Update();

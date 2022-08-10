@@ -10,7 +10,7 @@ namespace AllBeginningsMod.Common.Globals.Tiles;
 public sealed class RandomUpdatesGlobalTile : GlobalTile
 {
     public override void RandomUpdate(int i, int j, int type) {
-        if (type == TileID.Grass && Main.rand.NextBool(200) && !Main.dayTime) {
+        if (type == TileID.Grass && Main.rand.NextBool(100) && !Main.dayTime) {
             WorldGen.PlaceObject(i, j - 1, ModContent.TileType<DeathBlossomTile>());
             NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<DeathBlossomTile>(), 0, 0, -1, -1);
         }

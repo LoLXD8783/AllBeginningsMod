@@ -28,7 +28,7 @@ public sealed class LeekShieldReturningProjectile : ModProjectileBase
     }
 
     public override bool PreDraw(ref Color lightColor) {
-        Projectile.DrawAfterimage(lightColor, Projectile.Hitbox.Size() / 2f, 0.8f, 0.1f, 2);
+        Projectile.DrawAfterimage(lightColor, Projectile.Hitbox.GetCenterOrigin(), 0.8f, 0.1f, 2);
 
         return true;
     }

@@ -6,11 +6,11 @@ using Terraria.ModLoader;
 namespace AllBeginningsMod.Common;
 
 [Autoload(Side = ModSide.Client)]
-public sealed class CustomWindowTitles : ILoadable
+public sealed class CustomWindowTitles : ModSystem
 {
-    public const int MaxTitles = 9;
+    public const int MaxTitles = 15;
 
-    void ILoadable.Load(Mod mod) {
+    public override void OnWorldLoad() {
         if (!ClientSideConfiguration.Instance.CustomWindowTitles)
             return;
 
@@ -18,7 +18,7 @@ public sealed class CustomWindowTitles : ILoadable
         Main.instance.Window.Title = $"All Beginnings: {selectedTitle}";
     }
 
-    void ILoadable.Unload() {
+    public override void OnWorldUnload() {
         if (!ClientSideConfiguration.Instance.CustomWindowTitles)
             return;
 
