@@ -8,7 +8,7 @@ namespace AllBeginningsMod.Common.Bases.Items;
 
 public abstract class GreatswordItemBase<T> : ModItemBase where T : GreatswordProjectileBase
 {
-    private T HeldProjectile { get; set; }
+    private static T HeldProjectile { get; set; }
 
     public override void SetStaticDefaults() {
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
@@ -18,8 +18,8 @@ public abstract class GreatswordItemBase<T> : ModItemBase where T : GreatswordPr
         // Kirtle: useTime and useAnimation must be manually tailored for each greatsword..
         // Reading TotalAnimationTime from the projectile doesn't seem to work
         Item.noMelee = true;
-        Item.noUseGraphic = true;
         Item.useTurn = false;
+        Item.noUseGraphic = true;
     }
 
     public override void HoldItem(Player player) {
@@ -32,16 +32,19 @@ public abstract class GreatswordItemBase<T> : ModItemBase where T : GreatswordPr
 
     public override bool? UseItem(Player player) {
         if (player.whoAmI == Main.myPlayer)
-            HeldProjectile.TryAttacking();
+            HeldProjectile?.TryAttacking();
 
         return false;
     }
 
     private static T NewGreatswordProjectile(Player player, int type, int damage, float knockBack, int owner, int itemType) {
         Projectile projectile = Projectile.NewProjectileDirect(player.GetSource_FromThis(), player.Center, Vector2.Zero, type, damage, knockBack, owner);
-        T greatswordProjectile = projectile.ModProjectile as T;
-        greatswordProjectile?.SetAssociatedItemType(itemType);
 
-        return greatswordProjectile;
+        if (projectile.ModProjectile is T greatsword) {
+            greatsword.SetAssociatedItemType(itemType);
+            return greatsword;
+        }
+
+        return null;
     }
 }

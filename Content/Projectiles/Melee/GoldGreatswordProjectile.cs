@@ -7,7 +7,7 @@ public class GoldGreatswordProjectile : GreatswordProjectileBase
 {
     public override float ChargeUpBehindHeadAngle => MathHelper.Pi / 6f;
 
-    public override float SwingArc => 4f * MathHelper.Pi / 3f;
+    public override float SwingArc => 7f * MathHelper.PiOver4;
 
     public override int HoldingRadius => 14;
 

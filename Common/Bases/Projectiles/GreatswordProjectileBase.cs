@@ -45,7 +45,7 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
     // TODO: Setup for public use, other content sets could benefit from easing as well.
     private readonly Func<float, float> easeOut = value => MathF.Log10(9f * value + 1f);
 
-    private readonly Func<float, float> easeIn = value => MathF.Pow(value, 3); //x^3 or x^6?
+    private readonly Func<float, float> easeIn = value => MathF.Pow(value, 3); 
 
     private readonly Func<float, float> cooldownSmoothCurve = value => MathF.Sin(MathHelper.Pi * value / 2f);
 
@@ -71,6 +71,11 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
     public override void ModifyDamageHitbox(ref Rectangle hitbox) {
         if (CurrentState != AttackingState)
             return;
+
+        float offset = Projectile.direction == -1 ? 0f : MathHelper.PiOver2;
+        
+        hitbox.X += (int) (MathF.Cos(Projectile.rotation + offset) * Projectile.width);
+        hitbox.Y += (int) (MathF.Sin(Projectile.rotation + offset) * Projectile.width);
     }
 
     public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
@@ -89,6 +94,8 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
         float rotationFix = MathHelper.PiOver2 * direction;
         float angleFix = direction == -1 ? MathHelper.Pi : 0f;
 
+        float attackSpeed = Owner.GetAttackSpeed(DamageClass.Melee);
+
         switch (CurrentState) {
             case HoldingState:
                 // Unit vector from player's center to mouse rotated by 90deg (rotationFix) so that (0,-1) is 0deg.
@@ -105,7 +112,9 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
                 float chargeProgress = easeOut(Timer / MaxChargeTimer);
                 shiftedRotation = unitVectorToMouse.ToRotation() + transitionAngle * chargeProgress;
 
-                if (Timer++ >= MaxChargeTimer) {
+                Timer++;
+                
+                if (Timer >= MaxChargeTimer) {
                     CurrentState = AttackingState;
                     Timer = 0f;
 
@@ -120,8 +129,10 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
             case AttackingState:
                 float attackProgress = easeIn(Timer / MaxAttackTimer);
                 shiftedRotation = unitVectorToMouse.ToRotation() + SwingArc * attackProgress * direction;
+                
+                Timer++;
 
-                if (Timer++ >= MaxAttackTimer) {
+                if (Timer >= MaxAttackTimer) {
                     CurrentState = CooldownState;
                     Timer = 0f;
 
@@ -134,8 +145,10 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
             case CooldownState:
                 float cooldownProgress = cooldownSmoothCurve(Timer / MaxCooldownTimer);
                 shiftedRotation = unitVectorToMouse.ToRotation() + MathHelper.ToRadians(5f) * cooldownProgress * direction;
+                
+                Timer++;
 
-                if (Timer++ >= MaxCooldownTimer) {
+                if (Timer >= MaxCooldownTimer) {
                     CurrentState = HoldingState;
                     Timer = 0f;
 
@@ -145,7 +158,7 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
 
                 break;
         }
-
+        
         // Revert rotation shift before drawing.
         shiftedRotation -= rotationFix;
 

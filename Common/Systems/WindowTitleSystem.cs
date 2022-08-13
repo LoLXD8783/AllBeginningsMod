@@ -8,7 +8,7 @@ namespace AllBeginningsMod.Common;
 [Autoload(Side = ModSide.Client)]
 public sealed class CustomWindowTitles : ModSystem
 {
-    public const int MaxTitles = 15;
+    public const int MaxTitles = 16;
 
     public override void OnWorldLoad() {
         if (!ClientSideConfiguration.Instance.CustomWindowTitles)
