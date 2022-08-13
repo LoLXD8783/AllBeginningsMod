@@ -5,6 +5,7 @@ using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
+using Terraria.UI;
 using Terraria.WorldBuilding;
 
 namespace AllBeginningsMod.Common.Systems.WorldGeneration.ChestLoot;
@@ -19,20 +20,18 @@ public sealed class ChestLootSystem : ModSystem
 
     private static void GenerateChestLoot(GenerationProgress progress, GameConfiguration configuration) {
         progress.Message = "Adding loot to chests...";
-    
-        for (int i = 0; i < Main.maxChests; i++) {
-            Chest chest = Main.chest[i];
 
+        foreach (Chest chest in Main.chest) {
             if (chest == null)
                 continue;
             
             Tile tile = Framing.GetTileSafely(chest.x, chest.y);
-            
-            foreach (ChestLoot loot in ModContent.GetContent<ChestLoot>()) {
-                if (!tile.HasTile || tile.TileType != TileID.Containers || tile.TileFrameX != loot.ChestFrame)
+
+            foreach (ChestLoot chestLoot in ModContent.GetContent<ChestLoot>()) {
+                if (!tile.HasTile || tile.TileType != TileID.Containers || tile.TileFrameX != chestLoot.ChestFrame)
                     continue;
                 
-                loot.SetLoot(chest);
+                chestLoot.SetLoot(chest);
             }
         }
     }

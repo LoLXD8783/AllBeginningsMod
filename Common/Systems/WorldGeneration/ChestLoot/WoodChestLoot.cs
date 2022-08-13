@@ -1,5 +1,6 @@
 ﻿using AllBeginningsMod.Content.Items.Accessories;
 using AllBeginningsMod.Content.Items.Consumables;
+using AllBeginningsMod.Utility.Extensions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,5 +14,7 @@ public sealed class WoodChestLoot : ChestLoot
     public override void SetLoot(Chest chest) {
         TryAddItem(chest, ModContent.ItemType<MidasPouchItem>(), WorldGen.genRand.Next(3, 6), 4);
         TryAddItem(chest, ModContent.ItemType<PegasusBootsItem>(), 1, 4);
+        
+        TrySort(chest);
     }
 }

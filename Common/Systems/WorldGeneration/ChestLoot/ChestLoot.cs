@@ -49,4 +49,8 @@ public abstract class ChestLoot : ModType
     protected bool TryRemoveItem(Chest chest, Predicate<Item> predicate) {
         return chest.TryRemoveItem(predicate);
     }
+
+    protected bool TrySort(Chest chest) {
+        return chest.TrySort();
+    }
 }

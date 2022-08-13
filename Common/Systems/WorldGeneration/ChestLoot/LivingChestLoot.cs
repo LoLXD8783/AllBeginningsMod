@@ -15,5 +15,7 @@ public sealed class LivingWoodChestLoot : ChestLoot
         TryAddItem(chest, ModContent.ItemType<MidasPouchItem>(), WorldGen.genRand.Next(3, 6), 4);
         TryAddItem(chest, ModContent.ItemType<PegasusBootsItem>(), 1, 4);
         TryAddItem(chest, ModContent.ItemType<PlumeWhipItem>(), 1, 4);
+
+        TrySort(chest);
     }
 }
