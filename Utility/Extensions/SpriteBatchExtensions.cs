@@ -5,6 +5,10 @@ namespace AllBeginningsMod.Utility.Extensions;
 
 public static class SpriteBatchExtensions
 {
+    public static SpriteBatchSnapshot Capture(this SpriteBatch spriteBatch) {
+        return SpriteBatchSnapshot.Capture(spriteBatch);
+    }
+    
     public static void Begin(this SpriteBatch spriteBatch, SpriteBatchSnapshot snapshot) {
         spriteBatch.Begin(
             snapshot.SortMode,
