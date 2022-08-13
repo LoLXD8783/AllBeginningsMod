@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AllBeginningsMod.Utility.Extensions;
 using Terraria;
 using Terraria.ModLoader;
@@ -26,7 +27,7 @@ public abstract class ChestLoot : ModType
         ModTypeLookup<ChestLoot>.Register(this);
     }
     
-    protected bool AddItemToChest(Chest chest, int type, int stack = 1, int chance = 1) {
+    protected bool TryAddItem(Chest chest, int type, int stack = 1, int chance = 1) {
         // So we guarantee at least one item in the entire world, instead of fully relying on RNG.
         bool alreadyExists = ItemAmountByType.TryGetValue(type, out int amount) && amount > 0;
         bool shouldAdd = WorldGen.genRand.NextBool(chance);
@@ -43,5 +44,9 @@ public abstract class ChestLoot : ModType
                 ItemAmountByType[type] = stack;
 
         return success;
+    }
+
+    protected bool TryRemoveItem(Chest chest, Predicate<Item> predicate) {
+        return chest.TryRemoveItem(predicate);
     }
 }
