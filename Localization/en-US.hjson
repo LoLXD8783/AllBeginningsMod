@@ -60,6 +60,7 @@
             SilverTomahawkItem: "Silver Tomahawk"
             TinTomahawkItem: "Tin Tomahawk"
             TungstenTomahawkItem: "Tungsten Tomahawk"
+            FrostBoltItem: "Frost Bolt"
             
             # Summon
             PlumeWhipItem: "Plume Whip"
@@ -121,6 +122,7 @@
             SilverTomahawkProjectile: "Silver Tomahawk"
             TinTomahawkProjectile: "Tin Tomahawk"
             TungstenTomahawkProjectile: "Tungsten Tomahawk"
+            FrostBoltProjectile: "Frost Bolt"
             
             # Summon
             PlumeWhipFeatherProjectile: "Plume Whip Feather"
