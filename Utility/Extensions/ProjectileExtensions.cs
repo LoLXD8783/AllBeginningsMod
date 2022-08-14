@@ -18,7 +18,7 @@ public static class ProjectileExtensions
         Texture2D texture = null
     ) {
         texture ??= TextureAssets.Projectile[projectile.type].Value;
-        
+
         SpriteEffects effects = projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         Rectangle frame = texture.Frame(1, Main.projFrames[projectile.type], 0, projectile.frame);
 

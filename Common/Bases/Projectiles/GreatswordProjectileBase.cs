@@ -45,7 +45,7 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
     // TODO: Setup for public use, other content sets could benefit from easing as well.
     private readonly Func<float, float> easeOut = value => MathF.Log10(9f * value + 1f);
 
-    private readonly Func<float, float> easeIn = value => MathF.Pow(value, 3); 
+    private readonly Func<float, float> easeIn = value => MathF.Pow(value, 3);
 
     private readonly Func<float, float> cooldownSmoothCurve = value => MathF.Sin(MathHelper.Pi * value / 2f);
 
@@ -73,7 +73,7 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
             return;
 
         float offset = Projectile.direction == -1 ? 0f : MathHelper.PiOver2;
-        
+
         hitbox.X += (int) (MathF.Cos(Projectile.rotation + offset) * Projectile.width);
         hitbox.Y += (int) (MathF.Sin(Projectile.rotation + offset) * Projectile.width);
     }
@@ -113,7 +113,7 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
                 shiftedRotation = unitVectorToMouse.ToRotation() + transitionAngle * chargeProgress;
 
                 Timer++;
-                
+
                 if (Timer >= MaxChargeTimer) {
                     CurrentState = AttackingState;
                     Timer = 0f;
@@ -129,7 +129,7 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
             case AttackingState:
                 float attackProgress = easeIn(Timer / MaxAttackTimer);
                 shiftedRotation = unitVectorToMouse.ToRotation() + SwingArc * attackProgress * direction;
-                
+
                 Timer++;
 
                 if (Timer >= MaxAttackTimer) {
@@ -145,7 +145,7 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
             case CooldownState:
                 float cooldownProgress = cooldownSmoothCurve(Timer / MaxCooldownTimer);
                 shiftedRotation = unitVectorToMouse.ToRotation() + MathHelper.ToRadians(5f) * cooldownProgress * direction;
-                
+
                 Timer++;
 
                 if (Timer >= MaxCooldownTimer) {
@@ -158,7 +158,7 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
 
                 break;
         }
-        
+
         // Revert rotation shift before drawing.
         shiftedRotation -= rotationFix;
 

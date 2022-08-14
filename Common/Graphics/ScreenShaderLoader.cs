@@ -23,7 +23,6 @@ public sealed class ScreenShaderLoader : ILoadable
 
         foreach (TmodFile.FileEntry entry in shaders) {
             string name = Path.GetFileNameWithoutExtension(entry.Name);
-
             LoadScreenShader(name);
         }
     }
