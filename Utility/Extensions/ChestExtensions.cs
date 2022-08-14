@@ -12,6 +12,13 @@ public static class ChestExtensions
 {
     private static readonly MethodInfo sortMethodInfo = typeof(ItemSorting).GetMethod("Sort", BindingFlags.Static | BindingFlags.NonPublic);
     
+    /// <summary>
+    /// Attempts to add an item to a chest's inventory.
+    /// </summary>
+    /// <param name="chest">The chest.</param>
+    /// <param name="type">The item type.</param>
+    /// <param name="stack">The item stack.</param>
+    /// <returns>Whether the item has been successfully added to the chest's inventory or not</returns>
     public static bool TryAddItem(this Chest chest, int type, int stack) {
         if (type == ItemID.None)
             return false;
@@ -25,6 +32,12 @@ public static class ChestExtensions
         return false;
     }
 
+    /// <summary>
+    /// Attempts to remove an item from a chest's inventory.
+    /// </summary>
+    /// <param name="chest">The chest.</param>
+    /// <param name="predicate">The predicate.</param>
+    /// <returns>Whether the item has been successfully removed from the chest's inventory or not</returns>
     public static bool TryRemoveItem(this Chest chest, Predicate<Item> predicate) {
         bool success = false;
 
@@ -38,7 +51,13 @@ public static class ChestExtensions
         
         return success;
     }
-
+    
+    /// <summary>
+    /// Attempts to sort a chest's inventory.
+    /// </summary>
+    /// <param name="chest">The chest.</param>
+    /// <param name="ignoreSlots">The item slots that should be ignored by sorting.</param>
+    /// <returns>Whether the chest's inventory has been successfully sorted or not.</returns>
     public static bool TrySort(this Chest chest, params int[] ignoreSlots) {
         if (!chest.HasAnyItem())
             return false;
@@ -54,6 +73,11 @@ public static class ChestExtensions
         return true;
     }
 
+    /// <summary>
+    /// Represents whether the chest contains any item in its inventory or not.
+    /// </summary>
+    /// <param name="chest">The chest.</param>
+    /// <returns></returns>
     public static bool HasAnyItem(this Chest chest) {
         return chest.item.Any(item => item != null && !item.IsAir && item.type != ItemID.None);
     }
