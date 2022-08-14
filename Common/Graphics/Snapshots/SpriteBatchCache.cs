@@ -4,16 +4,49 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Graphics.Snapshots;
 
-public sealed class ReflectionCache : ILoadable
+/// <summary>
+/// 
+/// </summary>
+public sealed class SpriteBatchCache : ILoadable
 {
+    /// <summary>
+    /// Represents whether the cache has been initialized or not.
+    /// </summary>
     public static bool Initialized { get; private set; }
 
+    /// <summary>
+    /// Represents the <see cref="SortMode"/>
+    /// </summary>
     public static FieldInfo SortMode { get; private set; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
     public static FieldInfo BlendState { get; private set; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
     public static FieldInfo SamplerState { get; private set; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
     public static FieldInfo DepthStencilState { get; private set; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
     public static FieldInfo RasterizerState { get; private set; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
     public static FieldInfo Effect { get; private set; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
     public static FieldInfo TransformMatrix { get; private set; }
 
     void ILoadable.Load(Mod mod) {

@@ -10,6 +10,8 @@ namespace AllBeginningsMod.Content.Projectiles.Melee;
 
 public sealed class GraveShieldThrownProjectile : ModProjectileBase
 {
+    public override string Texture => $"{AllBeginningsMod.ModName}/Assets/Items/Weapons/Melee/GraveShieldItem";
+
     public override void SetStaticDefaults() {
         ProjectileID.Sets.TrailingMode[Type] = 2;
         ProjectileID.Sets.TrailCacheLength[Type] = 10;

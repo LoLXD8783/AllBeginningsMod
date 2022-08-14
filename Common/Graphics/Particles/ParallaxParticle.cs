@@ -5,9 +5,19 @@ namespace AllBeginningsMod.Common.Graphics.Particles;
 
 public abstract class ParallaxParticle : Particle
 {
+    /// <summary>
+    /// Represents the position where this particle was spawned.
+    /// </summary>
     public Vector2 SpawnPosition;
+    
+    /// <summary>
+    /// Represents the parallax offset this particle was offset by when spawned.
+    /// </summary>
     public Vector2 ParallaxOffset;
 
+    /// <summary>
+    /// Represents the intensity of the parallax effect on this particle.
+    /// </summary>
     public float Parallax = 0.1f;
 
     public override void OnSpawn() {

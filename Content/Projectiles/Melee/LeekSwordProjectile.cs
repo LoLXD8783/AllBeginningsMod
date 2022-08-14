@@ -6,6 +6,8 @@ namespace AllBeginningsMod.Content.Projectiles.Melee;
 
 public sealed class LeekSwordProjectile : HeldProjectileBase
 {
+    public override string Texture => base.Texture.Replace("/Projectiles/", "/Items/Weapons/").Replace("Projectile", "Item");
+
     public override void SetDefaults() {
         Projectile.friendly = true;
         Projectile.tileCollide = false;

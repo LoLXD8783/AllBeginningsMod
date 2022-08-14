@@ -9,7 +9,9 @@ using Terraria.ID;
 namespace AllBeginningsMod.Content.Projectiles.Ranged;
 
 public sealed class BorealTurnipProjectile : ModProjectileBase
-{
+{    
+    public override string Texture => base.Texture.Replace("/Projectiles/", "/Items/Weapons/").Replace("Projectile", "Item");
+
     public override void SetStaticDefaults() {
         ProjectileID.Sets.TrailingMode[Type] = 2;
         ProjectileID.Sets.TrailCacheLength[Type] = 10;

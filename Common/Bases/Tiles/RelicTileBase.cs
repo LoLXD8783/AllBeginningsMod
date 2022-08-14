@@ -63,9 +63,7 @@ public abstract class RelicTileBase : ModTile
     }
 
     public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) {
-        Vector2 offScreen = Main.drawToScreen
-            ? Vector2.Zero
-            : new Vector2(Main.offScreenRange);
+        Vector2 offScreen = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
         Point point = new(i, j);
         Tile tile = Framing.GetTileSafely(point.X, point.Y);
         Texture2D texture = ModContent.Request<Texture2D>(RelicTexturePath).Value;
@@ -78,9 +76,7 @@ public abstract class RelicTileBase : ModTile
         Color color = Lighting.GetColor(point.X, point.Y);
 
         bool direction = tile.TileFrameY / FrameHeight != 0;
-        SpriteEffects effects = direction
-            ? SpriteEffects.FlipHorizontally
-            : SpriteEffects.None;
+        SpriteEffects effects = direction ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
         float offset = MathF.Sin(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi / 5f);
         Vector2 drawPos = worldPosition + offScreen - Main.screenPosition - new Vector2(0f, 40f) + new Vector2(0f, offset * 4f);

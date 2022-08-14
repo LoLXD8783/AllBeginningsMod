@@ -9,17 +9,34 @@ namespace AllBeginningsMod.Common.Bases.Projectiles;
 
 public abstract class WhipProjectileBase : ModProjectileBase
 {
-    public Player Owner => Main.player[Projectile.owner];
-
+    /// <summary>
+    /// Represents the current progress of the whiplash.
+    /// </summary>
     public ref float Timer => ref Projectile.ai[0];
 
+    /// <summary>
+    /// Represents the height of the head sprite.
+    /// </summary>
     public abstract int HeadHeight { get; }
 
+    /// <summary>
+    /// Represents the height of the chain sprite.
+    /// </summary>
     public abstract int ChainHeight { get; }
 
+    /// <summary>
+    /// Represents the width of the handle sprite.
+    /// </summary>
     public abstract int HandleWidth { get; }
+    
+    /// <summary>
+    /// Represents the height of the handle sprite.
+    /// </summary>
     public abstract int HandleHeight { get; }
 
+    /// <summary>
+    /// Represents the <see cref="Color"/> of the whip line.
+    /// </summary>
     public abstract Color BackLineColor { get; }
 
     public override void SetStaticDefaults() {
@@ -51,6 +68,10 @@ public abstract class WhipProjectileBase : ModProjectileBase
         return false;
     }
 
+    /// <summary>
+    /// Draws a backline for each segment of this whip to fill out empty gaps.
+    /// </summary>
+    /// <param name="controlPoints">The whip's control points</param>
     protected void DrawControlPointsBackLine(List<Vector2> controlPoints) {
         Texture2D texture = TextureAssets.FishingLine.Value;
         Rectangle frame = texture.Frame();
@@ -71,6 +92,10 @@ public abstract class WhipProjectileBase : ModProjectileBase
         }
     }
 
+    /// <summary>
+    /// Draws each segment of this whip.
+    /// </summary>
+    /// <param name="controlPoints">The whip's control points</param>
     protected void DrawControlPoints(List<Vector2> controlPoints) {
         SpriteEffects effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 

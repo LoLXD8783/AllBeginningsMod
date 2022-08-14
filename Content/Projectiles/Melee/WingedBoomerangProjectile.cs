@@ -8,6 +8,8 @@ namespace AllBeginningsMod.Content.Projectiles.Melee;
 
 public sealed class WingedBoomerangProjectile : ModProjectileBase
 {
+    public override string Texture => base.Texture.Replace("/Projectiles/", "/Items/Weapons/").Replace("Projectile", "Item");
+
     public override void SetDefaults() {
         Projectile.width = 16;
         Projectile.height = 16;

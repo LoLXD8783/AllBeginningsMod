@@ -13,6 +13,8 @@ namespace AllBeginningsMod.Content.Projectiles.Melee;
 
 public sealed class LeekShieldThrownProjectile : ModProjectileBase
 {
+    public override string Texture => $"{AllBeginningsMod.ModName}/Assets/Items/Weapons/Melee/LeekShieldItem";
+
     public override void SetStaticDefaults() {
         ProjectileID.Sets.TrailingMode[Type] = 2;
         ProjectileID.Sets.TrailCacheLength[Type] = 10;

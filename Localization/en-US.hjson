@@ -37,11 +37,14 @@
             MidasPouchItem: "Midas Pouch"
             
             # Placeables
-            DeathBlossomItem: "Death Blossom"
             DevilFlowerItem: "Devil Flower"
             NightgauntRelicItem: "Nightgaunt Relic"
             MysteriousTotemItem: "Mysterious Totem"
             NightmareTotemItem: "Nightmare Totem"
+            
+            # Materials
+            DeathBlossomItem: "Death Blossom"
+            SnowflakeItem: "Snowflake"
             
             # Melee
             GoldGreatswordItem: "Gold Greatsword"
@@ -83,10 +86,12 @@
             MidasPouchItem: "{$CommonItemTooltip.RightClickToOpen}"
             
             # Placeables
-            DeathBlossomItem: "Contains the essence of the ones who survived death"
             DevilFlowerItem: "Flower gifted of an aggressive aroma \n Increases damage and enemy spawns when nearby"
             MysteriousTotemItem: "Ancient relic of unknown origins"
             NightmareTotemItem: "The harbinger of terror"
+            
+            # Materials
+            DeathBlossomItem: "Contains the essence of the ones who survived death"
             
             # Melee
             GraveShieldItem: "Throwing this shield causes unstable energy to leak"
