@@ -14,6 +14,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Bases.Projectiles;
 
+// TODO: Documentation
 public abstract class GreatswordProjectileBase : HeldProjectileBase
 {
     public const float HoldingState = 0f;
