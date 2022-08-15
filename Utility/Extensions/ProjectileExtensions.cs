@@ -9,7 +9,7 @@ namespace AllBeginningsMod.Utility.Extensions;
 public static class ProjectileExtensions
 {
     /// <summary>
-    /// Draws a projectile's afterimage.
+    /// Draws a texture over a projectile's afterimage.
     /// </summary>
     /// <param name="projectile">The projectile.</param>
     /// <param name="color">The color of the afterimage.</param>

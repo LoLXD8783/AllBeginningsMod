@@ -5,11 +5,13 @@
             VisualsHeader: "Visuals [i:237]"
             ExtrasHeader: "Extras [i:75]"
             
-            # Settings
+            # Visual Settings
             MaxParticles: {
                 Label: "Max Particles"
                 Tooltip: "Sets the max amount of particles created by the mod"
             }
+                        
+            # Extra Settings
             CustomWindowTitles: {
                 Label: "Custom Window Titles"
                 Tooltip: "Toggles custom window titles added by the mod"
@@ -27,11 +29,20 @@
             PegasusBootsItem: "Pegasus Boots"
             RabbitsFootItem: "Rabbit's Foot"
             SnailsShellItem: "Snail's Shell"
+            PulseRadarItem: "Pulse Radar"
+            
+            # Tools
+            EtherealBugNetItem: "Ethereal Bug Net"
+            FemurBreakerItem: "Femur Breaker"
+            SpiritClawsItem: "Spirit Claws"
             
             # Armor
             ScavengerChestplateItem: "Scavenger Chestplate"
-            ScavengerGreavesItem: "ScavengerGreaves"
+            ScavengerBootsItem: "Scavenger Boots"
             ScavengerSkullItem: "Scavenger Skull"
+            HyperboreanHelmetItem: "Hyperborean Helmet"
+            HyperboreanChestplateItem: "Hyperborean Chestplate"
+            HyperboreanGreavesItem: "Hyperborean Greaves"
             
             # Consumables
             MidasPouchItem: "Midas Pouch"
@@ -41,16 +52,29 @@
             NightgauntRelicItem: "Nightgaunt Relic"
             MysteriousTotemItem: "Mysterious Totem"
             NightmareTotemItem: "Nightmare Totem"
+            SacredSeedItem: "Sacred Seed"
+            AccursedScarecrowItem: "Accursed Scarecrow"
             
             # Materials
             DeathBlossomItem: "Death Blossom"
             SnowflakeItem: "Snowflake"
             
             # Melee
+            CopperGreatswordItem: "Copper Greatsword"
+            TinGreatswordItem: "Tin Greatsword"
+            IronGreatswordItem: "Iron Greatsword"
+            LeadGreatswordItem: "Lead Greatsword"
+            SilverGreatswordItem: "Silver Greatsword"
+            TungstenGreatswordItem: "Tungsten Greatsword"
             GoldGreatswordItem: "Gold Greatsword"
+            PlatinumGreatswordItem: "Platinum Greatsword"
+            StoneGreatswordItem: "Stone Greatsword"
             GraveShieldItem: "Grave Shield"
             LeekShieldItem: "Leek Shield"
             LeekSwordItem: "Leek Sword"
+            ArcticClaymoreItem: "Arctic Glaymore"
+            IceClimbingAxeItem: "Ice Climbing Axe"
+            MoonCrossItem: "Moon Cross"
             
             # Ranged
             WingedBoomerangItem: "Winged Boomerang"
@@ -63,11 +87,31 @@
             SilverTomahawkItem: "Silver Tomahawk"
             TinTomahawkItem: "Tin Tomahawk"
             TungstenTomahawkItem: "Tungsten Tomahawk"
-            FrostBoltItem: "Frost Bolt"
+            GloveofGlacialArtsItem: "Glove of Glacial Arts"
+            CrossBonesItem: "Cross Bones"
+            StunpipeItem: "Stunpipe"
+            DarkBombshellItem: "Dark Bombshell"
             
             # Summon
             PlumeWhipItem: "Plume Whip"
             TimberWhipItem: "Timber Whip"
+            NorthernStarWhipItem: "Northen Star Whip"
+            SoulVesselItem: "Soul Vessel"
+            SoulboundStaffItem: "Soulbound Staff"
+            
+            # Magic
+            MagicQuillItem: "Magic Quill"
+            TomeofCryomancyItem: "Tome of Cryomancy"
+            LightningRodItem: "Lightning Rod"
+            ApprenticesWandItem: "Apprentice's Wand"
+            
+            # Ammo
+            FrostBoltItem: "Frost Bolt"
+            FeatherDartItem: "Feather Dart"
+            
+            # Typeless
+            SpectralUrnItem: "Spectral Urn"
+            AdventurersBackpackItem: "Adventurer's Backpack"
         }
         
         ItemTooltip: {
@@ -76,27 +120,56 @@
             ClearFeatherWingsItem: "Allows flight and slow fall"
             DarkFeatherWingsItem: "Allows flight and slow fall"
             FeatherCharmItem: "Greatly increases movement speed"
-            FinoftheDolphinItem: "Lets you move swiftly in water \n Increases damage while submerged in water \n Turns the user into a dolphin"
-            MagmaShellItem: "Allows for temporary lava immunity \n The wearer starts to feel heavier"
+            FinoftheDolphinItem: 
+                '''
+                Lets you move swiftly in water
+                Increases damage while submerged in water
+                Turns the user into a dolphin
+                '''
+            MagmaShellItem: 
+                '''
+                Allows for temporary lava immunity
+                The wearer starts to feel heavier
+                '''
             PegasusBootsItem: "The wearer can run fast" 
             RabbitsFootItem: "Increases movement speed, jump speed and luck"
-            SnailsShellItem: "Increases player endurance \n The wearer starts to feel heavier"
-            
+            SnailsShellItem: 
+                '''
+                Increases player endurance
+                The wearer starts to feel heavier
+                '''
+
             # Consumables
             MidasPouchItem: "{$CommonItemTooltip.RightClickToOpen}"
             
             # Placeables
-            DevilFlowerItem: "Flower gifted of an aggressive aroma \n Increases damage and enemy spawns when nearby"
+            DevilFlowerItem: 
+                '''
+                Flower gifted of an aggressive aroma
+                Increases damage and enemy spawns when nearby
+                '''
             MysteriousTotemItem: "Ancient relic of unknown origins"
             NightmareTotemItem: "The harbinger of terror"
+            AccursedScarecrowItem: "When placed, prevents enemy spawns in a short area around itself"
             
             # Materials
             DeathBlossomItem: "Contains the essence of the ones who survived death"
             
             # Melee
             GraveShieldItem: "Throwing this shield causes unstable energy to leak"
-            LeekShieldItem: "I'm sure some bird would love to hold this \n Splits into returning leaves"
-            LeekSwordItem: "I'm sure some bird would love to hold this \n Giving your enemies a swift death"
+            LeekShieldItem: 
+                '''
+                I'm sure some bird would love to hold this
+                Splits into returning leaves"
+                '''
+            LeekSwordItem: 
+                '''
+                I'm sure some bird would love to hold this 
+                Give your enemies a swift death
+                '''
+            
+            # Typeless
+            SpectralUrnItem: "When favorited, you will not lose your coins upon death"
         }
         
         BuffName: { 
@@ -127,12 +200,14 @@
             SilverTomahawkProjectile: "Silver Tomahawk"
             TinTomahawkProjectile: "Tin Tomahawk"
             TungstenTomahawkProjectile: "Tungsten Tomahawk"
-            FrostBoltProjectile: "Frost Bolt"
-            
+
             # Summon
             PlumeWhipFeatherProjectile: "Plume Whip Feather"
             PlumeWhipProjectile: "Plume Whip"
             TimberWhipProjectile: "Timber Whip"
+            
+            # Ammo
+            FrostBoltProjectile: "Frost Bolt"
         }
 		
 		CustomWindowTitles: {
