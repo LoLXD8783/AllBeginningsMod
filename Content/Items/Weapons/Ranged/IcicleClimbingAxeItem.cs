@@ -34,7 +34,7 @@ public sealed class IcicleClimbingAxeItem : ModItemBase
         Item.shootSpeed = 14f;
 
         Item.value = Item.sellPrice(gold: 1, silver: 12);
-        Item.rare = ItemRarityID.White;
+        Item.rare = ItemRarityID.Blue;
 
         Item.UseSound = SoundID.Item1;
     }

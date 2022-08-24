@@ -3,11 +3,15 @@ using AllBeginningsMod.Content.Projectiles.Melee;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Melee;
 
 public sealed class GoldGreatswordItem : GreatswordItemBase<GoldGreatswordProjectile>
 {
+    public override void SetStaticDefaults() {
+        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+    }
     public override void SetDefaults() {
         base.SetDefaults();
 

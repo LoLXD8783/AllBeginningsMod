@@ -18,6 +18,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Magic
         public override void SetDefaults() {
             Item.damage = 10;
             Item.DamageType = DamageClass.Magic;
+            Item.mana = 3;
 
             Item.autoReuse = true;
             Item.knockBack = 2f;

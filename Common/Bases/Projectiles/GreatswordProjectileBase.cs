@@ -60,7 +60,7 @@ public abstract class GreatswordProjectileBase : HeldProjectileBase
 
     private int associatedItemType = -1;
 
-    public override string Texture => base.Texture.Replace("/Projectiles/", "/Items/Weapons/").Replace("GreatswordProjectile", "GreatswordItem");
+    public override string Texture => base.Texture.Replace("/Projectiles/", "/Items/Weapons/").Replace("Projectile", "Item");
 
     public override void SetDefaults() {
         Projectile.tileCollide = false;
