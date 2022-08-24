@@ -33,7 +33,7 @@ public sealed class ArcticClaymoreItem : ModItemBase
     }
     public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit) {
         for (int i = 0; i < 3; i++) {
-            Projectile.NewProjectile(Item.GetSource_FromThis(), target.Center, new Vector2(Main.rand.Next(2, 6) * player.direction, Main.rand.Next(-3, 3)), ModContent.ProjectileType<ArcticClaymoreProjectile>(), damage, knockBack, player.whoAmI);
+            Projectile.NewProjectile(Item.GetSource_FromThis(), target.Center, new Vector2(Main.rand.Next(5, 9) * player.direction, Main.rand.Next(-3, 3)), ModContent.ProjectileType<ArcticClaymoreProjectile>(), damage, knockBack, player.whoAmI);
         }
     }
 }
