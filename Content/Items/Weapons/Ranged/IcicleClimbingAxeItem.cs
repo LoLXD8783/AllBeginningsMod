@@ -1,4 +1,5 @@
 ﻿using AllBeginningsMod.Common.Bases.Items;
+using AllBeginningsMod.Content.Items.Materials;
 using AllBeginningsMod.Content.Projectiles.Ranged;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -37,5 +38,12 @@ public sealed class IcicleClimbingAxeItem : ModItemBase
         Item.rare = ItemRarityID.Blue;
 
         Item.UseSound = SoundID.Item1;
+    }
+    public override void AddRecipes() {
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ModContent.ItemType<SnowflakeItem>(), 18);
+        recipe.AddRecipeGroup(RecipeGroupID.Wood, 12);
+        recipe.AddTile(TileID.WorkBenches);
+        recipe.Register();
     }
 }

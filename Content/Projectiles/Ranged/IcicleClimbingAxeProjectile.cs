@@ -29,6 +29,9 @@ public sealed class IcicleClimbingAxeProjectile : ModProjectileBase
 
         Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
 
+        if (Main.rand.NextBool(5))
+            Item.NewItem(Projectile.GetSource_Death(), Projectile.position, ModContent.ItemType<IcicleClimbingAxeItem>());
+
         return true;
     }
 }

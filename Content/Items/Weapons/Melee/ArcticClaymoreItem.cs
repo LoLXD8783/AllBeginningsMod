@@ -1,4 +1,5 @@
 ﻿using AllBeginningsMod.Common.Bases.Items;
+using AllBeginningsMod.Content.Items.Materials;
 using AllBeginningsMod.Content.Projectiles.Melee;
 using Terraria;
 using Terraria.ID;
@@ -16,7 +17,7 @@ public sealed class ArcticClaymoreItem : GreatswordItemBase<ArcticClaymoreProjec
     public override void SetDefaults() {
         base.SetDefaults();
 
-        Item.damage = 15;
+        Item.damage = 24;
         Item.DamageType = DamageClass.Melee;
 
         Item.autoReuse = true;
@@ -31,5 +32,12 @@ public sealed class ArcticClaymoreItem : GreatswordItemBase<ArcticClaymoreProjec
 
         Item.rare = ItemRarityID.Blue;
         Item.value = Item.sellPrice(gold: 1, silver: 50);
+    }
+    public override void AddRecipes() {
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ModContent.ItemType<SnowflakeItem>(), 15);
+        recipe.AddRecipeGroup(RecipeGroupID.Wood, 12);
+        recipe.AddTile(TileID.WorkBenches);
+        recipe.Register();
     }
 }

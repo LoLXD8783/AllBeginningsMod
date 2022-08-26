@@ -24,7 +24,7 @@ public sealed class GoldGreatswordItem : GreatswordItemBase<GoldGreatswordProjec
         Item.useAnimation = 50;
         Item.useStyle = ItemUseStyleID.Shoot;
 
-        Item.damage = 16;
+        Item.damage = 30;
         Item.knockBack = 8f;
         Item.DamageType = DamageClass.Melee;
     }
