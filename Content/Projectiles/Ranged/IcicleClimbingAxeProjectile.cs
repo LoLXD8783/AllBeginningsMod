@@ -22,15 +22,14 @@ public sealed class IcicleClimbingAxeProjectile : ModProjectileBase
         Projectile.aiStyle = ProjAIStyleID.ThrownProjectile;
     }
     public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-        target.AddBuff(BuffID.Frostburn, 120);
+        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<IcicleClimbingAxeClusterProjectile>(), Projectile.damage, Projectile.knockBack, Main.player[Projectile.owner].whoAmI);
     }
     public override bool OnTileCollide(Vector2 oldVelocity) {
         SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
 
         Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
 
-        if (Main.rand.NextBool(5))
-            Item.NewItem(Projectile.GetSource_Death(), Projectile.position, ModContent.ItemType<IcicleClimbingAxeItem>());
+        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<IcicleClimbingAxeClusterProjectile>(), Projectile.damage, Projectile.knockBack, Main.player[Projectile.owner].whoAmI);
 
         return true;
     }
