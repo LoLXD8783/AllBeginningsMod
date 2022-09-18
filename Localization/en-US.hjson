@@ -1,0 +1,34 @@
+﻿Mods: {
+    AllBeginningsMod: {   
+        ItemName: {
+            FinoftheDolphinItem: "Fin of the Dolphin"
+            MagmaShellItem: "Magma Shell"
+            SnailsShellItem: "Snail's Shell"
+            FeatherCharmItem: "Feather Charm"
+            PegasusBootsItem: "Pegasus Boots"
+            RabbitsFootItem: "Rabbit's Foot"
+        }
+        
+        ItemTooltip: {
+            FinoftheDolphinItem: 
+                '''
+                Lets you move swiftly in water
+                Increases damage while submerged in water
+                Turns the user into a dolphin
+                '''
+            MagmaShellItem: 
+                '''
+                Allows for temporary lava immunity
+                The wearer starts to feel heavier
+                '''
+            SnailsShellItem: 
+                '''
+                Increases player endurance
+                The wearer starts to feel heavier
+                '''
+            FeatherCharmItem: "Greatly increases movement speed"
+            PegasusBootsItem: "The wearer can run fast" 
+            RabbitsFootItem: "Increases movement speed, jump speed and luck"
+        }
+    }
+}
