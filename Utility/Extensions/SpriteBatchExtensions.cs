@@ -5,6 +5,10 @@ namespace AllBeginningsMod.Utility.Extensions;
 
 public static class SpriteBatchExtensions
 {
+    public static SpriteBatchSnapshot Capture(this SpriteBatch spriteBatch) {
+        return SpriteBatchSnapshot.Capture(spriteBatch);
+    }
+
     /// <summary>
     /// Starts a <see cref="SpriteBatch"/> drawing instance from a captured <see cref="SpriteBatchSnapshot"/>.
     /// </summary>
