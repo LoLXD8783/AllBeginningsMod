@@ -21,7 +21,7 @@ public sealed class GraveyardSceneEffect : ModSceneEffect
 
         player.ManageSpecialBiomeVisuals(AllBeginningsMod.ModPrefix + "ScreenVignette", isActive);
     }
-
+    
     public override bool IsSceneEffectActive(Player player) {
         return player.ZoneGraveyard;
     }

@@ -8,7 +8,12 @@ public static class SpriteBatchExtensions
     public static SpriteBatchSnapshot Capture(this SpriteBatch spriteBatch) {
         return SpriteBatchSnapshot.Capture(spriteBatch);
     }
-    
+
+    /// <summary>
+    /// Starts a <see cref="SpriteBatch"/> drawing instance from a captured <see cref="SpriteBatchSnapshot"/>.
+    /// </summary>
+    /// <param name="spriteBatch">The spritebatch to be started.</param>
+    /// <param name="snapshot">The captured snapshot.</param>
     public static void Begin(this SpriteBatch spriteBatch, SpriteBatchSnapshot snapshot) {
         spriteBatch.Begin(
             snapshot.SortMode,

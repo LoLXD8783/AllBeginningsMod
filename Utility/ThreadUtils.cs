@@ -9,6 +9,12 @@ public static class ThreadUtils
 {
     public static bool IsMainThread => AssetRepository.IsMainThread;
 
+    /// <summary>
+    /// Queues the specified action to the main thread and blocks until its complete. If the current thread is the main thread, the action is invoked directly.
+    /// </summary>
+    /// <param name="action">The action to invoke.</param>
+    /// <param name="cancellationToken">The cancellation token to observe.</param>
+    /// <exception cref="AggregateException"></exception>
     public static void RunOnMainThread(Action action, CancellationToken cancellationToken = default) {
         cancellationToken.ThrowIfCancellationRequested();
 

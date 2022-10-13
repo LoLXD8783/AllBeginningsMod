@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Bases.Items;
 
+// TODO: Documentation
 public abstract class GreatswordItemBase<T> : ModItemBase where T : GreatswordProjectileBase
 {
     private static T HeldProjectile { get; set; }

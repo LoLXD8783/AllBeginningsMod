@@ -28,6 +28,13 @@ public sealed class PrimitiveDrawing : ILoadable
         );
     }
 
+    /// <summary>
+    /// Draws primitives through a vertex and index buffer. Automatically applies all effect passes.
+    /// </summary>
+    /// <param name="type">The primitive type.</param>
+    /// <param name="vertices">The primitive vertices.</param>
+    /// <param name="indices">The primitive indices.</param>
+    /// <param name="effect">The primitive effect.</param>
     public static void DrawPrimitive(PrimitiveType type, VertexPositionColorTexture[] vertices, short[] indices, Effect effect) {
         if (vertices.Length <= 0 || indices.Length <= 0 || effect == null)
             return;

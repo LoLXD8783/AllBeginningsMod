@@ -6,21 +6,37 @@ namespace AllBeginningsMod.Common.Bases.Projectiles;
 
 public abstract class HeldProjectileBase : ModProjectileBase
 {
-    public Player Owner => Main.player[Projectile.owner];
-
+    /// <summary>
+    /// Represents whether this projectile sets its owner's direction based on the mouse position or not.
+    /// </summary>
     public bool ChangeOwnerDirection;
+    
+    /// <summary>
+    /// Represents whether this projectile sets its owner's item animation data or not.
+    /// </summary>
     public bool ChangeOwnerItemData;
 
+    /// <summary>
+    /// Represents whether this projectile remains active if its owner is channeling or not.
+    /// </summary>
     public bool ChannelDependant;
 
+    /// <summary>
+    /// Represents the hold offset of this projectile from the owner's center.
+    /// </summary>
     public Vector2 HoldoutOffset;
 
-    public override void AI() {
-        if (ChannelDependant && !Owner.channel) {
-            Projectile.Kill();
-            return;
-        }
+    public override bool PreAI() {
+        return CheckActive();
+    }
 
+    public override void AI() {
+        Owner.heldProj = Projectile.whoAmI;
+
+        Projectile.Center = Owner.MountedCenter + HoldoutOffset;
+        Projectile.direction = Owner.direction;
+        Projectile.spriteDirection = Owner.direction;
+        
         if (ChangeOwnerDirection) {
             int direction = Math.Sign(Main.MouseWorld.X - Owner.Center.X);
             Owner.ChangeDir(direction);
@@ -31,11 +47,18 @@ public abstract class HeldProjectileBase : ModProjectileBase
             Owner.itemAnimation = 2;
             Owner.itemRotation = Projectile.rotation;
         }
+    }
 
-        Owner.heldProj = Projectile.whoAmI;
-
-        Projectile.Center = Owner.MountedCenter + HoldoutOffset;
-        Projectile.direction = Owner.direction;
-        Projectile.spriteDirection = Owner.direction;
+    /// <summary>
+    /// Represents whether this projectile meets all conditions for staying active or not.
+    /// </summary>
+    /// <returns></returns>
+    protected bool CheckActive() {
+        bool active = ChannelDependant && !Owner.channel;
+        
+        if (!active)
+            Projectile.Kill();
+        
+        return active;
     }
 }

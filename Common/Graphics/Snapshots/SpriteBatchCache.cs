@@ -1,19 +1,50 @@
 ﻿using System.Reflection;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Graphics.Snapshots;
 
-public sealed class ReflectionCache : ILoadable
+public sealed class SpriteBatchCache : ILoadable
 {
+    /// <summary>
+    /// Represents whether the cache has been initialized or not.
+    /// </summary>
     public static bool Initialized { get; private set; }
 
+    /// <summary>
+    /// Represents the <see cref="SpriteBatch"/>'s <see cref="SpriteSortMode"/> field info.
+    /// </summary>
     public static FieldInfo SortMode { get; private set; }
+    
+    /// <summary>
+    /// Represents the <see cref="SpriteBatch"/>'s <see cref="BlendState"/> field info.
+    /// </summary>
     public static FieldInfo BlendState { get; private set; }
+    
+    /// <summary>
+    /// Represents the <see cref="SpriteBatch"/>'s <see cref="SamplerState"/> field info.
+    /// </summary>
     public static FieldInfo SamplerState { get; private set; }
+    
+    /// <summary>
+    /// Represents the <see cref="SpriteBatch"/>'s <see cref="DepthStencilState"/> field info.
+    /// </summary>
     public static FieldInfo DepthStencilState { get; private set; }
+    
+    /// <summary>
+    /// Represents the <see cref="SpriteBatch"/>'s <see cref="RasterizerState"/> field info.
+    /// </summary>
     public static FieldInfo RasterizerState { get; private set; }
+    
+    /// <summary>
+    /// Represents the <see cref="SpriteBatch"/>'s <see cref="Effect"/> field info.
+    /// </summary>
     public static FieldInfo Effect { get; private set; }
+    
+    /// <summary>
+    /// Represents the <see cref="SpriteBatch"/>'s <see cref="Matrix"/> field info.
+    /// </summary>
     public static FieldInfo TransformMatrix { get; private set; }
 
     void ILoadable.Load(Mod mod) {

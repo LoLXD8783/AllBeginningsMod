@@ -10,6 +10,8 @@ namespace AllBeginningsMod.Content.Projectiles.Melee;
 
 public sealed class GraveShieldThrownProjectile : ModProjectileBase
 {
+    public override string Texture => $"{AllBeginningsMod.ModName}/Assets/Items/Weapons/Melee/GraveShieldItem";
+
     public override void SetStaticDefaults() {
         ProjectileID.Sets.TrailingMode[Type] = 2;
         ProjectileID.Sets.TrailCacheLength[Type] = 10;
@@ -33,8 +35,6 @@ public sealed class GraveShieldThrownProjectile : ModProjectileBase
     }
 
     public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-        DustUtils.SpawnCircle(Projectile.Center, DustID.AmberBolt, 30, 5f);
-
         for (int i = 0; i < 3; i++)
             Projectile.NewProjectile(
                 Projectile.GetSource_OnHit(target),
