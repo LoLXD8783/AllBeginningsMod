@@ -6,7 +6,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Common.Bases.Projectiles;
+namespace AllBeginningsMod.Common.Bases;
 
 public abstract class WhipProjectileBase : ModProjectile
 {
@@ -42,7 +42,7 @@ public abstract class WhipProjectileBase : ModProjectile
 
     public override bool PreDraw(ref Color lightColor) {
         List<Vector2> controlPoints = new();
-        
+
         Projectile.FillWhipControlPoints(Projectile, controlPoints);
 
         DrawControlPointsBackLine(controlPoints);
@@ -53,7 +53,7 @@ public abstract class WhipProjectileBase : ModProjectile
 
     protected void DrawControlPointsBackLine(List<Vector2> controlPoints) {
         Texture2D texture = TextureAssets.FishingLine.Value;
-        
+
         Rectangle frame = texture.Frame();
         Vector2 origin = new(frame.Width / 2f, 2f);
         Vector2 position = controlPoints[0];

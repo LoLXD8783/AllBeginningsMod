@@ -34,9 +34,6 @@
             FeatherCharmItem: "Greatly increases movement speed"
             PegasusBootsItem: "The wearer can run fast" 
             RabbitsFootItem: "Increases movement speed, jump speed and luck"
-            
-            # Consumables
-            MidasPouchItem: "Quite a bit of coins, eh?"
         }
     }
 }

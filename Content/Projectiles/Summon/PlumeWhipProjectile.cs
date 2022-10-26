@@ -1,4 +1,4 @@
-﻿using AllBeginningsMod.Common.Bases.Projectiles;
+﻿using AllBeginningsMod.Common.Bases;
 using Microsoft.Xna.Framework;
 
 namespace AllBeginningsMod.Content.Projectiles.Summon;
