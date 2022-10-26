@@ -1,15 +1,20 @@
 ﻿Mods: {
     AllBeginningsMod: {   
         ItemName: {
+            # Accessories
             FinoftheDolphinItem: "Fin of the Dolphin"
             MagmaShellItem: "Magma Shell"
             SnailsShellItem: "Snail's Shell"
             FeatherCharmItem: "Feather Charm"
             PegasusBootsItem: "Pegasus Boots"
             RabbitsFootItem: "Rabbit's Foot"
+            
+            # Consumables
+            MidasPouchItem: "Midas' Pouch"
         }
         
         ItemTooltip: {
+            # Accessories
             FinoftheDolphinItem: 
                 '''
                 Lets you move swiftly in water
@@ -29,6 +34,9 @@
             FeatherCharmItem: "Greatly increases movement speed"
             PegasusBootsItem: "The wearer can run fast" 
             RabbitsFootItem: "Increases movement speed, jump speed and luck"
+            
+            # Consumables
+            MidasPouchItem: "Quite a bit of coins, eh?"
         }
     }
 }

@@ -1,16 +1,20 @@
-﻿using Terraria;
+﻿using AllBeginningsMod.Common.Bases;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Accessories;
 
-public sealed class FinoftheDolphinItem : ModItem
+public sealed class FinoftheDolphinItem : CostumeItemBase
 {
     public override void SetStaticDefaults() {
         SacrificeTotal = 1;
+
+        base.SetStaticDefaults();
     }
 
     public override void SetDefaults() {
+        Item.canBePlacedInVanityRegardlessOfConditions = true;
         Item.accessory = true;
 
         Item.width = 16;

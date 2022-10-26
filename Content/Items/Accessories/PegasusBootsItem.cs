@@ -11,6 +11,7 @@ public sealed class PegasusBootsItem : ModItem
     }
 
     public override void SetDefaults() {
+        Item.canBePlacedInVanityRegardlessOfConditions = true;
         Item.accessory = true;
 
         Item.width = 32;

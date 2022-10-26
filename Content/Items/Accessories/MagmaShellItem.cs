@@ -11,6 +11,7 @@ public sealed class MagmaShellItem : ModItem
     }
 
     public override void SetDefaults() {
+        Item.canBePlacedInVanityRegardlessOfConditions = true;
         Item.accessory = true;
 
         Item.defense = 8;
