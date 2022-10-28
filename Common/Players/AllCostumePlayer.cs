@@ -7,7 +7,7 @@ namespace AllBeginningsMod.Common.Players;
 public sealed class AllCostumePlayer : ModPlayer
 {
     public override void FrameEffects() {
-        foreach (CostumeItemBase costumeItem in ModContent.GetContent<CostumeItemBase>()) {
+        foreach (CostumeItemBase costumeItem in Mod.GetContent<CostumeItemBase>()) {
             if (Player.HasEquip(costumeItem.Type) || Player.HasVanityEquip(costumeItem.Type)) {
                 Player.head = EquipLoader.GetEquipSlot(Mod, costumeItem.Name, EquipType.Head);
                 Player.body = EquipLoader.GetEquipSlot(Mod, costumeItem.Name, EquipType.Body);

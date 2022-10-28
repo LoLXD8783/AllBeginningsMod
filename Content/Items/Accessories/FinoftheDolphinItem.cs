@@ -7,12 +7,6 @@ namespace AllBeginningsMod.Content.Items.Accessories;
 
 public sealed class FinoftheDolphinItem : CostumeItemBase
 {
-    public override void SetStaticDefaults() {
-        SacrificeTotal = 1;
-
-        base.SetStaticDefaults();
-    }
-
     public override void SetDefaults() {
         Item.canBePlacedInVanityRegardlessOfConditions = true;
         Item.accessory = true;

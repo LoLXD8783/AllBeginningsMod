@@ -6,10 +6,6 @@ namespace AllBeginningsMod.Content.Items.Accessories;
 
 public sealed class PegasusBootsItem : ModItem
 {
-    public override void SetStaticDefaults() {
-        SacrificeTotal = 1;
-    }
-
     public override void SetDefaults() {
         Item.canBePlacedInVanityRegardlessOfConditions = true;
         Item.accessory = true;

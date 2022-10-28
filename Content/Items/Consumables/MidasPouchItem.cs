@@ -7,10 +7,6 @@ namespace AllBeginningsMod.Content.Items.Consumables;
 
 public sealed class MidasPouchItem : ModItem
 {
-    public override void SetStaticDefaults() {
-        SacrificeTotal = 20;
-    }
-
     public override void SetDefaults() {
         Item.consumable = true;
 

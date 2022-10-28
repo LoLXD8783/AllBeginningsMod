@@ -26,9 +26,9 @@ public sealed class AllNPCShop : GlobalNPC
     }
 
     private static void AddCritterItem<T>(Chest shop, int critterType, ref int nextSlot) where T : ModItem {
-        BestiaryEntry critterEntry = Main.BestiaryDB.FindEntryByNPCID(NPCID.FromNetId(critterType));
+        BestiaryEntry entry = Main.BestiaryDB.FindEntryByNPCID(NPCID.FromNetId(critterType));
 
-        if (critterEntry.UIInfoProvider.GetEntryUICollectionInfo().UnlockState != BestiaryEntryUnlockState.CanShowDropsWithDropRates_4) {
+        if (entry.UIInfoProvider.GetEntryUICollectionInfo().UnlockState != BestiaryEntryUnlockState.CanShowDropsWithDropRates_4) {
             return;
         }
 

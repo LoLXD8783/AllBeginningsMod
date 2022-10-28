@@ -9,8 +9,6 @@ namespace AllBeginningsMod.Content.Items.Accessories;
 public sealed class BrownFeatherWingsItem : ModItem
 {
     public override void SetStaticDefaults() {
-        SacrificeTotal = 1;
-
         ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(30);
     }
 
