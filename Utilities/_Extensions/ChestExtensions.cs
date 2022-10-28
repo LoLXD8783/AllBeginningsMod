@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using AllBeginningsMod.Common.Systems.WorldGeneration;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
-using Terraria.UI;
 
 namespace AllBeginningsMod.Utilities;
 
@@ -35,7 +30,7 @@ public static class ChestExtensions
     public static bool TryGetEmptySlot(this Chest chest, out int index) {
         for (int i = 0; i < Chest.maxItems; i++) {
             Item item = chest.item[i];
-            
+
             if (item != null && item.IsAir) {
                 index = i;
 
