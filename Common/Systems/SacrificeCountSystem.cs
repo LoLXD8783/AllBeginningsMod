@@ -18,7 +18,10 @@ public sealed class SacrificeCountSystem : ModSystem
 
             int sacrificeCount = 25;
 
-            if (isTile) {
+            if (isEquip) {
+                sacrificeCount = 1;
+            }
+            else if (isTile) {
                 sacrificeCount = 100;
             }
             else if (isWall) {
@@ -26,9 +29,6 @@ public sealed class SacrificeCountSystem : ModSystem
             }
             else if (isWeapon) {
                 sacrificeCount = item.consumable ? 100 : 1;
-            }
-            else if (isEquip) {
-                sacrificeCount = 1;
             }
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[modItem.Type] = sacrificeCount;

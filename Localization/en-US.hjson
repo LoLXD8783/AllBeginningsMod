@@ -11,6 +11,16 @@
             
             # Consumables
             MidasPouchItem: "Midas' Pouch"
+            
+            # Ranged
+            CopperTomahawkItem: "Copper Tomahawk"
+            GoldTomahawkItem: "Gold Tomahawk"
+            IronTomahawkItem: "Iron Tomahawk"
+            LeadTomahawkItem: "Lead Tomahawk"
+            PlatinumTomahawkItem: "Platinum Tomahawk"
+            SilverTomahawkItem: "Silver Tomahawk"
+            TinTomahawkItem: "Tin Tomahawk"
+            TungstenTomahawkItem: "Tungsten Tomahawk"
         }
         
         ItemTooltip: {
@@ -34,6 +44,18 @@
             FeatherCharmItem: "Greatly increases movement speed"
             PegasusBootsItem: "The wearer can run fast" 
             RabbitsFootItem: "Increases movement speed, jump speed and luck"
+        }
+        
+        ProjectileName: {
+            # Ranged
+            CopperTomahawkProjectile: "Copper Tomahawk"
+            GoldTomahawkProjectile: "Gold Tomahawk"
+            IronTomahawkProjectile: "Iron Tomahawk"
+            LeadTomahawkProjectile: "Lead Tomahawk"
+            PlatinumTomahawkProjectile: "Platinum Tomahawk"
+            SilverTomahawkProjectile: "Silver Tomahawk"
+            TinTomahawkProjectile: "Tin Tomahawk"
+            TungstenTomahawkProjectile: "Tungsten Tomahawk"
         }
     }
 }
