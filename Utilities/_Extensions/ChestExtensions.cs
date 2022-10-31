@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using AllBeginningsMod.Common.Systems.Generation;
+using Terraria;
 using Terraria.ID;
 
 namespace AllBeginningsMod.Utilities;
@@ -25,6 +26,20 @@ public static class ChestExtensions
         nextSlot++;
 
         return true;
+    }
+
+    public static bool TryAddLootItem(this Chest chest, int type, int stack = 1, int chance = 1) {
+        if (ChestLootSystem.ExistsInWorld(type) && !WorldGen.genRand.NextBool(chance)) {
+            return false;
+        }
+
+        bool success = chest.TryAddItem(type, stack);
+
+        if (success) {
+            ChestLootSystem.RegisterLootItem(type, stack);
+        }
+
+        return success;
     }
 
     public static bool TryGetEmptySlot(this Chest chest, out int index) {

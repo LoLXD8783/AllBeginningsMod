@@ -1,5 +1,4 @@
 ﻿using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Systems;
@@ -30,8 +29,6 @@ public sealed class SacrificeCountSystem : ModSystem
             else if (isWeapon) {
                 sacrificeCount = item.consumable ? 100 : 1;
             }
-
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[modItem.Type] = sacrificeCount;
         }
     }
 }
