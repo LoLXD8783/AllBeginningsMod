@@ -37,12 +37,13 @@ public sealed class ChestLootSystem : ModSystem
     }
 
     public static bool ExistsInWorld(int type) {
-        return ItemWorldAmountByType.TryGetValue(type, out int amount) && amount > 0;
+        return ItemWorldAmountByType.TryGetValue(type, out int amount);
     }
 
     private static void SetAdequateLoot(Tile tile, Chest chest) {
         switch (tile.TileFrameX) {
             case 0:
+            case 12 * 36:
                 new WoodChestLoot().SetLoot(chest);
 
                 break;
