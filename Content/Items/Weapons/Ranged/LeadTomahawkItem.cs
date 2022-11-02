@@ -1,4 +1,5 @@
 ﻿using AllBeginningsMod.Content.Projectiles.Ranged;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,6 +33,10 @@ public sealed class LeadTomahawkItem : ModItem
         Item.rare = ItemRarityID.White;
 
         Item.UseSound = SoundID.Item1;
+    }
+    
+    public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+        position.Y -= 20f;
     }
 
     public override void AddRecipes() {
