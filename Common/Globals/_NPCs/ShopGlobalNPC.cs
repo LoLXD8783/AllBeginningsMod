@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Globals;
 
-public sealed class AllNPCShop : GlobalNPC
+public sealed class ShopGlobalNPC : GlobalNPC
 {
     public override void SetupShop(int type, Chest shop, ref int nextSlot) {
         switch (type) {

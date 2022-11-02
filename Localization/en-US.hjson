@@ -21,6 +21,20 @@
             SilverTomahawkItem: "Silver Tomahawk"
             TinTomahawkItem: "Tin Tomahawk"
             TungstenTomahawkItem: "Tungsten Tomahawk"
+			
+			# Melee
+			CopperGreatswordItem: "Copper Greatsword"
+            TinGreatswordItem: "Tin Greatsword"
+            IronGreatswordItem: "Iron Greatsword"
+            LeadGreatswordItem: "Lead Greatsword"
+            SilverGreatswordItem: "Silver Greatsword"
+            TungstenGreatswordItem: "Tungsten Greatsword"
+            GoldGreatswordItem: "Gold Greatsword"
+            PlatinumGreatswordItem: "Platinum Greatsword"
+            StoneGreatswordItem: "Stone Greatsword"
+			WoodGreatswordItem: "Wood Greatsword"
+			BorealWoodGreatswordItem: "Boreal Wood Greatsword"
+			EbonwoodGreatswordItem: "Ebonwood Greatsword"
         }
         
         ItemTooltip: {
@@ -56,6 +70,20 @@
             SilverTomahawkProjectile: "Silver Tomahawk"
             TinTomahawkProjectile: "Tin Tomahawk"
             TungstenTomahawkProjectile: "Tungsten Tomahawk"
+			
+			# Melee
+			CopperGreatswordProjectile: "Copper Greatsword"
+            TinGreatswordProjectile: "Tin Greatsword"
+            IronGreatswordProjectile: "Iron Greatsword"
+            LeadGreatswordProjectile: "Lead Greatsword"
+            SilverGreatswordProjectile: "Silver Greatsword"
+            TungstenGreatswordProjectile: "Tungsten Greatsword"
+            GoldGreatswordProjectile: "Gold Greatsword"
+            PlatinumGreatswordProjectile: "Platinum Greatsword"
+            StoneGreatswordProjectile: "Stone Greatsword"
+			WoodGreatswordProjectile: "Wood Greatsword"
+			BorealWoodGreatswordProjectile: "Boreal Wood Greatsword"
+			EbonwoodGreatswordProjectile: "Ebonwood Greatsword"
         }
     }
 }

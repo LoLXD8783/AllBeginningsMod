@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Players;
 
-public sealed class AllCostumePlayer : ModPlayer
+public sealed class CostumePlayer : ModPlayer
 {
     public override void FrameEffects() {
         foreach (CostumeItemBase costumeItem in Mod.GetContent<CostumeItemBase>()) {
