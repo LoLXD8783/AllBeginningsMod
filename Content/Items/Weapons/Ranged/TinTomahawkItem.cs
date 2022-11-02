@@ -10,7 +10,6 @@ public sealed class TinTomahawkItem : ModItem
     public override void SetDefaults() {
         Item.consumable = true;
         Item.noMelee = true;
-        Item.noUseGraphic = true;
 
         Item.maxStack = 999;
 

@@ -1,4 +1,5 @@
 ﻿using AllBeginningsMod.Content.Projectiles.Ranged;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,7 +11,6 @@ public sealed class TungstenTomahawkItem : ModItem
     public override void SetDefaults() {
         Item.consumable = true;
         Item.noMelee = true;
-        Item.noUseGraphic = true;
 
         Item.maxStack = 999;
 

@@ -24,8 +24,8 @@ public abstract class GreatswordProjectileBase : ModProjectile
     public override void ModifyDamageHitbox(ref Rectangle hitbox) {
         float offset = MathHelper.PiOver4;
 
-        hitbox.X += (int)(MathF.Cos(Projectile.rotation - offset) * Projectile.width);
-        hitbox.Y += (int)(MathF.Sin(Projectile.rotation - offset) * Projectile.height);
+        hitbox.X += (int)(MathF.Cos(Projectile.rotation - offset) * Projectile.width / 2f);
+        hitbox.Y += (int)(MathF.Sin(Projectile.rotation - offset) * Projectile.height / 2f);
     }
 
     public override void OnSpawn(IEntitySource source) {

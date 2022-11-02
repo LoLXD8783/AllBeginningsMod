@@ -2,11 +2,11 @@
 
 namespace AllBeginningsMod.Content.Projectiles.Melee;
 
-public sealed class EbonwoodGreatswordProjectile : GreatswordProjectileBase
+public sealed class WoodGreatswordProjectile : GreatswordProjectileBase
 {
     public override void SetDefaults() {
-        Projectile.width = 50;
-        Projectile.height = 50;
+        Projectile.width = 40;
+        Projectile.height = 40;
 
         base.SetDefaults();
     }

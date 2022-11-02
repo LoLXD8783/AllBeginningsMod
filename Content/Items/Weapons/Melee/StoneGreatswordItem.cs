@@ -6,21 +6,21 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Melee;
 
-public sealed class EbonwoodGreatswordItem : ModItem
+public sealed class StoneGreatswordItem : ModItem
 {
     public override void SetDefaults() {
         Item.noUseGraphic = true;
         Item.noMelee = true;
 
         Item.DamageType = DamageClass.Melee;
-        Item.damage = 22;
-        Item.knockBack = 8f;
+        Item.damage = 24;
+        Item.knockBack = 9f;
 
-        Item.useTime = 70;
-        Item.useAnimation = 70;
+        Item.useTime = 77;
+        Item.useAnimation = 77;
         Item.useStyle = ItemUseStyleID.Swing;
 
-        Item.shoot = ModContent.ProjectileType<EbonwoodGreatswordProjectile>();
+        Item.shoot = ModContent.ProjectileType<StoneGreatswordProjectile>();
 
         Item.UseSound = new SoundStyle($"{nameof(AllBeginningsMod)}/Assets/Sounds/Item/GreatswordSwing") {
             PitchVariance = 0.5f
@@ -33,7 +33,7 @@ public sealed class EbonwoodGreatswordItem : ModItem
 
     public override void AddRecipes() {
         Recipe recipe = CreateRecipe();
-        recipe.AddIngredient(ItemID.Ebonwood, 25);
+        recipe.AddIngredient(ItemID.StoneBlock, 20);
         recipe.AddTile(TileID.WorkBenches);
         recipe.Register();
     }
