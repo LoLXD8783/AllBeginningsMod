@@ -1,20 +1,13 @@
-﻿using System;
-using AllBeginningsMod.Common.Bases;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.ModLoader;
+﻿using AllBeginningsMod.Common.Bases;
 
 namespace AllBeginningsMod.Content.Projectiles.Melee;
 
 public sealed class EbonwoodGreatswordProjectile : GreatswordProjectileBase
 {
     public override void SetDefaults() {
-        Projectile.width = 32;
-        Projectile.height = 32;
-        
+        Projectile.width = 64;
+        Projectile.height = 64;
+
         base.SetDefaults();
     }
 }

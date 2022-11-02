@@ -24,6 +24,7 @@ public sealed class LeadTomahawkItem : ModItem
         Item.useTime = 15;
         Item.useAnimation = 15;
         Item.useStyle = ItemUseStyleID.Swing;
+        Item.holdStyle = ItemHoldStyleID.HoldUp;
 
         Item.shoot = ModContent.ProjectileType<LeadTomahawkProjectile>();
         Item.shootSpeed = 11f;

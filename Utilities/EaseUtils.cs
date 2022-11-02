@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace AllBeginningsMod.Utilities;
+﻿namespace AllBeginningsMod.Utilities;
 
 public static class EaseUtils
 {
@@ -8,7 +6,7 @@ public static class EaseUtils
         return x * x;
     }
 
-    public static float QuinticEaseIn(float x) {
-        return x * x * x * x * x;
+    public static float HexicEaseIn(float x) {
+        return x * x * x * x * x * x;
     }
 }

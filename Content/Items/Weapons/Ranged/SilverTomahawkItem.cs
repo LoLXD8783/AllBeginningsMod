@@ -24,6 +24,7 @@ public sealed class SilverTomahawkItem : ModItem
         Item.useTime = 13;
         Item.useAnimation = 13;
         Item.useStyle = ItemUseStyleID.Swing;
+        Item.holdStyle = ItemHoldStyleID.HoldUp;
 
         Item.shoot = ModContent.ProjectileType<SilverTomahawkProjectile>();
         Item.shootSpeed = 12f;

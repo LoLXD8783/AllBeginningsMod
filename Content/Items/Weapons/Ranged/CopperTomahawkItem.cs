@@ -10,7 +10,6 @@ public sealed class CopperTomahawkItem : ModItem
     public override void SetDefaults() {
         Item.consumable = true;
         Item.noMelee = true;
-        Item.noUseGraphic = true;
 
         Item.maxStack = 999;
 
@@ -24,6 +23,7 @@ public sealed class CopperTomahawkItem : ModItem
         Item.useTime = 15;
         Item.useAnimation = 15;
         Item.useStyle = ItemUseStyleID.Swing;
+        Item.holdStyle = ItemHoldStyleID.HoldUp;
 
         Item.shoot = ModContent.ProjectileType<CopperTomahawkProjectile>();
         Item.shootSpeed = 11f;

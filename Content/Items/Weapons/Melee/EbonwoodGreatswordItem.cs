@@ -11,13 +11,13 @@ public sealed class EbonwoodGreatswordItem : ModItem
     public override void SetDefaults() {
         Item.noUseGraphic = true;
         Item.noMelee = true;
-        
+
         Item.DamageType = DamageClass.Melee;
         Item.damage = 21;
         Item.knockBack = 6f;
-        
-        Item.useTime = 50;
-        Item.useAnimation = 50;
+
+        Item.useTime = 70;
+        Item.useAnimation = 70;
         Item.useStyle = ItemUseStyleID.Swing;
 
         Item.shoot = ModContent.ProjectileType<EbonwoodGreatswordProjectile>();
