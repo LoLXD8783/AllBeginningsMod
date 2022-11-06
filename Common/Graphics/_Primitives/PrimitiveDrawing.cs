@@ -4,7 +4,7 @@ using Terraria;
 
 namespace AllBeginningsMod.Common.Graphics;
 
-public static class PrimitiveBatch
+public static class PrimitiveDrawing
 {
     private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
 
