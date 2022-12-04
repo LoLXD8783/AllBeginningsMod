@@ -10,6 +10,7 @@ using Terraria.GameContent;
 using ReLogic.Content;
 using AllBeginningsMod.Common.Graphics;
 using AllBeginningsMod.Utilities;
+using AllBeginningsMod.Utilities.Extensions;
 using Terraria.DataStructures;
 
 namespace AllBeginningsMod.Content.NPCs
