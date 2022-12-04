@@ -10,13 +10,10 @@ public sealed class GraveyardSceneEffect : ModSceneEffect
     public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 
     public override void SpecialVisuals(Player player, bool isActive) {
-        if (isActive) {
-            ScreenShaderSystem.Vignette.Parameters["uOpacity"].SetValue(1f);
-            ScreenShaderSystem.Vignette.Parameters["strength"].SetValue(0.8f);
-            ScreenShaderSystem.Vignette.Parameters["curvature"].SetValue(0.5f);
-            ScreenShaderSystem.Vignette.Parameters["innerRadius"].SetValue(0.5f);
-            ScreenShaderSystem.Vignette.Parameters["outerRadius"].SetValue(1.2f);
-        }
+        ScreenShaderSystem.Vignette.Parameters["strength"].SetValue(0.8f);
+        ScreenShaderSystem.Vignette.Parameters["curvature"].SetValue(0.5f);
+        ScreenShaderSystem.Vignette.Parameters["innerRadius"].SetValue(0.5f);
+        ScreenShaderSystem.Vignette.Parameters["outerRadius"].SetValue(1.2f);
 
         player.ManageSpecialBiomeVisuals(AllBeginningsMod.ModPrefix + "Vignette", isActive);
     }

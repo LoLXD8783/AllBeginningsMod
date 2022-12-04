@@ -28,12 +28,13 @@ float curvature;
 float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
+    
     float2 curve = pow(abs(coords * 2.0 - 1.0), 1.0 / curvature);
     float edge = pow(length(curve), curvature);
     float vignette = 1.0 - strength * smoothstep(innerRadius, outerRadius, edge);
     
     color.rgb *= vignette;
-    
+
     return color * uOpacity;
 }
 
