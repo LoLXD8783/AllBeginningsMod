@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
@@ -16,9 +15,7 @@ public sealed class ScreenShaderSystem : ModSystem
     public static Effect Vignette { get; private set; }
 
     public override void Load() {
-        PropertyInfo[] properties = typeof(ScreenShaderSystem).GetProperties().ToArray();
-
-        foreach (PropertyInfo info in properties) {
+        foreach (PropertyInfo info in typeof(ScreenShaderSystem).GetProperties()) {
             ScreenShaderAttribute attribute = info.GetCustomAttribute<ScreenShaderAttribute>();
 
             if (attribute == null || info.PropertyType != typeof(Effect)) {

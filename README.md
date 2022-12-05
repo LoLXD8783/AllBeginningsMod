@@ -20,9 +20,7 @@
 
 <h2>About</h2>
 
-The All Beginnings Mod is a project me and the others have been working on for a while now that aims to take inspiration
-from the concepts and designs of H.P. Lovecraft's creations, while still adding content to enhance the overall
-experience.
+The All Beginnings Mod takes heavy inspiration from H. P. Lovecraft, with a scope of surrealism and mystic terror in mind, though with bits of miscellaneous content pieces spread around to give it some more live feeling. Overall a content mod, but with nice tiny features spread all around to make our experience far more unique from other mods.
 
 <h2>Links</h2>
 
