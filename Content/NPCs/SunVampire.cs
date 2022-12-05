@@ -54,7 +54,7 @@ namespace AllBeginningsMod.Content.NPCs
                 }
             }
             else {
-                if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active || NPC.DistanceSQ(Target.Center) > MathF.Pow(16 * 45, 2)) {
+                if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active || NPC.DistanceSQ(Target.Center) > MathF.Pow(16 * 30, 2)) {
                     NPC.TargetClosest();
                 } 
                 else if (NPC.velocity.LengthSquared() < 0.8f) {
@@ -78,7 +78,7 @@ namespace AllBeginningsMod.Content.NPCs
 
                 for (int i = 0; i < 3; i++) {
                     Vector2 pos = NPC.Center + Vector2.UnitX.RotatedBy(angle) * Main.rand.NextFloat() * 25;
-                    Gore gore = Gore.NewGoreDirect(source, pos, pos.DirectionFrom(NPC.Center) * Main.rand.NextFloat(3, 9), Mod.Find<ModGore>("SunVampire_Gore" + i).Type);
+                    Gore gore = Gore.NewGoreDirect(source, pos, pos.DirectionFrom(NPC.Center) * Main.rand.NextFloat(6, 9), Mod.Find<ModGore>("SunVampire_Gore" + i).Type);
                     gore.position -= new Vector2(gore.Width, gore.Height) * 0.5f;
 
                     angle += MathHelper.TwoPi / 3f;
@@ -112,7 +112,7 @@ namespace AllBeginningsMod.Content.NPCs
                 0
                 );
 
-            SpriteBatchSnapshot snapshot = spriteBatch.Capture();
+            SpriteBatchSnapshot snapshot = SpriteBatchSnapshot.Capture(spriteBatch);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
@@ -145,7 +145,7 @@ namespace AllBeginningsMod.Content.NPCs
                 );
 
             spriteBatch.End();
-            spriteBatch.Begin(snapshot);
+            spriteBatch.Begin(snapshot.SortMode, snapshot.BlendState, snapshot.SamplerState, snapshot.DepthStencilState, snapshot.RasterizerState, snapshot.Effect, snapshot.TransformMatrix);
 
             return false;
         }
