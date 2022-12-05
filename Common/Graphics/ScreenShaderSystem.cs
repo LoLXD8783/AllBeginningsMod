@@ -27,10 +27,12 @@ public sealed class ScreenShaderSystem : ModSystem
     }
 
     public override void Unload() {
-        Vignette?.Dispose();
-        Vignette = null;
+        Main.QueueMainThreadAction(() => {
+            Vignette?.Dispose();
+            Vignette = null;
+        });
     }
-
+    
     private static Effect LoadScreenShader(string name) {
         string effectPath = $"{AllBeginningsMod.ModName}/Assets/Effects/{name}";
 

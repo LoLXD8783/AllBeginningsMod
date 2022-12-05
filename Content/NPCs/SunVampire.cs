@@ -12,6 +12,7 @@ using AllBeginningsMod.Common.Graphics;
 using AllBeginningsMod.Utilities;
 using AllBeginningsMod.Utilities.Extensions;
 using Terraria.DataStructures;
+using Terraria.Audio;
 
 namespace AllBeginningsMod.Content.NPCs
 {
@@ -31,8 +32,7 @@ namespace AllBeginningsMod.Content.NPCs
             NPC.noGravity = true;
             NPC.knockBackResist = 0.25f;
 
-            NPC.HitSound = SoundID.NPCHit1;
-            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.HitSound = SoundID.NPCHit23;
         }
 
         private Player Target => Main.player[NPC.target];
@@ -85,7 +85,15 @@ namespace AllBeginningsMod.Content.NPCs
                     angle += MathHelper.TwoPi / 3f;
                 }
 
+                SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, NPC.Center);
+
                 DustUtils.NewDustCircular(NPC.Center, 30, d => Main.rand.NextFromList(DustID.Smoke, DustID.TreasureSparkle, DustID.YellowTorch), 14, angle, (4, 13));
+            }
+
+            if (Main.netMode != NetmodeID.MultiplayerClient) {
+                TargetingUtils.ForEachPlayerInRange(NPC.Center, 16 * 7, player => {
+                    player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), 40, MathF.Sign(player.Center.X - NPC.Center.X));
+                });
             }
 
             NPC.active = false;
@@ -113,7 +121,7 @@ namespace AllBeginningsMod.Content.NPCs
                 0
                 );
 
-            SpriteBatchSnapshot snapshot = SpriteBatchSnapshot.Capture(spriteBatch);
+            SpriteBatchSnapshot snapshot = spriteBatch.Capture();
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
@@ -146,7 +154,7 @@ namespace AllBeginningsMod.Content.NPCs
                 );
 
             spriteBatch.End();
-            spriteBatch.Begin(snapshot.SortMode, snapshot.BlendState, snapshot.SamplerState, snapshot.DepthStencilState, snapshot.RasterizerState, snapshot.Effect, snapshot.TransformMatrix);
+            spriteBatch.Begin(snapshot);
 
             return false;
         }
