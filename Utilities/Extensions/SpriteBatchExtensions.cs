@@ -23,7 +23,15 @@ public static class SpriteBatchExtensions
         return SpriteBatchSnapshot.Capture(spriteBatch);
     }
 
-    public static void DrawAdditive(this SpriteBatch spriteBatch, Texture2D texture, Vector2 position, Rectangle? source, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects) {
+    public static void DrawAdditive(this SpriteBatch spriteBatch,
+        Texture2D texture,
+        Vector2 position,
+        Rectangle? source,
+        Color color,
+        float rotation,
+        Vector2 origin,
+        Vector2 scale,
+        SpriteEffects effects) {
         SpriteBatchSnapshot snapshit = spriteBatch.Capture();
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
@@ -38,7 +46,7 @@ public static class SpriteBatchExtensions
             scale,
             effects,
             0
-            );
+        );
 
         spriteBatch.End();
         spriteBatch.Begin(snapshit);
