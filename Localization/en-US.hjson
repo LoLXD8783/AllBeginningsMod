@@ -1,0 +1,7 @@
+﻿Mods: {
+    AllBeginningsMod: {
+        NPCName: {
+            VampireSunNPC: "Vampire Sun"
+        }
+    }
+}

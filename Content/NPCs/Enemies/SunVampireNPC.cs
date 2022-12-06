@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs;
 
-public class SunVampire : ModNPC
+public sealed class SunVampireNPC : ModNPC
 {
     private const int ExplodeAfter = 110;
 
