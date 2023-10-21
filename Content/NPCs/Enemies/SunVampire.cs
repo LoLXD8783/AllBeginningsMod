@@ -12,9 +12,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Content.NPCs;
+namespace AllBeginningsMod.Content.NPCs.Enemies;
 
-public sealed class SunVampireNPC : ModNPC
+public sealed class SunVampire : ModNPC
 {
     private const int ExplodeAfter = 110;
 
@@ -89,12 +89,14 @@ public sealed class SunVampireNPC : ModNPC
             }
 
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, NPC.Center);
-
             DustUtils.NewDustCircular(NPC.Center, 30, d => Main.rand.NextFromList(DustID.Smoke, DustID.TreasureSparkle, DustID.YellowTorch), 14, angle, (4, 13));
         }
 
+
+
         if (Main.netMode != NetmodeID.MultiplayerClient) {
-            TargetingUtils.ForEachPlayerInRange(NPC.Center, 16 * 7, player => { player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), 40, MathF.Sign(player.Center.X - NPC.Center.X)); });
+            Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<SunVampireExplosion>(), 100, 0.2f);
+            //TargetingUtils.ForEachPlayerInRange(NPC.Center, 16 * 7, player => { player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), 40, MathF.Sign(player.Center.X - NPC.Center.X)); });
         }
 
         NPC.active = false;
@@ -106,9 +108,9 @@ public sealed class SunVampireNPC : ModNPC
         float explodeProgress = ExplodeTimer / ExplodeAfter;
         float progSQ = MathF.Pow(explodeProgress, 2);
 
-        Vector2 position = NPC.Center - screenPos + Main.rand.NextVector2Unit() * 3.5f * progSQ * (Main.rand.NextBool(3) ? 1 : 0);
+        Vector2 position = NPC.Center - screenPos + Vector2.UnitX * Main.rand.NextFloatDirection() * 8f * progSQ * (Main.rand.NextBool(3) ? 1 : 0);
         Vector2 scale = Vector2.One * (1 + 0.25f * progSQ);
-        float rotation = NPC.rotation + (ExplodeTimer > 0 ? Main.rand.NextFloatDirection() * 0.25f * progSQ : 0);
+        float rotation = NPC.rotation + (ExplodeTimer > 0 ? Main.rand.NextFloatDirection() * 0.07f * progSQ : 0);
 
         spriteBatch.Draw(
             tex,
@@ -128,7 +130,7 @@ public sealed class SunVampireNPC : ModNPC
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
         float bloomScaling = 0.2f;
-        Texture2D texBloom0 = ModContent.Request<Texture2D>(Texture + "_Bloom_0", AssetRequestMode.ImmediateLoad).Value;
+        Texture2D texBloom0 = ModContent.Request<Texture2D>(Texture + "_Glow", AssetRequestMode.ImmediateLoad).Value;
         spriteBatch.Draw(
             texBloom0,
             position,
@@ -136,12 +138,12 @@ public sealed class SunVampireNPC : ModNPC
             Color.White * progSQ * 1.1f,
             rotation,
             texBloom0.Size() * 0.5f,
-            scale * bloomScaling,
+            scale,
             SpriteEffects.None,
             0
         );
 
-        Texture2D texBloom1 = ModContent.Request<Texture2D>(Texture + "_Bloom_1", AssetRequestMode.ImmediateLoad).Value;
+        Texture2D texBloom1 = ModContent.Request<Texture2D>(Texture + "_Bloom", AssetRequestMode.ImmediateLoad).Value;
         spriteBatch.Draw(
             texBloom1,
             position,

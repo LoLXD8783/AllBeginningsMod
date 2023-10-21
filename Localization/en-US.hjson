@@ -1,7 +1,23 @@
-﻿Mods: {
-    AllBeginningsMod: {
-        NPCName: {
-            VampireSunNPC: "Vampire Sun"
-        }
-    }
+Mods: {
+	AllBeginningsMod: {
+		NPCName.VampireSunNPC: Vampire Sun
+
+		Items: {
+			BorealWoodGreatswordItem: {
+				DisplayName: Boreal Wood Greatsword Item
+				Tooltip: ""
+			}
+		}
+
+		NPCs: {
+			SunVampireNPC.DisplayName: Sun Vampire N P C
+			SunVampire.DisplayName: Sun Vampire
+			Gardener.DisplayName: Gardener
+		}
+
+		Projectiles: {
+			CustomUseStyleProjectile.DisplayName: Custom Use Style Projectile
+			SunVampireExplosion.DisplayName: Sun Vampire Explosion
+		}
+	}
 }
