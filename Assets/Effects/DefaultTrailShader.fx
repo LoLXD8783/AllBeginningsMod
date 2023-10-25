@@ -1,5 +1,5 @@
 ﻿matrix transformation_matrix;
-float opacity = 1.0;
+float4 color = float4(1, 1, 1, 1);
 
 texture sample_texture;
 sampler2D sampler_texture = sampler_state
@@ -38,7 +38,7 @@ VSOutput vertex_shader_function(VSInput input)
 
 float4 pixel_shader_function(VSOutput input) : COLOR0
 {
-    return input.color * tex2D(sampler_texture, input.texture_coordinates) * opacity;
+    return input.color * tex2D(sampler_texture, input.texture_coordinates) * color;
 }
 
 technique technique1

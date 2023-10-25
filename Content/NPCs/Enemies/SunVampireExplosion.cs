@@ -14,15 +14,13 @@ namespace AllBeginningsMod.Content.NPCs.Enemies
 {
     internal class SunVampireExplosion : ModProjectile
     {
-        public override string Texture => "Terraria/Images/Item_0";
-
         private Effect effect;
         private readonly int maxTimeLeft = 40;
         public override void SetDefaults() {
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.tileCollide = false;
-            Projectile.Size = new Vector2(128, 128);
+            Projectile.Size = new Vector2(280, 280);
             Projectile.penetrate = -1;
             Projectile.timeLeft = maxTimeLeft;
             Projectile.aiStyle = -1;
@@ -31,13 +29,14 @@ namespace AllBeginningsMod.Content.NPCs.Enemies
         public override bool PreDraw(ref Color lightColor) {
             effect ??= Mod.Assets.Request<Effect>("Assets/Effects/VampireExplosion", AssetRequestMode.ImmediateLoad).Value;
             effect.Parameters["progress"].SetValue(1f - (float)Projectile.timeLeft / maxTimeLeft);
-            
+            effect.Parameters["color_sample_texture"].SetValue(ModContent.Request<Texture2D>(Texture + "_Color", AssetRequestMode.ImmediateLoad).Value);
+
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(default, BlendState.Additive, default, default, default, effect);
 
             Point position = (Projectile.position - Main.screenPosition).ToPoint();
             Main.spriteBatch.Draw(
-                TextureAssets.MagicPixel.Value,
+                TextureAssets.Projectile[Type].Value,
                 new Rectangle(position.X, position.Y, Projectile.width, Projectile.height),
                 Color.White
             );

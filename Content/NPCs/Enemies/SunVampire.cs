@@ -43,6 +43,7 @@ public sealed class SunVampire : ModNPC
 
     public override void AI() {
         if (killed) {
+            NPC.friendly = true;
             if (ExplodeTimer++ > ExplodeAfter) {
                 Explode();
             }
@@ -92,11 +93,15 @@ public sealed class SunVampire : ModNPC
             DustUtils.NewDustCircular(NPC.Center, 30, d => Main.rand.NextFromList(DustID.Smoke, DustID.TreasureSparkle, DustID.YellowTorch), 14, angle, (4, 13));
         }
 
-
-
         if (Main.netMode != NetmodeID.MultiplayerClient) {
-            Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<SunVampireExplosion>(), 100, 0.2f);
-            //TargetingUtils.ForEachPlayerInRange(NPC.Center, 16 * 7, player => { player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), 40, MathF.Sign(player.Center.X - NPC.Center.X)); });
+            for (int i = 0; i < Main.maxPlayers; i++) {
+                Player player = Main.player[i];
+                if (player is null || !player.active || !player.Hitbox.Intersects(NPC.Center, 64)) {
+                    break;
+                }
+
+                player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), 40, MathF.Sign(player.Center.X - NPC.Center.X));
+            }
         }
 
         NPC.active = false;

@@ -11,9 +11,19 @@
         <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     </PropertyGroup>
     <ItemGroup>
+      <None Remove="Assets\Images\Glow2.png" />
+      <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\Bastroboy.png" />
+      <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\Bastroboy_Crescent.png" />
+      <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\Bastroboy_Star.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Gardener\Gardener_Intestine.png" />
+      <None Remove="Content\NPCs\Enemies\SunVampireExplosion.png" />
+      <None Remove="Content\NPCs\Enemies\SunVampireExplosion_Color.png" />
+      <None Remove="Content\NPCs\SunVampireExplosionColor.png" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Common\ParticleSystem\" />
     </ItemGroup>
 </Project>

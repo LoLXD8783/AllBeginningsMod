@@ -9,8 +9,8 @@ namespace AllBeginningsMod.Utilities.Extensions
 {
     internal static class Vector2Extensions 
     {
-        public static Vector3 ToVector3(this Vector2 vector) {
-            return new Vector3(vector.X, vector.Y, 0f);
+        public static Vector3 ToVector3(this Vector2 vector, float z = 0f) {
+            return new Vector3(vector.X, vector.Y, z);
         } 
     }
 }

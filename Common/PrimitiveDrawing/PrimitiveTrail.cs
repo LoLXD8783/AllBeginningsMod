@@ -12,13 +12,13 @@ namespace AllBeginningsMod.Common.PrimitiveDrawing
         public DynamicIndexBuffer IndexBuffer { get; private set; }
         public ITrailStyle TrailStyle { get; }
         public Func<float, float> TrailWidth { get; set; }
-        public Func<float, Color> TrailColor { get; set; }
+        public Func<Vector2, Color> TrailColor { get; set; }
 
         public int MaxTrailPositions { get; }
 
         private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
 
-        public PrimitiveTrail(int maxTrailPositionsCount, Func<float, float> trailWidth, Func<float, Color> trailColor = null, ITrailStyle trailStyle = null) {
+        public PrimitiveTrail(int maxTrailPositionsCount, Func<float, float> trailWidth, Func<Vector2, Color> trailColor = null, ITrailStyle trailStyle = null) {
             TrailStyle = trailStyle ?? new DefaultTrailStyle();
             TrailWidth = trailWidth;
             TrailColor = trailColor ?? (_ => Color.White);

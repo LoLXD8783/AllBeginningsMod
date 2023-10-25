@@ -19,9 +19,13 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Gardener
 {
     internal class Gardener : ModNPC
     {
+        private PrimitiveTrail[] intestineTrails;
+        private Effect trailEffect;
+        private Vector2 twitchOffset;
+        private int twitchTimer;
         public override void SetDefaults() {
-            NPC.width = 178;
-            NPC.height = 196;
+            NPC.width = 90;
+            NPC.height = 140;
             NPC.knockBackResist = 0f;
 
             NPC.defense = 100;
@@ -32,8 +36,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Gardener
             NPC.noGravity = true;
             NPC.noTileCollide = true;
 
-            NPC.alpha = 255;
-            NPC.dontTakeDamage = true;
+            NPC.alpha = 0;
             NPC.aiStyle = -1;
 
             NPC.npcSlots = 40f;
@@ -48,14 +51,11 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Gardener
                 intestineTrails[i] = new(8, factor => 26);
             }
         }
-
-        private PrimitiveTrail[] intestineTrails;
-        private Effect trailEffect;
-        private Vector2 twitchOffset;
-        private int twitchTimer;
+        
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
             twitchOffset *= 0.85f;
-            Vector2 bodyDrawPosition = NPC.Center - Main.screenPosition + twitchOffset;
+            Vector2 bodyDrawPosition = NPC.Center - Main.screenPosition + twitchOffset - Vector2.UnitY * 10;
+            Color mainDrawColor = drawColor * (1f - (Math.Clamp(NPC.alpha, 0, 255) / 255f));
             if (twitchTimer == 0) {
                 twitchOffset = Main.rand.NextVector2Unit() * 5f;
                 twitchTimer = Main.rand.Next(30, 80);
@@ -69,7 +69,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Gardener
                 armLeftTexture,
                 bodyDrawPosition + new Vector2(46, -60).RotatedBy(NPC.rotation),
                 null,
-                drawColor,
+                mainDrawColor,
                 NPC.rotation + MathF.Sin(Main.GameUpdateCount * 0.035f + 0.5f) * MathHelper.PiOver4 * 0.05f,
                 Vector2.Zero,
                 NPC.scale,
@@ -82,7 +82,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Gardener
                 armRightTexture,
                 bodyDrawPosition + new Vector2(-46, -35).RotatedBy(NPC.rotation),
                 null,
-                drawColor,
+                mainDrawColor,
                 NPC.rotation - MathF.Sin(Main.GameUpdateCount * 0.0275f) * MathHelper.PiOver4 * 0.1f,
                 new Vector2(armLeftTexture.Width, 0f),
                 NPC.scale,
@@ -95,7 +95,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Gardener
                 mainTexture,
                 bodyDrawPosition,
                 null,
-                drawColor,
+                mainDrawColor,
                 NPC.rotation,
                 mainTexture.Size() * 0.5f,
                 NPC.scale,
@@ -107,7 +107,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Gardener
             spriteBatch.End();
             spriteBatch.Begin(capture);
 
-            DrawTrails(bodyDrawPosition);
+            DrawTrails(bodyDrawPosition, mainDrawColor);
 
             return false;
         }
@@ -119,7 +119,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Gardener
             new Vector2(14, 17)
         };
 
-        private void DrawTrails(Vector2 bodyDrawPosition) {
+        private void DrawTrails(Vector2 bodyDrawPosition, Color drawColor) {
             static float IntestineEquation(float x) {
                 return 0.2f * MathF.Sin(x) + 0.8f * MathF.Cos(x + MathHelper.PiOver4);
             }
@@ -141,10 +141,12 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Gardener
             Texture2D intestineTexture = ModContent.Request<Texture2D>(Texture + "_Intestine", AssetRequestMode.ImmediateLoad).Value;
             trailEffect ??= ModContent.Request<Effect>("AllBeginningsMod/Assets/Effects/DefaultTrailShader", AssetRequestMode.ImmediateLoad).Value;
             trailEffect.Parameters["sample_texture"].SetValue(intestineTexture);
+            trailEffect.Parameters["color"].SetValue(drawColor.ToVector4());
             trailEffect.Parameters["transformation_matrix"].SetValue(
                 Main.GameViewMatrix.TransformationMatrix
                 * Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1)
             );
+
 
             for (int i = 0; i < intestineTrails.Length; i++) {
                 intestineTrails[i].Draw(trailEffect);

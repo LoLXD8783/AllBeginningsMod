@@ -13,11 +13,13 @@ Mods: {
 			SunVampireNPC.DisplayName: Sun Vampire N P C
 			SunVampire.DisplayName: Sun Vampire
 			Gardener.DisplayName: Gardener
+			Bastroboy.DisplayName: Bastroboy
 		}
 
 		Projectiles: {
 			CustomUseStyleProjectile.DisplayName: Custom Use Style Projectile
 			SunVampireExplosion.DisplayName: Sun Vampire Explosion
+			BastroboyOrbitingProjectile.DisplayName: Bastroboy Orbiting Projectile
 		}
 	}
 }
