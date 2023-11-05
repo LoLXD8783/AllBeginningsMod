@@ -3,15 +3,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace AllBeginningsMod.Common.Graphics;
 
-public readonly struct SpriteBatchSnapshot
+public struct SpriteBatchSnapshot
 {
-    public readonly SpriteSortMode SortMode;
-    public readonly BlendState BlendState;
-    public readonly SamplerState SamplerState;
-    public readonly DepthStencilState DepthStencilState;
-    public readonly RasterizerState RasterizerState;
-    public readonly Effect Effect;
-    public readonly Matrix TransformMatrix;
+    public SpriteSortMode SortMode { get; init; }
+    public BlendState BlendState { get; init; }
+    public SamplerState SamplerState { get; init; }
+    public DepthStencilState DepthStencilState { get; init; }
+    public RasterizerState RasterizerState { get; init; }
+    public Effect Effect { get; init; }
+    public Matrix TransformMatrix { get; init; }
 
     public SpriteBatchSnapshot(
         SpriteSortMode sortMode,

@@ -1,4 +1,4 @@
-Mods: {
+﻿Mods: {
 	AllBeginningsMod: {
 		NPCName.VampireSunNPC: Vampire Sun
 
@@ -10,16 +10,29 @@ Mods: {
 		}
 
 		NPCs: {
-			SunVampireNPC.DisplayName: Sun Vampire N P C
-			SunVampire.DisplayName: Sun Vampire
-			Gardener.DisplayName: Gardener
-			Bastroboy.DisplayName: Bastroboy
+			HellVampireNPC.DisplayName: Hell Vampire
+			BastroboyNPC.DisplayName: Bastroboy
+			GardenerNPC.DisplayName: Gardener
+			VampireDevilNPC.DisplayName: Vampire Devil
+			CaveVampire.DisplayName: Cave Vampire
+			NightgauntNPC.DisplayName: Nightgaunt
 		}
 
 		Projectiles: {
 			CustomUseStyleProjectile.DisplayName: Custom Use Style Projectile
-			SunVampireExplosion.DisplayName: Sun Vampire Explosion
+			BastroboyNPCOrbitingProjectile.DisplayName: Bastroboy Orbiting Projectile
+			BastroboyNPCExplodingStarProjectile.DisplayName: Bastroboy Exploding Star Projectile
+			BastroboyExplodingStarProjectile.DisplayName: Bastroboy Exploding Star Projectile
 			BastroboyOrbitingProjectile.DisplayName: Bastroboy Orbiting Projectile
+			BastroboyExplodingProjectile.DisplayName: Bastroboy Exploding Projectile
+			BastroboyStarWhirlProjectile.DisplayName: Bastroboy Star Whirl Projectile
+		}
+
+		Buffs: {
+			NoFlightDebuff: {
+				Description: Player can't use wings for the duration of this debuff.
+				DisplayName: No Flight Debuff
+			}
 		}
 	}
 }

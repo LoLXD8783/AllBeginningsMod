@@ -1,7 +1,10 @@
-﻿matrix transformationMatrix;
-float4 color = float4(1, 1, 1, 1);
-texture sampleTexture;
+﻿float4 outlineColor = float4(0.0, 0.0, 0.0, 1.0);
+float outlineWidth = 0.1;
+float outlineSmooth = 0.0;
 bool blackAsAlpha = false;
+
+matrix transformationMatrix;
+texture sampleTexture;
 sampler2D samplerTexture = sampler_state
 {
     texture = <sampleTexture>;
@@ -38,12 +41,13 @@ VSOutput vertex_shader_function(VSInput input)
 
 float4 pixel_shader_function(VSOutput input) : COLOR0
 {
-    if (blackAsAlpha)
-    {
-        return input.color * tex2D(samplerTexture, input.textureCoordinates).r * color;
-    }
+    float max = 1.0 - outlineWidth;
+    float intensity = smoothstep(max - outlineSmooth, max, abs((input.textureCoordinates.y - 0.5) * 2.0));
     
-    return input.color * tex2D(samplerTexture, input.textureCoordinates) * color;
+    float4 sampleColor = tex2D(samplerTexture, input.textureCoordinates);
+    float4 middleColor = input.color * (blackAsAlpha ? sampleColor.r : sampleColor);
+    
+    return lerp(middleColor, outlineColor, intensity);
 }
 
 technique technique1

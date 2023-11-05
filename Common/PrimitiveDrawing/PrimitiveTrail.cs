@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.PrimitiveDrawing
 {
@@ -13,7 +15,7 @@ namespace AllBeginningsMod.Common.PrimitiveDrawing
         public ITrailStyle TrailStyle { get; }
         public Func<float, float> TrailWidth { get; set; }
         public Func<Vector2, Color> TrailColor { get; set; }
-
+        public static Effect DefaultTrailEffect => ModContent.Request<Effect>("AllBeginningsMod/Assets/Effects/DefaultTrailShader", AssetRequestMode.ImmediateLoad).Value;
         public int MaxTrailPositions { get; }
 
         private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
@@ -52,7 +54,7 @@ namespace AllBeginningsMod.Common.PrimitiveDrawing
             IndexBuffer.SetData(indices);
         }
 
-        public void Draw(Effect shader) {
+        public void Draw(Effect effect = null) {
             if (VertexBuffer is null || IndexBuffer is null) {
                 return;
             }
@@ -60,7 +62,15 @@ namespace AllBeginningsMod.Common.PrimitiveDrawing
             Device.SetVertexBuffer(VertexBuffer);
             Device.Indices = IndexBuffer;
 
-            foreach (EffectPass pass in shader.CurrentTechnique.Passes) {
+            if (effect is null) {
+                if (DefaultTrailEffect is null) {
+                    return;
+                }
+
+                effect = DefaultTrailEffect;
+            }
+            
+            foreach (EffectPass pass in effect.CurrentTechnique.Passes) {
                 pass.Apply();
                 Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, VertexBuffer.VertexCount, 0, IndexBuffer.IndexCount / 3);
             }
