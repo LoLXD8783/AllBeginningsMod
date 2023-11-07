@@ -1,4 +1,4 @@
-﻿Mods: {
+Mods: {
 	AllBeginningsMod: {
 		NPCName.VampireSunNPC: Vampire Sun
 
@@ -26,6 +26,8 @@
 			BastroboyOrbitingProjectile.DisplayName: Bastroboy Orbiting Projectile
 			BastroboyExplodingProjectile.DisplayName: Bastroboy Exploding Projectile
 			BastroboyStarWhirlProjectile.DisplayName: Bastroboy Star Whirl Projectile
+			NightgauntReverseGravityProjectile.DisplayName: Nightgaunt Reverse Gravity Projectile
+			NightgauntForceField.DisplayName: Nightgaunt Force Field
 		}
 
 		Buffs: {

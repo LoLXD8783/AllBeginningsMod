@@ -12,13 +12,13 @@
     </PropertyGroup>
     <ItemGroup>
       <None Remove="Assets\Effects\BastroboyStarWhirl.fx" />
+      <None Remove="Assets\Effects\ForceField.fx" />
+      <None Remove="Assets\Effects\JellyfishYe.fx" />
       <None Remove="Assets\Effects\OutlinedTrailShader.fx" />
       <None Remove="Assets\Gores\HellVampireGore2.png" />
       <None Remove="Assets\Images\Glow2.png" />
       <None Remove="Assets\Images\OutlineTrail.png" />
       <None Remove="Assets\Images\pebbles.png" />
-      <None Remove="Assets\Images\StarTrail.png" />
-      <None Remove="Assets\Images\Wind.png" />
       <None Remove="Content\Buffs\NoFlightDebuff.png" />
       <None Remove="Content\Dusts\SmokeDust.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyExplodingProjectile_Crescent.png" />
@@ -30,6 +30,8 @@
       <None Remove="Content\NPCs\Enemies\Bosses\Nightgaunt\NightgauntNPC_Jump.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Nightgaunt\NightgauntNPC_Shield.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Nightgaunt\NightgauntNPC_Swing.png" />
+      <None Remove="Content\NPCs\Enemies\Bosses\Nightgaunt\NightgauntReverseGravityProjectile.png" />
+      <None Remove="Content\NPCs\Enemies\Bosses\Nightgaunt\NightgauntReverseGravityProjectile_ColorMask.png" />
       <None Remove="Content\NPCs\Enemies\CaveVampire.png" />
       <None Remove="Content\NPCs\SunVampireExplosionColor.png" />
     </ItemGroup>
@@ -38,5 +40,6 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Common\ParticleSystem\" />
+      <Folder Include="Common\Players\" />
     </ItemGroup>
 </Project>

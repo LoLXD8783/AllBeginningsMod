@@ -28,5 +28,9 @@ namespace AllBeginningsMod.Utilities.Extensions
             float distanceSquared = MathF.Pow(distanceX - halfWidth, 2) + MathF.Pow(distanceY - halfHeight, 2);
             return distanceSquared < MathF.Pow(radius, 2);
         }
+
+        public static bool Intersects(this Rectangle rectangle, Point center, float radius) {
+            return rectangle.Intersects(center.ToVector2(), radius);
+        }
     }
 }
