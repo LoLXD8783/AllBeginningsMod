@@ -12,8 +12,10 @@
     </PropertyGroup>
     <ItemGroup>
       <None Remove="Assets\Effects\BastroboyStarWhirl.fx" />
+      <None Remove="Assets\Effects\FishEye.fx" />
       <None Remove="Assets\Effects\ForceField.fx" />
       <None Remove="Assets\Effects\JellyfishYe.fx" />
+      <None Remove="Assets\Effects\NightgauntFilter.fx" />
       <None Remove="Assets\Effects\OutlinedTrailShader.fx" />
       <None Remove="Assets\Gores\HellVampireGore2.png" />
       <None Remove="Assets\Images\Glow2.png" />
@@ -41,5 +43,6 @@
     <ItemGroup>
       <Folder Include="Common\ParticleSystem\" />
       <Folder Include="Common\Players\" />
+      <Folder Include="Content\Items\" />
     </ItemGroup>
 </Project>

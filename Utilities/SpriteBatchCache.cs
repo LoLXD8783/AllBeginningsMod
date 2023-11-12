@@ -1,9 +1,8 @@
 ﻿using System.Reflection;
-using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Common.Graphics;
+namespace AllBeginningsMod.Utilities;
 
 public sealed class SpriteBatchCache : ILoadable
 {

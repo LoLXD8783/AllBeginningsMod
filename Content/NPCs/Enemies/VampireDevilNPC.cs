@@ -15,6 +15,8 @@ using Terraria.ID;
 using Terraria.DataStructures;
 using AllBeginningsMod.Content.Dusts;
 using Terraria.ModLoader;
+using AllBeginningsMod.Utilities;
+using AllBeginningsMod.Common.Loaders;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies;
 
@@ -40,6 +42,11 @@ internal class VampireDevilNPC : VampireNPC
     }
 
     public override void FindFrame(int frameHeight) {
+        if (IsExploding) {
+            NPC.frame = new(0, 0, 84, frameHeight);
+            return;
+        }
+
         int frameTime = 20;
         if (NPC.frameCounter++ > frameTime * 2) {
             NPC.frameCounter = 0d;
@@ -68,9 +75,12 @@ internal class VampireDevilNPC : VampireNPC
             );
         }
 
+        Lighting.AddLight(NPC.Center, new Vector3(1.86f, 1.22f, 0.69f) * 5f);
         SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, NPC.Center);
     }
 
+    [Effect("FishEye")]
+    private static Effect fishEyeEffect;
     protected override void Draw(SpriteBatch spriteBatch, Color drawColor, float explodingProgress) {
         Texture2D texture = TextureAssets.Npc[Type].Value;
 
@@ -78,11 +88,11 @@ internal class VampireDevilNPC : VampireNPC
 
         Vector2 position = NPC.Center - Main.screenPosition;
         if (explodingProgress != 0f && Main.GameUpdateCount % (int)((1f - explodingProgress) * 10f + 1f) == 0) {
-            position += Main.rand.NextVector2Unit() * explodingProgress * 4f;
+            position += Main.rand.NextVector2Unit() * explodingProgress * 2.5f;
         }
 
-        Vector2 scale = Vector2.One * (1f + 0.25f * explodingProgress);
-        float rotation = NPC.rotation + Main.rand.NextFloatDirection() * 0.15f * explodingProgress;
+        Vector2 scale = Vector2.One * (1f + 0.5f * explodingProgress);
+        float rotation = NPC.rotation + Main.rand.NextFloatDirection() * 0.05f * explodingProgress;
 
         for (int i = 0; i < 4; i++) {
             spriteBatch.Draw(
@@ -98,6 +108,15 @@ internal class VampireDevilNPC : VampireNPC
             );
         }
 
+        fishEyeEffect.Parameters["strength"].SetValue(explodingProgress * 2f);
+        fishEyeEffect.Parameters["uImageSize0"].SetValue(texture.Size());
+        fishEyeEffect.Parameters["uSourceRect"].SetValue(new Vector4(NPC.frame.X, NPC.frame.Y, NPC.frame.Width, NPC.frame.Height));
+        fishEyeEffect.Parameters["center"].SetValue(Vector2.One * 0.5f);
+
+        SpriteBatchSnapshot snapshot = spriteBatch.Capture();
+        spriteBatch.End();
+        spriteBatch.Begin(snapshot with { Effect = fishEyeEffect });
+
         spriteBatch.Draw(
             texture,
             position,
@@ -109,5 +128,8 @@ internal class VampireDevilNPC : VampireNPC
             NPC.direction > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
             0
         );
+
+        spriteBatch.End();
+        spriteBatch.Begin(snapshot);
     }
 }

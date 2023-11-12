@@ -1,5 +1,4 @@
-﻿using AllBeginningsMod.Common.Graphics;
-using AllBeginningsMod.Utilities;
+﻿using AllBeginningsMod.Utilities;
 using AllBeginningsMod.Utilities.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -64,7 +63,7 @@ internal class BastroboyStarWhirlProjectile : ModProjectile
     public override bool PreDraw(ref Color lightColor) {
         effect ??= Mod.Assets.Request<Effect>("Assets/Effects/BastroboyStarWhirl", AssetRequestMode.ImmediateLoad).Value;
         sampleTexture ??= Mod.Assets.Request<Texture2D>("Assets/Images/Pebbles", AssetRequestMode.ImmediateLoad).Value;
-        noiseTexture ??= Mod.Assets.Request<Texture2D>("Assets/Images/Wind", AssetRequestMode.ImmediateLoad).Value;
+        noiseTexture ??= Mod.Assets.Request<Texture2D>("Assets/Images/Pebbles", AssetRequestMode.ImmediateLoad).Value;
 
         effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.06f);
         effect.Parameters["yOffset"].SetValue(-1f);

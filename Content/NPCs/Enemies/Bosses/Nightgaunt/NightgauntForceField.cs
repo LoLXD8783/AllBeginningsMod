@@ -8,10 +8,10 @@ using Terraria.ModLoader;
 using AllBeginningsMod.Utilities.Extensions;
 using Terraria;
 using Terraria.GameContent;
-using AllBeginningsMod.Common.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Reflection.Metadata;
+using AllBeginningsMod.Utilities;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
 {
@@ -22,9 +22,9 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
         public override string Texture => "Terraria/Images/Item_0";
         public override void SetDefaults() {
             Projectile.friendly = false;
-            Projectile.hostile = true;
+            Projectile.hostile = false;
             Projectile.tileCollide = false;
-            Projectile.width = Projectile.height = 400;
+            Projectile.width = Projectile.height = 0;
             Projectile.timeLeft = 2;
             Projectile.alpha = 255;
             Projectile.penetrate = -1;
@@ -35,7 +35,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
         private bool dissapear;
         public override void AI() {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (npc is null || npc.ModNPC is not NightgauntNPC nightgaunt) {
+            if (npc is null || npc.ModNPC is not NightgauntNPC nightgaunt || !npc.active) {
                 Projectile.active = false;
                 return;
             }
@@ -51,6 +51,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                 dissapear = true;
             }
 
+            Projectile.width = Projectile.height = (int)MathHelper.Lerp(0, 400, 1f - Projectile.alpha / 255f);
+
             if (dissapear) {
                 Projectile.alpha += 10;
                 if (Projectile.alpha >= 255) {
@@ -61,7 +63,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
 
             for (int i = 0; i < Main.maxProjectiles; i++) {
                 Projectile projectile = Main.projectile[i];
-                if (projectile is null || !projectile.active || projectile.whoAmI == Projectile.whoAmI) {
+                if (projectile is null || !projectile.active || projectile.whoAmI == Projectile.whoAmI || projectile.hostile) {
                     continue;
                 }
 
@@ -79,6 +81,10 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                     i--;
                 }
             }
+
+            if (!Main.dedServ) {
+                Lighting.AddLight(Projectile.Center, new Vector3(4f, 4f, 5f) * (1f - Projectile.alpha / 255f));
+            }
         }
 
         public override bool ShouldUpdatePosition() {
@@ -91,18 +97,19 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
 
         private Effect effect;
         public override bool PreDraw(ref Color lightColor) {
-            Color color = new Color(185, 140, 183) * (1f - Projectile.alpha / 255f) * 0.5f;
+            Color color = new Color(185, 140, 183) * (1f - Projectile.alpha / 255f) * 0.3f;
             Texture2D noiseTexture = Mod.Assets.Request<Texture2D>("Assets/Images/Pebbles", AssetRequestMode.ImmediateLoad).Value;
 
             SpriteBatchSnapshot snapshot = Main.spriteBatch.Capture();
             effect ??= Mod.Assets.Request<Effect>("Assets/Effects/ForceField", AssetRequestMode.ImmediateLoad).Value;
-            effect.Parameters["size"].SetValue(0.2f);
+            effect.Parameters["size"].SetValue(0.3f);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.08f);
             effect.Parameters["intensity"].SetValue(2f);
-            effect.Parameters["fishEye"].SetValue(-0.2f);
+            effect.Parameters["fishEye"].SetValue(1.5f);
+            effect.Parameters["sampleOpacity"].SetValue(0.35f);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(snapshot with { Effect = effect, BlendState = BlendState.Additive });
+            Main.spriteBatch.Begin(snapshot with { Effect = effect });
 
             Main.spriteBatch.Draw(
                 noiseTexture,

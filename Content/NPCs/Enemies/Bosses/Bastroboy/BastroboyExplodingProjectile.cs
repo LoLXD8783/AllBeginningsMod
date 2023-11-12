@@ -1,5 +1,4 @@
-﻿using AllBeginningsMod.Common.Graphics;
-using AllBeginningsMod.Common.PrimitiveDrawing;
+﻿using AllBeginningsMod.Common.PrimitiveDrawing;
 using AllBeginningsMod.Content.Buffs;
 using AllBeginningsMod.Content.Dusts;
 using AllBeginningsMod.Utilities;

@@ -1,4 +1,4 @@
-﻿using AllBeginningsMod.Common.Graphics;
+﻿using AllBeginningsMod.Utilities;
 using AllBeginningsMod.Utilities.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,15 +32,15 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
             Projectile.penetrate = -1;
         }
 
-        bool runAIOnSpawn;
-        float rotationOffset;
+        private bool runAIOnSpawn;
+        private float rotationOffset;
         public override void AI() {
             if (!runAIOnSpawn) {
                 runAIOnSpawn = true;
                 rotationOffset = Main.rand.NextFloat(MathHelper.PiOver2);
             }
 
-            Projectile.velocity.Y -= 0.08f;
+            Projectile.velocity.Y -= 0.06f;
             if (Projectile.timeLeft > 60) {
                 if (Projectile.alpha > 0) {
                     Projectile.alpha -= 2;
@@ -57,8 +57,12 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                     Projectile.frame = 0;
                 }
             }
-            Projectile.rotation = MathF.Sin(Projectile.timeLeft * 0.05f + rotationOffset) * 0.2f;
+            Projectile.rotation = MathF.Sin(Projectile.timeLeft * 0.08f + rotationOffset) * 0.2f;
             Projectile.position += Projectile.velocity.RotatedBy(Projectile.rotation);
+
+            if (!Main.dedServ) {
+                Lighting.AddLight(Projectile.Center - Vector2.UnitY * 30f, new Vector3(185, 140, 183) * 0.0025f);
+            }
         }
 
         public override bool ShouldUpdatePosition() {
@@ -106,8 +110,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
 
             effect ??= Mod.Assets.Request<Effect>("Assets/Effects/JellyfishYe", AssetRequestMode.ImmediateLoad).Value;
             effect.Parameters["time"].SetValue(Projectile.timeLeft * 0.05f + rotationOffset * 4f);
-            effect.Parameters["textureSize"].SetValue(colorMaskTexture.Size());
-            effect.Parameters["sourceRectangle"].SetValue(new Vector4(source.X, source.Y, source.Width, source.Height));
+            effect.Parameters["uImageSize0"].SetValue(colorMaskTexture.Size());
+            effect.Parameters["uSourceRect"].SetValue(new Vector4(source.X, source.Y, source.Width, source.Height));
             Main.spriteBatch.Begin(snapshot with { Effect = effect });
 
             Main.spriteBatch.Draw(

@@ -14,6 +14,8 @@ using Terraria;
 using Microsoft.Xna.Framework;
 using AllBeginningsMod.Content.Dusts;
 using Terraria.ModLoader;
+using AllBeginningsMod.Common.Loaders;
+using AllBeginningsMod.Utilities;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies
 {
@@ -54,9 +56,12 @@ namespace AllBeginningsMod.Content.NPCs.Enemies
                 }
             }
 
+            Lighting.AddLight(NPC.Center, new Vector3(1.86f, 1.22f, 0.69f) * 3.5f);
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, NPC.Center);
         }
 
+        [Effect("FishEye")]
+        private static Effect fishEyeEffect;
         protected override void Draw(SpriteBatch spriteBatch, Color drawColor, float explodingProgress) {
             Texture2D texture = TextureAssets.Npc[Type].Value;
 
@@ -67,8 +72,17 @@ namespace AllBeginningsMod.Content.NPCs.Enemies
                 position += Main.rand.NextVector2Unit() * explodingProgress * 3f;
             }
 
-            Vector2 scale = Vector2.One * (1f + 0.25f * explodingProgress);
+            Vector2 scale = Vector2.One * (1f + 0.5f * explodingProgress);
             float rotation = NPC.rotation + Main.rand.NextFloatDirection() * 0.09f * explodingProgress;
+
+            fishEyeEffect.Parameters["strength"].SetValue(explodingProgress * 2f);
+            fishEyeEffect.Parameters["uImageSize0"].SetValue(texture.Size());
+            fishEyeEffect.Parameters["uSourceRect"].SetValue(new Vector4(0f, 0f, texture.Width, texture.Height));
+            fishEyeEffect.Parameters["center"].SetValue(Vector2.One * 0.5f);
+
+            SpriteBatchSnapshot snapshot = spriteBatch.Capture();
+            spriteBatch.End();
+            spriteBatch.Begin(snapshot with { Effect = fishEyeEffect });
 
             spriteBatch.Draw(
                 texture,
@@ -81,6 +95,9 @@ namespace AllBeginningsMod.Content.NPCs.Enemies
                 NPC.direction < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
                 0
             );
+
+            spriteBatch.End();
+            spriteBatch.Begin(snapshot);
         }
     }
 }

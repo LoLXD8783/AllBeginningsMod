@@ -1,5 +1,4 @@
-﻿using AllBeginningsMod.Common.Graphics;
-using AllBeginningsMod.Utilities;
+﻿using AllBeginningsMod.Utilities;
 using AllBeginningsMod.Utilities.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -50,6 +49,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
             }
         }
 
+        private ref float ShieldJellyFishInterval => ref NPC.ai[3];
+
         private Player Target => Main.player[NPC.target];
         //private bool Grounded => Collision.SolidCollision(NPC.position + Vector2.UnitY * NPC.height, NPC.width, 4);
         private int Frame => Attack switch {
@@ -90,7 +91,6 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
         private int swingTime;
         private int shieldTime;
         private int jumpTime;
-        private bool appliedJumpVelocity = false;
         private const float Gravity = 0.4f;
         private float jumpTrailAlpha;
         private int swingCount;
@@ -148,7 +148,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                                     Attack = Attacks.Jump;
                                     swingCount = 0;
                                 } else {
-                                    Attack = Main.rand.NextFloat() < 0.2f && shieldAttackCooldown <= 0 ? Attacks.Shield : Attacks.Swing;
+                                    Attack = /*Main.rand.NextFloat() < 0.2f && shieldAttackCooldown <= 0 ? */Attacks.Shield/* : Attacks.Swing*/;
                                 }
 
                                 AttackTimer = 0;
@@ -193,8 +193,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                             break;
                         case Attacks.Jump:
                             AttackTimer++;
-                            if (Frame == 4 && !appliedJumpVelocity) {
-                                appliedJumpVelocity = true;
+                            if (Frame == 4 && LastFrame == 3) {
                                 NPC.noTileCollide = true;
                                 NPC.velocity = PhysicsUtils.InitialVelocityRequiredToHitPosition(NPC.Bottom, Target.Bottom, Gravity, Main.rand.NextFloat(15f, 19f));
                             }
@@ -207,7 +206,6 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                                 NPC.noTileCollide = false;
                                 if (NPC.velocity.Y == 0f) {
                                     Attack = Attacks.None;
-                                    appliedJumpVelocity = false;
                                     TargetingUtils.ForEachPlayerInRange(
                                         NPC.Center,
                                         120,
@@ -223,7 +221,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                                         }
                                     );
                                     Main.instance.CameraModifiers.Add(
-                                        new PunchCameraModifier(NPC.Center, Main.rand.NextVector2Unit(), 10f, 4f, 10, 1000f, FullName)
+                                        new PunchCameraModifier(NPC.Center, Main.rand.NextVector2Unit(), 12f, 4f, 14, 5000f, FullName)
                                     );
                                     SoundEngine.PlaySound(SoundID.DD2_BetsyFireballImpact);
                                     JumpSmashEffects();
@@ -241,25 +239,27 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                                     Vector2.Zero,
                                     ModContent.ProjectileType<NightgauntForceField>(),
                                     1,
-                                    10f,
+                                    30f,
                                     -1,
                                     NPC.whoAmI
                                 );
                             }
 
-                            if (AttackTimer % 30 == 0) {
-                                float spread = 240f;
+                            if (ShieldJellyFishInterval-- <= 0 && (shieldTime - AttackTimer) > 90) {
+                                float spread = 140f;
                                 int count = 5;
                                 for (int i = -count; i < count; i++) {
                                     Projectile.NewProjectile(
                                         NPC.GetSource_FromAI(),
-                                        new Vector2(Target.Center.X + i * Main.rand.NextFloat(spread, spread * 1.5f), Target.Center.Y + 350f + Main.rand.Next(-60, 60)),
+                                        new Vector2(Target.Center.X + i * Main.rand.NextFloat(spread, spread * 2f), Target.Center.Y + 750f + Main.rand.Next(-60, 60)),
                                         Vector2.Zero,
                                         ModContent.ProjectileType<NightgauntReverseGravityProjectile>(),
                                         NPC.damage,
                                         2f
                                     );
                                 }
+
+                                ShieldJellyFishInterval = Main.rand.Next(20, 40);
                             }
 
                             if (AttackTimer >= shieldTime) {
@@ -277,7 +277,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                     break;
             }
 
-            if (Attack != Attacks.Jump && NPC.velocity.Y == 0f) {
+            if ((Attack != Attacks.Jump || Frame < 4) && NPC.velocity.Y == 0f) {
                 NPC.velocity.X *= 0.885f;
             }
             if (Attack == Attacks.Jump) {
@@ -295,7 +295,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
         }
 
         public override bool? CanFallThroughPlatforms() {
-            return Target is not null && Target.Top.Y > NPC.Bottom.Y;
+            return Target is not null && Target.Top.Y > NPC.Bottom.Y && (Attack != Attacks.Jump || Frame >= 4) && Attack != Attacks.Shield;
         }
 
         private void FaceTarget() {
@@ -312,7 +312,6 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                 Vector2 position = NPC.BottomLeft + Vector2.UnitX * Main.rand.NextFloat(NPC.width);
                 Dust.NewDustPerfect(position, DustID.Dirt, new Vector2(MathF.Sign(position.X - NPC.Center.X) * 2f, -6f) * Main.rand.NextFloat());
             }
-            
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) {
@@ -367,14 +366,14 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
 
             SpriteBatchSnapshot snapshot = Main.spriteBatch.Capture();
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);
             for (int i = 0; i < NPC.oldPos.Length; i++) {
                 float factor = (float)i / NPC.oldPos.Length;
                 Main.spriteBatch.Draw(
                     texture,
                     NPC.oldPos[i] + NPC.Size / 2f - screenPos,
                     NPC.frame,
-                    Color.Lerp(drawColor, Color.SlateBlue, factor) * (1f - factor) * jumpTrailAlpha * 0.2f,
+                    Color.DarkSlateGray * (1f - factor) * jumpTrailAlpha * 0.6f,
                     NPC.rotation,
                     NPC.frame.Size() / 2f + offset,
                     NPC.scale,

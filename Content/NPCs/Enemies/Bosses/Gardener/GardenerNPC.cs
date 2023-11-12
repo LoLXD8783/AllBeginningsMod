@@ -13,7 +13,7 @@ using ReLogic.Content;
 using AllBeginningsMod.Common.PrimitiveDrawing;
 using Terraria.DataStructures;
 using AllBeginningsMod.Utilities.Extensions;
-using AllBeginningsMod.Common.Graphics;
+using AllBeginningsMod.Utilities;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Gardener;
 
@@ -65,7 +65,7 @@ internal class GardenerNPC : ModNPC
             twitchTimer--;
         }
 
-        Texture2D armLeftTexture = ModContent.Request<Texture2D>(Texture + "_ArmLeft", AssetRequestMode.ImmediateLoad).Value;
+        Texture2D armLeftTexture = ModContent.Request<Texture2D>(Texture.Replace("Body", "ArmLeft"), AssetRequestMode.ImmediateLoad).Value;
         Main.spriteBatch.Draw(
             armLeftTexture,
             bodyDrawPosition + new Vector2(46, -60).RotatedBy(NPC.rotation),
@@ -78,7 +78,7 @@ internal class GardenerNPC : ModNPC
             0f
         );
 
-        Texture2D armRightTexture = ModContent.Request<Texture2D>(Texture + "_ArmRight", AssetRequestMode.ImmediateLoad).Value;
+        Texture2D armRightTexture = ModContent.Request<Texture2D>(Texture.Replace("Body", "ArmRight"), AssetRequestMode.ImmediateLoad).Value;
         Main.spriteBatch.Draw(
             armRightTexture,
             bodyDrawPosition + new Vector2(-46, -35).RotatedBy(NPC.rotation),
@@ -139,7 +139,7 @@ internal class GardenerNPC : ModNPC
             intestineTrails[i].Update(positions.Select(position => position + bodyDrawPosition).ToArray());
         }
 
-        Texture2D intestineTexture = ModContent.Request<Texture2D>(Texture + "_Intestine", AssetRequestMode.ImmediateLoad).Value;
+        Texture2D intestineTexture = ModContent.Request<Texture2D>(Texture.Replace("Body", "Intestine"), AssetRequestMode.ImmediateLoad).Value;
         PrimitiveTrail.DefaultTrailEffect.Parameters["sampleTexture"].SetValue(intestineTexture);
         PrimitiveTrail.DefaultTrailEffect.Parameters["color"].SetValue(drawColor.ToVector4());
         PrimitiveTrail.DefaultTrailEffect.Parameters["transformationMatrix"].SetValue(

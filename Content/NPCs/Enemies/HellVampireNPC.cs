@@ -1,6 +1,6 @@
 ﻿using System;
 using AllBeginningsMod.Common.Bases.NPCs;
-using AllBeginningsMod.Common.Graphics;
+using AllBeginningsMod.Common.Loaders;
 using AllBeginningsMod.Content.Dusts;
 using AllBeginningsMod.Utilities;
 using AllBeginningsMod.Utilities.Extensions;
@@ -65,19 +65,31 @@ public sealed class HellVampireNPC : VampireNPC
             }
         }
 
+        Lighting.AddLight(NPC.Center, new Vector3(1.86f, 1.22f, 0.69f) * 3.5f);
         SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, NPC.Center);
     }
 
+    [Effect("FishEye")]
+    private static Effect fishEyeEffect;
     protected override void Draw(SpriteBatch spriteBatch, Color drawColor, float explodingProgress) {
         Texture2D texture = TextureAssets.Npc[Type].Value;
         explodingProgress *= explodingProgress;
 
         Vector2 position = NPC.Center - Main.screenPosition;
         if (explodingProgress != 0f && Main.GameUpdateCount % (int)((1f - explodingProgress) * 10f + 1f) == 0) {
-            position += Main.rand.NextVector2Unit() * explodingProgress * 4f;
+            position += Main.rand.NextVector2Unit() * explodingProgress * 2f;
         }
-        Vector2 scale = Vector2.One * (1f + 0.25f * explodingProgress);
+        Vector2 scale = Vector2.One * (1f + 0.5f * explodingProgress);
         float rotation = NPC.rotation + Main.rand.NextFloatDirection() * 0.07f * explodingProgress;
+
+        fishEyeEffect.Parameters["strength"].SetValue(explodingProgress * 2f);
+        fishEyeEffect.Parameters["uImageSize0"].SetValue(texture.Size());
+        fishEyeEffect.Parameters["uSourceRect"].SetValue(new Vector4(0f, 0f, texture.Width, texture.Height));
+        fishEyeEffect.Parameters["center"].SetValue(Vector2.One * 0.5f);
+
+        SpriteBatchSnapshot snapshot = spriteBatch.Capture();
+        spriteBatch.End();
+        spriteBatch.Begin(snapshot with { Effect = fishEyeEffect });
 
         spriteBatch.Draw(
             texture,
@@ -91,8 +103,6 @@ public sealed class HellVampireNPC : VampireNPC
             0
         );
 
-        SpriteBatchSnapshot snapshot = spriteBatch.Capture();
-
         spriteBatch.End();
         spriteBatch.Begin(
             SpriteSortMode.Deferred, 
@@ -100,7 +110,7 @@ public sealed class HellVampireNPC : VampireNPC
             Main.DefaultSamplerState, 
             DepthStencilState.None, 
             Main.Rasterizer, 
-            null, 
+            fishEyeEffect, 
             Main.GameViewMatrix.TransformationMatrix
         );
 

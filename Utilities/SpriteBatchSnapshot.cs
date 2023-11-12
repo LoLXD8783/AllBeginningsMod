@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace AllBeginningsMod.Common.Graphics;
+namespace AllBeginningsMod.Utilities;
 
 public struct SpriteBatchSnapshot
 {

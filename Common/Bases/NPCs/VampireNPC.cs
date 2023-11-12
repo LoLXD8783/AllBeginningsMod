@@ -1,5 +1,4 @@
-﻿using AllBeginningsMod.Common.Graphics;
-using AllBeginningsMod.Utilities.Extensions;
+﻿using AllBeginningsMod.Utilities.Extensions;
 using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -37,6 +36,7 @@ public abstract class VampireNPC : ModNPC
     protected virtual void Draw(SpriteBatch spriteBatch, Color drawColor, float explodingProgress) { }
     private Player Target => Main.player[NPC.target];
     protected ref float ExplodingTimer => ref NPC.ai[0];
+    protected bool IsExploding => ExplodingTimer > 0;
 
     public sealed override void SetDefaults() {
         NPC.width = 36;

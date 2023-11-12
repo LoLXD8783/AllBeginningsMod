@@ -1,5 +1,5 @@
 ﻿sampler uImage0 : register(s0);
-sampler uImage1 : register(s1); 
+sampler uImage1 : register(s1);
 sampler uImage2 : register(s2);
 sampler uImage3 : register(s3);
 float3 uColor;
@@ -17,30 +17,29 @@ float2 uImageSize2;
 float2 uImageSize3;
 float2 uImageOffset;
 float uSaturation;
-float4 uSourceRect; 
+float4 uSourceRect;
 float2 uZoom;
 
-float outerRadius;
-float innerRadius;
-float strength;
-float curvature;
+float radius = 1.0;
+float smooth = 0.1;
 
 float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
     
-    float2 curve = pow(abs(coords * 2.0 - 1.0), 1.0 / curvature);
-    float edge = pow(length(curve), curvature);
-    float vignette = 1.0 - strength * smoothstep(innerRadius, outerRadius, edge);
+    coords = (coords - 0.5) * 2.0;
+    coords.y *= uScreenResolution.y / uScreenResolution.x;
     
-    color.rgb *= vignette;
+    float len = length(coords);
+    float grayScaleValue = color.r * 0.299 + color.g * 0.587 + color.b * 0.114;
+    float4 grayScaleColor = float4(grayScaleValue, grayScaleValue, grayScaleValue, color.a);
 
-    return color * uOpacity;
+    return lerp(lerp(color, grayScaleColor, smoothstep(radius - smooth, radius, len) * uOpacity), 0.0, smoothstep(0.9, 1.2, len) * uOpacity);
 }
 
 technique Technique1
 {
-    pass VignettePass
+    pass NightgauntFilterPass
     {
         PixelShader = compile ps_2_0 PixelShaderFunction();
     }
