@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,14 +33,14 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
             Projectile.penetrate = -1;
         }
 
-        private bool runAIOnSpawn;
-        private float rotationOffset;
-        public override void AI() {
-            if (!runAIOnSpawn) {
-                runAIOnSpawn = true;
-                rotationOffset = Main.rand.NextFloat(MathHelper.PiOver2);
-            }
+        public override void OnSpawn(IEntitySource source) {
+            RotationOffset = Main.rand.NextFloat(MathHelper.PiOver2);
+            Projectile.scale = Main.rand.NextFloat(0.85f, 1.1f);
+            Projectile.netUpdate = true;
+        }
 
+        private ref float RotationOffset => ref Projectile.ai[0];
+        public override void AI() {
             Projectile.velocity.Y -= 0.06f;
             if (Projectile.timeLeft > 60) {
                 if (Projectile.alpha > 0) {
@@ -57,7 +58,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                     Projectile.frame = 0;
                 }
             }
-            Projectile.rotation = MathF.Sin(Projectile.timeLeft * 0.08f + rotationOffset) * 0.2f;
+            Projectile.rotation = MathF.Sin(Projectile.timeLeft * 0.08f + RotationOffset) * 0.2f;
             Projectile.position += Projectile.velocity.RotatedBy(Projectile.rotation);
 
             if (!Main.dedServ) {
@@ -73,7 +74,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
         public override bool PreDraw(ref Color lightColor) {
             Texture2D texture = TextureAssets.Projectile[Type].Value;
             Texture2D colorMaskTexture = ModContent.Request<Texture2D>(Texture + "_ColorMask", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D glowTexture = Mod.Assets.Request<Texture2D>("Assets/Images/Glow2", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D glowTexture = Mod.Assets.Request<Texture2D>("Assets/Images/Misc/Glow2", AssetRequestMode.ImmediateLoad).Value;
             Rectangle source = new(0, Projectile.frame * 76, 50, 76);
             Color color = new(185, 140, 183);
             float alpha = 1f - Projectile.alpha / 255f;
@@ -109,7 +110,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
             Main.spriteBatch.End();
 
             effect ??= Mod.Assets.Request<Effect>("Assets/Effects/JellyfishYe", AssetRequestMode.ImmediateLoad).Value;
-            effect.Parameters["time"].SetValue(Projectile.timeLeft * 0.05f + rotationOffset * 4f);
+            effect.Parameters["time"].SetValue(Projectile.timeLeft * 0.05f + RotationOffset * 4f);
             effect.Parameters["uImageSize0"].SetValue(colorMaskTexture.Size());
             effect.Parameters["uSourceRect"].SetValue(new Vector4(source.X, source.Y, source.Width, source.Height));
             Main.spriteBatch.Begin(snapshot with { Effect = effect });

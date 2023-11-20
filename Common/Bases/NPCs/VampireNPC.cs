@@ -42,15 +42,14 @@ public abstract class VampireNPC : ModNPC
         NPC.width = 36;
         NPC.height = 36;
         NPC.damage = 25;
-        NPC.defense = 20;
-        NPC.lifeMax = 80;
+        NPC.defense = 35;
+        NPC.lifeMax = 120;
         NPC.value = 67f;
-        NPC.netAlways = true;
-        NPC.noTileCollide = true;
+        NPC.noTileCollide = false;
         NPC.aiStyle = -1;
-        NPC.noTileCollide = true;
         NPC.noGravity = true;
-        NPC.knockBackResist = 0.25f;
+        NPC.knockBackResist = 0.05f;
+        NPC.friendly = false;
 
         NPC.HitSound = SoundID.NPCHit23;
 
@@ -58,13 +57,23 @@ public abstract class VampireNPC : ModNPC
     }
 
     public sealed override void AI() {
+        if (NPC.collideX) {
+            NPC.velocity.X -= MathF.Sign(NPC.velocity.X) * 2f;
+        }
+
+        if (NPC.collideY) {
+            NPC.velocity.Y -= MathF.Sign(NPC.velocity.Y) * 2f;
+        }
+
         NPC.rotation = NPC.velocity.X * 0.1f;
         NPC.velocity *= SlowDownFactor;
         if (ExplodingTimer > 0f) {
             if (--ExplodingTimer == 0f) {
                 if (!Main.dedServ) {
                     ExplosionEffects();
-                } else {
+                } 
+                
+                if (Main.netMode != NetmodeID.MultiplayerClient) {
                     TargetingUtils.ForEachPlayerInRange(
                         NPC.Center,
                         ExplosionRange,
@@ -76,7 +85,7 @@ public abstract class VampireNPC : ModNPC
                 return;
             }
 
-            if (!Main.dedServ) {
+            /*if (!Main.dedServ) {
                 if (Main.rand.NextBool((int)(ExplodingTimer / MaxExplodingTime * 10f + 3f))) {
                     Dust.NewDust(
                         NPC.Center + Main.rand.NextVector2Unit() * 20 * Main.rand.NextFloat(),
@@ -90,40 +99,32 @@ public abstract class VampireNPC : ModNPC
 
                 float lightAmount = ExplodingTimer / MaxExplodingTime;
                 Lighting.AddLight(NPC.Center, 0.5f * lightAmount, 0.2f * lightAmount, 0.05f * lightAmount);
-            }
+            }*/
 
             return;
         }
 
         if (
             NPC.target < 0 
-            || NPC.target == 255 
+            || NPC.target >= 255 
             || Main.player[NPC.target].dead 
-            || !Main.player[NPC.target].active 
-            || NPC.DistanceSQ(Target.Center) > MathF.Pow(FollowRange, 2)
+            || !Main.player[NPC.target].active
+            || !Main.player[NPC.target].Hitbox.Intersects(NPC.Center, FollowRange)
         ) {
             NPC.TargetClosest();
-        }
-        else {
+        } else {
             FollowBehaviour(Target);
         }
 
-        NPC.Center += 0.25f * MathF.Sin(Main.GameUpdateCount * 0.025f) * Vector2.UnitY;
+        NPC.velocity.Y += 0.025f * MathF.Sin(Main.GameUpdateCount * 0.025f);
     }
 
     public sealed override bool CheckDead() {
-        NPC.life = 1;
         ExplodingTimer = MaxExplodingTime;
+        NPC.dontTakeDamage = true;
+        NPC.life = 1;
 
         return false;
-    }
-
-    public override bool? CanBeHitByItem(Player player, Item item) {
-        return ExplodingTimer == 0;
-    }
-
-    public sealed override bool? CanBeHitByProjectile(Projectile projectile) {
-        return ExplodingTimer == 0;
     }
 
     public sealed override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {

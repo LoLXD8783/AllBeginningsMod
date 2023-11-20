@@ -32,7 +32,7 @@ float4 PixelShaderFunction(float2 coords : TEXCOORD0, float4 color : COLOR0) : C
         return float4(0.0, 0.0, 0.0, 0.0);
     }
     
-    return tex2D(uImage0, uv * sourceSize + sourceXY);
+    return tex2D(uImage0, uv * sourceSize + sourceXY) * color;
 }
 
 technique Technique1

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,6 @@ namespace AllBeginningsMod.Common.PrimitiveDrawing
         /// <param name="vertexBuffer"></param>
         /// <param name="indexBuffer"></param>
         /// <returns>Whether or not to proceed with rendering.</returns>
-        void SetBuffers(Vector2[] trailPositions, Func<float, float> trailWidth, Func<Vector2, Color> trailColor, ref VertexPositionColorTexture[] vertices, ref ushort[] indices);
+        void SetBuffers(ImmutableArray<Vector2> trailPositions, Func<float, float> trailWidth, Func<float, Color> trailColor, ref VertexPositionColorTexture[] vertices, ref ushort[] indices);
     }
 }

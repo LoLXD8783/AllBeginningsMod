@@ -136,20 +136,14 @@ internal class GardenerNPC : ModNPC
                     + moveDirection.RotatedBy(MathHelper.PiOver2) * IntestineEquation(Main.GameUpdateCount * (0.04f + i * 0.005f) + factor * 4f + factor + i * 0.4f) * 20f;
             }
 
-            intestineTrails[i].Update(positions.Select(position => position + bodyDrawPosition).ToArray());
+            intestineTrails[i].Positions = positions.Select(position => position + bodyDrawPosition).ToArray();
         }
 
         Texture2D intestineTexture = ModContent.Request<Texture2D>(Texture.Replace("Body", "Intestine"), AssetRequestMode.ImmediateLoad).Value;
-        PrimitiveTrail.DefaultTrailEffect.Parameters["sampleTexture"].SetValue(intestineTexture);
-        PrimitiveTrail.DefaultTrailEffect.Parameters["color"].SetValue(drawColor.ToVector4());
-        PrimitiveTrail.DefaultTrailEffect.Parameters["transformationMatrix"].SetValue(
-            Main.GameViewMatrix.TransformationMatrix
-            * Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1)
-        );
-
-
+        Matrix transformationMatrix = Main.GameViewMatrix.TransformationMatrix
+            * Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
         for (int i = 0; i < intestineTrails.Length; i++) {
-            intestineTrails[i].Draw();
+            intestineTrails[i].Draw(intestineTexture, drawColor, transformationMatrix);
         }
     }
 }

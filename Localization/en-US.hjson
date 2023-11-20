@@ -13,21 +13,23 @@ Mods: {
 			HellVampireNPC.DisplayName: Hell Vampire
 			BastroboyNPC.DisplayName: Bastroboy
 			GardenerNPC.DisplayName: Gardener
-			VampireDevilNPC.DisplayName: Vampire Devil
-			CaveVampire.DisplayName: Cave Vampire
+			MineVampireNPC.DisplayName: Mine Vampire
 			NightgauntNPC.DisplayName: Nightgaunt
+			DevilVampireNPC.DisplayName: Devil Vampire
+			TerrarianHunterNPC.DisplayName: Terrarian Hunter
+			NPCHitboxNPC.DisplayName: N P C Hitbox N P C
 		}
 
 		Projectiles: {
-			CustomUseStyleProjectile.DisplayName: Custom Use Style Projectile
 			BastroboyNPCOrbitingProjectile.DisplayName: Bastroboy Orbiting Projectile
 			BastroboyNPCExplodingStarProjectile.DisplayName: Bastroboy Exploding Star Projectile
 			BastroboyExplodingStarProjectile.DisplayName: Bastroboy Exploding Star Projectile
 			BastroboyOrbitingProjectile.DisplayName: Bastroboy Orbiting Projectile
 			BastroboyExplodingProjectile.DisplayName: Bastroboy Exploding Projectile
 			BastroboyStarWhirlProjectile.DisplayName: Bastroboy Star Whirl Projectile
-			NightgauntReverseGravityProjectile.DisplayName: Nightgaunt Reverse Gravity Projectile
-			NightgauntForceField.DisplayName: Nightgaunt Force Field
+			NightgauntReverseGravityProjectile.DisplayName: Nightgaunt's Jellyfish
+			NightgauntForceField.DisplayName: Nightgaunt's Force Field
+			TerrarianHunterMineProjectile.DisplayName: Terrarian Hunter Mine
 		}
 
 		Buffs: {

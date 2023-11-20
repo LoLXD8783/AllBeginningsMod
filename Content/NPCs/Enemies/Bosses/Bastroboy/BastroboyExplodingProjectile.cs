@@ -46,7 +46,7 @@ internal class BastroboyExplodingProjectile : ModProjectile
         trail = new PrimitiveTrail(
             ProjectileID.Sets.TrailCacheLength[Type], 
             factor => 20f * Projectile.scale * (factor < 0.1f ? -MathF.Pow(factor * 10f - 1f, 2) + 1 : 1.1f - factor), 
-            static factor => Color.Lerp(Color.DeepPink, Color.LightBlue, factor.X) * (1f - factor.X) * 0.55f
+            static factor => Color.Lerp(Color.DeepPink, Color.LightBlue, factor) * (1f - factor) * 0.55f
         );
     }
 
@@ -79,7 +79,7 @@ internal class BastroboyExplodingProjectile : ModProjectile
             Projectile.scale = 1.5f * (-MathF.Pow(Progress - 1f, 2) + 1f);
         }
 
-        trail.Update(Projectile.oldPos.Select(position => position + Projectile.Size / 2f).ToArray());
+        trail.Positions = Projectile.oldPos.Select(position => position + Projectile.Size / 2f).ToArray();
 
         if (!Main.dedServ) {
             Lighting.AddLight(Projectile.Center, Color.LightBlue.ToVector3() * 0.8f);
@@ -101,7 +101,7 @@ internal class BastroboyExplodingProjectile : ModProjectile
             for (int i = 0; i < dustPositions.Length; i++) {
                 Dust.NewDustPerfect(
                     dustPositions[i],
-                    ModContent.DustType<SmokeDust>(),
+                    ModContent.DustType<HellVampireExplosionDust>(),
                     directions[i] * Main.rand.NextFloat(0.5f, 7f),
                     Main.rand.Next(20, 50),
                     Color.BlueViolet,

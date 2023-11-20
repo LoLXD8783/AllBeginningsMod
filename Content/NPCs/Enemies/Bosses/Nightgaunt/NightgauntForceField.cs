@@ -17,12 +17,14 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
 {
     internal class NightgauntForceField : ModProjectile
     {
+
+
         private List<(int timeLeft, float angle)> hits;
         private const int MaxTimeLeftHit = 60;
         public override string Texture => "Terraria/Images/Item_0";
         public override void SetDefaults() {
             Projectile.friendly = false;
-            Projectile.hostile = false;
+            Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.width = Projectile.height = 0;
             Projectile.timeLeft = 2;
@@ -98,7 +100,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
         private Effect effect;
         public override bool PreDraw(ref Color lightColor) {
             Color color = new Color(185, 140, 183) * (1f - Projectile.alpha / 255f) * 0.3f;
-            Texture2D noiseTexture = Mod.Assets.Request<Texture2D>("Assets/Images/Pebbles", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D noiseTexture = Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise6", AssetRequestMode.ImmediateLoad).Value;
 
             SpriteBatchSnapshot snapshot = Main.spriteBatch.Capture();
             effect ??= Mod.Assets.Request<Effect>("Assets/Effects/ForceField", AssetRequestMode.ImmediateLoad).Value;

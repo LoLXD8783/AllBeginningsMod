@@ -12,17 +12,34 @@
     </PropertyGroup>
     <ItemGroup>
       <None Remove="Assets\Effects\BastroboyStarWhirl.fx" />
+      <None Remove="Assets\Effects\FireTrail.fx" />
       <None Remove="Assets\Effects\FishEye.fx" />
       <None Remove="Assets\Effects\ForceField.fx" />
       <None Remove="Assets\Effects\JellyfishYe.fx" />
+      <None Remove="Assets\Effects\MineDetectionField.fx" />
       <None Remove="Assets\Effects\NightgauntFilter.fx" />
       <None Remove="Assets\Effects\OutlinedTrailShader.fx" />
-      <None Remove="Assets\Gores\HellVampireGore2.png" />
+      <None Remove="Assets\Effects\WaterFilter.fx" />
+      <None Remove="Assets\Images\Gores\DevilVampireGore0.png" />
+      <None Remove="Assets\Images\Gores\DevilVampireGore1.png" />
       <None Remove="Assets\Images\Glow2.png" />
+      <None Remove="Assets\Images\Gores\MineVampireGore0.png" />
+      <None Remove="Assets\Images\Gores\MineVampireGore1.png" />
       <None Remove="Assets\Images\OutlineTrail.png" />
       <None Remove="Assets\Images\pebbles.png" />
+      <None Remove="Assets\Images\Sample\Noise1.png" />
+      <None Remove="Assets\Images\Sample\Noise2.png" />
+      <None Remove="Assets\Images\Sample\Noise3.png" />
+      <None Remove="Assets\Images\Sample\Noise4.png" />
+      <None Remove="Assets\Images\Sample\Noise6.png" />
+      <None Remove="Assets\Images\Sample\Noise7.png" />
+      <None Remove="Assets\Images\Sample\PerlinNoise.png" />
+      <None Remove="Assets\Images\Sample\PlasmaNoise.png" />
+      <None Remove="Assets\Images\Sample\PortalNoise.png" />
       <None Remove="Content\Buffs\NoFlightDebuff.png" />
-      <None Remove="Content\Dusts\SmokeDust.png" />
+      <None Remove="Content\Dusts\DevilVampireExplosionDust.png" />
+      <None Remove="Content\Dusts\HellVampireExplosionDust.png" />
+      <None Remove="Content\Dusts\MineVampireExplosionDust.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyExplodingProjectile_Crescent.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyExplodingProjectile_Star.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyNPC.png" />
@@ -32,9 +49,15 @@
       <None Remove="Content\NPCs\Enemies\Bosses\Nightgaunt\NightgauntNPC_Jump.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Nightgaunt\NightgauntNPC_Shield.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Nightgaunt\NightgauntNPC_Swing.png" />
+      <None Remove="Content\NPCs\Enemies\Bosses\Nightgaunt\NightgauntNPC_Swing_Head_Boss.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Nightgaunt\NightgauntReverseGravityProjectile.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Nightgaunt\NightgauntReverseGravityProjectile_ColorMask.png" />
-      <None Remove="Content\NPCs\Enemies\CaveVampire.png" />
+      <None Remove="Content\NPCs\Enemies\Hell\TerrarianHunterMineProjectile.png" />
+      <None Remove="Content\NPCs\Enemies\Hell\TerrarianHunterNPC.png" />
+      <None Remove="Content\NPCs\Enemies\Hell\TerrarianHunterNPC_Glow.png" />
+      <None Remove="Content\NPCs\Enemies\Hell\TerrarianHunterNPC_Gun.png" />
+      <None Remove="Content\NPCs\Enemies\Hell\TerrarianHunterNPC_Gun_Glow.png" />
+      <None Remove="Content\NPCs\Enemies\MineVampireNPC.png" />
       <None Remove="Content\NPCs\SunVampireExplosionColor.png" />
     </ItemGroup>
     <ItemGroup>
