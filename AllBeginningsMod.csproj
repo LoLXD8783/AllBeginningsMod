@@ -12,6 +12,9 @@
     </PropertyGroup>
     <ItemGroup>
       <None Remove="Assets\Effects\BastroboyStarWhirl.fx" />
+      <None Remove="Assets\Effects\BastroboyStarWhirlOld.fx" />
+      <None Remove="Assets\Effects\Compiler\BastroboyStarWhirlOld.fx" />
+      <None Remove="Assets\Effects\ExplosionSmoke.fx" />
       <None Remove="Assets\Effects\FireTrail.fx" />
       <None Remove="Assets\Effects\FishEye.fx" />
       <None Remove="Assets\Effects\ForceField.fx" />
@@ -36,10 +39,15 @@
       <None Remove="Assets\Images\Sample\PerlinNoise.png" />
       <None Remove="Assets\Images\Sample\PlasmaNoise.png" />
       <None Remove="Assets\Images\Sample\PortalNoise.png" />
+      <None Remove="Assets\Images\Sample\SmokeGlow.png" />
       <None Remove="Content\Buffs\NoFlightDebuff.png" />
       <None Remove="Content\Dusts\DevilVampireExplosionDust.png" />
       <None Remove="Content\Dusts\HellVampireExplosionDust.png" />
       <None Remove="Content\Dusts\MineVampireExplosionDust.png" />
+      <None Remove="Content\Items\PlasmicRepeaterHeldProjectile.png" />
+      <None Remove="Content\Items\PlasmicRepeaterHeldProjectile_Glow.png" />
+      <None Remove="Content\Items\PlasmicRepeaterItem.png" />
+      <None Remove="Content\Items\PlasmicRepeaterItem_Glow.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyExplodingProjectile_Crescent.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyExplodingProjectile_Star.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyNPC.png" />
@@ -64,8 +72,6 @@
         <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Common\ParticleSystem\" />
       <Folder Include="Common\Players\" />
-      <Folder Include="Content\Items\" />
     </ItemGroup>
 </Project>

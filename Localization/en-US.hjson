@@ -1,10 +1,8 @@
-Mods: {
+﻿Mods: {
 	AllBeginningsMod: {
-		NPCName.VampireSunNPC: Vampire Sun
-
 		Items: {
-			BorealWoodGreatswordItem: {
-				DisplayName: Boreal Wood Greatsword Item
+			PlasmicRepeaterItem: {
+				DisplayName: Plasmic Repeater
 				Tooltip: ""
 			}
 		}
@@ -17,7 +15,7 @@ Mods: {
 			NightgauntNPC.DisplayName: Nightgaunt
 			DevilVampireNPC.DisplayName: Devil Vampire
 			TerrarianHunterNPC.DisplayName: Terrarian Hunter
-			NPCHitboxNPC.DisplayName: N P C Hitbox N P C
+			NPCHitboxNPC.DisplayName: Hitbox
 		}
 
 		Projectiles: {
@@ -30,6 +28,10 @@ Mods: {
 			NightgauntReverseGravityProjectile.DisplayName: Nightgaunt's Jellyfish
 			NightgauntForceField.DisplayName: Nightgaunt's Force Field
 			TerrarianHunterMineProjectile.DisplayName: Terrarian Hunter Mine
+			PlasmicRepeaterHeldProjectile.DisplayName: Plasmic Repeater Held Projectile
+			PlasmicRepeaterLaserProjectile.DisplayName: Plasmic Repeater Laser Projectile
+			ExplosionVFXProjectile.DisplayName: Explosion V F X Projectile
+			DevilVampireAuraProjectile.DisplayName: Devil Vampire Aura
 		}
 
 		Buffs: {

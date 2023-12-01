@@ -50,4 +50,9 @@ public static class SpriteBatchExtensions
         spriteBatch.End();
         spriteBatch.Begin(snapshit);
     }
+
+    public static void End(this SpriteBatch spriteBatch, out SpriteBatchSnapshot snapshot) {
+        snapshot = spriteBatch.Capture();
+        spriteBatch.End();
+    }
 }

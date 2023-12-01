@@ -19,6 +19,7 @@ using AllBeginningsMod.Utilities;
 using AllBeginningsMod.Common.Loaders;
 using Terraria.Graphics.CameraModifiers;
 using AllBeginningsMod.Content.CameraModifiers;
+using AllBeginningsMod.Content.Projectiles;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Nighttime;
 
@@ -30,7 +31,7 @@ internal class DevilVampireNPC : VampireNPC
 
     protected override float FollowRange => 6000;
     protected override float ExplosionRange => 160;
-    protected override int MaxExplodingTime => 180;
+    protected override int MaxExplodingTime => 60;
     protected override void PostSetDefaults() {
         NPC.width = NPC.height = 75;
         NPC.life = 250;
@@ -43,6 +44,10 @@ internal class DevilVampireNPC : VampireNPC
 
         NPC.velocity += 0.05f * NPC.Center.DirectionTo(target.Center);
         NPC.direction = MathF.Sign(target.Center.X - NPC.Center.X);
+    }
+
+    protected override void Exploding(float progress) {
+        //NPC.position.X += MathF.Sin(Main.GameUpdateCount * 0.05f) * progress * 0.3f;
     }
 
     public override void FindFrame(int frameHeight) {
@@ -107,11 +112,30 @@ internal class DevilVampireNPC : VampireNPC
             }
         }
 
+        Projectile.NewProjectile(
+            source, 
+            NPC.Center, 
+            Vector2.Zero, 
+            ModContent.ProjectileType<DevilVampireAuraProjectile>(), 
+            NPC.damage,
+            0f
+        );
+
+        ExplosionVFXProjectile.Spawn(
+            source, 
+            NPC.Center,
+            Color.Yellow, 
+            Color.OrangeRed,
+            progress => Color.Lerp(Color.OrangeRed, Color.Black, -MathF.Pow(progress - 1f, 2) + 1f), 
+            300, 
+            130
+        );
+
         Lighting.AddLight(NPC.Center, new Vector3(1.86f, 1.22f, 0.69f) * 5f);
         SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, NPC.Center);
 
         Main.instance.CameraModifiers.Add(
-            new ExplosionShakeCameraModifier(11f, 0.87f, NPC.Center, 5000, FullName)
+            new ExplosionShakeCameraModifier(70f, 0.88f, NPC.Center, 5000, FullName)
         );
     }
 
@@ -120,15 +144,10 @@ internal class DevilVampireNPC : VampireNPC
     protected override void Draw(SpriteBatch spriteBatch, Color drawColor, float explodingProgress) {
         Texture2D texture = TextureAssets.Npc[Type].Value;
 
-        explodingProgress *= explodingProgress;
-
-        Vector2 position = NPC.Center - Main.screenPosition;
-        if (explodingProgress != 0f && Main.GameUpdateCount % (int)((1f - explodingProgress) * 10f + 1f) == 0) {
-            position += Main.rand.NextVector2Unit() * explodingProgress * 2.5f;
-        }
-
-        Vector2 scale = Vector2.One * (1f + 0.2f * explodingProgress);
-        float rotation = NPC.rotation + Main.rand.NextFloatDirection() * 0.05f * explodingProgress;
+        float shake = MathF.Max(explodingProgress * explodingProgress - 0.66f, 0f);
+        Vector2 position = NPC.Center - Main.screenPosition + Main.rand.NextVector2Unit() * shake * 16f;
+        Vector2 scale = Vector2.One * (1f + 0.25f * explodingProgress);
+        float rotation = NPC.rotation + MathF.Sin(Main.GameUpdateCount * 0.3f) * 0.4f * shake;
 
         for (int i = 0; i < 4; i++) {
             spriteBatch.Draw(
@@ -144,7 +163,7 @@ internal class DevilVampireNPC : VampireNPC
             );
         }
 
-        fishEyeEffect.Parameters["strength"].SetValue(explodingProgress * 1.5f);
+        fishEyeEffect.Parameters["strength"].SetValue(explodingProgress * 1.8f);
         fishEyeEffect.Parameters["uImageSize0"].SetValue(texture.Size());
         fishEyeEffect.Parameters["uSourceRect"].SetValue(new Vector4(NPC.frame.X, NPC.frame.Y, NPC.frame.Width, NPC.frame.Height));
         fishEyeEffect.Parameters["center"].SetValue(new Vector2(0.5f, 0.5f));

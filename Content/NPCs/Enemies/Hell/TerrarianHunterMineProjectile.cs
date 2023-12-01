@@ -1,9 +1,11 @@
 ﻿using AllBeginningsMod.Content.CameraModifiers;
 using AllBeginningsMod.Content.Dusts;
+using AllBeginningsMod.Content.Projectiles;
 using AllBeginningsMod.Utilities;
 using AllBeginningsMod.Utilities.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -73,6 +75,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                 _ => Main.rand.NextFloat(10f, 15f), 
                 out Vector2[] dustDirections, Main.rand.NextFloat()
             );
+
             for (int i = 0; i < dustPositions.Length; i++) {
                 Dust.NewDustPerfect(
                     dustPositions[i],
@@ -91,6 +94,16 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                     );
                 }
             }
+
+            ExplosionVFXProjectile.Spawn(
+                Projectile.GetSource_Death(),
+                Projectile.Center,
+                Color.Yellow,
+                Color.OrangeRed,
+                progress => Color.Lerp(Color.OrangeRed, Color.Black, -MathF.Pow(progress - 1f, 2) + 1f),
+                SizeType == 0 ? 100 : 200,
+                90
+            );
 
             Lighting.AddLight(Projectile.Center, new Vector3(1.86f, 1.22f, 0.69f) * 3.5f);
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.Center);

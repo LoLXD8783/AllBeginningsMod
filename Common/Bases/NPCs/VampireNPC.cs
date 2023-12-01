@@ -23,7 +23,7 @@ public abstract class VampireNPC : ModNPC
     protected virtual float FollowRange => 16 * 30;
     protected virtual float SlowDownFactor => 0.95f;
     protected virtual float ExplosionRange => 64f;
-    //protected virtual void ExlodingEffects() { }
+    protected virtual void Exploding(float progress) { }
     protected virtual void ExplosionEffects() { }
     protected virtual void FollowBehaviour(Player target) {
         if (NPC.velocity.LengthSquared() > 0.8f) {
@@ -68,6 +68,7 @@ public abstract class VampireNPC : ModNPC
         NPC.rotation = NPC.velocity.X * 0.1f;
         NPC.velocity *= SlowDownFactor;
         if (ExplodingTimer > 0f) {
+            Exploding(ExplodingTimer == 0f ? 0f : 1f - ExplodingTimer / MaxExplodingTime);
             if (--ExplodingTimer == 0f) {
                 if (!Main.dedServ) {
                     ExplosionEffects();
@@ -117,6 +118,10 @@ public abstract class VampireNPC : ModNPC
         }
 
         NPC.velocity.Y += 0.025f * MathF.Sin(Main.GameUpdateCount * 0.025f);
+    }
+
+    public sealed override bool? CanFallThroughPlatforms() {
+        return true;
     }
 
     public sealed override bool CheckDead() {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 
 namespace AllBeginningsMod.Utilities.Extensions
 {
@@ -36,6 +37,21 @@ namespace AllBeginningsMod.Utilities.Extensions
 
         public static Vector2[] PositionsAround(this Vector2 vector, int count, float radius, out Vector2[] directions, float initialRotation = 0f) {
             return vector.PositionsAround(count, _ => radius, out directions, initialRotation);
+        }
+
+        public static Vector2 OffsetVerticallyTowardsPosition(this Vector2 vector, Vector2 position, float offset, out Vector2 direction) {
+            Vector2 displacement = position - vector;
+            float length = displacement.Length();
+            if (length == 0f) {
+                direction = Vector2.Zero;
+                return vector;
+            }
+
+            Vector2 preRotationDirection = displacement / length;
+
+            direction = preRotationDirection.RotatedBy(MathF.Sign(offset) * (MathHelper.PiOver2 - MathF.Atan(length / MathF.Abs(offset))));
+
+            return vector + preRotationDirection.RotatedBy(MathHelper.PiOver2) * offset;
         }
     }
 }

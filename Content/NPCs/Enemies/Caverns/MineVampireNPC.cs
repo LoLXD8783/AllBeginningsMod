@@ -18,12 +18,15 @@ using AllBeginningsMod.Common.Loaders;
 using AllBeginningsMod.Utilities;
 using Terraria.Graphics.CameraModifiers;
 using AllBeginningsMod.Content.CameraModifiers;
+using AllBeginningsMod.Content.Projectiles;
+using static tModPorter.ProgressUpdate;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Caverns
 {
     internal class MineVampireNPC : VampireNPC
     {
-        protected override float ExplosionRange => 130;
+        protected override float ExplosionRange => 120;
+        protected override int MaxExplodingTime => 60;
         protected override void PostSetDefaults() {
             NPC.width = NPC.height = 45;
         }
@@ -78,11 +81,20 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Caverns
                 }
             }
 
+            ExplosionVFXProjectile.Spawn(
+                source, 
+                NPC.Center, 
+                Color.Yellow,
+                Color.OrangeRed,
+                progress => Color.Lerp(Color.OrangeRed, Color.DarkGray, -MathF.Pow(progress - 1f, 2) + 1f), 
+                250, 
+                120
+            );
             Lighting.AddLight(NPC.Center, new Vector3(1.86f, 1.22f, 0.69f) * 3.5f);
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, NPC.Center);
 
             Main.instance.CameraModifiers.Add(
-                new ExplosionShakeCameraModifier(8f, 0.87f, NPC.Center, 5000, FullName)
+                new ExplosionShakeCameraModifier(70f, 0.88f, NPC.Center, 5000, FullName)
             );
         }
 
@@ -97,13 +109,10 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Caverns
 
             explodingProgress *= explodingProgress;
 
-            Vector2 position = NPC.Center - Main.screenPosition;
-            if (explodingProgress != 0f && Main.GameUpdateCount % (int)((1f - explodingProgress) * 10f + 1f) == 0) {
-                position += Main.rand.NextVector2Unit() * explodingProgress * 3f;
-            }
-
-            Vector2 scale = Vector2.One * (1f + 0.3f * explodingProgress);
-            float rotation = NPC.rotation + Main.rand.NextFloatDirection() * 0.09f * explodingProgress;
+            float shake = MathF.Max(explodingProgress * explodingProgress - 0.6f, 0f);
+            Vector2 position = NPC.Center - Main.screenPosition + Main.rand.NextVector2Unit() * shake * 16f;
+            Vector2 scale = Vector2.One * (1f + 0.25f * explodingProgress);
+            float rotation = NPC.rotation + MathF.Sin(Main.GameUpdateCount * 0.3f) * 0.5f * shake;
 
             fishEyeEffect.Parameters["strength"].SetValue(explodingProgress * 2f);
             fishEyeEffect.Parameters["uImageSize0"].SetValue(texture.Size());

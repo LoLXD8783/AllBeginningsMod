@@ -140,7 +140,7 @@ internal class BastroboyExplodingProjectile : ModProjectile
         bastroboy.HitWithExplodingProjectile = true;
     }
 
-    Effect effect;
+    private Effect effect;
     public override bool PreDraw(ref Color lightColor) {
         Texture2D texture = IsStar ? TextureAssets.Projectile[Type].Value 
             : ModContent.Request<Texture2D>(Texture.Replace("Star", "Crescent"), ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;

@@ -281,7 +281,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                                     NPC.Center,
                                     Vector2.Zero,
                                     ModContent.ProjectileType<NightgauntForceField>(),
-                                    1,
+                                    NPC.damage / 2,
                                     30f,
                                     -1,
                                     NPC.whoAmI

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +40,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
         }
 
         private ref float NextGunRotation => ref NPC.ai[2];
+        private float gunRotation;
         private int consecutiveBottomMines;
         private int backMinesCooldown;
         private Player Target => Main.player[NPC.target];
@@ -49,7 +51,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
         private int LastGunFrame { get; set; } = -1;
         private Vector2 BigMuzzlePosition { 
             get {
-                Vector2 direction = NPC.rotation.ToRotationVector2();
+                Vector2 direction = gunRotation.ToRotationVector2();
                 return GunElbowPosition 
                     + direction * (GunOriginOffset + 65) 
                     + direction.RotatedBy(MathHelper.PiOver2) * -4f * NPC.direction;
@@ -60,7 +62,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
 
         private Vector2 SmallMuzzlePosition {
             get {
-                Vector2 direction = NPC.rotation.ToRotationVector2();
+                Vector2 direction = gunRotation.ToRotationVector2();
                 return GunElbowPosition
                     + direction * (GunOriginOffset + 40)
                     + direction.RotatedBy(MathHelper.PiOver2) * 12f * NPC.direction;
@@ -111,10 +113,10 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                     9,
                     factor => (-MathF.Pow(factor - 1f, 4) + 1f) * width,
                     factor => Color.Lerp(
-                        Color.Lerp(Color.Orange, Color.DarkRed, factor * 1.5f),
+                        Color.Lerp(Color.Orange, Color.MediumPurple, factor * 1.2f),
                         Color.Black,
                         (MathF.Sin(Main.GameUpdateCount * 0.25f + factor * 10f) + 1f) * 0.1f
-                    ) * 0.8f
+                    ) * 0.9f
                 );
             }
         }
@@ -227,19 +229,20 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                 case Attacks.Gun:
                     void GenerateNextGunRotation() {
                         NextGunRotation = GunElbowPosition.DirectionTo(Target.Center).ToRotation() + MathHelper.PiOver4 * 0.5f * Main.rand.NextFloatDirection();
+                        NPC.netUpdate = true;
                     }
                     if (AttackTimer == 0) {
-                        NPC.rotation = GunElbowPosition.DirectionTo(Target.Center).ToRotation();
+                        gunRotation = GunElbowPosition.DirectionTo(Target.Center).ToRotation();
                         GenerateNextGunRotation();
                     } else {
-                        NPC.rotation = Utils.AngleLerp(
-                            NPC.rotation,
+                        gunRotation = Utils.AngleLerp(
+                            gunRotation,
                             NextGunRotation,
                             0.15f
                         );
                     }
 
-                    Vector2 shootDirection = NPC.rotation.ToRotationVector2();
+                    Vector2 shootDirection = gunRotation.ToRotationVector2();
                     if (GunFrame == 0 && LastGunFrame != 0) {
                         Projectile.NewProjectile(
                             NPC.GetSource_FromAI(),
@@ -267,6 +270,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                     }
 
                     FaceTarget();
+                    NPC.velocity.X += 0.05f * NPC.direction;
 
                     bigMuzzleAlpha *= 0.925f;
                     smallMuzzleAlpha *= 0.925f;
@@ -293,6 +297,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                         );
                     }
 
+                    NPC.velocity.X += -0.035f * NPC.direction;
+
                     AttackTimer++;
                     if (AttackTimer > 90) {
                         Attack = Main.rand.NextFromList(Attacks.BottomMine);
@@ -308,6 +314,9 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
             }
 
             NPC.velocity *= 0.9f;
+
+            float maxRotation = 0.2f;
+            NPC.rotation = Math.Clamp(NPC.velocity.X * 0.05f, -maxRotation, maxRotation);
             if (backMinesCooldown > 0) {
                 backMinesCooldown--;
             }
@@ -373,7 +382,9 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
 
         Effect effect;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-            Matrix transformationMatrix = Matrix.CreateTranslation(-Main.screenPosition.X, -Main.screenPosition.Y, 0f)
+            Matrix transformationMatrix = Matrix.CreateTranslation(-NPC.Center.X, -NPC.Center.Y, 0f)
+                * Matrix.CreateRotationZ(NPC.rotation)
+                * Matrix.CreateTranslation(-Main.screenPosition.X + NPC.Center.X, -Main.screenPosition.Y + NPC.Center.Y, 0f)
                 * Main.GameViewMatrix.TransformationMatrix
                 * Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
             effect ??= Mod.Assets.Request<Effect>("Assets/Effects/FireTrail", AssetRequestMode.ImmediateLoad).Value;
@@ -395,7 +406,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                 NPC.Center - screenPos,
                 NPC.frame,
                 drawColor,
-                0f,
+                NPC.rotation,
                 NPC.frame.Size() / 2f,
                 NPC.scale,
                 NPC.direction == 1f ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
@@ -408,7 +419,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                 NPC.Center - screenPos,
                 NPC.frame,
                 Color.White,
-                0f,
+                NPC.rotation,
                 NPC.frame.Size() / 2f,
                 NPC.scale,
                 NPC.direction == 1f ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
@@ -420,13 +431,14 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                 int frame = GunFrame;
                 Rectangle source = new(0, 34 * frame, 78, 34);
                 Vector2 origin = new(NPC.direction == 1 ? -GunOriginOffset : source.Width + GunOriginOffset, source.Height / 2f);
+                Vector2 position = GunElbowPosition.RotatedBy(NPC.rotation, NPC.Center) - screenPos;
 
                 spriteBatch.Draw(
                     gunTexture,
-                    GunElbowPosition - screenPos,
+                    position,
                     source,
                     drawColor,
-                    NPC.rotation - (NPC.direction == -1 ? MathHelper.Pi : 0f),
+                    gunRotation - (NPC.direction == -1 ? MathHelper.Pi : 0f),
                     origin,
                     NPC.scale,
                     NPC.direction == 1f ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
@@ -436,10 +448,10 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                 Texture2D gunGlowTexture = ModContent.Request<Texture2D>(Texture + "_Gun_Glow", AssetRequestMode.ImmediateLoad).Value;
                 spriteBatch.Draw(
                     gunGlowTexture,
-                    GunElbowPosition - screenPos,
+                    position,
                     source,
                     Color.White,
-                    NPC.rotation - (NPC.direction == -1 ? MathHelper.Pi : 0f),
+                    gunRotation - (NPC.direction == -1 ? MathHelper.Pi : 0f),
                     origin,
                     NPC.scale,
                     NPC.direction == 1f ? SpriteEffects.FlipHorizontally : SpriteEffects.None,

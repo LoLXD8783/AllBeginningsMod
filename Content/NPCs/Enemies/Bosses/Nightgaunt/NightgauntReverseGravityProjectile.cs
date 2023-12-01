@@ -62,6 +62,9 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
             Projectile.position += Projectile.velocity.RotatedBy(Projectile.rotation);
 
             if (!Main.dedServ) {
+                if (Projectile.timeLeft % 8 == 0) {
+                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.MagicMirror);
+                }
                 Lighting.AddLight(Projectile.Center - Vector2.UnitY * 30f, new Vector3(185, 140, 183) * 0.0025f);
             }
         }

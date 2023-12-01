@@ -58,26 +58,25 @@ internal class BastroboyStarWhirlProjectile : ModProjectile
     }
 
     private Effect effect;
-    private Texture2D sampleTexture;
-    private Texture2D noiseTexture;
     public override bool PreDraw(ref Color lightColor) {
         effect ??= Mod.Assets.Request<Effect>("Assets/Effects/BastroboyStarWhirl", AssetRequestMode.ImmediateLoad).Value;
-        sampleTexture ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Pebbles", AssetRequestMode.ImmediateLoad).Value;
-        noiseTexture ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Pebbles", AssetRequestMode.ImmediateLoad).Value;
+        Texture2D sampleTexture1 = Mod.Assets.Request<Texture2D>("Assets/Images/Sample/PlasmaNoise", AssetRequestMode.ImmediateLoad).Value;
+        Texture2D sampleTexture2 = Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise1", AssetRequestMode.ImmediateLoad).Value;
 
         effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.06f);
-        effect.Parameters["yOffset"].SetValue(-1f);
-        effect.Parameters["ringSize"].SetValue(0.1f);
-        effect.Parameters["noiseTexture"].SetValue(noiseTexture);
+        effect.Parameters["holeSize"].SetValue(0.05f);
+        effect.Parameters["topHalf"].SetValue(false);
+        effect.Parameters["sampleTexture2"].SetValue(sampleTexture2);
+        effect.Parameters["intensity"].SetValue(4f);
 
         Color color = Color.CornflowerBlue;
 
         SpriteBatchSnapshot snapshot = Main.spriteBatch.Capture();
         Main.spriteBatch.End();
-        Main.spriteBatch.Begin(snapshot with { Effect = effect });
+        Main.spriteBatch.Begin(snapshot with { Effect = effect, BlendState = BlendState.AlphaBlend });
 
         Main.spriteBatch.Draw(
-            sampleTexture,
+            sampleTexture1,
             Projectile.Hitbox.Modified((int)-Main.screenPosition.X, (int)-Main.screenPosition.Y, 0, -Projectile.height / 2),
             color
         );
@@ -98,13 +97,13 @@ internal class BastroboyStarWhirlProjectile : ModProjectile
             0f
         );
 
-        effect.Parameters["yOffset"].SetValue(0f);
+        effect.Parameters["topHalf"].SetValue(true);
 
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(snapshot with { Effect = effect });
 
         Main.spriteBatch.Draw(
-            sampleTexture, 
+            sampleTexture1, 
             Projectile.Hitbox.Modified((int)-Main.screenPosition.X, (int)-Main.screenPosition.Y + Projectile.height / 2, 0, -Projectile.height / 2),
             color
         );
