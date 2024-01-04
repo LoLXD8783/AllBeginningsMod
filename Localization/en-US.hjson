@@ -5,6 +5,36 @@
 				DisplayName: Plasmic Repeater
 				Tooltip: ""
 			}
+
+			ExothermicSoulItem: {
+				DisplayName: Exothermic Soul
+				Tooltip: ""
+			}
+
+			MistaBombItem: {
+				DisplayName: Mista Bomb
+				Tooltip: ""
+			}
+
+			StoneStatueItem: {
+				DisplayName: Stone Statue
+				Tooltip: ""
+			}
+
+			PocketSnowmanItem: {
+				DisplayName: Pocket Snowman
+				Tooltip: ""
+			}
+
+			SandStoneStatueItem: {
+				DisplayName: Sandstone Statue
+				Tooltip: ""
+			}
+
+			BIGGunItem: {
+				DisplayName: BIG Gun
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -32,12 +62,21 @@
 			PlasmicRepeaterLaserProjectile.DisplayName: Plasmic Repeater Laser Projectile
 			ExplosionVFXProjectile.DisplayName: Explosion V F X Projectile
 			DevilVampireAuraProjectile.DisplayName: Devil Vampire Aura
+			MistaBombProjectile.DisplayName: Mista Bomb Projectile
+			BIGGunHeldProjectile.DisplayName: B I G Gun Held Projectile
+			BIGGunBigRocketProjectile.DisplayName: B I G Gun Big Rocket Projectile
+			BIGGunSmallRocketProjectile.DisplayName: B I G Gun Small Rocket Projectile
 		}
 
 		Buffs: {
 			NoFlightDebuff: {
 				Description: Player can't use wings for the duration of this debuff.
 				DisplayName: No Flight Debuff
+			}
+
+			OnGasDebuff: {
+				DisplayName: On Gas Debuff
+				Description: Mods.AllBeginningsMod.Buffs.OnGasDebuff.Description
 			}
 		}
 	}

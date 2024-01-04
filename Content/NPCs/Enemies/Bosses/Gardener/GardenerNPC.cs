@@ -12,7 +12,6 @@ using Terraria.GameContent;
 using ReLogic.Content;
 using AllBeginningsMod.Common.PrimitiveDrawing;
 using Terraria.DataStructures;
-using AllBeginningsMod.Utilities.Extensions;
 using AllBeginningsMod.Utilities;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Gardener;

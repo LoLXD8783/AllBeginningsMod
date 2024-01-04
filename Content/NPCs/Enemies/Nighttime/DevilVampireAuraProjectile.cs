@@ -1,5 +1,5 @@
-﻿using AllBeginningsMod.Utilities;
-using AllBeginningsMod.Utilities.Extensions;
+﻿using AllBeginningsMod.Content.Buffs;
+using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static tModPorter.ProgressUpdate;
 
@@ -20,40 +21,54 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Nighttime
         public override string Texture => "Terraria/Images/Item_0";
         private int maxTimeLeft = 1200;
         private float offsetRotation;
+        private float progress;
         public override void SetDefaults() {
             Projectile.friendly = false;
-            Projectile.hostile = false;
+            Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.width = Projectile.height = 300;
             Projectile.timeLeft = maxTimeLeft;
             Projectile.penetrate = -1;
+            Projectile.knockBack = 0f;
         }
 
         public override void AI() {
             if (offsetRotation == 0) {
                 offsetRotation = Main.rand.NextFloat(0.01f, MathHelper.TwoPi);
             }
-            /*Projectile.position = Projectile.Center;
-            Projectile.width = Projectile.height = (int)((float)Projectile.timeLeft / MaxTimeLeft * 300f);
-            Projectile.Center = Projectile.position;*/
 
             Projectile.position.Y -= 0.2f;
+            progress = 1f - (float)Projectile.timeLeft / maxTimeLeft;
+            if (progress < 0.3f) {
+                if (Projectile.timeLeft % (int)(15f * progress + 1f) == 0) {
+                    Dust.NewDust(
+                        Projectile.position,
+                        Projectile.width,
+                        Projectile.height,
+                        DustID.Demonite
+                    );
+                }
 
+                if (Projectile.friendly) {
+                    Helper.ForEachNPCInRange(Projectile.Center, Projectile.width / 2f, npc => {
+                        npc.AddBuff(ModContent.BuffType<OnGasDebuff>(), 120);
+                    });
+                }
 
-            if (Projectile.timeLeft > maxTimeLeft * 0.7f) {
-                TargetingUtils.ForEachPlayerInRange(
-                    Projectile.Center,
-                    Projectile.width / 2f,
-                    player => {
-                        player.Hurt(
-                            PlayerDeathReason.ByProjectile(player.whoAmI, Projectile.whoAmI),
-                            Projectile.damage,
-                            -1,
-                            knockback: 0f
-                        );
-                    }
-                );
+                if (Projectile.hostile) {
+                    Helper.ForEachPlayerInRange(Projectile.Center, Projectile.width / 2f, player => {
+                        player.AddBuff(ModContent.BuffType<OnGasDebuff>(), 120);
+                    });
+                }
             }
+        }
+
+        public override bool CanHitPlayer(Player target) {
+            return false;
+        }
+
+        public override bool? CanHitNPC(NPC target) {
+            return false;
         }
 
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
@@ -68,8 +83,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Nighttime
             noiseTexture1 ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise2", AssetRequestMode.ImmediateLoad).Value;
             noiseTexture2 ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/PortalNoise", AssetRequestMode.ImmediateLoad).Value;
 
-            float timeLeftProgress = 1f - (float)Projectile.timeLeft / maxTimeLeft;
-            float effectProgress = MathF.Min(-MathF.Pow(timeLeftProgress / 2f - 1f, 2) + 1f, 1f);
+            float effectProgress = MathF.Min(-MathF.Pow(progress / 2f - 1f, 2) + 1f, 1f);
 
             Effect effect = Mod.Assets.Request<Effect>("Assets/Effects/ExplosionSmoke", AssetRequestMode.ImmediateLoad).Value;
             effect.Parameters["progress"].SetValue(effectProgress);
@@ -96,7 +110,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Nighttime
                     (int)size,
                     (int)size
                 ),
-                Color.Lerp(Color.DarkViolet, Color.Transparent, timeLeftProgress + 0.5f)
+                Color.Lerp(Color.DarkViolet, Color.Transparent, progress + 0.5f)
             );
 
             Main.spriteBatch.End();

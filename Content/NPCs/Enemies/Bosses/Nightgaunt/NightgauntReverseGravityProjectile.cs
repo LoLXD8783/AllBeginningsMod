@@ -1,5 +1,4 @@
 ﻿using AllBeginningsMod.Utilities;
-using AllBeginningsMod.Utilities.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;

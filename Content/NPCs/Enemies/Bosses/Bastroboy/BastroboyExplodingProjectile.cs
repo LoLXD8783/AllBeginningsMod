@@ -2,7 +2,6 @@
 using AllBeginningsMod.Content.Buffs;
 using AllBeginningsMod.Content.Dusts;
 using AllBeginningsMod.Utilities;
-using AllBeginningsMod.Utilities.Extensions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -57,7 +56,7 @@ internal class BastroboyExplodingProjectile : ModProjectile
                 Projectile.oldPos[i] = Projectile.Center;
             }
 
-            if (Projectile.ai[0] != -1) {
+            if (Projectile.ai[0] > -1) {
                 Player player = Main.player[(int)Projectile.ai[0]];
                 Projectile.velocity = -Projectile.Center.DirectionTo(player.Center);
             }
@@ -65,7 +64,7 @@ internal class BastroboyExplodingProjectile : ModProjectile
             random = Main.rand.NextFloat();
         }
 
-        if (Projectile.ai[0] != -1 && routingTimer++ < 55) {
+        if (Projectile.ai[0] > -1 && routingTimer++ < 55) {
             Player player = Main.player[(int)Projectile.ai[0]];
             Projectile.velocity = Utils.AngleLerp(Projectile.velocity.ToRotation(), Projectile.Center.AngleTo(player.Center), 0.07f).ToRotationVector2() * 11f;
         }
@@ -113,7 +112,7 @@ internal class BastroboyExplodingProjectile : ModProjectile
         }
 
         if (Main.netMode != NetmodeID.MultiplayerClient) {
-            TargetingUtils.ForEachPlayerInRange(
+            Helper.ForEachPlayerInRange(
                 Projectile.Center,
                 100f,
                 player => {

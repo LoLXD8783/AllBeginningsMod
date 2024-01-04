@@ -12,6 +12,9 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.GlobalItems
 {
+    /// <summary>
+    /// Automatically draws a glowmask in the world for an item (name of glowmask image: "ItemName_Glow")
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     internal class ItemGlowmaskAttribute : Attribute {
         public string Path { get; set; } = default;

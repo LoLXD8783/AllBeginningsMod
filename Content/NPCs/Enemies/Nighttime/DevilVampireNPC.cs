@@ -2,24 +2,19 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.GameContent;
 using Terraria;
-using AllBeginningsMod.Utilities.Extensions;
-using Mono.Cecil;
+using AllBeginningsMod.Utilities;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.DataStructures;
 using AllBeginningsMod.Content.Dusts;
 using Terraria.ModLoader;
-using AllBeginningsMod.Utilities;
 using AllBeginningsMod.Common.Loaders;
-using Terraria.Graphics.CameraModifiers;
 using AllBeginningsMod.Content.CameraModifiers;
 using AllBeginningsMod.Content.Projectiles;
+using AllBeginningsMod.Content.Items.Materials;
+using Terraria.GameContent.ItemDropRules;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Nighttime;
 
@@ -46,8 +41,8 @@ internal class DevilVampireNPC : VampireNPC
         NPC.direction = MathF.Sign(target.Center.X - NPC.Center.X);
     }
 
-    protected override void Exploding(float progress) {
-        //NPC.position.X += MathF.Sin(Main.GameUpdateCount * 0.05f) * progress * 0.3f;
+    public override void ModifyNPCLoot(NPCLoot npcLoot) {
+        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ExothermicSoulItem>(), 1, 2, 4));
     }
 
     public override void FindFrame(int frameHeight) {
@@ -68,8 +63,23 @@ internal class DevilVampireNPC : VampireNPC
         return spawnInfo.Player.ZoneOverworldHeight && !Main.dayTime ? 0.04f : 0f;
     }
 
-    protected override void ExplosionEffects() {
+    protected override void OnExplode() {
         IEntitySource source = NPC.GetSource_Death();
+        if (Main.netMode != NetmodeID.MultiplayerClient) {
+            Projectile.NewProjectile(
+                source,
+                NPC.Center,
+                Vector2.Zero,
+                ModContent.ProjectileType<DevilVampireAuraProjectile>(),
+                NPC.damage,
+                0f
+            );
+        }
+
+        if (Main.dedServ) {
+            return;
+        }
+
         Gore gore1 = Gore.NewGoreDirect(
             source,
             NPC.Center,
@@ -80,8 +90,10 @@ internal class DevilVampireNPC : VampireNPC
         gore1.position -= new Vector2(gore1.Width, gore1.Height) * 0.5f;
 
         for (int i = 0; i < 4; i++) {
-            Vector2 direction = (NPC.direction == -1 ? Main.rand.NextFloat(-MathHelper.PiOver2, 0f) : Main.rand.NextFloat(-MathHelper.Pi, -MathHelper.PiOver2))
-                .ToRotationVector2();
+            Vector2 direction = (
+                NPC.direction == -1 ? Main.rand.NextFloat(-MathHelper.PiOver2, 0f) : Main.rand.NextFloat(-MathHelper.Pi, -MathHelper.PiOver2)
+            ).ToRotationVector2();
+
             Gore spikeGore = Gore.NewGoreDirect(
                 source,
                 NPC.Center + direction * 16f,
@@ -112,14 +124,7 @@ internal class DevilVampireNPC : VampireNPC
             }
         }
 
-        Projectile.NewProjectile(
-            source, 
-            NPC.Center, 
-            Vector2.Zero, 
-            ModContent.ProjectileType<DevilVampireAuraProjectile>(), 
-            NPC.damage,
-            0f
-        );
+        
 
         ExplosionVFXProjectile.Spawn(
             source, 

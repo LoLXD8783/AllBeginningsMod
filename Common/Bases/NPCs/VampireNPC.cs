@@ -1,5 +1,4 @@
-﻿using AllBeginningsMod.Utilities.Extensions;
-using AllBeginningsMod.Utilities;
+﻿using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -24,7 +23,7 @@ public abstract class VampireNPC : ModNPC
     protected virtual float SlowDownFactor => 0.95f;
     protected virtual float ExplosionRange => 64f;
     protected virtual void Exploding(float progress) { }
-    protected virtual void ExplosionEffects() { }
+    protected virtual void OnExplode() { }
     protected virtual void FollowBehaviour(Player target) {
         if (NPC.velocity.LengthSquared() > 0.8f) {
             return;
@@ -35,6 +34,7 @@ public abstract class VampireNPC : ModNPC
     protected virtual void PostSetDefaults() { }
     protected virtual void Draw(SpriteBatch spriteBatch, Color drawColor, float explodingProgress) { }
     private Player Target => Main.player[NPC.target];
+    private bool killed;
     protected ref float ExplodingTimer => ref NPC.ai[0];
     protected bool IsExploding => ExplodingTimer > 0;
 
@@ -71,18 +71,23 @@ public abstract class VampireNPC : ModNPC
             Exploding(ExplodingTimer == 0f ? 0f : 1f - ExplodingTimer / MaxExplodingTime);
             if (--ExplodingTimer == 0f) {
                 if (!Main.dedServ) {
-                    ExplosionEffects();
+                    OnExplode();
                 } 
                 
                 if (Main.netMode != NetmodeID.MultiplayerClient) {
-                    TargetingUtils.ForEachPlayerInRange(
+                    Helper.ForEachPlayerInRange(
                         NPC.Center,
                         ExplosionRange,
-                        player => player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), 40, MathF.Sign(player.Center.X - NPC.Center.X))
+                        player => player.Hurt(
+                            PlayerDeathReason.ByNPC(NPC.whoAmI), 
+                            40, 
+                            MathF.Sign(player.Center.X - NPC.Center.X),
+                            knockback: 8f
+                        )
                     );
                 }
 
-                NPC.active = false;
+                NPC.StrikeInstantKill();
                 return;
             }
 
@@ -125,6 +130,12 @@ public abstract class VampireNPC : ModNPC
     }
 
     public sealed override bool CheckDead() {
+        if (killed) {
+            return true;
+        }
+
+        killed = true;
+
         ExplodingTimer = MaxExplodingTime;
         NPC.dontTakeDamage = true;
         NPC.life = 1;

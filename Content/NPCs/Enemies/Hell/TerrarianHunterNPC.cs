@@ -1,7 +1,6 @@
 ﻿using AllBeginningsMod.Common;
 using AllBeginningsMod.Common.PrimitiveDrawing;
 using AllBeginningsMod.Utilities;
-using AllBeginningsMod.Utilities.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;

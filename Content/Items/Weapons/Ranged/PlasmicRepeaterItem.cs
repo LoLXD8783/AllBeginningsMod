@@ -1,5 +1,5 @@
 ﻿using AllBeginningsMod.Common.GlobalItems;
-using AllBeginningsMod.Utilities.Extensions;
+using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,10 +10,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Content.Items;
+namespace AllBeginningsMod.Content.Items.Weapons.Ranged;
 
 [ItemGlowmask]
-internal sealed class PlasmicRepeaterItem : ModItem {
+internal sealed class PlasmicRepeaterItem : ModItem
+{
     public override void SetDefaults() {
         Item.damage = 99;
         Item.DamageType = DamageClass.Ranged;
@@ -39,7 +40,7 @@ internal sealed class PlasmicRepeaterItem : ModItem {
     public override void UpdateInventory(Player player) {
         if (Main.myPlayer == player.whoAmI) {
             GunCenter = CalculateGunCenter(player, out Vector2 direction);
-            GunRotation = Utils.AngleLerp(GunRotation, direction.ToRotation(), 0.1f);
+            GunRotation = GunRotation.AngleLerp(direction.ToRotation(), 0.1f);
         }
     }
 }

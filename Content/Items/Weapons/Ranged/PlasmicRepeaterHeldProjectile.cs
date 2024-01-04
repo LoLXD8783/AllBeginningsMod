@@ -7,7 +7,6 @@ using Terraria.ModLoader;
 using Terraria;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
-using AllBeginningsMod.Utilities.Extensions;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using ReLogic.Content;
@@ -15,7 +14,7 @@ using AllBeginningsMod.Utilities;
 using Terraria.DataStructures;
 using static Terraria.GameContent.Animations.Actions.NPCs;
 
-namespace AllBeginningsMod.Content.Items;
+namespace AllBeginningsMod.Content.Items.Weapons.Ranged;
 
 internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile
 {
@@ -76,7 +75,7 @@ internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile
             Projectile.rotation = repeaterItem.GunRotation;
             Projectile.netUpdate = true;
         }
-        
+
         Vector2 directionToMouse = Projectile.rotation.ToRotationVector2();
         Vector2 rotatedDirection = directionToMouse.RotatedBy(MathHelper.PiOver2 * Player.direction);
         Vector2 defaultShootPositionBottom = Projectile.Center + rotatedDirection * 2f;
@@ -166,15 +165,7 @@ internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile
                 continue;
             }
 
-            npc.StrikeNPC(
-                new() {
-                    Damage = Projectile.damage,
-                    Knockback = 6,
-                    HitDirection = MathF.Sign(npc.Center.X - Player.Center.X),
-                    Crit = Main.rand.NextBool(10),
-                    DamageType = DamageClass.Ranged
-                }
-            );
+            Player.ApplyDamageToNPC(npc, Projectile.damage, Projectile.knockBack, MathF.Sign(npc.Center.X - Player.Center.X), Main.rand.NextBool(10), DamageClass.Ranged);
         }
     }
 

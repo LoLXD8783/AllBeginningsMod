@@ -3,9 +3,9 @@ using AllBeginningsMod.Common.Bases.NPCs;
 using AllBeginningsMod.Common.Loaders;
 using AllBeginningsMod.Content.CameraModifiers;
 using AllBeginningsMod.Content.Dusts;
+using AllBeginningsMod.Content.Items.Materials;
 using AllBeginningsMod.Content.Projectiles;
 using AllBeginningsMod.Utilities;
-using AllBeginningsMod.Utilities.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -13,6 +13,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,11 +33,11 @@ public sealed class HellVampireNPC : VampireNPC
         return spawnInfo.Player.ZoneUnderworldHeight ? 0.15f : 0f;
     }
 
-    protected override void Exploding(float progress) {
-        
+    public override void ModifyNPCLoot(NPCLoot npcLoot) {
+        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ExothermicSoulItem>(), 1, 2, 4));
     }
 
-    protected override void ExplosionEffects() {
+    protected override void OnExplode() {
         IEntitySource source = NPC.GetSource_Death();
         Gore gore1 = Gore.NewGoreDirect(
             source,

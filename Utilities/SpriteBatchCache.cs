@@ -15,13 +15,13 @@ public sealed class SpriteBatchCache : ILoadable
     public static FieldInfo TransformMatrix { get; private set; }
 
     void ILoadable.Load(Mod mod) {
-        SortMode = typeof(SpriteBatch).GetField("sortMode", ReflectionUtils.FlagsPrivateInstance);
-        BlendState = typeof(SpriteBatch).GetField("blendState", ReflectionUtils.FlagsPrivateInstance);
-        SamplerState = typeof(SpriteBatch).GetField("samplerState", ReflectionUtils.FlagsPrivateInstance);
-        DepthStencilState = typeof(SpriteBatch).GetField("depthStencilState", ReflectionUtils.FlagsPrivateInstance);
-        RasterizerState = typeof(SpriteBatch).GetField("rasterizerState", ReflectionUtils.FlagsPrivateInstance);
-        Effect = typeof(SpriteBatch).GetField("customEffect", ReflectionUtils.FlagsPrivateInstance);
-        TransformMatrix = typeof(SpriteBatch).GetField("transformMatrix", ReflectionUtils.FlagsPrivateInstance);
+        SortMode = typeof(SpriteBatch).GetField("sortMode", Helper.FlagsPrivateInstance);
+        BlendState = typeof(SpriteBatch).GetField("blendState", Helper.FlagsPrivateInstance);
+        SamplerState = typeof(SpriteBatch).GetField("samplerState", Helper.FlagsPrivateInstance);
+        DepthStencilState = typeof(SpriteBatch).GetField("depthStencilState", Helper.FlagsPrivateInstance);
+        RasterizerState = typeof(SpriteBatch).GetField("rasterizerState", Helper.FlagsPrivateInstance);
+        Effect = typeof(SpriteBatch).GetField("customEffect", Helper.FlagsPrivateInstance);
+        TransformMatrix = typeof(SpriteBatch).GetField("transformMatrix", Helper.FlagsPrivateInstance);
     }
 
     void ILoadable.Unload() {

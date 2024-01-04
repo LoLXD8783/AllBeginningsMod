@@ -1,5 +1,5 @@
-﻿using AllBeginningsMod.Utilities;
-using AllBeginningsMod.Utilities.Extensions;
+﻿using AllBeginningsMod.Content.Dusts;
+using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -59,12 +59,13 @@ namespace AllBeginningsMod.Content.Projectiles
         private bool runAIOnSpawn = true;
         public override void AI() {
             if (runAIOnSpawn) {
-                for (int i = 0; i < Projectile.width * 0.1f; i++) {
+                for (int i = 0; i < Projectile.width * 0.2f; i++) {
                     Dust.NewDust(
                         Projectile.position,
                         Projectile.width,
                         Projectile.height,
-                        Main.rand.NextFromList(DustID.Smoke, DustID.Torch)
+                        Main.rand.NextFromList(DustID.Smoke, DustID.Torch),
+                        Scale: Main.rand.NextFloat(1f, 1.5f)
                     );
                 }
 
@@ -88,7 +89,7 @@ namespace AllBeginningsMod.Content.Projectiles
         private Texture2D noiseTexture1;
         private Texture2D noiseTexture2;
         public override bool PreDraw(ref Color lightColor) {
-            glowTexture ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Star2", AssetRequestMode.ImmediateLoad).Value;
+            glowTexture ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Glow1", AssetRequestMode.ImmediateLoad).Value;
             flareTexture ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Flare1", AssetRequestMode.ImmediateLoad).Value;
             smokeTexture ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/SmokeGlow", AssetRequestMode.ImmediateLoad).Value;
             noiseTexture1 ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/PerlinNoise", AssetRequestMode.ImmediateLoad).Value;
@@ -100,7 +101,7 @@ namespace AllBeginningsMod.Content.Projectiles
 
             Effect effect = Mod.Assets.Request<Effect>("Assets/Effects/ExplosionSmoke", AssetRequestMode.ImmediateLoad).Value;
             effect.Parameters["progress"].SetValue(Progress);
-            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.002f);
+            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.002f + offsetRotation);
 
             effect.Parameters["noiseTexture1"].SetValue(noiseTexture1);
             effect.Parameters["noiseScale1"].SetValue(0.2f);
@@ -127,7 +128,7 @@ namespace AllBeginningsMod.Content.Projectiles
                 glowColor * 0.4f,
                 offsetRotation * 2.3f,
                 glowTexture.Size() / 2f,
-                0.02f * Projectile.width * flashScale,
+                0.02f * Projectile.width * flashScale * Main.rand.NextFloat(1.5f),
                 SpriteEffects.None,
                 0f
             );
@@ -139,7 +140,7 @@ namespace AllBeginningsMod.Content.Projectiles
                 flashColor * 0.65f,
                 offsetRotation,
                 flareTexture.Size() / 2f,
-                0.02f * Projectile.width * flashScale,
+                0.02f * Projectile.width * flashScale * Main.rand.NextFloat(1.5f),
                 SpriteEffects.None,
                 0f
             );

@@ -1,11 +1,7 @@
 ﻿using AllBeginningsMod.Common.Bases.NPCs;
-using AllBeginningsMod.Utilities.Extensions;
+using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -15,11 +11,10 @@ using Microsoft.Xna.Framework;
 using AllBeginningsMod.Content.Dusts;
 using Terraria.ModLoader;
 using AllBeginningsMod.Common.Loaders;
-using AllBeginningsMod.Utilities;
-using Terraria.Graphics.CameraModifiers;
 using AllBeginningsMod.Content.CameraModifiers;
 using AllBeginningsMod.Content.Projectiles;
-using static tModPorter.ProgressUpdate;
+using AllBeginningsMod.Content.Items.Materials;
+using Terraria.GameContent.ItemDropRules;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Caverns
 {
@@ -40,23 +35,27 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Caverns
             NPC.direction = MathF.Sign(target.Center.X - NPC.Center.X);
         }
 
-        protected override void ExplosionEffects() {
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ExothermicSoulItem>(), 1, 2, 4));
+        }
+
+        protected override void OnExplode() {
             IEntitySource source = NPC.GetSource_Death();
             Gore gore1 = Gore.NewGoreDirect(
-                    source,
-                    NPC.Center - Vector2.UnitY * 20f,
-                    -Vector2.UnitY * Main.rand.NextFloat(5f, 7f),
-                    Mod.Find<ModGore>("MineVampireGore0").Type
-                );
+                source,
+                NPC.Center - Vector2.UnitY * 20f,
+                -Vector2.UnitY * Main.rand.NextFloat(5f, 7f),
+                Mod.Find<ModGore>("MineVampireGore0").Type
+            );
 
             gore1.position -= new Vector2(gore1.Width, gore1.Height) * 0.5f;
 
             Gore gore2 = Gore.NewGoreDirect(
-                    source,
-                    NPC.Center + Vector2.UnitY * 20f,
-                    Vector2.UnitY * Main.rand.NextFloat(3f, 5f),
-                    Mod.Find<ModGore>("MineVampireGore1").Type
-                );
+                source,
+                NPC.Center + Vector2.UnitY * 20f,
+                Vector2.UnitY * Main.rand.NextFloat(3f, 5f),
+                Mod.Find<ModGore>("MineVampireGore1").Type
+            );
 
             gore2.position -= new Vector2(gore1.Width, gore1.Height) * 0.5f;
 

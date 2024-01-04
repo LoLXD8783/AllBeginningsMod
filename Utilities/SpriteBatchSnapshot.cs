@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace AllBeginningsMod.Utilities;
 
-public struct SpriteBatchSnapshot
+public readonly struct SpriteBatchSnapshot
 {
     public SpriteSortMode SortMode { get; init; }
     public BlendState BlendState { get; init; }

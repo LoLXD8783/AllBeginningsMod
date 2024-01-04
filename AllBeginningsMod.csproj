@@ -41,13 +41,24 @@
       <None Remove="Assets\Images\Sample\PortalNoise.png" />
       <None Remove="Assets\Images\Sample\SmokeGlow.png" />
       <None Remove="Content\Buffs\NoFlightDebuff.png" />
+      <None Remove="Content\Buffs\OnGasDebuff.png" />
       <None Remove="Content\Dusts\DevilVampireExplosionDust.png" />
       <None Remove="Content\Dusts\HellVampireExplosionDust.png" />
       <None Remove="Content\Dusts\MineVampireExplosionDust.png" />
+      <None Remove="Content\Items\Placeable\PocketSnowmanItem.png" />
+      <None Remove="Content\Items\Placeable\PocketSnowmanTile.png" />
+      <None Remove="Content\Items\Placeable\SandStoneStatueItem.png" />
+      <None Remove="Content\Items\Placeable\SandStoneStatueTile.png" />
+      <None Remove="Content\Items\Placeable\StoneStatueItem.png" />
       <None Remove="Content\Items\PlasmicRepeaterHeldProjectile.png" />
       <None Remove="Content\Items\PlasmicRepeaterHeldProjectile_Glow.png" />
       <None Remove="Content\Items\PlasmicRepeaterItem.png" />
       <None Remove="Content\Items\PlasmicRepeaterItem_Glow.png" />
+      <None Remove="Content\Items\Weapons\Magic\MistaBombItem.png" />
+      <None Remove="Content\Items\Weapons\Magic\MistaBombProjectile.png" />
+      <None Remove="Content\Items\Weapons\Ranged\BIGGunBigRocketProjectile.png" />
+      <None Remove="Content\Items\Weapons\Ranged\BIGGunItem_Glow.png" />
+      <None Remove="Content\Items\Weapons\Ranged\BIGGunSmallRocketProjectile.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyExplodingProjectile_Crescent.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyExplodingProjectile_Star.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyNPC.png" />
@@ -67,11 +78,13 @@
       <None Remove="Content\NPCs\Enemies\Hell\TerrarianHunterNPC_Gun_Glow.png" />
       <None Remove="Content\NPCs\Enemies\MineVampireNPC.png" />
       <None Remove="Content\NPCs\SunVampireExplosionColor.png" />
+      <None Remove="Content\Tiles\Decorations\PersonalizedMoaiTile.png" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Common\Players\" />
+      <Folder Include="Content\Tiles\Decorations\" />
     </ItemGroup>
 </Project>

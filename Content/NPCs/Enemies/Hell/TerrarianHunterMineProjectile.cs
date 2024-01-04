@@ -2,7 +2,6 @@
 using AllBeginningsMod.Content.Dusts;
 using AllBeginningsMod.Content.Projectiles;
 using AllBeginningsMod.Utilities;
-using AllBeginningsMod.Utilities.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
@@ -41,7 +40,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                 return;
             }
 
-            if (TargetingUtils.ClosestPlayer(Projectile.Center, out Player target, player => player.active && !player.dead) != -1) {
+            if (Helper.ClosestPlayer(Projectile.Center, out Player target, player => player.active && !player.dead) > -1) {
                 Vector2 direction = Projectile.Center.DirectionTo(target.Center);
                 Projectile.velocity = Projectile.velocity.RotatedBy(-Vector3.Cross(direction.ToVector3(), Projectile.velocity.ToVector3()).Z * 0.008f);
             }
@@ -54,7 +53,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
 
         public override void OnKill(int timeLeft) {
             if (Main.netMode != NetmodeID.MultiplayerClient) {
-                TargetingUtils.ForEachPlayerInRange(
+                Helper.ForEachPlayerInRange(
                     Projectile.Center, 
                     100, 
                     player => player.Hurt(

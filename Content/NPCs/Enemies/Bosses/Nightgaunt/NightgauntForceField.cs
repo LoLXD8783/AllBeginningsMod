@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria.ModLoader;
-using AllBeginningsMod.Utilities.Extensions;
 using Terraria;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,10 +16,6 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
 {
     internal class NightgauntForceField : ModProjectile
     {
-
-
-        private List<(int timeLeft, float angle)> hits;
-        private const int MaxTimeLeftHit = 60;
         public override string Texture => "Terraria/Images/Item_0";
         public override void SetDefaults() {
             Projectile.friendly = false;
@@ -30,8 +25,6 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
             Projectile.timeLeft = 2;
             Projectile.alpha = 255;
             Projectile.penetrate = -1;
-
-            hits = new();
         }
 
         private bool dissapear;
@@ -71,16 +64,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
 
                 if (Colliding(Projectile.Hitbox, projectile.Hitbox).Value) {
                     Vector2 direction = Projectile.Center.DirectionTo(projectile.Center);
-                    projectile.velocity = direction * projectile.velocity.Length();
-                    hits.Add((MaxTimeLeftHit, direction.ToRotation()));
-                }
-            }
-
-            for (int i = 0; i < hits.Count; i++) {
-                hits[i] = hits[i] with { timeLeft = hits[i].timeLeft - 1 };
-                if (hits[i].timeLeft <= 0) {
-                    hits.RemoveAt(i);
-                    i--;
+                    npc.ReflectProjectile(projectile);
                 }
             }
 

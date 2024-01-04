@@ -1,6 +1,5 @@
 ﻿using AllBeginningsMod.Common;
 using AllBeginningsMod.Utilities;
-using AllBeginningsMod.Utilities.Extensions;
 using Microsoft.CodeAnalysis.CodeStyle;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -228,7 +227,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                                 if (distance > TeleportDistance) {
                                     NPC.Center = Target.Center - Vector2.UnitY * 2000f;
                                 } else {
-                                    NPC.velocity = PhysicsUtils.InitialVelocityRequiredToHitPosition(
+                                    NPC.velocity = Helper.InitialVelocityRequiredToHitPosition(
                                         NPC.Bottom,
                                         Target.Bottom,
                                         Gravity,
@@ -255,7 +254,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                                 if (NPC.velocity.Y == 0f) {
                                     NPC.noTileCollide = false;
                                     Attack = Attacks.None;
-                                    TargetingUtils.ForEachPlayerInRange(
+                                    Helper.ForEachPlayerInRange(
                                         NPC.Center,
                                         120,
                                         player => {
@@ -369,8 +368,12 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
         }
 
         private void JumpSmashEffects() {
+            if (Main.dedServ) {
+                return;
+            }
+
             Main.instance.CameraModifiers.Add(
-                new PunchCameraModifier(NPC.Center, Vector2.UnitY, 18f, 4f, 18, 5000f, FullName)
+                new PunchCameraModifier(NPC.Center, Vector2.UnitY, 28f, 4f, 18, 5000f, FullName)
             );
             SoundEngine.PlaySound(SoundID.DD2_BetsyFireballImpact, NPC.Center);
             int dustCount = 25;
