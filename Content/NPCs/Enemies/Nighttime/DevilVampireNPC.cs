@@ -1,20 +1,20 @@
 ﻿using AllBeginningsMod.Common.Bases.NPCs;
+using AllBeginningsMod.Common.Loaders;
+using AllBeginningsMod.Content.CameraModifiers;
+using AllBeginningsMod.Content.Dusts;
+using AllBeginningsMod.Content.Items.Materials;
+using AllBeginningsMod.Content.Projectiles;
+using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using Terraria.GameContent;
 using Terraria;
-using AllBeginningsMod.Utilities;
 using Terraria.Audio;
-using Terraria.ID;
 using Terraria.DataStructures;
-using AllBeginningsMod.Content.Dusts;
-using Terraria.ModLoader;
-using AllBeginningsMod.Common.Loaders;
-using AllBeginningsMod.Content.CameraModifiers;
-using AllBeginningsMod.Content.Projectiles;
-using AllBeginningsMod.Content.Items.Materials;
+using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Nighttime;
 
@@ -124,15 +124,15 @@ internal class DevilVampireNPC : VampireNPC
             }
         }
 
-        
+
 
         ExplosionVFXProjectile.Spawn(
-            source, 
+            source,
             NPC.Center,
-            Color.Yellow, 
+            Color.Yellow,
             Color.OrangeRed,
-            progress => Color.Lerp(Color.OrangeRed, Color.Black, -MathF.Pow(progress - 1f, 2) + 1f), 
-            300, 
+            progress => Color.Lerp(Color.OrangeRed, Color.Black, -MathF.Pow(progress - 1f, 2) + 1f),
+            300,
             130
         );
 
@@ -144,8 +144,6 @@ internal class DevilVampireNPC : VampireNPC
         );
     }
 
-    [Effect("FishEye")]
-    private static Effect fishEyeEffect;
     protected override void Draw(SpriteBatch spriteBatch, Color drawColor, float explodingProgress) {
         Texture2D texture = TextureAssets.Npc[Type].Value;
 
@@ -168,12 +166,13 @@ internal class DevilVampireNPC : VampireNPC
             );
         }
 
+        Effect fishEyeEffect = EffectLoader.GetEffect("Pixel::FishEye");
         fishEyeEffect.Parameters["strength"].SetValue(explodingProgress * 1.8f);
         fishEyeEffect.Parameters["uImageSize0"].SetValue(texture.Size());
         fishEyeEffect.Parameters["uSourceRect"].SetValue(new Vector4(NPC.frame.X, NPC.frame.Y, NPC.frame.Width, NPC.frame.Height));
         fishEyeEffect.Parameters["center"].SetValue(new Vector2(0.5f, 0.5f));
 
-        SpriteBatchSnapshot snapshot = spriteBatch.Capture();
+        SpriteBatchData snapshot = spriteBatch.Capture();
         spriteBatch.End();
         spriteBatch.Begin(snapshot with { Effect = fishEyeEffect });
 

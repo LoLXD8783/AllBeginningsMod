@@ -1,16 +1,12 @@
-﻿using AllBeginningsMod.Common.PrimitiveDrawing;
-using AllBeginningsMod.Content.Buffs;
+﻿using AllBeginningsMod.Common.Loaders;
+using AllBeginningsMod.Common.PrimitiveDrawing;
 using AllBeginningsMod.Content.Dusts;
 using AllBeginningsMod.Utilities;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Linq;
-using System.Transactions;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -43,8 +39,8 @@ internal class BastroboyExplodingProjectile : ModProjectile
         Projectile.timeLeft = MaxTimeLeft;
 
         trail = new PrimitiveTrail(
-            ProjectileID.Sets.TrailCacheLength[Type], 
-            factor => 20f * Projectile.scale * (factor < 0.1f ? -MathF.Pow(factor * 10f - 1f, 2) + 1 : 1.1f - factor), 
+            ProjectileID.Sets.TrailCacheLength[Type],
+            factor => 20f * Projectile.scale * (factor < 0.1f ? -MathF.Pow(factor * 10f - 1f, 2) + 1 : 1.1f - factor),
             static factor => Color.Lerp(Color.DeepPink, Color.LightBlue, factor) * (1f - factor) * 0.55f
         );
     }
@@ -127,7 +123,8 @@ internal class BastroboyExplodingProjectile : ModProjectile
         Projectile.penetrate--;
         if (IsStar) {
             //target.AddBuff(ModContent.BuffType<NoFlightDebuff>(), 400);
-        } else {
+        }
+        else {
             target.AddBuff(BuffID.WitheredWeapon, 400);
         }
 
@@ -139,14 +136,13 @@ internal class BastroboyExplodingProjectile : ModProjectile
         bastroboy.HitWithExplodingProjectile = true;
     }
 
-    private Effect effect;
     public override bool PreDraw(ref Color lightColor) {
-        Texture2D texture = IsStar ? TextureAssets.Projectile[Type].Value 
+        Texture2D texture = IsStar ? TextureAssets.Projectile[Type].Value
             : ModContent.Request<Texture2D>(Texture.Replace("Star", "Crescent"), ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         Color color = Color.Lerp(Color.DeepPink, Color.LightBlue, (MathF.Sin(Main.GameUpdateCount * 0.03f + random * 2.541f) + 1f) / 2f);
         float squish = 0.2f * MathF.Sin(Main.GameUpdateCount * 0.25f + random);
         Vector2 scale = Projectile.scale * new Vector2(1f + squish, 1f - squish);
-        effect ??= Mod.Assets.Request<Effect>("Assets/Effects/OutlinedTrailShader", AssetRequestMode.ImmediateLoad).Value;
+        Effect effect = EffectLoader.GetEffect("Trail::Outlined");
 
         Main.spriteBatch.End();
 
@@ -160,7 +156,7 @@ internal class BastroboyExplodingProjectile : ModProjectile
 
         trail.Draw(effect);
 
-        SpriteBatchSnapshot snapshot = Main.spriteBatch.Capture();
+        SpriteBatchData snapshot = Main.spriteBatch.Capture();
         Main.spriteBatch.Begin(default, BlendState.Additive, default, default, default);
 
         for (int i = 0; i < Projectile.oldPos.Length; i++) {

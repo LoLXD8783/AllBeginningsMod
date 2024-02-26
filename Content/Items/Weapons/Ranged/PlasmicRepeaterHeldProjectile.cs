@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ModLoader;
-using Terraria;
+﻿using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
-using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.ID;
 using ReLogic.Content;
-using AllBeginningsMod.Utilities;
+using System;
+using Terraria;
 using Terraria.DataStructures;
-using static Terraria.GameContent.Animations.Actions.NPCs;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Ranged;
 
@@ -46,7 +41,8 @@ internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile
         Projectile.rotation = lastRotation;
         if (Player.HeldItem.ModItem is PlasmicRepeaterItem repeaterItem) {
             this.repeaterItem = repeaterItem;
-        } else {
+        }
+        else {
             Projectile.Kill();
         }
     }
@@ -181,7 +177,7 @@ internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile
         Vector2 origin = new(75f - recoilOffset, 26f);
         float rotation = Projectile.rotation + (Player.direction == -1 ? MathHelper.Pi : 0);
 
-        Main.spriteBatch.End(out SpriteBatchSnapshot snapshot);
+        Main.spriteBatch.End(out SpriteBatchData snapshot);
         Main.spriteBatch.Begin(snapshot with { BlendState = BlendState.Additive });
 
         Texture2D glowTexture = Mod.Assets.Request<Texture2D>("Assets/Images/Misc/Glow2", AssetRequestMode.ImmediateLoad).Value;

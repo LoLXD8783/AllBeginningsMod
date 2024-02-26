@@ -1,12 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AllBeginningsMod.Common.Loaders;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Net;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.PrimitiveDrawing
 {
@@ -17,7 +14,6 @@ namespace AllBeginningsMod.Common.PrimitiveDrawing
         public ITrailStyle TrailStyle { get; }
         public Func<float, float> TrailWidth { get; set; }
         public Func<float, Color> TrailColor { get; set; }
-        private static Effect defaultTrailEffect;
         public int MaxTrailPositions { get; }
         public Vector2[] Positions { get; set; }
 
@@ -59,7 +55,7 @@ namespace AllBeginningsMod.Common.PrimitiveDrawing
             UpdateBuffers();
             Device.SetVertexBuffer(VertexBuffer);
             Device.Indices = IndexBuffer;
-            
+
             foreach (EffectPass pass in effect.CurrentTechnique.Passes) {
                 pass.Apply();
                 Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, VertexBuffer.VertexCount, 0, IndexBuffer.IndexCount / 3);
@@ -67,13 +63,13 @@ namespace AllBeginningsMod.Common.PrimitiveDrawing
         }
 
         public void Draw(Texture2D texture, Color color, Matrix transformationMatrix = default, bool blackAsAlpha = false) {
-            defaultTrailEffect ??= ModContent.Request<Effect>("AllBeginningsMod/Assets/Effects/DefaultTrailShader", AssetRequestMode.ImmediateLoad).Value;
-            defaultTrailEffect.Parameters["sampleTexture"].SetValue(texture);
-            defaultTrailEffect.Parameters["color"].SetValue(color.ToVector4());
-            defaultTrailEffect.Parameters["transformationMatrix"].SetValue(transformationMatrix);
-            defaultTrailEffect.Parameters["blackAsAlpha"].SetValue(blackAsAlpha);
+            Effect effect = EffectLoader.GetEffect("Trail::Default");
+            effect.Parameters["sampleTexture"].SetValue(texture);
+            effect.Parameters["color"].SetValue(color.ToVector4());
+            effect.Parameters["transformationMatrix"].SetValue(transformationMatrix);
+            effect.Parameters["blackAsAlpha"].SetValue(blackAsAlpha);
 
-            Draw(defaultTrailEffect);
+            Draw(effect);
         }
     }
 }

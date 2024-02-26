@@ -1,9 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AllBeginningsMod.Utilities
 {
@@ -11,7 +6,7 @@ namespace AllBeginningsMod.Utilities
     {
         public Vector2[] Positions { get; private set; }
         public int Count => Positions.Length;
-        public OldPositionCache(int length) { 
+        public OldPositionCache(int length) {
             Positions = new Vector2[length];
         }
 
@@ -23,7 +18,7 @@ namespace AllBeginningsMod.Utilities
 
         public void Add(Vector2 position) {
             for (int i = Positions.Length - 1; i > 0; i--) {
-                Positions[i] = Positions[i - 1]; 
+                Positions[i] = Positions[i - 1];
             }
 
             Positions[0] = position;

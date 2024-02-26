@@ -1,12 +1,6 @@
-﻿using AllBeginningsMod.Content.Items.Weapons.Ranged;
-using AllBeginningsMod.Utilities;
+﻿using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,7 +8,8 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
 {
     internal abstract class HeldProjectile : ModProjectile
     {
-        protected enum DespawnMode {
+        protected enum DespawnMode
+        {
             Manual,
             Channel,
             Animation
@@ -51,7 +46,8 @@ namespace AllBeginningsMod.Common.Bases.Projectiles
             Projectile.Center = Player.RotatedRelativePoint(Player.MountedCenter) + new Vector2(-4 * Player.direction, -2);
             if (verticalOffset != 0) {
                 Projectile.Center = Projectile.Center.OffsetVerticallyTowardsPosition(Main.MouseWorld, verticalOffset, out Projectile.velocity);
-            } else {
+            }
+            else {
                 Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld);
             }
 

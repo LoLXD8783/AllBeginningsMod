@@ -11,9 +11,14 @@
         <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     </PropertyGroup>
     <ItemGroup>
+      <AdditionalFiles Remove="Assets\Effects\.compile\**" />
+      <Compile Remove="Assets\Effects\.compile\**" />
+      <EmbeddedResource Remove="Assets\Effects\.compile\**" />
+      <None Remove="Assets\Effects\.compile\**" />
+    </ItemGroup>
+    <ItemGroup>
       <None Remove="Assets\Effects\BastroboyStarWhirl.fx" />
       <None Remove="Assets\Effects\BastroboyStarWhirlOld.fx" />
-      <None Remove="Assets\Effects\Compiler\BastroboyStarWhirlOld.fx" />
       <None Remove="Assets\Effects\ExplosionSmoke.fx" />
       <None Remove="Assets\Effects\FireTrail.fx" />
       <None Remove="Assets\Effects\FishEye.fx" />
@@ -22,6 +27,8 @@
       <None Remove="Assets\Effects\MineDetectionField.fx" />
       <None Remove="Assets\Effects\NightgauntFilter.fx" />
       <None Remove="Assets\Effects\OutlinedTrailShader.fx" />
+      <None Remove="Assets\Effects\Pixelate.fx" />
+      <None Remove="Assets\Effects\PixelateFilter.fx" />
       <None Remove="Assets\Effects\WaterFilter.fx" />
       <None Remove="Assets\Images\Gores\DevilVampireGore0.png" />
       <None Remove="Assets\Images\Gores\DevilVampireGore1.png" />
@@ -40,6 +47,11 @@
       <None Remove="Assets\Images\Sample\PlasmaNoise.png" />
       <None Remove="Assets\Images\Sample\PortalNoise.png" />
       <None Remove="Assets\Images\Sample\SmokeGlow.png" />
+      <None Remove="Common\SceneEffects\GardenBackground_0.png" />
+      <None Remove="Common\SceneEffects\GardenBackground_1.png" />
+      <None Remove="Common\SceneEffects\GardenBackground_2.png" />
+      <None Remove="Common\SceneEffects\GardenBackground_3.png" />
+      <None Remove="Common\SceneEffects\GardenBackground_4.png" />
       <None Remove="Content\Buffs\NoFlightDebuff.png" />
       <None Remove="Content\Buffs\OnGasDebuff.png" />
       <None Remove="Content\Dusts\DevilVampireExplosionDust.png" />
@@ -62,8 +74,9 @@
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyExplodingProjectile_Crescent.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyExplodingProjectile_Star.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyNPC.png" />
+      <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyPhantomProjectile.png" />
+      <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyPhantomProjectile_Trail.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\BastroboyStarWhirlProjectile.png" />
-      <None Remove="Content\NPCs\Enemies\Bosses\Bastroboy\_BastroboyExplodingStarProjectile.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Gardener\GardenerNPC_Intestine.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Nightgaunt\NightgauntNPC_Jump.png" />
       <None Remove="Content\NPCs\Enemies\Bosses\Nightgaunt\NightgauntNPC_Shield.png" />

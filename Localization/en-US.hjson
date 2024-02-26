@@ -1,4 +1,4 @@
-﻿Mods: {
+Mods: {
 	AllBeginningsMod: {
 		Items: {
 			PlasmicRepeaterItem: {
@@ -66,6 +66,7 @@
 			BIGGunHeldProjectile.DisplayName: B I G Gun Held Projectile
 			BIGGunBigRocketProjectile.DisplayName: B I G Gun Big Rocket Projectile
 			BIGGunSmallRocketProjectile.DisplayName: B I G Gun Small Rocket Projectile
+			BastroboyPhantomProjectile.DisplayName: Bastroboy Phantom Projectile
 		}
 
 		Buffs: {
@@ -77,6 +78,18 @@
 			OnGasDebuff: {
 				DisplayName: On Gas Debuff
 				Description: Mods.AllBeginningsMod.Buffs.OnGasDebuff.Description
+			}
+		}
+
+		Biomes: {
+			Garden: {
+				DisplayName: Garden
+				TownNPCDialogueName: the Garden
+			}
+
+			GardenBiome: {
+				DisplayName: Garden Biome
+				TownNPCDialogueName: the Garden Biome
 			}
 		}
 	}

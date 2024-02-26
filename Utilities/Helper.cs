@@ -1,10 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AllBeginningsMod.Common;
+using AllBeginningsMod.Common.Loaders;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 
@@ -19,6 +18,25 @@ namespace AllBeginningsMod.Utilities
         public static Matrix WorldTransformationMatrix => Matrix.CreateTranslation(-Main.screenPosition.X, -Main.screenPosition.Y, 0f)
             * Main.GameViewMatrix.TransformationMatrix
             * Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+        private static EffectScreenDrawLayer pixelateLayer;
+        private static Effect pixelateEffect;
+        public static void DrawPixelated(Action<SpriteBatch> drawAction) {
+            pixelateEffect ??= EffectLoader.GetEffect("Pixel::Pixelate");
+            pixelateEffect.Parameters["size"].SetValue(Main.ScreenSize.ToVector2());
+            pixelateEffect.Parameters["resolution"].SetValue(2);
+            pixelateEffect.Parameters["stepMin"].SetValue(0.3f);
+            pixelateEffect.Parameters["stepMax"].SetValue(0.8f);
+
+            /*ScreenShaderLoader.ApplyShader("AllBeginningsMod::Pixelate", effect => {
+                effect.Parameters["resolution"].SetValue(2);
+                effect.Parameters["stepMin"].SetValue(0.3f);
+                effect.Parameters["stepMax"].SetValue(0.5f);
+            });*/
+
+            pixelateLayer ??= new EffectScreenDrawLayer();
+            pixelateLayer.Draw(pixelateEffect, drawAction);
+        }
 
         public static float Lerp3(float a, float b, float c, float progress, float upperBound = 0.5f) {
             if (progress < upperBound) {
@@ -94,7 +112,7 @@ namespace AllBeginningsMod.Utilities
             (Player player, float distance)? closest = null;
             for (int i = 0; i <= Main.maxPlayers; i++) {
                 Player checkPlayer = Main.player[i];
-                if (checkPlayer is null) {
+                if (checkPlayer is null || !checkPlayer.active) {
                     continue;
                 }
 
@@ -115,16 +133,16 @@ namespace AllBeginningsMod.Utilities
         }
 
         public static Projectile NewProjectileCheckCollision(
-            IEntitySource spawnSource, 
-            Vector2 position, 
-            Vector2 offset, 
-            Vector2 velocity, 
-            int type, 
-            int damage, 
-            float knockback, 
-            int owner = -1, 
-            float ai0 = 0, 
-            float ai1 = 0, 
+            IEntitySource spawnSource,
+            Vector2 position,
+            Vector2 offset,
+            Vector2 velocity,
+            int type,
+            int damage,
+            float knockback,
+            int owner = -1,
+            float ai0 = 0,
+            float ai1 = 0,
             float ai2 = 0
         ) {
             if (Collision.CanHit(position, 0, 0, position + offset, 0, 0)) {

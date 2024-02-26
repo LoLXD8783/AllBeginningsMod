@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Buffs
@@ -30,7 +26,8 @@ namespace AllBeginningsMod.Content.Buffs
         }
     }
 
-    internal class OnGasDebuffPlayer : ModPlayer {
+    internal class OnGasDebuffPlayer : ModPlayer
+    {
         public override void UpdateBadLifeRegen() {
             if (!Player.HasBuff<OnGasDebuff>()) {
                 return;

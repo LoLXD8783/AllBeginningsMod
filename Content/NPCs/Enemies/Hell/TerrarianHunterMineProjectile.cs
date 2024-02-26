@@ -1,16 +1,13 @@
-﻿using AllBeginningsMod.Content.CameraModifiers;
+﻿using AllBeginningsMod.Common.Loaders;
+using AllBeginningsMod.Content.CameraModifiers;
 using AllBeginningsMod.Content.Dusts;
 using AllBeginningsMod.Content.Projectiles;
 using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -54,12 +51,12 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
         public override void OnKill(int timeLeft) {
             if (Main.netMode != NetmodeID.MultiplayerClient) {
                 Helper.ForEachPlayerInRange(
-                    Projectile.Center, 
-                    100, 
+                    Projectile.Center,
+                    100,
                     player => player.Hurt(
-                        PlayerDeathReason.ByProjectile(player.whoAmI, Projectile.whoAmI), 
-                        Projectile.damage, 
-                        MathF.Sign(player.Center.X - Projectile.Center.X), 
+                        PlayerDeathReason.ByProjectile(player.whoAmI, Projectile.whoAmI),
+                        Projectile.damage,
+                        MathF.Sign(player.Center.X - Projectile.Center.X),
                         knockback: Projectile.knockBack
                     )
                 );
@@ -70,8 +67,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
             }
 
             Vector2[] dustPositions = Projectile.Center.PositionsAround(
-                SizeType == 0 ? 7 : 14, 
-                _ => Main.rand.NextFloat(10f, 15f), 
+                SizeType == 0 ? 7 : 14,
+                _ => Main.rand.NextFloat(10f, 15f),
                 out Vector2[] dustDirections, Main.rand.NextFloat()
             );
 
@@ -118,8 +115,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
             int blinkTime = 6;
             Color color = Color.OrangeRed * (1f - Projectile.alpha / 255f) * 0.2f * detectionAlpha * (Main.GameUpdateCount % blinkTime < blinkTime / 2 ? 1f : 0f);
 
-            SpriteBatchSnapshot snapshot = Main.spriteBatch.Capture();
-            effect ??= Mod.Assets.Request<Effect>("Assets/Effects/MineDetectionField", AssetRequestMode.ImmediateLoad).Value;
+            SpriteBatchData snapshot = Main.spriteBatch.Capture();
+            effect ??= EffectLoader.GetEffect("Pixel::MineDetectionField");
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(snapshot with { Effect = effect });

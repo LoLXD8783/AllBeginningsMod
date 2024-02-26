@@ -1,18 +1,14 @@
 ﻿using AllBeginningsMod.Content.CameraModifiers;
 using AllBeginningsMod.Content.Projectiles;
 using AllBeginningsMod.Utilities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.GameContent;
 using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Ranged
 {
@@ -35,7 +31,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
         }
 
         public override void OnKill(int timeLeft) {
-            Main.instance.CameraModifiers.Add(new ExplosionShakeCameraModifier(3f, 0.9f));
+            Main.instance.CameraModifiers.Add(new ExplosionShakeCameraModifier(4f, 0.9f, Projectile.Center, 10_000));
 
             if (Main.myPlayer != Projectile.owner) {
                 return;
@@ -63,14 +59,25 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
 
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.Center);
 
+            for (int i = 0; i < 15; i++) {
+                Dust.NewDust(
+                    Projectile.position,
+                    Projectile.width,
+                    Projectile.height,
+                    Main.rand.NextFromList(DustID.Dirt, DustID.Stone),
+                    Main.rand.NextFloat(-10f, 10f),
+                    Main.rand.NextFloat(-8f, -2f)
+                );
+            }
+
             ExplosionVFXProjectile.Spawn(
                 Projectile.GetSource_Death(),
                 Projectile.Center,
                 Color.Yellow,
                 Color.Yellow,
                 factor => Color.Lerp(Color.Orange, Color.Black, factor),
-                150,
-                Main.rand.Next(140, 170)
+                Main.rand.Next(120, 180),
+                Main.rand.Next(80, 90)
             );
         }
 

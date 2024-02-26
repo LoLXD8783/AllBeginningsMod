@@ -1,16 +1,12 @@
-﻿using AllBeginningsMod.Utilities;
+﻿using AllBeginningsMod.Common.Loaders;
+using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.GameContent.UI.Elements;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Bastroboy;
@@ -48,17 +44,16 @@ internal class BastroboyStarWhirlProjectile : ModProjectile
         Projectile.height = (int)(MaxHeight * Projectile.scale);
         Projectile.Center = new(bastroboy.Center.X, MathHelper.Lerp(Projectile.Center.Y, bastroboy.Center.Y - 130f, 0.1f));
         Helper.ForEachPlayerInRange(
-            Projectile.Center, 
-            16 * 100, 
+            Projectile.Center,
+            16 * 100,
             player => {
                 player.GetModPlayer<BastroboyStarWhirlPlayer>().StarWhirlWhoAmI = Projectile.whoAmI;
             }
         );
     }
 
-    private Effect effect;
     public override bool PreDraw(ref Color lightColor) {
-        effect ??= Mod.Assets.Request<Effect>("Assets/Effects/BastroboyStarWhirl", AssetRequestMode.ImmediateLoad).Value;
+        Effect effect = EffectLoader.GetEffect("Pixel::BastroboyStarWhirl");
         Texture2D sampleTexture1 = Mod.Assets.Request<Texture2D>("Assets/Images/Sample/PlasmaNoise", AssetRequestMode.ImmediateLoad).Value;
         Texture2D sampleTexture2 = Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise1", AssetRequestMode.ImmediateLoad).Value;
 
@@ -70,7 +65,7 @@ internal class BastroboyStarWhirlProjectile : ModProjectile
 
         Color color = Color.CornflowerBlue;
 
-        SpriteBatchSnapshot snapshot = Main.spriteBatch.Capture();
+        SpriteBatchData snapshot = Main.spriteBatch.Capture();
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(snapshot with { Effect = effect, BlendState = BlendState.AlphaBlend });
 
@@ -102,7 +97,7 @@ internal class BastroboyStarWhirlProjectile : ModProjectile
         Main.spriteBatch.Begin(snapshot with { Effect = effect });
 
         Main.spriteBatch.Draw(
-            sampleTexture1, 
+            sampleTexture1,
             Projectile.Hitbox.Modified((int)-Main.screenPosition.X, (int)-Main.screenPosition.Y + Projectile.height / 2, 0, -Projectile.height / 2),
             color
         );
@@ -115,7 +110,8 @@ internal class BastroboyStarWhirlProjectile : ModProjectile
 }
 
 
-public class BastroboyStarWhirlPlayer : ModPlayer {
+public class BastroboyStarWhirlPlayer : ModPlayer
+{
     public int StarWhirlWhoAmI { get; set; }
     public override void PreUpdateMovement() {
         if (StarWhirlWhoAmI == -1) {

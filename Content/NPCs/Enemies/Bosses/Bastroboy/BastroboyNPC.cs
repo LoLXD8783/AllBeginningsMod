@@ -15,7 +15,8 @@ internal class BastroboyNPC : ModNPC
 
     private const int MaxSquashTime = 28;
     public const int StarWhirlTime = 60 * 10;
-    private enum Attacks {
+    private enum Attacks
+    {
         None,
         StarToss,
         CrescentToss,
@@ -26,20 +27,19 @@ internal class BastroboyNPC : ModNPC
         RayBeamSword
     }
 
-    private enum Phases {
+    private enum Phases
+    {
         Phase1,
         Phase2,
         Phase3
     }
 
     private float squishSquash;
-    private float SquishSquash 
-    {
+    private float SquishSquash {
         get => squishSquash;
-        set
-        {
+        set {
             squishSquash = Math.Clamp(value, -1f, 1f);
-        } 
+        }
     }
     private Phases Phase {
         get => (Phases)NPC.ai[0];
@@ -49,7 +49,7 @@ internal class BastroboyNPC : ModNPC
         }
     }
     private ref float AttackTimer => ref NPC.ai[1];
-    private Attacks Attack { 
+    private Attacks Attack {
         get => (Attacks)NPC.ai[2];
         set {
 
@@ -88,6 +88,7 @@ internal class BastroboyNPC : ModNPC
         if (NPC.target != -1) {
             distanceToTargetSQ = NPC.Center.DistanceSQ(Main.player[NPC.target].Center);
         }
+
         switch (Phase) {
             case Phases.Phase1:
                 if (Attack != Attacks.CandyToss && Attack != Attacks.StarWhirl) {
@@ -100,17 +101,17 @@ internal class BastroboyNPC : ModNPC
                         if (AttackTimer++ > 60) {
                             Attack = Attacks.None;
                             AttackTimer = Main.rand.Next(40, 60);
-                        } else if (AttackTimer % 10 == 0) {
+                        }
+                        else if (AttackTimer % 10 == 0) {
                             NPC.velocity *= 0.8f;
                             Projectile.NewProjectile(
                                 NPC.GetSource_FromAI(),
                                 NPC.Center,
-                                Vector2.Zero,
-                                ModContent.ProjectileType<BastroboyExplodingProjectile>(),
+                                NPC.Center.DirectionTo(Main.player[NPC.target].Center) * 10f,
+                                ModContent.ProjectileType<BastroboyPhantomProjectile>(),
                                 NPC.damage,
                                 11f,
                                 -1,
-                                NPC.target,
                                 Attack == Attacks.StarToss ? 0 : 1
                             );
                         }
@@ -119,10 +120,10 @@ internal class BastroboyNPC : ModNPC
                     case Attacks.StarWhirl:
                         if (AttackTimer == 0) {
                             Projectile.NewProjectile(
-                                NPC.GetSource_FromAI(), 
+                                NPC.GetSource_FromAI(),
                                 NPC.Center,
                                 Vector2.Zero,
-                                ModContent.ProjectileType<BastroboyStarWhirlProjectile>(), 
+                                ModContent.ProjectileType<BastroboyStarWhirlProjectile>(),
                                 NPC.damage,
                                 0f,
                                 -1
@@ -132,6 +133,7 @@ internal class BastroboyNPC : ModNPC
                         SquishSquash *= 0.94f;
                         NPC.velocity *= 0.94f;
                         NPC.rotation *= 0.94f;
+                        NPC.frame = new Rectangle(0, 0, 56, 124);
 
                         if (AttackTimer++ > StarWhirlTime) {
                             Attack = Attacks.None;
@@ -139,7 +141,7 @@ internal class BastroboyNPC : ModNPC
                             HitWithExplodingProjectile = false;
                         }
                         break;
-                    case Attacks.CandyToss: 
+                    case Attacks.CandyToss:
                         break;
                     case Attacks.None:
                         if (AttackTimer == 0f) {
@@ -147,10 +149,12 @@ internal class BastroboyNPC : ModNPC
                                 if (NPC.velocity.Y < -0.005f && distanceToTargetSQ < 120_000) {
                                     Attack = Attacks.StarWhirl;
                                 }
-                            } else {
+                            }
+                            else {
                                 Attack = Main.rand.NextFromList(Attacks.StarToss, Attacks.CrescentToss);
                             }
-                        } else {
+                        }
+                        else {
                             AttackTimer--;
                         }
                         break;
@@ -221,20 +225,24 @@ internal class BastroboyNPC : ModNPC
     private Vector2 initialJumpVelocity;
     private void DoJumpingMovement() {
         if (squashTimer > 0) {
-            SquishSquash = MathF.Sin(MathHelper.Pi * squashTimer / MaxSquashTime) * 0.4f;
+            NPC.frame = new Rectangle(0, 124 * 2, 56, 124);
+            SquishSquash = MathF.Sin(MathHelper.Pi * squashTimer / MaxSquashTime) * 0.1f;
             NPC.rotation = MathHelper.Lerp(NPC.rotation, -0.05f * Math.Clamp(initialJumpVelocity.Y, -4, 4) * MathF.Sign(initialJumpVelocity.X), 0.05f);
             squashTimer--;
-        } else if (squashTimer == 0) {
+        }
+        else if (squashTimer == 0) {
             NPC.velocity = initialJumpVelocity;
             squashTimer--;
-        } else {
+        }
+        else {
+            NPC.frame = new Rectangle(0, 124 * 1, 56, 124);
             if (NPC.velocity.Y == 0) {
                 NPC.velocity = Vector2.Zero;
                 CalculateInitialJumpVelocity();
                 squashTimer = MaxSquashTime;
             }
 
-            SquishSquash = -Math.Clamp(Math.Abs(NPC.velocity.Y), -10, 10) * 0.03f;
+            SquishSquash = -Math.Clamp(Math.Abs(NPC.velocity.Y), -10, 10) * 0.01f;
             NPC.velocity.Y += Gravity;
             NPC.velocity.X += initialJumpVelocity.X * 0.001f;
             NPC.rotation = -0.05f * Math.Clamp(NPC.velocity.Y, -4, 4) * MathF.Sign(NPC.velocity.X);
@@ -251,22 +259,22 @@ internal class BastroboyNPC : ModNPC
         Player target = Main.player[NPC.target];
         initialJumpVelocity = Helper.InitialVelocityRequiredToHitPosition(
             NPC.Bottom,
-            target.Bottom + target.velocity * 100f * Main.rand.NextFloat(0.5f, 0.95f), 
-            Gravity, 
+            target.Bottom + target.velocity * 100f * Main.rand.NextFloat(0.5f, 0.95f),
+            Gravity,
             16f
         );
     }
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
         Texture2D texture = TextureAssets.Npc[Type].Value;
-        float aspectRatio = (float)texture.Height / texture.Width;
+        float aspectRatio = (float)NPC.frame.Height / NPC.frame.Width;
         Main.spriteBatch.Draw(
              texture,
              NPC.Center + 0.5f * NPC.height * Vector2.UnitY - screenPos,
-             null,
+             NPC.frame,
              drawColor,
              NPC.rotation,
-             new Vector2(texture.Width / 2f, texture.Height),
+             new Vector2(NPC.frame.Width / 2f, NPC.frame.Height),
              NPC.scale * new Vector2(1f + SquishSquash, 1f - SquishSquash * aspectRatio),
              SpriteEffects.None,
              0f

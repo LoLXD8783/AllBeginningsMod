@@ -2,11 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -16,7 +12,8 @@ namespace AllBeginningsMod.Common.GlobalItems
     /// Automatically draws a glowmask in the world for an item (name of glowmask image: "ItemName_Glow")
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    internal class ItemGlowmaskAttribute : Attribute {
+    internal class ItemGlowmaskAttribute : Attribute
+    {
         public string Path { get; set; } = default;
     }
 

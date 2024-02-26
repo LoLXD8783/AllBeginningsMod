@@ -1,11 +1,6 @@
-﻿using AllBeginningsMod.Utilities;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent;
 
@@ -67,20 +62,47 @@ namespace AllBeginningsMod.Utilities
             entity.velocity = entity.velocity.RotatedBy(-Vector3.Cross(direction.ToVector3(), entity.velocity.ToVector3()).Z * turn) * acceleration;
         }
 
-        public static void Begin(this SpriteBatch spriteBatch, SpriteBatchSnapshot snapshot) {
+        public static void Begin(this SpriteBatch spriteBatch, SpriteBatchData data) {
             spriteBatch.Begin(
-                snapshot.SortMode,
-                snapshot.BlendState,
-                snapshot.SamplerState,
-                snapshot.DepthStencilState,
-                snapshot.RasterizerState,
-                snapshot.Effect,
-                snapshot.TransformMatrix
+                data.SortMode,
+                data.BlendState,
+                data.SamplerState,
+                data.DepthStencilState,
+                data.RasterizerState,
+                data.Effect,
+                data.TransformMatrix
             );
         }
 
-        public static SpriteBatchSnapshot Capture(this SpriteBatch spriteBatch) {
-            return SpriteBatchSnapshot.Capture(spriteBatch);
+        public static void EndBegin(this SpriteBatch spriteBatch, SpriteBatchData data) {
+            spriteBatch.End();
+            spriteBatch.Begin(data);
+        }
+
+        public static SpriteBatchData CaptureEndBegin(this SpriteBatch spriteBatch, SpriteBatchData data) {
+            SpriteBatchData captureData = spriteBatch.Capture();
+            spriteBatch.EndBegin(data);
+
+            return captureData;
+        }
+
+        public static void InsertDraw(this SpriteBatch spriteBatch, SpriteBatchData data, Action<SpriteBatch> drawAction) {/*
+            if ((bool)SpriteBatchCache.BeginCalled.GetValue(spriteBatch)) {
+                SpriteBatchData rebeginData = spriteBatch.CaptureEndBegin(data);
+                drawAction(spriteBatch);
+                spriteBatch.EndBegin(rebeginData);
+            }
+            else {
+                
+            }*/
+
+            SpriteBatchData initData = spriteBatch.CaptureEndBegin(data);
+            drawAction(spriteBatch);
+            spriteBatch.EndBegin(initData);
+        }
+
+        public static SpriteBatchData Capture(this SpriteBatch spriteBatch) {
+            return SpriteBatchData.Capture(spriteBatch);
         }
 
         public static void DrawAdditive(this SpriteBatch spriteBatch,
@@ -92,7 +114,7 @@ namespace AllBeginningsMod.Utilities
             Vector2 origin,
             Vector2 scale,
             SpriteEffects effects) {
-            SpriteBatchSnapshot snapshit = spriteBatch.Capture();
+            SpriteBatchData data = spriteBatch.Capture();
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
@@ -109,10 +131,10 @@ namespace AllBeginningsMod.Utilities
             );
 
             spriteBatch.End();
-            spriteBatch.Begin(snapshit);
+            spriteBatch.Begin(data);
         }
 
-        public static void End(this SpriteBatch spriteBatch, out SpriteBatchSnapshot snapshot) {
+        public static void End(this SpriteBatch spriteBatch, out SpriteBatchData snapshot) {
             snapshot = spriteBatch.Capture();
             spriteBatch.End();
         }

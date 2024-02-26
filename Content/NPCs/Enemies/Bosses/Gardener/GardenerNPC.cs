@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using ReLogic.Content;
-using AllBeginningsMod.Common.PrimitiveDrawing;
-using Terraria.DataStructures;
+﻿using AllBeginningsMod.Common.PrimitiveDrawing;
 using AllBeginningsMod.Utilities;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using System;
+using System.Linq;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Gardener;
 
@@ -51,7 +47,7 @@ internal class GardenerNPC : ModNPC
             intestineTrails[i] = new(8, factor => 26);
         }
     }
-    
+
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
         twitchOffset *= 0.85f;
         Vector2 bodyDrawPosition = NPC.Center - Main.screenPosition + twitchOffset - Vector2.UnitY * 10;
@@ -103,7 +99,7 @@ internal class GardenerNPC : ModNPC
             0f
         );
 
-        SpriteBatchSnapshot capture = spriteBatch.Capture();
+        SpriteBatchData capture = spriteBatch.Capture();
         spriteBatch.End();
         spriteBatch.Begin(capture);
 

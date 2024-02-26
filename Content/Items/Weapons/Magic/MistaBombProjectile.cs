@@ -6,10 +6,7 @@ using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -48,7 +45,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Magic
 
             positionCache = new(30);
             sparkleTrail = new PrimitiveTrail(
-                positionCache.Count, 
+                positionCache.Count,
                 progress => 3f * (1f - progress + MathF.Sin(-Main.GameUpdateCount * 0.5f + progress * 13f) * 0.3f),
                 progress => Color.Lerp(Color.Orange, Color.DarkRed * 0.2f, progress)
             );
@@ -76,8 +73,8 @@ namespace AllBeginningsMod.Content.Items.Weapons.Magic
 
             if (!Main.dedServ) {
                 Dust.NewDustPerfect(
-                    linePosition, 
-                    DustID.TreasureSparkle, 
+                    linePosition,
+                    DustID.TreasureSparkle,
                     Main.rand.NextVector2Unit(Projectile.rotation - MathHelper.PiOver2, MathHelper.Pi) * Main.rand.NextFloat(10f)
                 );
             }
@@ -125,7 +122,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Magic
                         }
 
                         Main.player[Projectile.owner].ApplyDamageToNPC(
-                            npc, 
+                            npc,
                             Projectile.damage,
                             6f,
                             MathF.Sign(npc.Center.X - Projectile.Center.X),
@@ -159,7 +156,8 @@ namespace AllBeginningsMod.Content.Items.Weapons.Magic
             Texture2D texture = TextureAssets.Projectile[Type].Value;
             if (Progress > explodingTime) {
                 Projectile.frame = (int)(5f + stretch);
-            } else {
+            }
+            else {
                 Projectile.frame = (int)Helper.Lerp3(0f, 3f, 6f, Progress, explodingTime);
             }
             Rectangle source = Projectile.SourceRectangle();

@@ -1,20 +1,20 @@
 ﻿using AllBeginningsMod.Common.Bases.NPCs;
+using AllBeginningsMod.Common.Loaders;
+using AllBeginningsMod.Content.CameraModifiers;
+using AllBeginningsMod.Content.Dusts;
+using AllBeginningsMod.Content.Items.Materials;
+using AllBeginningsMod.Content.Projectiles;
 using AllBeginningsMod.Utilities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.ID;
-using Terraria;
-using Microsoft.Xna.Framework;
-using AllBeginningsMod.Content.Dusts;
-using Terraria.ModLoader;
-using AllBeginningsMod.Common.Loaders;
-using AllBeginningsMod.Content.CameraModifiers;
-using AllBeginningsMod.Content.Projectiles;
-using AllBeginningsMod.Content.Items.Materials;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Caverns
 {
@@ -81,12 +81,12 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Caverns
             }
 
             ExplosionVFXProjectile.Spawn(
-                source, 
-                NPC.Center, 
+                source,
+                NPC.Center,
                 Color.Yellow,
                 Color.OrangeRed,
-                progress => Color.Lerp(Color.OrangeRed, Color.DarkGray, -MathF.Pow(progress - 1f, 2) + 1f), 
-                250, 
+                progress => Color.Lerp(Color.OrangeRed, Color.DarkGray, -MathF.Pow(progress - 1f, 2) + 1f),
+                250,
                 120
             );
             Lighting.AddLight(NPC.Center, new Vector3(1.86f, 1.22f, 0.69f) * 3.5f);
@@ -101,8 +101,6 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Caverns
             return spawnInfo.Player.ZoneRockLayerHeight ? 0.05f : 0f;
         }
 
-        [Effect("FishEye")]
-        private static Effect fishEyeEffect;
         protected override void Draw(SpriteBatch spriteBatch, Color drawColor, float explodingProgress) {
             Texture2D texture = TextureAssets.Npc[Type].Value;
 
@@ -113,12 +111,13 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Caverns
             Vector2 scale = Vector2.One * (1f + 0.25f * explodingProgress);
             float rotation = NPC.rotation + MathF.Sin(Main.GameUpdateCount * 0.3f) * 0.5f * shake;
 
+            Effect fishEyeEffect = EffectLoader.GetEffect("Pixel::FishEye");
             fishEyeEffect.Parameters["strength"].SetValue(explodingProgress * 2f);
             fishEyeEffect.Parameters["uImageSize0"].SetValue(texture.Size());
             fishEyeEffect.Parameters["uSourceRect"].SetValue(new Vector4(0f, 0f, texture.Width, texture.Height));
             fishEyeEffect.Parameters["center"].SetValue(Vector2.One * 0.5f);
 
-            SpriteBatchSnapshot snapshot = spriteBatch.Capture();
+            SpriteBatchData snapshot = spriteBatch.Capture();
             spriteBatch.End();
             spriteBatch.Begin(snapshot with { Effect = fishEyeEffect });
 

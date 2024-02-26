@@ -1,14 +1,7 @@
-﻿using AllBeginningsMod.Common;
-using AllBeginningsMod.Utilities;
-using Microsoft.CodeAnalysis.CodeStyle;
+﻿using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -20,13 +13,16 @@ using Terraria.ModLoader;
 namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
 {
     [AutoloadBossHead]
-    internal class NightgauntNPC : ModNPC {
-        public enum Phases {
+    internal class NightgauntNPC : ModNPC
+    {
+        public enum Phases
+        {
             Phase1,
             Phase2
         }
 
-        public enum Attacks {
+        public enum Attacks
+        {
             None,
             Swing,
             Jump,
@@ -64,8 +60,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
         private const int BigSwingAreaHeight = 150;
         private const int BigSwingAreaOffset = 50;
         private Rectangle BigSwingHitArea => new(
-            (int)NPC.Center.X + (NPC.direction == -1 ? -BigSwingAreaWidth - BigSwingAreaOffset : BigSwingAreaOffset), 
-            (int)NPC.Center.Y - BigSwingAreaHeight / 2, 
+            (int)NPC.Center.X + (NPC.direction == -1 ? -BigSwingAreaWidth - BigSwingAreaOffset : BigSwingAreaOffset),
+            (int)NPC.Center.Y - BigSwingAreaHeight / 2,
             BigSwingAreaWidth,
             BigSwingAreaHeight
         );
@@ -168,10 +164,12 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
 
                                 if (NPC.target == -1) {
                                     Attack = Attacks.Dip;
-                                } else if (!BigSwingHitArea.Intersects(Target.Hitbox) || swingCount >= 2) {
+                                }
+                                else if (!BigSwingHitArea.Intersects(Target.Hitbox) || swingCount >= 2) {
                                     Attack = Attacks.Jump;
                                     swingCount = 0;
-                                } else {
+                                }
+                                else {
                                     Attack = Main.rand.NextFloat() < 0.2f && shieldAttackCooldown <= 0 ? Attacks.Shield : Attacks.Swing;
                                 }
 
@@ -226,21 +224,22 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                                 float distance = NPC.Center.DistanceSQ(Target.Center);
                                 if (distance > TeleportDistance) {
                                     NPC.Center = Target.Center - Vector2.UnitY * 2000f;
-                                } else {
+                                }
+                                else {
                                     NPC.velocity = Helper.InitialVelocityRequiredToHitPosition(
                                         NPC.Bottom,
                                         Target.Bottom,
                                         Gravity,
                                         Main.rand.NextFloat(15f, 19f)
                                     );
-                                    Main.NewText(NPC.velocity);
+                                    // Main.NewText(NPC.velocity);
                                 }
                             }
-                            
+
                             if (frame < 4) {
                                 FaceTarget();
                             }
-                            
+
                             if (NPC.velocity.Y >= 0 && frame == 5) {
                                 NPC.noTileCollide = false;
                                 if (
@@ -339,7 +338,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                 if (jumpTrailAlpha < 1f) {
                     jumpTrailAlpha += 0.05f;
                 }
-            } else {
+            }
+            else {
                 jumpTrailAlpha *= 0.96f;
             }
 
@@ -364,7 +364,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                 return;
             }
 
-            NPC.direction = MathF.Sign(Target.Center.X - NPC.Center.X); 
+            NPC.direction = MathF.Sign(Target.Center.X - NPC.Center.X);
         }
 
         private void JumpSmashEffects() {
@@ -430,7 +430,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
             };
             offset.X *= -NPC.direction;
 
-            SpriteBatchSnapshot snapshot = Main.spriteBatch.Capture();
+            SpriteBatchData snapshot = Main.spriteBatch.Capture();
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);
             for (int i = 0; i < NPC.oldPos.Length; i++) {
@@ -447,7 +447,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                     0f
                 );
             }
-            
+
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(snapshot);

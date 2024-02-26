@@ -1,26 +1,22 @@
-﻿using AllBeginningsMod.Common;
+﻿using AllBeginningsMod.Common.Loaders;
 using AllBeginningsMod.Common.PrimitiveDrawing;
 using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
-using System.Collections.Generic;
-using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
 {
-    internal class TerrarianHunterNPC : ModNPC {
-        public enum Attacks {
+    internal class TerrarianHunterNPC : ModNPC
+    {
+        public enum Attacks
+        {
             HoverHorizontal,
             HoverVertical,
             BottomMine,
@@ -48,11 +44,11 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
         private Vector2 GunElbowPosition => NPC.Center + new Vector2(10f * NPC.direction, 20f);
         private int GunFrame => (int)(AttackTimer % GunAnimationTime / (GunAnimationTime / 3f));
         private int LastGunFrame { get; set; } = -1;
-        private Vector2 BigMuzzlePosition { 
+        private Vector2 BigMuzzlePosition {
             get {
                 Vector2 direction = gunRotation.ToRotationVector2();
-                return GunElbowPosition 
-                    + direction * (GunOriginOffset + 65) 
+                return GunElbowPosition
+                    + direction * (GunOriginOffset + 65)
                     + direction.RotatedBy(MathHelper.PiOver2) * -4f * NPC.direction;
             }
         }
@@ -77,7 +73,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                 Attacks.Gun => new Vector2(30 * NPC.direction, 64),
                 _ => new Vector2(24 * NPC.direction, 66),
             },
-            1 =>  Attack switch {
+            1 => Attack switch {
                 Attacks.HoverHorizontal => new Vector2(-28 * NPC.direction, 65),
                 Attacks.BottomMine => new Vector2(-28 * NPC.direction, 75),
                 _ => new Vector2(-28 * NPC.direction, 75),
@@ -131,7 +127,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                     Vector2 direction;
                     if (i == 2) {
                         direction = (NPC.direction == -1 ? MathHelper.PiOver4 : MathHelper.Pi * 0.75f).ToRotationVector2();
-                    } else {
+                    }
+                    else {
                         direction = Attack switch {
                             Attacks.HoverHorizontal => (NPC.direction == -1 ? MathHelper.PiOver4 : MathHelper.Pi * 0.75f).ToRotationVector2(),
                             Attacks.BottomMine => (NPC.direction == 1 ? MathHelper.PiOver4 : MathHelper.Pi * 0.75f).ToRotationVector2(),
@@ -170,13 +167,15 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                     float distanceX = Target.Center.X - NPC.Center.X;
                     if (MathF.Abs(distanceX) > 350f) {
                         NPC.velocity.X += MathF.Sign(distanceX) * 1.25f;
-                    } else {
+                    }
+                    else {
                         if (backMinesCooldown <= 0) {
                             Attack = Main.rand.NextFromList(Attacks.Gun, Attacks.BackMines);
-                        } else {
+                        }
+                        else {
                             Attack = Attacks.Gun;
                         }
-                        
+
                         AttackTimer = 0f;
                     }
 
@@ -186,7 +185,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                     float distanceY = Target.Center.Y - NPC.Center.Y;
                     if (MathF.Abs(distanceY) > MathF.Abs(NPC.velocity.Y)) {
                         NPC.velocity.Y += MathF.Sign(distanceY) * 1.25f;
-                    } else {
+                    }
+                    else {
                         Attack = Attacks.HoverHorizontal;
                         AttackTimer = 0f;
                     }
@@ -214,7 +214,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                     if (AttackTimer > 30) {
                         if (consecutiveBottomMines < 2) {
                             Attack = Main.rand.NextFromList(Attacks.BottomMine, Attacks.HoverVertical);
-                        } else {
+                        }
+                        else {
                             Attack = Attacks.HoverVertical;
                         }
 
@@ -233,7 +234,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                     if (AttackTimer == 0) {
                         gunRotation = GunElbowPosition.DirectionTo(Target.Center).ToRotation();
                         GenerateNextGunRotation();
-                    } else {
+                    }
+                    else {
                         gunRotation = Utils.AngleLerp(
                             gunRotation,
                             NextGunRotation,
@@ -379,14 +381,14 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
             };
         }
 
-        Effect effect;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
             Matrix transformationMatrix = Matrix.CreateTranslation(-NPC.Center.X, -NPC.Center.Y, 0f)
                 * Matrix.CreateRotationZ(NPC.rotation)
                 * Matrix.CreateTranslation(-Main.screenPosition.X + NPC.Center.X, -Main.screenPosition.Y + NPC.Center.Y, 0f)
                 * Main.GameViewMatrix.TransformationMatrix
                 * Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-            effect ??= Mod.Assets.Request<Effect>("Assets/Effects/FireTrail", AssetRequestMode.ImmediateLoad).Value;
+
+            Effect effect = EffectLoader.GetEffect("Trail::Fire");
             effect.Parameters["sampleTexture"].SetValue(Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise2", AssetRequestMode.ImmediateLoad).Value);
             effect.Parameters["transformationMatrix"].SetValue(transformationMatrix);
             effect.Parameters["amp"].SetValue(0.15f);
@@ -457,7 +459,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
                     0f
                 );
 
-                SpriteBatchSnapshot snapshot = spriteBatch.Capture();
+                SpriteBatchData snapshot = spriteBatch.Capture();
                 spriteBatch.End();
                 spriteBatch.Begin(snapshot with { BlendState = BlendState.Additive });
 

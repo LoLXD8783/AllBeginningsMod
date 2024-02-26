@@ -1,11 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
-using Terraria;
+﻿using System.IO;
 using Terraria.ModLoader;
-using System.IO;
-using AllBeginningsMod.Common.Netcode;
 
 namespace AllBeginningsMod;
 

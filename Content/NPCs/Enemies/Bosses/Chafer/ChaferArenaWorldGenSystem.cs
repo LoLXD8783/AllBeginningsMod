@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using AllBeginningsMod.Common.Loaders;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using Terraria;
-using Terraria.GameContent.Generation;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.WorldBuilding;
+﻿using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Chafer
 {
@@ -18,22 +8,22 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Chafer
         public static int ArenaY;
         public static int ArenaWidth;
         public static int ArenaHeight;
-        
-        public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight) {
+
+        /*public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight) {
             int index = tasks.FindIndex(task => task.Name is "Remove Broken Traps");
             if (index == -1) {
                 return;
             }
 
             tasks.Insert(
-                index + 1, 
+                index + 1,
                 new PassLegacy(
                     "",
                     (_, _) => {
                         ImageData data = ImageStructureLoader.Get("ChaferArena");
                         ArenaWidth = data.Width;
                         ArenaHeight = data.Height;
-                        
+
                         const int spawnWidth = 200;
                         ArenaX = Main.rand.Next(Main.maxTilesX / 2 - spawnWidth, Main.maxTilesX / 2 + spawnWidth);
                         ArenaY = Main.rand.Next((int)Main.rockLayer, Main.UnderworldLayer - ArenaHeight);
@@ -41,7 +31,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Chafer
                             (i, j, color) => {
                                 i += ArenaX;
                                 j += ArenaY;
-                                
+
                                 if (color.R != 49) {
                                     PlaceWall(i, j, WallID.LunarBrickWall);
                                     RemoveTile(i, j);
@@ -83,6 +73,6 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Chafer
                     }
                 )
             );
-        }
+        }*/
     }
 }

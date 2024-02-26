@@ -1,18 +1,11 @@
 ﻿using AllBeginningsMod.Utilities;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Bases.NPCs;
 
@@ -72,15 +65,15 @@ public abstract class VampireNPC : ModNPC
             if (--ExplodingTimer == 0f) {
                 if (!Main.dedServ) {
                     OnExplode();
-                } 
-                
+                }
+
                 if (Main.netMode != NetmodeID.MultiplayerClient) {
                     Helper.ForEachPlayerInRange(
                         NPC.Center,
                         ExplosionRange,
                         player => player.Hurt(
-                            PlayerDeathReason.ByNPC(NPC.whoAmI), 
-                            40, 
+                            PlayerDeathReason.ByNPC(NPC.whoAmI),
+                            40,
                             MathF.Sign(player.Center.X - NPC.Center.X),
                             knockback: 8f
                         )
@@ -111,14 +104,15 @@ public abstract class VampireNPC : ModNPC
         }
 
         if (
-            NPC.target < 0 
-            || NPC.target >= 255 
-            || Main.player[NPC.target].dead 
+            NPC.target < 0
+            || NPC.target >= 255
+            || Main.player[NPC.target].dead
             || !Main.player[NPC.target].active
             || !Main.player[NPC.target].Hitbox.Intersects(NPC.Center, FollowRange)
         ) {
             NPC.TargetClosest();
-        } else {
+        }
+        else {
             FollowBehaviour(Target);
         }
 

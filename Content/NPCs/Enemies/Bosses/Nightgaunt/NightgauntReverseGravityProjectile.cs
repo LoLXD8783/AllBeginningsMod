@@ -1,12 +1,9 @@
-﻿using AllBeginningsMod.Utilities;
+﻿using AllBeginningsMod.Common.Loaders;
+using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -45,7 +42,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                 if (Projectile.alpha > 0) {
                     Projectile.alpha -= 2;
                 }
-            } else {
+            }
+            else {
                 Projectile.alpha = 255 - (int)(255f * Projectile.timeLeft / 60f);
             }
 
@@ -72,7 +70,6 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
             return false;
         }
 
-        private Effect effect;
         public override bool PreDraw(ref Color lightColor) {
             Texture2D texture = TextureAssets.Projectile[Type].Value;
             Texture2D colorMaskTexture = ModContent.Request<Texture2D>(Texture + "_ColorMask", AssetRequestMode.ImmediateLoad).Value;
@@ -108,10 +105,10 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                 0f
             );
 
-            SpriteBatchSnapshot snapshot = Main.spriteBatch.Capture();
+            SpriteBatchData snapshot = Main.spriteBatch.Capture();
             Main.spriteBatch.End();
 
-            effect ??= Mod.Assets.Request<Effect>("Assets/Effects/JellyfishYe", AssetRequestMode.ImmediateLoad).Value;
+            Effect effect = EffectLoader.GetEffect("Pixel::JellyfishYe");
             effect.Parameters["time"].SetValue(Projectile.timeLeft * 0.05f + RotationOffset * 4f);
             effect.Parameters["uImageSize0"].SetValue(colorMaskTexture.Size());
             effect.Parameters["uSourceRect"].SetValue(new Vector4(source.X, source.Y, source.Width, source.Height));

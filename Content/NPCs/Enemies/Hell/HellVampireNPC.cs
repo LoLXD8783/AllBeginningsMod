@@ -1,5 +1,4 @@
-﻿using System;
-using AllBeginningsMod.Common.Bases.NPCs;
+﻿using AllBeginningsMod.Common.Bases.NPCs;
 using AllBeginningsMod.Common.Loaders;
 using AllBeginningsMod.Content.CameraModifiers;
 using AllBeginningsMod.Content.Dusts;
@@ -9,12 +8,12 @@ using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -78,10 +77,10 @@ public sealed class HellVampireNPC : VampireNPC
         }
 
         ExplosionVFXProjectile.Spawn(
-            source, 
-            NPC.Center, 
-            Color.Yellow, 
-            Color.OrangeRed, progress => Color.Lerp(Color.Orange, Color.Gray, progress * progress), 
+            source,
+            NPC.Center,
+            Color.Yellow,
+            Color.OrangeRed, progress => Color.Lerp(Color.Orange, Color.Gray, progress * progress),
             200,
             120
         );
@@ -94,8 +93,6 @@ public sealed class HellVampireNPC : VampireNPC
         );
     }
 
-    [Effect("FishEye")]
-    private static Effect fishEyeEffect;
     protected override void Draw(SpriteBatch spriteBatch, Color drawColor, float explodingProgress) {
         Texture2D texture = TextureAssets.Npc[Type].Value;
         explodingProgress *= explodingProgress;
@@ -105,12 +102,13 @@ public sealed class HellVampireNPC : VampireNPC
         Vector2 scale = Vector2.One * (1f + 0.25f * explodingProgress);
         float rotation = NPC.rotation + MathF.Sin(Main.GameUpdateCount * 0.3f) * 0.4f * shake;
 
+        Effect fishEyeEffect = EffectLoader.GetEffect("Pixel::FishEye");
         fishEyeEffect.Parameters["strength"].SetValue(explodingProgress * 2f);
         fishEyeEffect.Parameters["uImageSize0"].SetValue(texture.Size());
         fishEyeEffect.Parameters["uSourceRect"].SetValue(new Vector4(0f, 0f, texture.Width, texture.Height));
         fishEyeEffect.Parameters["center"].SetValue(Vector2.One * 0.5f);
 
-        SpriteBatchSnapshot snapshot = spriteBatch.Capture();
+        SpriteBatchData snapshot = spriteBatch.Capture();
         spriteBatch.End();
         spriteBatch.Begin(snapshot with { Effect = fishEyeEffect });
 
@@ -128,12 +126,12 @@ public sealed class HellVampireNPC : VampireNPC
 
         spriteBatch.End();
         spriteBatch.Begin(
-            SpriteSortMode.Deferred, 
-            BlendState.Additive, 
-            Main.DefaultSamplerState, 
-            DepthStencilState.None, 
-            Main.Rasterizer, 
-            fishEyeEffect, 
+            SpriteSortMode.Deferred,
+            BlendState.Additive,
+            Main.DefaultSamplerState,
+            DepthStencilState.None,
+            Main.Rasterizer,
+            fishEyeEffect,
             Main.GameViewMatrix.TransformationMatrix
         );
 

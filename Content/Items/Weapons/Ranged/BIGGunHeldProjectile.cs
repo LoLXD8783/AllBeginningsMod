@@ -4,10 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -19,7 +15,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
     internal class BIGGunHeldProjectile : HeldProjectile
     {
         private int aiTimer;
-        private float maxNormalShootTime = 18f;
+        private float maxNormalShootTime = 24f;
         private float maxAltShootTime = 60f;
         private float altReleaseTime;
         private Vector2 recoil;
@@ -37,7 +33,8 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
             if (Player.altFunctionUse == 2) {
                 DoAltShoot();
                 recoil *= 0.95f;
-            } else {
+            }
+            else {
                 DoNormalShoot();
                 recoil *= 0.8f;
             }
@@ -55,7 +52,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
                         Projectile.GetSource_FromAI(),
                         Projectile.Center,
                         Projectile.velocity * 30f,
-                        Projectile.velocity * 18f,
+                        Projectile.velocity * 25f,
                         ModContent.ProjectileType<BIGGunSmallRocketProjectile>(),
                         Projectile.damage,
                         Projectile.knockBack,
@@ -71,7 +68,8 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
             if (aiTimer > maxNormalShootTime + 5) {
                 if (ShouldDespawn(DespawnMode.Channel)) {
                     Despawn();
-                } else {
+                }
+                else {
                     aiTimer = -1;
                     Player.direction = MathF.Sign(Main.MouseWorld.X - Player.Center.X);
                 }
@@ -107,7 +105,8 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
                         bigRocket.Projectile.friendly = true;
                         recoil = new Vector2(30, -0.3f * Player.direction);
                     }
-                } else {
+                }
+                else {
                     Despawn();
                 }
             }
@@ -126,8 +125,8 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
         public override bool PreDraw(ref Color lightColor) {
             Vector2 origin = new(10 + recoil.X, 6);
             DrawHeldProjectile(
-                TextureAssets.Projectile[Type].Value, 
-                Projectile.Center - Main.screenPosition, 
+                TextureAssets.Projectile[Type].Value,
+                Projectile.Center - Main.screenPosition,
                 lightColor,
                 Projectile.rotation,
                 origin
@@ -142,7 +141,8 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
                     Projectile.rotation,
                     origin
                 );
-            } else {
+            }
+            else {
                 Texture2D glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow", AssetRequestMode.ImmediateLoad).Value;
                 DrawHeldProjectile(
                     glowTexture,

@@ -5,15 +5,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static tModPorter.ProgressUpdate;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Ranged
 {
@@ -44,7 +40,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
         }
 
         public override void OnKill(int timeLeft) {
-            Main.instance.CameraModifiers.Add(new ExplosionShakeCameraModifier(25f, 0.9f));
+            Main.instance.CameraModifiers.Add(new ExplosionShakeCameraModifier(120f, 0.95f, Projectile.Center, 10_000f));
             if (Main.myPlayer != Projectile.owner) {
                 return;
             }
@@ -72,13 +68,13 @@ namespace AllBeginningsMod.Content.Items.Weapons.Ranged
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.Center);
 
             ExplosionVFXProjectile.Spawn(
-                Projectile.GetSource_Death(), 
-                Projectile.Center, 
-                Color.Yellow, 
-                Color.Yellow, 
-                factor => Color.Lerp(Color.Black, Color.SlateGray, factor), 
-                1400,
-                Main.rand.Next(140, 170)
+                Projectile.GetSource_Death(),
+                Projectile.Center,
+                Color.Yellow,
+                Color.Yellow,
+                factor => Color.Lerp(Color.Orange, Color.Black, factor),
+                Main.rand.Next(1400, 1600),
+                Main.rand.Next(80, 120)
             );
         }
 

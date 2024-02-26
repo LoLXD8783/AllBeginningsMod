@@ -1,16 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ModLoader;
-using Terraria;
-using Terraria.GameContent;
+﻿using AllBeginningsMod.Common.Loaders;
+using AllBeginningsMod.Utilities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System.Reflection.Metadata;
-using AllBeginningsMod.Utilities;
+using Terraria;
+using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
 {
@@ -42,7 +36,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
                 if (Projectile.alpha > 0) {
                     Projectile.alpha -= 10;
                 }
-            } else {
+            }
+            else {
                 dissapear = true;
             }
 
@@ -81,30 +76,29 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
             return targetHitbox.Intersects(projHitbox.Center, Projectile.width / 2);
         }
 
-        private Effect effect;
         public override bool PreDraw(ref Color lightColor) {
             Color color = new Color(185, 140, 183) * (1f - Projectile.alpha / 255f) * 0.3f;
             Texture2D noiseTexture = Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise6", AssetRequestMode.ImmediateLoad).Value;
 
-            SpriteBatchSnapshot snapshot = Main.spriteBatch.Capture();
-            effect ??= Mod.Assets.Request<Effect>("Assets/Effects/ForceField", AssetRequestMode.ImmediateLoad).Value;
+            Effect effect = EffectLoader.GetEffect("Pixel::ForceField");
             effect.Parameters["size"].SetValue(0.3f);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.08f);
             effect.Parameters["intensity"].SetValue(2f);
             effect.Parameters["fishEye"].SetValue(1.5f);
             effect.Parameters["sampleOpacity"].SetValue(0.35f);
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(snapshot with { Effect = effect });
+            Helper.DrawPixelated(spriteBatch => {
+                Main.spriteBatch.End(out SpriteBatchData snapshot);
+                Main.spriteBatch.Begin(snapshot with { Effect = effect });
+                spriteBatch.Draw(
+                    noiseTexture,
+                    Projectile.Hitbox.Modified((int)-Main.screenPosition.X, (int)-Main.screenPosition.Y, 0, 0),
+                    color
+                );
 
-            Main.spriteBatch.Draw(
-                noiseTexture,
-                Projectile.Hitbox.Modified((int)-Main.screenPosition.X, (int)-Main.screenPosition.Y, 0, 0),
-                color
-            );
+                Main.spriteBatch.EndBegin(snapshot);
+            });
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(snapshot);
             return false;
         }
     }

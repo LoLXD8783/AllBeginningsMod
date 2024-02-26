@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -11,7 +11,7 @@ namespace AllBeginningsMod.Common.Loaders;
 
 public class ImageStructureLoader : ILoadable
 {
-    private static readonly Dictionary<string, ImageData> images  = new();
+    private static readonly Dictionary<string, ImageData> images = new();
 
     public void Load(Mod mod) {
         foreach (string filePath in mod.GetFileNames()) {
@@ -20,10 +20,10 @@ public class ImageStructureLoader : ILoadable
             }
 
             Texture2D texture = mod.Assets.Request<Texture2D>(filePath[..^7], AssetRequestMode.ImmediateLoad).Value;
-            
+
             Color[] textureData = new Color[texture.Width * texture.Height];
             Main.RunOnMainThread(() => texture.GetData(textureData)).Wait();
-            
+
             images[Path.GetFileName(filePath)] = new ImageData(texture.Width, textureData);
         }
     }

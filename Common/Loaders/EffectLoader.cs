@@ -1,67 +1,52 @@
-﻿using log4net.Repository.Hierarchy;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
-using Terraria.IO;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Loaders
 {
-    internal class EffectLoader : ILoadable {
+    internal class EffectLoader : ILoadable
+    {
+        private readonly static Dictionary<string, Effect> Effects = new();
+
+        /// <param name="name">ex. Nightgaunt</param>
+        public static Filter GetFilter(string name) {
+            return Filters.Scene[nameof(AllBeginningsMod) + "::" + name] ?? throw new ArgumentException($"No such filter \"{name}\"");
+        }
+
+        /// <param name="path">ex. "Filter::Nightgaunt" or "Pixel::FishEye"</param>
+        public static Effect GetEffect(string path) {
+            return Effects[path] ?? throw new ArgumentException($"No such effect \"{path}\"");
+        }
+
         public void Load(Mod mod) {
             foreach (string filePath in mod.GetFileNames()) {
-                if (filePath.EndsWith(".xnb")) {
-                    Asset<Effect> assetEffect = mod.Assets.Request<Effect>(filePath.Replace(".xnb", string.Empty), AssetRequestMode.ImmediateLoad);
-                    if (assetEffect.Value is null) {
-                        continue;
-                    }
+                if (filePath.EndsWith(".fxc")) {
+                    Effect effect = mod.Assets.Request<Effect>(filePath.Replace(".fxc", string.Empty), AssetRequestMode.ImmediateLoad).Value;
 
                     string name = Path.GetFileNameWithoutExtension(filePath);
-                    string sceneShaderName = nameof(AllBeginningsMod) + ":" + name;
+                    string directory = Path.GetFileName(Path.GetDirectoryName(filePath));
+                    if (directory == "Filter") {
+                        string sceneShaderName = nameof(AllBeginningsMod) + "::" + name;
+                        Filters.Scene[sceneShaderName] = new Filter(new ScreenShaderData(
+                            new Ref<Effect>(effect),
+                            name + "Pass"
+                        ));
 
-                    Filters.Scene[sceneShaderName] = new Filter(
-                        new ScreenShaderData(new Ref<Effect>(assetEffect.Value), name + "Pass")
-                    );
-                    Filters.Scene[sceneShaderName].Load();
-                }
-            }
-
-            foreach (FieldInfo[] fieldInfos in mod.Code.GetTypes().Select(type => type.GetRuntimeFields())) {
-                foreach (FieldInfo fieldInfo in fieldInfos) {
-                    EffectAttribute effectAttribute;
-                    if ((effectAttribute = fieldInfo.GetCustomAttribute<EffectAttribute>()) is null) {
-                        continue;
+                        Filters.Scene[sceneShaderName].Load();
                     }
 
-                    Asset<Effect> assetEffect = mod.Assets.Request<Effect>("Assets/Effects/" + effectAttribute.Name, AssetRequestMode.ImmediateLoad);
-                    if (assetEffect.Value is null) {
-                        continue;
-                    }
-
-                    if (fieldInfo.IsInitOnly) {
-                        continue;
-                    }
-
-                    fieldInfo.SetValue(null, assetEffect.Value);
+                    Effects[$"{directory}::{name}"] = effect;
+                    mod.Logger.Info($"Loaded effect: {directory}::{name}.");
                 }
             }
         }
 
         public void Unload() { }
-    }
-
-    [AttributeUsage(AttributeTargets.Field)]
-    internal sealed class EffectAttribute : Attribute {
-        public string Name { get; }
-        public EffectAttribute(string name) {
-            Name = name;
-        }
-
     }
 }

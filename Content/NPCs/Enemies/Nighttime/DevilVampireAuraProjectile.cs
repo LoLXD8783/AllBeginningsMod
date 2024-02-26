@@ -1,18 +1,14 @@
-﻿using AllBeginningsMod.Content.Buffs;
+﻿using AllBeginningsMod.Common.Loaders;
+using AllBeginningsMod.Content.Buffs;
 using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static tModPorter.ProgressUpdate;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Nighttime
 {
@@ -85,7 +81,8 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Nighttime
 
             float effectProgress = MathF.Min(-MathF.Pow(progress / 2f - 1f, 2) + 1f, 1f);
 
-            Effect effect = Mod.Assets.Request<Effect>("Assets/Effects/ExplosionSmoke", AssetRequestMode.ImmediateLoad).Value;
+
+            Effect effect = EffectLoader.GetEffect("Pixel::ExplosionSmoke");
             effect.Parameters["progress"].SetValue(effectProgress);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.0001f + offsetRotation);
 
@@ -100,21 +97,25 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Nighttime
 
             float size = (Projectile.width + 250);
 
-            Main.spriteBatch.End(out SpriteBatchSnapshot snapshot);
+            Main.spriteBatch.End(out SpriteBatchData snapshot);
             Main.spriteBatch.Begin(snapshot with { Effect = effect });
-            Main.spriteBatch.Draw(
-                baseTexture,
-                new Rectangle(
-                    (int)(Projectile.Center.X - size / 2f - Main.screenPosition.X),
-                    (int)(Projectile.Center.Y - size / 2f - Main.screenPosition.Y),
-                    (int)size,
-                    (int)size
-                ),
-                Color.Lerp(Color.DarkViolet, Color.Transparent, progress + 0.5f)
-            );
+            Helper.DrawPixelated(spriteBatch => {
+
+                spriteBatch.Draw(
+                    baseTexture,
+                    new Rectangle(
+                        (int)(Projectile.Center.X - size / 2f - Main.screenPosition.X),
+                        (int)(Projectile.Center.Y - size / 2f - Main.screenPosition.Y),
+                        (int)size,
+                        (int)size
+                    ),
+                    Color.Lerp(Color.DarkViolet, Color.Transparent, progress + 0.5f)
+                );
+            });
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(snapshot);
+
             return false;
         }
     }

@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System.Reflection;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Utilities;
@@ -13,6 +13,8 @@ public sealed class SpriteBatchCache : ILoadable
     public static FieldInfo RasterizerState { get; private set; }
     public static FieldInfo Effect { get; private set; }
     public static FieldInfo TransformMatrix { get; private set; }
+    public static FieldInfo BeginCalled { get; private set; }
+    public static MethodInfo FlushBatch { get; private set; }
 
     void ILoadable.Load(Mod mod) {
         SortMode = typeof(SpriteBatch).GetField("sortMode", Helper.FlagsPrivateInstance);
@@ -22,6 +24,8 @@ public sealed class SpriteBatchCache : ILoadable
         RasterizerState = typeof(SpriteBatch).GetField("rasterizerState", Helper.FlagsPrivateInstance);
         Effect = typeof(SpriteBatch).GetField("customEffect", Helper.FlagsPrivateInstance);
         TransformMatrix = typeof(SpriteBatch).GetField("transformMatrix", Helper.FlagsPrivateInstance);
+        BeginCalled = typeof(SpriteBatch).GetField("beginCalled", Helper.FlagsPrivateInstance);
+        FlushBatch = typeof(SpriteBatch).GetMethod("FlushBatch", Helper.FlagsPrivateInstance);
     }
 
     void ILoadable.Unload() {
