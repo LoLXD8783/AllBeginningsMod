@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 namespace AllBeginningsMod.Common
 {
     [Autoload(Side = ModSide.Client)]
-    internal class FilterManager : ILoadable
+    internal class FilterSystem : ILoadable
     {
-        public static void ApplyShader(Filter filter, Action<Effect> effectAction = null) {
+        public static void ApplyFilter(Filter filter, Action<Effect> effectAction = null) {
             filterApplyCache.Add(new ScreenShaderApplyData(filter, effectAction));
         }
 

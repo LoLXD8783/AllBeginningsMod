@@ -44,7 +44,7 @@ internal class GardenerNPC : ModNPC
 
         intestineTrails = new PrimitiveTrail[4];
         for (int i = 0; i < intestineTrails.Length; i++) {
-            intestineTrails[i] = new(8, factor => 26);
+            intestineTrails[i] = new(new Vector2[8], factor => 26);
         }
     }
 

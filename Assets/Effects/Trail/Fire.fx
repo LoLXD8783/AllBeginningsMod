@@ -16,14 +16,14 @@ sampler2D samplerTexture = sampler_state
 struct VSInput
 {
     float4 position : POSITION;
-    float2 textureCoordinates : TEXCOORD;
+    float2 coords : TEXCOORD;
     float4 color : COLOR;
 };
 
 struct VSOutput
 {
     float4 position : POSITION;
-    float2 textureCoordinates : TEXCOORD;
+    float2 coords : TEXCOORD;
     float4 color : COLOR;
 };
 
@@ -32,7 +32,7 @@ VSOutput VertexShaderFunction(VSInput input)
     VSOutput output;
     output.color = input.color;
     output.position = mul(input.position, transformationMatrix);
-    output.textureCoordinates = input.textureCoordinates;
+    output.coords = input.coords;
     
     return output;
 }
@@ -46,7 +46,7 @@ float WaveValue(float x)
 
 float4 PixelShaderFunction(VSOutput output) : COLOR0
 {
-    float2 uv = output.textureCoordinates;
+    float2 uv = output.coords;
     uv.x = cos(uv.x * PI / 2.0);
     uv.y = (uv.y - 0.5) * 2.0;
     

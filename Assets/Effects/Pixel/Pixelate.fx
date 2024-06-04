@@ -1,4 +1,4 @@
-﻿int resolution = 3;
+﻿int resolution = 2;
 float2 size;
 float stepMin = 0.3, stepMax = 0.5;
 
@@ -12,6 +12,12 @@ sampler2D textureSampler = sampler_state
     AddressU = wrap;
     AddressV = wrap;
 };
+
+float closest(float x, int t)
+{
+    int y = (int) (x * 100.0);
+    return (float)(y - (y % t)) / 100.0;
+}
 
 float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
 {
@@ -29,7 +35,9 @@ float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
         }
     }
     
+    // return float4(closest(color.r, 20), closest(color.g, 20), closest(color.b, 20), color.a > 0.3 ? 1.0 : 0.0);
     
+    color = float4(closest(color.r, 20), closest(color.g, 20), closest(color.b, 20), closest(color.a, 20));
     return float4(color.rgb, smoothstep(stepMin, stepMax, color.a));
 }
 

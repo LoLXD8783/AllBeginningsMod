@@ -1,5 +1,6 @@
 ﻿using AllBeginningsMod.Common;
 using AllBeginningsMod.Common.Loaders;
+using AllBeginningsMod.Common.Rendering;
 using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -95,26 +96,24 @@ namespace AllBeginningsMod.Content.Projectiles
             noiseTexture1 ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/PerlinNoise", AssetRequestMode.ImmediateLoad).Value;
             noiseTexture2 ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise2", AssetRequestMode.ImmediateLoad).Value;
 
-            float flashScale = 1f - MathF.Min(0.15f, Progress) / 0.15f;
+            Renderer.QueueRenderAction(() => {
+                effect ??= EffectLoader.GetEffect("Pixel::ExplosionSmoke");
 
-            effect ??= EffectLoader.GetEffect("Pixel::ExplosionSmoke");
-            effect.Parameters["progress"].SetValue(Progress);
-            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.002f + Projectile.rotation);
+                effect.Parameters["progress"].SetValue(Progress);
+                effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.002f + Projectile.rotation);
 
-            effect.Parameters["noiseTexture1"].SetValue(noiseTexture1);
-            effect.Parameters["noiseScale1"].SetValue(0.2f);
-            effect.Parameters["smokeCut"].SetValue(0.15f);
-            effect.Parameters["smokeCutSmoothness"].SetValue(0.7f);
+                effect.Parameters["noiseTexture1"].SetValue(noiseTexture1);
+                effect.Parameters["noiseScale1"].SetValue(0.2f);
+                effect.Parameters["smokeCut"].SetValue(0.15f);
+                effect.Parameters["smokeCutSmoothness"].SetValue(0.7f);
 
-            effect.Parameters["noiseTexture2"].SetValue(noiseTexture2);
-            effect.Parameters["noiseScale2"].SetValue(0.3f);
-            effect.Parameters["edgeColor"].SetValue(Color.Black.ToVector4());
+                effect.Parameters["noiseTexture2"].SetValue(noiseTexture2);
+                effect.Parameters["noiseScale2"].SetValue(0.3f);
+                effect.Parameters["edgeColor"].SetValue(Color.Black.ToVector4());
 
-            Main.spriteBatch.End(out SpriteBatchData snapshot);
-            Main.spriteBatch.Begin(snapshot with { Effect = effect });
-
-            Helper.DrawPixelated(spriteBatch => {
-                spriteBatch.Draw(
+                Main.spriteBatch.End(out SpriteBatchData snapshot);
+                Main.spriteBatch.Begin(snapshot with { Effect = effect });
+                Main.spriteBatch.Draw(
                     smokeTexture,
                     Projectile.Center - Main.screenPosition,
                     null,
@@ -125,11 +124,15 @@ namespace AllBeginningsMod.Content.Projectiles
                     SpriteEffects.None,
                     0f
                 );
-            });
 
-            Main.spriteBatch.End();
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(snapshot);
+            }, RenderLayer.Projectiles, style: RenderStyle.Pixelated);
+
+            float flashScale = 1f - MathF.Min(0.15f, Progress) / 0.15f;
+
+            Main.spriteBatch.End(out SpriteBatchData snapshot);
             Main.spriteBatch.Begin(snapshot with { BlendState = BlendState.Additive });
-
             Main.spriteBatch.Draw(
                 glowTexture,
                 Projectile.Center - Main.screenPosition,
@@ -159,7 +162,7 @@ namespace AllBeginningsMod.Content.Projectiles
 
             float blobScale = MathF.Pow(1f - MathF.Min(0.25f, Progress) / 0.25f, 2);
 
-            FilterManager.ApplyShader(
+            FilterSystem.ApplyFilter(
                 EffectLoader.GetFilter("Water"),
                 effect => {
                     effect.Parameters["noise"].SetValue(

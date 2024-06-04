@@ -11,7 +11,7 @@ namespace AllBeginningsMod.Common.Loaders;
 
 public class ImageStructureLoader : ILoadable
 {
-    private static readonly Dictionary<string, ImageData> images = new();
+    private static readonly Dictionary<string, ImageData> Images = new();
 
     public void Load(Mod mod) {
         foreach (string filePath in mod.GetFileNames()) {
@@ -24,12 +24,12 @@ public class ImageStructureLoader : ILoadable
             Color[] textureData = new Color[texture.Width * texture.Height];
             Main.RunOnMainThread(() => texture.GetData(textureData)).Wait();
 
-            images[Path.GetFileName(filePath)] = new ImageData(texture.Width, textureData);
+            Images[Path.GetFileName(filePath)] = new ImageData(texture.Width, textureData);
         }
     }
 
     public static ImageData Get(string structureName) {
-        return images[structureName];
+        return Images[structureName];
     }
 
     public void Unload() { }

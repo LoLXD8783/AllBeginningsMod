@@ -1,7 +1,4 @@
-﻿using AllBeginningsMod.Common;
-using AllBeginningsMod.Common.Loaders;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Reflection;
 using Terraria;
@@ -18,25 +15,6 @@ namespace AllBeginningsMod.Utilities
         public static Matrix WorldTransformationMatrix => Matrix.CreateTranslation(-Main.screenPosition.X, -Main.screenPosition.Y, 0f)
             * Main.GameViewMatrix.TransformationMatrix
             * Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-        private static EffectScreenDrawLayer pixelateLayer;
-        private static Effect pixelateEffect;
-        public static void DrawPixelated(Action<SpriteBatch> drawAction) {
-            pixelateEffect ??= EffectLoader.GetEffect("Pixel::Pixelate");
-            pixelateEffect.Parameters["size"].SetValue(Main.ScreenSize.ToVector2());
-            pixelateEffect.Parameters["resolution"].SetValue(2);
-            pixelateEffect.Parameters["stepMin"].SetValue(0.3f);
-            pixelateEffect.Parameters["stepMax"].SetValue(0.8f);
-
-            /*ScreenShaderLoader.ApplyShader("AllBeginningsMod::Pixelate", effect => {
-                effect.Parameters["resolution"].SetValue(2);
-                effect.Parameters["stepMin"].SetValue(0.3f);
-                effect.Parameters["stepMax"].SetValue(0.5f);
-            });*/
-
-            pixelateLayer ??= new EffectScreenDrawLayer();
-            pixelateLayer.Draw(pixelateEffect, drawAction);
-        }
 
         public static float Lerp3(float a, float b, float c, float progress, float upperBound = 0.5f) {
             if (progress < upperBound) {

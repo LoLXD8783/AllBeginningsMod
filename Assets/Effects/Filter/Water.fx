@@ -38,7 +38,7 @@ float2 center;
 
 float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
 {
-    float2 centerNorm = center / uScreenResolution;
+    float2 centerNorm = uZoom * center / uScreenResolution;
     float2 uv = coords - centerNorm;
     float len = length(uv);
     float sampleValue = tex2D(noiseSampler, uv + uTime * 0.005).r;

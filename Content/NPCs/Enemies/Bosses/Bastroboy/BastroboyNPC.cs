@@ -21,8 +21,7 @@ internal class BastroboyNPC : ModNPC
         StarToss,
         CrescentToss,
         StarWhirl,
-        CandyToss,
-        RayBeams,
+        NeutralSun,
         Hammuh,
         RayBeamSword
     }
@@ -91,24 +90,22 @@ internal class BastroboyNPC : ModNPC
 
         switch (Phase) {
             case Phases.Phase1:
-                if (Attack != Attacks.CandyToss && Attack != Attacks.StarWhirl) {
-                    DoJumpingMovement();
-                }
-
                 switch (Attack) {
                     case Attacks.StarToss:
                     case Attacks.CrescentToss:
+                        DoJumpingMovement();
                         if (AttackTimer++ > 60) {
                             Attack = Attacks.None;
                             AttackTimer = Main.rand.Next(40, 60);
                         }
                         else if (AttackTimer % 10 == 0) {
                             NPC.velocity *= 0.8f;
+                            Vector2 position = NPC.Center + Main.rand.NextVector2Unit() * Main.rand.NextFloat(20f, 70f);
                             Projectile.NewProjectile(
                                 NPC.GetSource_FromAI(),
-                                NPC.Center,
-                                NPC.Center.DirectionTo(Main.player[NPC.target].Center) * 10f,
-                                ModContent.ProjectileType<BastroboyPhantomProjectile>(),
+                                position,
+                                position.DirectionTo(Main.player[NPC.target].Center) * 10f,
+                                ModContent.ProjectileType<PhantomProjectile>(),
                                 NPC.damage,
                                 11f,
                                 -1,
@@ -123,7 +120,7 @@ internal class BastroboyNPC : ModNPC
                                 NPC.GetSource_FromAI(),
                                 NPC.Center,
                                 Vector2.Zero,
-                                ModContent.ProjectileType<BastroboyStarWhirlProjectile>(),
+                                ModContent.ProjectileType<StarWhirlProjectile>(),
                                 NPC.damage,
                                 0f,
                                 -1
@@ -141,9 +138,32 @@ internal class BastroboyNPC : ModNPC
                             HitWithExplodingProjectile = false;
                         }
                         break;
-                    case Attacks.CandyToss:
+                    case Attacks.NeutralSun:
+                        if (AttackTimer == 0) {
+                            Projectile.NewProjectile(
+                                NPC.GetSource_FromAI(),
+                                NPC.Center,
+                                Vector2.Zero,
+                                ModContent.ProjectileType<NeutralSunProjectile>(),
+                                NPC.damage,
+                                0f,
+                                -1
+                            );
+                        }
+
+                        SquishSquash *= 0.94f;
+                        NPC.velocity *= 0.94f;
+                        NPC.rotation *= 0.94f;
+                        NPC.frame = new Rectangle(0, 0, 56, 124);
+
+                        if (AttackTimer++ > StarWhirlTime) {
+                            Attack = Attacks.None;
+                            AttackTimer = Main.rand.Next(60, 90);
+                            HitWithExplodingProjectile = false;
+                        }
                         break;
                     case Attacks.None:
+                        DoJumpingMovement();
                         if (AttackTimer == 0f) {
                             if (HitWithExplodingProjectile) {
                                 if (NPC.velocity.Y < -0.005f && distanceToTargetSQ < 120_000) {
@@ -151,7 +171,12 @@ internal class BastroboyNPC : ModNPC
                                 }
                             }
                             else {
-                                Attack = Main.rand.NextFromList(Attacks.StarToss, Attacks.CrescentToss);
+                                Attack = Main.rand.NextFromList(
+                                    //Attacks.StarToss,
+                                    //Attacks.CrescentToss,
+                                    //Attacks.StarWhirl,
+                                    Attacks.NeutralSun
+                                );
                             }
                         }
                         else {

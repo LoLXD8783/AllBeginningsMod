@@ -105,7 +105,7 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Hell
             for (int i = 0; i < engineTrails.Length; i++) {
                 float width = i == 2 ? 25f : 50f;
                 engineTrails[i] = new PrimitiveTrail(
-                    9,
+                    new Vector2[9],
                     factor => (-MathF.Pow(factor - 1f, 4) + 1f) * width,
                     factor => Color.Lerp(
                         Color.Lerp(Color.Orange, Color.MediumPurple, factor * 1.2f),

@@ -12,14 +12,13 @@ namespace AllBeginningsMod.Content.CameraModifiers
         private readonly Vector2? sourcePosition;
         private readonly float? maxRange;
         private readonly string uniqueIdentity;
-        private readonly float maxStrength;
         public ExplosionShakeCameraModifier(float strength, float diminish, Vector2 sourcePosition, float maxRange, string uniqueIdentity = null) : this(strength, diminish, uniqueIdentity) {
             this.sourcePosition = sourcePosition;
             this.maxRange = maxRange;
         }
 
         public ExplosionShakeCameraModifier(float strength, float diminish, string uniqueIdentity = "") {
-            this.strength = maxStrength = strength;
+            this.strength = strength;
             this.diminish = diminish;
             this.uniqueIdentity = uniqueIdentity;
         }

@@ -45,7 +45,7 @@ namespace AllBeginningsMod.Content.Items.Weapons.Magic
 
             positionCache = new(30);
             sparkleTrail = new PrimitiveTrail(
-                positionCache.Count,
+                positionCache.Positions,
                 progress => 3f * (1f - progress + MathF.Sin(-Main.GameUpdateCount * 0.5f + progress * 13f) * 0.3f),
                 progress => Color.Lerp(Color.Orange, Color.DarkRed * 0.2f, progress)
             );

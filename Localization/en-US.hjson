@@ -67,6 +67,9 @@ Mods: {
 			BIGGunBigRocketProjectile.DisplayName: B I G Gun Big Rocket Projectile
 			BIGGunSmallRocketProjectile.DisplayName: B I G Gun Small Rocket Projectile
 			BastroboyPhantomProjectile.DisplayName: Bastroboy Phantom Projectile
+			NeutralSunProjectile.DisplayName: Neutral Sun Projectile
+			PhantomProjectile.DisplayName: Phantom Projectile
+			StarWhirlProjectile.DisplayName: Star Whirl Projectile
 		}
 
 		Buffs: {

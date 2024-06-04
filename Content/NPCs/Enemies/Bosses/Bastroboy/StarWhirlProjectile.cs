@@ -11,11 +11,11 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Bastroboy;
 
-internal class BastroboyStarWhirlProjectile : ModProjectile
+internal class StarWhirlProjectile : ModProjectile
 {
     private int bastroboyWhoAmI = -1;
     private const int MaxWidth = 300;
-    private const int MaxHeight = 170;
+    private const int MaxHeight = 300;
     public override void SetDefaults() {
         Projectile.friendly = false;
         Projectile.hostile = true;

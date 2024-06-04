@@ -1,4 +1,5 @@
 ﻿using AllBeginningsMod.Common.Loaders;
+using AllBeginningsMod.Common.Rendering;
 using AllBeginningsMod.Content.Buffs;
 using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
@@ -79,29 +80,27 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Nighttime
             noiseTexture1 ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise2", AssetRequestMode.ImmediateLoad).Value;
             noiseTexture2 ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/PortalNoise", AssetRequestMode.ImmediateLoad).Value;
 
-            float effectProgress = MathF.Min(-MathF.Pow(progress / 2f - 1f, 2) + 1f, 1f);
+            Renderer.QueueRenderAction(() => {
+                float effectProgress = MathF.Min(-MathF.Pow(progress / 2f - 1f, 2) + 1f, 1f);
 
+                Effect effect = EffectLoader.GetEffect("Pixel::ExplosionSmoke");
+                effect.Parameters["progress"].SetValue(effectProgress);
+                effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.0001f + offsetRotation);
 
-            Effect effect = EffectLoader.GetEffect("Pixel::ExplosionSmoke");
-            effect.Parameters["progress"].SetValue(effectProgress);
-            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.0001f + offsetRotation);
+                effect.Parameters["noiseTexture1"].SetValue(noiseTexture1);
+                effect.Parameters["noiseScale1"].SetValue(1f);
+                effect.Parameters["smokeCut"].SetValue(0.05f);
+                effect.Parameters["smokeCutSmoothness"].SetValue(0.4f);
 
-            effect.Parameters["noiseTexture1"].SetValue(noiseTexture1);
-            effect.Parameters["noiseScale1"].SetValue(1f);
-            effect.Parameters["smokeCut"].SetValue(0.05f);
-            effect.Parameters["smokeCutSmoothness"].SetValue(0.4f);
+                effect.Parameters["noiseTexture2"].SetValue(noiseTexture2);
+                effect.Parameters["noiseScale2"].SetValue(1f);
+                effect.Parameters["edgeColor"].SetValue((Color.Black * (1f - effectProgress)).ToVector4());
 
-            effect.Parameters["noiseTexture2"].SetValue(noiseTexture2);
-            effect.Parameters["noiseScale2"].SetValue(1f);
-            effect.Parameters["edgeColor"].SetValue((Color.Black * (1f - effectProgress)).ToVector4());
+                float size = Projectile.width + 250;
 
-            float size = (Projectile.width + 250);
-
-            Main.spriteBatch.End(out SpriteBatchData snapshot);
-            Main.spriteBatch.Begin(snapshot with { Effect = effect });
-            Helper.DrawPixelated(spriteBatch => {
-
-                spriteBatch.Draw(
+                Main.spriteBatch.End(out SpriteBatchData snapshot);
+                Main.spriteBatch.Begin(snapshot with { Effect = effect });
+                Main.spriteBatch.Draw(
                     baseTexture,
                     new Rectangle(
                         (int)(Projectile.Center.X - size / 2f - Main.screenPosition.X),
@@ -111,10 +110,9 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Nighttime
                     ),
                     Color.Lerp(Color.DarkViolet, Color.Transparent, progress + 0.5f)
                 );
-            });
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(snapshot);
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(snapshot);
+            }, RenderLayer.Projectiles, style: RenderStyle.Pixelated);
 
             return false;
         }

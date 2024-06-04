@@ -1,4 +1,5 @@
 ﻿using AllBeginningsMod.Common.Loaders;
+using AllBeginningsMod.Common.Rendering;
 using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -87,17 +88,22 @@ namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Nightgaunt
             effect.Parameters["fishEye"].SetValue(1.5f);
             effect.Parameters["sampleOpacity"].SetValue(0.35f);
 
-            Helper.DrawPixelated(spriteBatch => {
-                Main.spriteBatch.End(out SpriteBatchData snapshot);
-                Main.spriteBatch.Begin(snapshot with { Effect = effect });
-                spriteBatch.Draw(
-                    noiseTexture,
-                    Projectile.Hitbox.Modified((int)-Main.screenPosition.X, (int)-Main.screenPosition.Y, 0, 0),
-                    color
-                );
+            Renderer.QueueRenderAction(
+                () => {
+                    Main.spriteBatch.End(out SpriteBatchData snapshot);
+                    Main.spriteBatch.Begin(snapshot with { Effect = effect });
+                    Main.spriteBatch.Draw(
+                        noiseTexture,
+                        Projectile.Hitbox.Modified((int)-Main.screenPosition.X, (int)-Main.screenPosition.Y, 0, 0),
+                        color
+                    );
 
-                Main.spriteBatch.EndBegin(snapshot);
-            });
+                    Main.spriteBatch.EndBegin(snapshot);
+                },
+                RenderLayer.Projectiles,
+                RenderOrder.Over,
+                RenderStyle.Pixelated
+            );
 
             return false;
         }

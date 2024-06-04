@@ -46,13 +46,13 @@ public readonly struct SpriteBatchData
 
     public static SpriteBatchData Default() {
         return new SpriteBatchData {
-            SortMode = SpriteSortMode.Deferred,
-            BlendState = BlendState.AlphaBlend,
+            SortMode = default,
+            BlendState = default,
             SamplerState = Main.DefaultSamplerState,
-            DepthStencilState = DepthStencilState.None,
+            DepthStencilState = default,
             RasterizerState = Main.Rasterizer,
             Effect = null,
-            TransformMatrix = Main.GameViewMatrix.EffectMatrix
+            TransformMatrix = Main.GameViewMatrix.TransformationMatrix
         };
     }
 }

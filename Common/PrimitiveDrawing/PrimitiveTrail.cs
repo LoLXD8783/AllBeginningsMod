@@ -19,12 +19,23 @@ namespace AllBeginningsMod.Common.PrimitiveDrawing
 
         private static GraphicsDevice Device => Main.graphics.GraphicsDevice;
 
-        public PrimitiveTrail(int maxTrailPositionsCount, Func<float, float> trailWidth, Func<float, Color> trailColor = null, ITrailStyle trailStyle = null) {
+        public PrimitiveTrail(
+            Vector2[] positions,
+            Func<float, float> trailWidth,
+            Func<float, Color> trailColor = null,
+            ITrailStyle trailStyle = null,
+            Vector2? initPosition = null
+        ) {
             TrailStyle = trailStyle ?? new DefaultTrailStyle();
             TrailWidth = trailWidth;
             TrailColor = trailColor ?? (_ => Color.White);
-            MaxTrailPositions = maxTrailPositionsCount;
-            Positions = new Vector2[maxTrailPositionsCount];
+            MaxTrailPositions = positions.Length;
+            Positions = positions;
+            if (initPosition.HasValue) {
+                for (int i = 0; i < Positions.Length; i++) {
+                    Positions[i] = initPosition.Value;
+                }
+            }
 
             Main.QueueMainThreadAction(
                 () => {
@@ -47,14 +58,22 @@ namespace AllBeginningsMod.Common.PrimitiveDrawing
             IndexBuffer.SetData(indices);
         }
 
-        public void Draw(Effect effect) {
+        private bool PrepareDevice() {
             if (VertexBuffer is null || IndexBuffer is null) {
-                return;
+                return false;
             }
 
             UpdateBuffers();
             Device.SetVertexBuffer(VertexBuffer);
             Device.Indices = IndexBuffer;
+
+            return true;
+        }
+
+        public void Draw(Effect effect) {
+            if (!PrepareDevice()) {
+                return;
+            }
 
             foreach (EffectPass pass in effect.CurrentTechnique.Passes) {
                 pass.Apply();
@@ -62,11 +81,11 @@ namespace AllBeginningsMod.Common.PrimitiveDrawing
             }
         }
 
-        public void Draw(Texture2D texture, Color color, Matrix transformationMatrix = default, bool blackAsAlpha = false) {
+        public void Draw(Texture2D texture, Color color, Matrix? transformationMatrix = null, bool blackAsAlpha = false) {
             Effect effect = EffectLoader.GetEffect("Trail::Default");
             effect.Parameters["sampleTexture"].SetValue(texture);
             effect.Parameters["color"].SetValue(color.ToVector4());
-            effect.Parameters["transformationMatrix"].SetValue(transformationMatrix);
+            effect.Parameters["transformationMatrix"].SetValue(transformationMatrix ?? Matrix.Identity);
             effect.Parameters["blackAsAlpha"].SetValue(blackAsAlpha);
 
             Draw(effect);
