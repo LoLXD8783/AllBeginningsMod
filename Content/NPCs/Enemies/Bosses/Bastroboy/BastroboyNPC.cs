@@ -56,8 +56,10 @@ internal class BastroboyNPC : ModNPC
             NPC.netUpdate = true;
         }
     }
+
     public bool HitWithExplodingProjectile { get; set; }
     private const float Gravity = 0.4f;
+
     public override void SetDefaults() {
         NPC.width = 30;
         NPC.height = 80;
@@ -139,7 +141,7 @@ internal class BastroboyNPC : ModNPC
                         }
                         break;
                     case Attacks.NeutralSun:
-                        if (AttackTimer == 0) {
+                        if (AttackTimer == 0f) {
                             Projectile.NewProjectile(
                                 NPC.GetSource_FromAI(),
                                 NPC.Center,
