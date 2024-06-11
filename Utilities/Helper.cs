@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Reflection;
 using Terraria;
@@ -139,6 +140,15 @@ namespace AllBeginningsMod.Utilities
                 ai1,
                 ai2
             );
+        }
+
+        public static void DrawAnimatedTexture(Texture2D texture, int frameCount, int frameHeight, int ticksPerFrame, Vector2 position, Color drawColor, Vector2 origin, float scale, SpriteEffects effects) {
+
+            int currentFrame = (int)(Main.GameUpdateCount / ticksPerFrame) % frameCount;
+
+            Rectangle sourceRectangle = new(0, currentFrame * frameHeight, texture.Width, texture.Height);
+
+            Main.spriteBatch.Draw(texture, position, sourceRectangle, drawColor, 0, origin, scale, effects, 0);
         }
     }
 }

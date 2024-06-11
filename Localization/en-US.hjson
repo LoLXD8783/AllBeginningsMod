@@ -46,6 +46,29 @@ Mods: {
 			DevilVampireNPC.DisplayName: Devil Vampire
 			TerrarianHunterNPC.DisplayName: Terrarian Hunter
 			NPCHitboxNPC.DisplayName: Hitbox
+
+			StrangeTreeNPC: {
+				DisplayName: Gleeful Tree
+
+				TownNPCMood: {
+					Content: I am content.
+					NoHome: I hate not having a home.
+					FarFromHome: I am too far from home.
+					LoveSpace: I love having so much space.
+					DislikeCrowded: I dislike how crowded I am.
+					HateCrowded: I hate how crowded I am.
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+					LoveBiome: I love {BiomeName}.
+				}
+
+				Dialogue: {
+					Line0: Can you believe it, a talking tree.
+					Line1: This place is STUNNING! Im so glad i could get a chance to dig my roots in this soil.
+					Line2: I'm glad you're here mister, we seem to share alot. Everything down from the bark, to our destiny.
+					Line3: Give this guy 5 golden coins, and get yourself a bunch of grass seeds.
+				}
+			}
 		}
 
 		Projectiles: {

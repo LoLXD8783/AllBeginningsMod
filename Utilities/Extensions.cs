@@ -174,5 +174,8 @@ namespace AllBeginningsMod.Utilities
                 && npc.active
                 && npc.immune[player.whoAmI] <= 0;
         }
+
+        public static Vector2 GetCenter(this Texture2D tex)
+            => new Vector2(tex.Width / 2, tex.Height / 2);
     }
 }
