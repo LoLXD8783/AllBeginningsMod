@@ -19,6 +19,8 @@ namespace AllBeginningsMod.Content.Tiles.Decorations;
 
 public class SuspiciousLookingTree : ModTile {
 
+    public override string Texture => "Terraria/Images/Item_0";
+
     internal enum TreeState { Normal, Decay, Evil, Dead }
 
     TreeState state;
