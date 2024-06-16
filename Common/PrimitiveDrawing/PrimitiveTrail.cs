@@ -56,6 +56,16 @@ namespace AllBeginningsMod.Common.PrimitiveDrawing
 
             VertexBuffer.SetData(vertices);
             IndexBuffer.SetData(indices);
+
+            if(IndexBuffer is null || VertexBuffer.VertexCount < vertices.Length) {
+                VertexBuffer.Dispose();
+                VertexBuffer.SetData(vertices);
+            }
+
+            if(IndexBuffer is null || IndexBuffer.IndexCount < indices.Length) {
+                IndexBuffer.Dispose();
+                IndexBuffer.SetData(indices);
+            }
         }
 
         private bool PrepareDevice() {

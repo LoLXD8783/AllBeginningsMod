@@ -15,8 +15,7 @@ internal class BastroboyNPC : ModNPC
 
     private const int MaxSquashTime = 28;
     public const int StarWhirlTime = 60 * 10;
-    private enum Attacks
-    {
+    private enum Attacks {
         None,
         StarToss,
         CrescentToss,
@@ -26,8 +25,7 @@ internal class BastroboyNPC : ModNPC
         RayBeamSword
     }
 
-    private enum Phases
-    {
+    private enum Phases {
         Phase1,
         Phase2,
         Phase3
@@ -174,9 +172,9 @@ internal class BastroboyNPC : ModNPC
                             }
                             else {
                                 Attack = Main.rand.NextFromList(
-                                    //Attacks.StarToss,
-                                    //Attacks.CrescentToss,
-                                    //Attacks.StarWhirl,
+                                    Attacks.StarToss,
+                                    Attacks.CrescentToss,
+                                    Attacks.StarWhirl,
                                     Attacks.NeutralSun
                                 );
                             }
