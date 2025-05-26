@@ -3,8 +3,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod;
 
-public sealed class AllBeginningsMod : Mod
-{
+public sealed class AllBeginningsMod : Mod {
     public static AllBeginningsMod Instance { get; private set; }
     public AllBeginningsMod() {
         Instance = this;

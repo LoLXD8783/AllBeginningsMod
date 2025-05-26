@@ -18,8 +18,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Nighttime;
 
-internal class DevilVampireNPC : VampireNPC
-{
+internal class DevilVampireNPC : VampireNPC {
     public override void SetStaticDefaults() {
         Main.npcFrameCount[Type] = 2;
     }
@@ -33,7 +32,7 @@ internal class DevilVampireNPC : VampireNPC
     }
 
     protected override void FollowBehaviour(Player target) {
-        if (NPC.velocity.LengthSquared() > 1.2f) {
+        if(NPC.velocity.LengthSquared() > 1.2f) {
             return;
         }
 
@@ -46,13 +45,13 @@ internal class DevilVampireNPC : VampireNPC
     }
 
     public override void FindFrame(int frameHeight) {
-        if (IsExploding) {
+        if(IsExploding) {
             NPC.frame = new(0, 0, 84, frameHeight);
             return;
         }
 
         int frameTime = 20;
-        if (NPC.frameCounter++ > frameTime * 2) {
+        if(NPC.frameCounter++ > frameTime * 2) {
             NPC.frameCounter = 0d;
         }
 
@@ -65,7 +64,7 @@ internal class DevilVampireNPC : VampireNPC
 
     protected override void OnExplode() {
         IEntitySource source = NPC.GetSource_Death();
-        if (Main.netMode != NetmodeID.MultiplayerClient) {
+        if(Main.netMode != NetmodeID.MultiplayerClient) {
             Projectile.NewProjectile(
                 source,
                 NPC.Center,
@@ -76,7 +75,7 @@ internal class DevilVampireNPC : VampireNPC
             );
         }
 
-        if (Main.dedServ) {
+        if(Main.dedServ) {
             return;
         }
 
@@ -89,7 +88,7 @@ internal class DevilVampireNPC : VampireNPC
 
         gore1.position -= new Vector2(gore1.Width, gore1.Height) * 0.5f;
 
-        for (int i = 0; i < 4; i++) {
+        for(int i = 0; i < 4; i++) {
             Vector2 direction = (
                 NPC.direction == -1 ? Main.rand.NextFloat(-MathHelper.PiOver2, 0f) : Main.rand.NextFloat(-MathHelper.Pi, -MathHelper.PiOver2)
             ).ToRotationVector2();
@@ -105,14 +104,14 @@ internal class DevilVampireNPC : VampireNPC
         }
 
         Vector2[] dustPositions = NPC.Center.PositionsAround(18, _ => Main.rand.NextFloat(20f, 50f), out Vector2[] dustDirections, Main.rand.NextFloat());
-        for (int i = 0; i < dustPositions.Length; i++) {
+        for(int i = 0; i < dustPositions.Length; i++) {
             Dust.NewDustPerfect(
                 dustPositions[i],
                 Main.rand.NextFromList(DustID.Smoke, DustID.TreasureSparkle, DustID.YellowTorch),
                 dustDirections[i] * Main.rand.NextFloat(3f, 7f)
             );
 
-            if (i % 3 == 0) {
+            if(i % 3 == 0) {
                 Dust.NewDustPerfect(
                     dustPositions[i],
                     ModContent.DustType<DevilVampireExplosionDust>(),
@@ -152,7 +151,7 @@ internal class DevilVampireNPC : VampireNPC
         Vector2 scale = Vector2.One * (1f + 0.25f * explodingProgress);
         float rotation = NPC.rotation + MathF.Sin(Main.GameUpdateCount * 0.3f) * 0.4f * shake;
 
-        for (int i = 0; i < 4; i++) {
+        for(int i = 0; i < 4; i++) {
             spriteBatch.Draw(
                 texture,
                 position + Main.rand.NextVector2Unit() * 4f,

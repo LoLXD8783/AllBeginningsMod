@@ -9,8 +9,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Bases.NPCs;
 
-public abstract class VampireNPC : ModNPC
-{
+public abstract class VampireNPC : ModNPC {
     protected virtual int MaxExplodingTime => 110;
     protected virtual float FollowRange => 16 * 30;
     protected virtual float SlowDownFactor => 0.95f;
@@ -18,7 +17,7 @@ public abstract class VampireNPC : ModNPC
     protected virtual void Exploding(float progress) { }
     protected virtual void OnExplode() { }
     protected virtual void FollowBehaviour(Player target) {
-        if (NPC.velocity.LengthSquared() > 0.8f) {
+        if(NPC.velocity.LengthSquared() > 0.8f) {
             return;
         }
 
@@ -50,24 +49,24 @@ public abstract class VampireNPC : ModNPC
     }
 
     public sealed override void AI() {
-        if (NPC.collideX) {
+        if(NPC.collideX) {
             NPC.velocity.X -= MathF.Sign(NPC.velocity.X) * 2f;
         }
 
-        if (NPC.collideY) {
+        if(NPC.collideY) {
             NPC.velocity.Y -= MathF.Sign(NPC.velocity.Y) * 2f;
         }
 
         NPC.rotation = NPC.velocity.X * 0.1f;
         NPC.velocity *= SlowDownFactor;
-        if (ExplodingTimer > 0f) {
+        if(ExplodingTimer > 0f) {
             Exploding(ExplodingTimer == 0f ? 0f : 1f - ExplodingTimer / MaxExplodingTime);
-            if (--ExplodingTimer == 0f) {
-                if (!Main.dedServ) {
+            if(--ExplodingTimer == 0f) {
+                if(!Main.dedServ) {
                     OnExplode();
                 }
 
-                if (Main.netMode != NetmodeID.MultiplayerClient) {
+                if(Main.netMode != NetmodeID.MultiplayerClient) {
                     Helper.ForEachPlayerInRange(
                         NPC.Center,
                         ExplosionRange,
@@ -103,7 +102,7 @@ public abstract class VampireNPC : ModNPC
             return;
         }
 
-        if (
+        if(
             NPC.target < 0
             || NPC.target >= 255
             || Main.player[NPC.target].dead
@@ -124,7 +123,7 @@ public abstract class VampireNPC : ModNPC
     }
 
     public sealed override bool CheckDead() {
-        if (killed) {
+        if(killed) {
             return true;
         }
 

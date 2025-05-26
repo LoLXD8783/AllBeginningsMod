@@ -11,8 +11,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.Items.Weapons.Ranged;
 
-internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile
-{
+internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile {
     private Player Player => Main.player[Projectile.owner];
     private bool shouldDie;
     private float Progress => 1f - (float)Player.itemAnimation / Player.itemAnimationMax;
@@ -39,7 +38,7 @@ internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile
 
     public override void OnSpawn(IEntitySource source) {
         Projectile.rotation = lastRotation;
-        if (Player.HeldItem.ModItem is PlasmicRepeaterItem repeaterItem) {
+        if(Player.HeldItem.ModItem is PlasmicRepeaterItem repeaterItem) {
             this.repeaterItem = repeaterItem;
         }
         else {
@@ -48,12 +47,12 @@ internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile
     }
 
     public override bool PreAI() {
-        if (!shouldDie) {
+        if(!shouldDie) {
             Projectile.timeLeft = Projectile.extraUpdates + 2;
         }
 
         Player.heldProj = Projectile.whoAmI;
-        if (Player.HeldItem.type != ModContent.ItemType<PlasmicRepeaterItem>() || Player.ItemAnimationEndingOrEnded) {
+        if(Player.HeldItem.type != ModContent.ItemType<PlasmicRepeaterItem>() || Player.ItemAnimationEndingOrEnded) {
             lastRotation = Projectile.rotation;
             shouldDie = true;
         }
@@ -62,8 +61,8 @@ internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile
     }
 
     public override void AI() {
-        if (Main.myPlayer == Player.whoAmI) {
-            if (repeaterItem is null) {
+        if(Main.myPlayer == Player.whoAmI) {
+            if(repeaterItem is null) {
                 return;
             }
 
@@ -79,10 +78,10 @@ internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile
         muzzlePositionBottom = defaultShootPositionBottom + directionToMouse * 48;
         muzzlePositionTop = defaultShootPositionTop + directionToMouse * 63;
 
-        if (Main.myPlayer == Player.whoAmI) {
-            if (frame == 0 && lastFrame != 0) {
+        if(Main.myPlayer == Player.whoAmI) {
+            if(frame == 0 && lastFrame != 0) {
                 Vector2 shootPosition = defaultShootPositionBottom;
-                if (Collision.CanHit(defaultShootPositionBottom, 0, 0, muzzlePositionBottom, 0, 0)) {
+                if(Collision.CanHit(defaultShootPositionBottom, 0, 0, muzzlePositionBottom, 0, 0)) {
                     shootPosition = muzzlePositionBottom;
                 }
 
@@ -108,9 +107,9 @@ internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile
                 muzzleFlashAlphaBottom = 1f;
             }
 
-            if (frame == 2 && lastFrame != 2) {
+            if(frame == 2 && lastFrame != 2) {
                 Vector2 shootPosition = defaultShootPositionTop;
-                if (Collision.CanHit(defaultShootPositionTop, 0, 0, muzzlePositionTop, 0, 0)) {
+                if(Collision.CanHit(defaultShootPositionTop, 0, 0, muzzlePositionTop, 0, 0)) {
                     shootPosition = muzzlePositionTop;
                 }
 
@@ -147,10 +146,10 @@ internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile
     }
 
     public void StrikeCloseRange(Vector2 position, Vector2 direction, float width) {
-        for (int i = 0; i < Main.maxNPCs; i++) {
+        for(int i = 0; i < Main.maxNPCs; i++) {
             NPC npc = Main.npc[i];
             float collisionPoint = 0;
-            if (
+            if(
                 npc == null
                 || npc.friendly
                 || npc.dontTakeDamage

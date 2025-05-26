@@ -4,8 +4,7 @@ using Terraria;
 
 namespace AllBeginningsMod.Utilities;
 
-public readonly struct SpriteBatchData
-{
+public readonly struct SpriteBatchData {
     public SpriteSortMode SortMode { get; init; }
     public BlendState BlendState { get; init; }
     public SamplerState SamplerState { get; init; }
@@ -45,7 +44,8 @@ public readonly struct SpriteBatchData
     }
 
     public static SpriteBatchData Default() {
-        return new SpriteBatchData {
+        return new SpriteBatchData
+        {
             SortMode = default,
             BlendState = default,
             SamplerState = Main.DefaultSamplerState,

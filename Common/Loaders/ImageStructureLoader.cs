@@ -9,13 +9,12 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Common.Loaders;
 
-public class ImageStructureLoader : ILoadable
-{
+public class ImageStructureLoader : ILoadable {
     private static readonly Dictionary<string, ImageData> Images = new();
 
     public void Load(Mod mod) {
-        foreach (string filePath in mod.GetFileNames()) {
-            if (!filePath.StartsWith("Assets/Images/Structures") || !filePath.EndsWith(".rawimg")) {
+        foreach(string filePath in mod.GetFileNames()) {
+            if(!filePath.StartsWith("Assets/Images/Structures") || !filePath.EndsWith(".rawimg")) {
                 continue;
             }
 
@@ -35,11 +34,10 @@ public class ImageStructureLoader : ILoadable
     public void Unload() { }
 }
 
-public record ImageData(int Width, Color[] Data)
-{
+public record ImageData(int Width, Color[] Data) {
     public int Height => Data.Length / Width;
     public void EnumeratePixels(Action<int, int, Color> action) {
-        for (int i = 0; i < Data.Length; i++) {
+        for(int i = 0; i < Data.Length; i++) {
             action(i % Width, i / Width, Data[i]);
         }
     }

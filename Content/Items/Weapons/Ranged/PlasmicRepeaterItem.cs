@@ -8,8 +8,7 @@ using Terraria.ModLoader;
 namespace AllBeginningsMod.Content.Items.Weapons.Ranged;
 
 [ItemGlowmask]
-internal sealed class PlasmicRepeaterItem : ModItem
-{
+internal sealed class PlasmicRepeaterItem : ModItem {
     public override void SetDefaults() {
         Item.damage = 99;
         Item.DamageType = DamageClass.Ranged;
@@ -33,7 +32,7 @@ internal sealed class PlasmicRepeaterItem : ModItem
     public Vector2 GunCenter { get; private set; }
     public float GunRotation { get; private set; }
     public override void UpdateInventory(Player player) {
-        if (Main.myPlayer == player.whoAmI) {
+        if(Main.myPlayer == player.whoAmI) {
             GunCenter = CalculateGunCenter(player, out Vector2 direction);
             GunRotation = GunRotation.AngleLerp(direction.ToRotation(), 0.1f);
         }

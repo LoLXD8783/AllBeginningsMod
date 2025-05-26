@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AllBeginningsMod.Common.Loaders;
+﻿using AllBeginningsMod.Common.Loaders;
 using AllBeginningsMod.Common.PrimitiveDrawing;
 using AllBeginningsMod.Common.Rendering;
 using AllBeginningsMod.Content.CameraModifiers;
@@ -9,13 +6,15 @@ using AllBeginningsMod.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Bastroboy;
 
-internal class NeutralSunProjectile : ModProjectile
-{
+internal class NeutralSunProjectile : ModProjectile {
     private int bastroboyWhoAmI = -1;
 
     private PrimitiveTrail[] fireTrails;
@@ -40,10 +39,10 @@ internal class NeutralSunProjectile : ModProjectile
             MathF.Sin(MathHelper.Pi * Projectile.timeLeft / BastroboyNPC.StarWhirlTime)
         );
 
-        if (fireTrails is null) {
+        if(fireTrails is null) {
             fireTrails = new PrimitiveTrail[8];
 
-            for (int i = 0; i < fireTrails.Length; i++) {
+            for(int i = 0; i < fireTrails.Length; i++) {
                 fireTrails[i] = new(
                     new Vector2[30],
                     factor => 120f * (1f - factor) * Projectile.scale,
@@ -58,18 +57,19 @@ internal class NeutralSunProjectile : ModProjectile
         const float shortLength = 200f;
         float bigLength = MathHelper.Lerp(shortLength, maxLength, MathHelper.SmoothStep(0f, 1f, MathF.Sin(MathHelper.Pi * Timer / maxTimer)));
 
-        for (int i = 0; i < fireTrails.Length; i++) {
+        for(int i = 0; i < fireTrails.Length; i++) {
             Vector2 direction = (MathHelper.TwoPi / fireTrails.Length * i).ToRotationVector2().RotatedBy(Projectile.rotation);
-            float length = (int)State switch {
-                    0 => i % 2 == 0 ? shortLength : bigLength,
-                    _ => i % 2 == 0 ? bigLength : shortLength
-                } +
+            float length = (int)State switch
+            {
+                0 => i % 2 == 0 ? shortLength : bigLength,
+                _ => i % 2 == 0 ? bigLength : shortLength
+            } +
                 Main.rand.NextFloat(10f);
 
             length *= Projectile.scale;
 
 
-            for (int j = 0; j < fireTrails[i].Positions.Length; j++) {
+            for(int j = 0; j < fireTrails[i].Positions.Length; j++) {
                 float ratio = (float)j / fireTrails[i].Positions.Length;
                 Vector2 target = Projectile.Center + direction * length * ratio + Main.rand.NextFloatDirection() * 2f * direction.RotatedBy(MathHelper.PiOver2);
                 fireTrails[i].Positions[j] = target;
@@ -80,14 +80,14 @@ internal class NeutralSunProjectile : ModProjectile
 
         Timer++;
 
-        if (Timer > maxTimer) {
+        if(Timer > maxTimer) {
             State = (State + 1) % 2;
             Timer = 0;
         }
 
         Lighting.AddLight(Projectile.Center, 10f, 10f, 10f);
 
-        if (bastroboyWhoAmI == -1) {
+        if(bastroboyWhoAmI == -1) {
             bastroboyWhoAmI = Main.npc.FirstOrDefault(npc => npc is not null && npc.active && npc.ModNPC is BastroboyNPC)?.whoAmI ?? -1;
         }
 
@@ -99,8 +99,8 @@ internal class NeutralSunProjectile : ModProjectile
     }
 
     public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-        foreach (PrimitiveTrail trail in fireTrails) {
-            if (
+        foreach(PrimitiveTrail trail in fireTrails) {
+            if(
                 Collision.CheckAABBvLineCollision(
                     targetHitbox.TopLeft(),
                     targetHitbox.Size(),
@@ -121,7 +121,8 @@ internal class NeutralSunProjectile : ModProjectile
 
     public override bool PreDraw(ref Color lightColor) {
         Renderer.QueueRenderAction(
-            () => {
+            () =>
+            {
                 Effect effect = EffectLoader.GetEffect("Trail::NeutralSunLaser");
                 effect.Parameters["stretch1"].SetValue(0.4f);
                 effect.Parameters["stretch2"].SetValue(0.8f);
@@ -136,7 +137,7 @@ internal class NeutralSunProjectile : ModProjectile
 
                 float time = -Main.GameUpdateCount * 0.01f;
 
-                foreach (PrimitiveTrail trail in fireTrails) {
+                foreach(PrimitiveTrail trail in fireTrails) {
                     effect.Parameters["time"].SetValue(time);
                     trail.Draw(effect);
 

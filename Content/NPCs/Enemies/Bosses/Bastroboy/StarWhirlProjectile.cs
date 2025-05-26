@@ -11,8 +11,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Bastroboy;
 
-internal class StarWhirlProjectile : ModProjectile
-{
+internal class StarWhirlProjectile : ModProjectile {
     private int bastroboyWhoAmI = -1;
     private const int MaxWidth = 300;
     private const int MaxHeight = 300;
@@ -25,14 +24,15 @@ internal class StarWhirlProjectile : ModProjectile
     }
 
     public override void AI() {
-        if (bastroboyWhoAmI == -1) {
+        if(bastroboyWhoAmI == -1) {
             bastroboyWhoAmI = Main.npc.FirstOrDefault(npc => npc is not null && npc.active && npc.ModNPC is BastroboyNPC)?.whoAmI ?? -1;
         }
 
         NPC bastroboy = Main.npc[bastroboyWhoAmI];
 
         float factor = 1f - (float)Projectile.timeLeft / BastroboyNPC.StarWhirlTime;
-        Projectile.scale = factor switch {
+        Projectile.scale = factor switch
+        {
             <= 0.1f => -MathF.Pow(10f * factor - 1, 2) + 1,
             >= 0.9f => -MathF.Pow(10f * (factor - 0.8f) - 1, 2) + 1,
             _ => 1f
@@ -46,7 +46,8 @@ internal class StarWhirlProjectile : ModProjectile
         Helper.ForEachPlayerInRange(
             Projectile.Center,
             16 * 100,
-            player => {
+            player =>
+            {
                 player.GetModPlayer<BastroboyStarWhirlPlayer>().StarWhirlWhoAmI = Projectile.whoAmI;
             }
         );
@@ -110,11 +111,10 @@ internal class StarWhirlProjectile : ModProjectile
 }
 
 
-public class BastroboyStarWhirlPlayer : ModPlayer
-{
+public class BastroboyStarWhirlPlayer : ModPlayer {
     public int StarWhirlWhoAmI { get; set; }
     public override void PreUpdateMovement() {
-        if (StarWhirlWhoAmI == -1) {
+        if(StarWhirlWhoAmI == -1) {
             return;
         }
 

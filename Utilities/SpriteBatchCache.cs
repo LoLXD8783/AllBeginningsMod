@@ -4,8 +4,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Utilities;
 
-public sealed class SpriteBatchCache : ILoadable
-{
+public sealed class SpriteBatchCache : ILoadable {
     public static FieldInfo SortMode { get; private set; }
     public static FieldInfo BlendState { get; private set; }
     public static FieldInfo SamplerState { get; private set; }

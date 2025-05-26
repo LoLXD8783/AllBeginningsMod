@@ -11,91 +11,89 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Content.Items.Weapons.Ranged
-{
-    internal class BIGGunBigRocketProjectile : ModProjectile
-    {
-        public bool isConnected = true;
-        public override void SetDefaults() {
-            Projectile.width = 70;
-            Projectile.height = 70;
-            Projectile.aiStyle = -1;
-            Projectile.ignoreWater = true;
-            Projectile.tileCollide = false;
-            Projectile.friendly = false;
-            Projectile.hostile = false;
-            Projectile.timeLeft = 800;
+namespace AllBeginningsMod.Content.Items.Weapons.Ranged; 
+internal class BIGGunBigRocketProjectile : ModProjectile {
+    public bool isConnected = true;
+    public override void SetDefaults() {
+        Projectile.width = 70;
+        Projectile.height = 70;
+        Projectile.aiStyle = -1;
+        Projectile.ignoreWater = true;
+        Projectile.tileCollide = false;
+        Projectile.friendly = false;
+        Projectile.hostile = false;
+        Projectile.timeLeft = 800;
+    }
+
+    public override bool ShouldUpdatePosition() {
+        return !isConnected;
+    }
+
+    public override void AI() {
+        if(!isConnected) {
+            Projectile.velocity.Y += 0.2f;
         }
 
-        public override bool ShouldUpdatePosition() {
-            return !isConnected;
+        Projectile.rotation = Projectile.velocity.ToRotation();
+    }
+
+    public override void OnKill(int timeLeft) {
+        Main.instance.CameraModifiers.Add(new ExplosionShakeCameraModifier(120f, 0.95f, Projectile.Center, 10_000f));
+        if(Main.myPlayer != Projectile.owner) {
+            return;
         }
 
-        public override void AI() {
-            if (!isConnected) {
-                Projectile.velocity.Y += 0.2f;
-            }
-
-            Projectile.rotation = Projectile.velocity.ToRotation();
-        }
-
-        public override void OnKill(int timeLeft) {
-            Main.instance.CameraModifiers.Add(new ExplosionShakeCameraModifier(120f, 0.95f, Projectile.Center, 10_000f));
-            if (Main.myPlayer != Projectile.owner) {
-                return;
-            }
-
-            Helper.ForEachNPCInRange(
-                Projectile.Center,
-                800,
-                npc => {
-                    Player player = Main.player[Projectile.owner];
-                    if (!npc.CanBeDamagedByPlayer(player)) {
-                        return;
-                    }
-
-                    player.ApplyDamageToNPC(
-                        npc,
-                        Projectile.damage,
-                        Projectile.knockBack,
-                        MathF.Sign(Projectile.Center.X - npc.Center.X),
-                        false,
-                        DamageClass.Ranged
-                    );
+        Helper.ForEachNPCInRange(
+            Projectile.Center,
+            800,
+            npc =>
+            {
+                Player player = Main.player[Projectile.owner];
+                if(!npc.CanBeDamagedByPlayer(player)) {
+                    return;
                 }
-            );
 
-            SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.Center);
+                player.ApplyDamageToNPC(
+                    npc,
+                    Projectile.damage,
+                    Projectile.knockBack,
+                    MathF.Sign(Projectile.Center.X - npc.Center.X),
+                    false,
+                    DamageClass.Ranged
+                );
+            }
+        );
 
-            ExplosionVFXProjectile.Spawn(
-                Projectile.GetSource_Death(),
-                Projectile.Center,
-                Color.Yellow,
-                Color.Yellow,
-                factor => Color.Lerp(Color.Orange, Color.Black, factor),
-                Main.rand.Next(1400, 1600),
-                Main.rand.Next(80, 120)
-            );
-        }
+        SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.Center);
 
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
-            overPlayers.Add(index);
-        }
+        ExplosionVFXProjectile.Spawn(
+            Projectile.GetSource_Death(),
+            Projectile.Center,
+            Color.Yellow,
+            Color.Yellow,
+            factor => Color.Lerp(Color.Orange, Color.Black, factor),
+            Main.rand.Next(1400, 1600),
+            Main.rand.Next(80, 120)
+        );
+    }
 
-        public override bool PreDraw(ref Color lightColor) {
-            Texture2D texture = TextureAssets.Projectile[Type].Value;
-            Main.spriteBatch.Draw(
-                texture,
-                Projectile.Center - Main.screenPosition,
-                null,
-                lightColor,
-                Projectile.spriteDirection == 1 ? Projectile.rotation : Projectile.rotation + MathHelper.Pi,
-                texture.Size() / 2f,
-                Projectile.scale,
-                Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
-                0f
-            );
-            return false;
-        }
+    public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+        overPlayers.Add(index);
+    }
+
+    public override bool PreDraw(ref Color lightColor) {
+        Texture2D texture = TextureAssets.Projectile[Type].Value;
+        Main.spriteBatch.Draw(
+            texture,
+            Projectile.Center - Main.screenPosition,
+            null,
+            lightColor,
+            Projectile.spriteDirection == 1 ? Projectile.rotation : Projectile.rotation + MathHelper.Pi,
+            texture.Size() / 2f,
+            Projectile.scale,
+            Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
+            0f
+        );
+        return false;
     }
 }

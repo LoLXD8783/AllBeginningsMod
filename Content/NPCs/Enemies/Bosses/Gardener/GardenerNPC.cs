@@ -12,8 +12,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Bosses.Gardener;
 
-internal class GardenerNPC : ModNPC
-{
+internal class GardenerNPC : ModNPC {
     public override string Texture => base.Texture + "_Body";
 
     private PrimitiveTrail[] intestineTrails;
@@ -43,7 +42,7 @@ internal class GardenerNPC : ModNPC
             Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music");*/
 
         intestineTrails = new PrimitiveTrail[4];
-        for (int i = 0; i < intestineTrails.Length; i++) {
+        for(int i = 0; i < intestineTrails.Length; i++) {
             intestineTrails[i] = new(new Vector2[8], factor => 26);
         }
     }
@@ -52,7 +51,7 @@ internal class GardenerNPC : ModNPC
         twitchOffset *= 0.85f;
         Vector2 bodyDrawPosition = NPC.Center - Main.screenPosition + twitchOffset - Vector2.UnitY * 10;
         Color mainDrawColor = drawColor * (1f - (Math.Clamp(NPC.alpha, 0, 255) / 255f));
-        if (twitchTimer == 0) {
+        if(twitchTimer == 0) {
             twitchOffset = Main.rand.NextVector2Unit() * 5f;
             twitchTimer = Main.rand.Next(30, 80);
         }
@@ -120,11 +119,11 @@ internal class GardenerNPC : ModNPC
             return 0.2f * MathF.Sin(x) + 0.8f * MathF.Cos(x + MathHelper.PiOver4);
         }
 
-        for (int i = 0; i < intestineTrails.Length; i++) {
+        for(int i = 0; i < intestineTrails.Length; i++) {
             Vector2[] positions = new Vector2[intestineTrails[i].MaxTrailPositions];
             positions[0] = initialIntestinePositions[i];
             Vector2 moveDirection = positions[0].SafeNormalize(Vector2.Zero);
-            for (int j = 1; j < intestineTrails[i].MaxTrailPositions; j++) {
+            for(int j = 1; j < intestineTrails[i].MaxTrailPositions; j++) {
                 float factor = j / (intestineTrails[i].MaxTrailPositions - 1f);
                 positions[j] = positions[0]
                     + moveDirection * MathHelper.Lerp(110, 130, MathF.Sin(Main.GameUpdateCount * (0.02f + i * 0.003f) + i * 0.6f)) * factor
@@ -137,7 +136,7 @@ internal class GardenerNPC : ModNPC
         Texture2D intestineTexture = ModContent.Request<Texture2D>(Texture.Replace("Body", "Intestine"), AssetRequestMode.ImmediateLoad).Value;
         Matrix transformationMatrix = Main.GameViewMatrix.TransformationMatrix
             * Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-        for (int i = 0; i < intestineTrails.Length; i++) {
+        for(int i = 0; i < intestineTrails.Length; i++) {
             intestineTrails[i].Draw(intestineTexture, drawColor, transformationMatrix);
         }
     }

@@ -2,17 +2,14 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace AllBeginningsMod.Content.Buffs
-{
-    internal class NoFlightDebuff : ModBuff
-    {
-        public override void SetStaticDefaults() {
-            BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
-            Main.debuff[Type] = true;
-        }
+namespace AllBeginningsMod.Content.Buffs; 
+internal class NoFlightDebuff : ModBuff {
+    public override void SetStaticDefaults() {
+        BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
+        Main.debuff[Type] = true;
+    }
 
-        public override void Update(Player player, ref int buffIndex) {
-            player.wingTime = 0;
-        }
+    public override void Update(Player player, ref int buffIndex) {
+        player.wingTime = 0;
     }
 }

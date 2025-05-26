@@ -59,7 +59,7 @@ public class SuspiciousLookingTree : ModTile {
         var tex = Request<Texture2D>("AllBeginningsMod/Content/Tiles/Decorations/SuspiciousLookingTreeStages").Value;
 
         Vector2 zero = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
-        var offset = new Vector2(30,116);
+        var offset = new Vector2(30, 116);
 
         switch(state) {
             case TreeState.Normal:
@@ -125,7 +125,7 @@ public class StrangeTreeNPC : ModNPC {
         bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
             BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
             new FlavorTextBestiaryInfoElement("Really cool looking talking tree. Nothing to see here.")
-        } );
+        });
         base.SetBestiary(database, bestiaryEntry);
     }
 
@@ -135,7 +135,7 @@ public class StrangeTreeNPC : ModNPC {
 
         int currentFrame = (int)(Main.GameUpdateCount / 5) % 7;
 
-        var sourceRect = new Rectangle(0, currentFrame * 192, 102, 192); 
+        var sourceRect = new Rectangle(0, currentFrame * 192, 102, 192);
 
         spriteBatch.Draw(tex, NPC.Center - Main.screenPosition, sourceRect, Color.White, 0, sourceRect.Size() / 2, 0.5f, SpriteEffects.None, 0f);
     }

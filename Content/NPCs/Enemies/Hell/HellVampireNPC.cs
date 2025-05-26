@@ -19,8 +19,7 @@ using Terraria.ModLoader;
 
 namespace AllBeginningsMod.Content.NPCs.Enemies.Hell;
 
-public sealed class HellVampireNPC : VampireNPC
-{
+public sealed class HellVampireNPC : VampireNPC {
     protected override float ExplosionRange => 120;
     protected override int MaxExplodingTime => 60;
 
@@ -57,14 +56,14 @@ public sealed class HellVampireNPC : VampireNPC
         gore2.position -= new Vector2(gore2.Width, gore2.Height) * 0.5f;
 
         Vector2[] dustPositions = NPC.Center.PositionsAround(13, _ => Main.rand.NextFloat(20f, 30f), out Vector2[] dustDirections, Main.rand.NextFloat());
-        for (int i = 0; i < dustPositions.Length; i++) {
+        for(int i = 0; i < dustPositions.Length; i++) {
             Dust.NewDustPerfect(
                 dustPositions[i],
                 Main.rand.NextFromList(DustID.Smoke, DustID.TreasureSparkle, DustID.YellowTorch),
                 dustDirections[i] * Main.rand.NextFloat(3f, 6f)
             );
 
-            if (i % 3 == 0) {
+            if(i % 3 == 0) {
                 Dust.NewDustPerfect(
                     dustPositions[i],
                     ModContent.DustType<HellVampireExplosionDust>(),
