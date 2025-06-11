@@ -95,7 +95,7 @@ internal class Renderer : ILoadable {
 
     private static readonly PropertyInfo RenderTargetUsageProperty;
     static Renderer() {
-        RenderTargetUsageProperty = typeof(RenderTarget2D).GetProperty("RenderTargetUsage", Helper.FlagsPublicInstance);
+        RenderTargetUsageProperty = typeof(RenderTarget2D).GetProperty("RenderTargetUsage", ReflectionUtilities.FlagsPublicInstance);
     }
 
     private static RenderTarget2D effectTarget;

@@ -16,15 +16,15 @@ public sealed class SpriteBatchCache : ILoadable {
     public static MethodInfo FlushBatch { get; private set; }
 
     void ILoadable.Load(Mod mod) {
-        SortMode = typeof(SpriteBatch).GetField("sortMode", Helper.FlagsPrivateInstance);
-        BlendState = typeof(SpriteBatch).GetField("blendState", Helper.FlagsPrivateInstance);
-        SamplerState = typeof(SpriteBatch).GetField("samplerState", Helper.FlagsPrivateInstance);
-        DepthStencilState = typeof(SpriteBatch).GetField("depthStencilState", Helper.FlagsPrivateInstance);
-        RasterizerState = typeof(SpriteBatch).GetField("rasterizerState", Helper.FlagsPrivateInstance);
-        Effect = typeof(SpriteBatch).GetField("customEffect", Helper.FlagsPrivateInstance);
-        TransformMatrix = typeof(SpriteBatch).GetField("transformMatrix", Helper.FlagsPrivateInstance);
-        BeginCalled = typeof(SpriteBatch).GetField("beginCalled", Helper.FlagsPrivateInstance);
-        FlushBatch = typeof(SpriteBatch).GetMethod("FlushBatch", Helper.FlagsPrivateInstance);
+        SortMode = typeof(SpriteBatch).GetField("sortMode", ReflectionUtilities.FlagsPrivateInstance);
+        BlendState = typeof(SpriteBatch).GetField("blendState", ReflectionUtilities.FlagsPrivateInstance);
+        SamplerState = typeof(SpriteBatch).GetField("samplerState", ReflectionUtilities.FlagsPrivateInstance);
+        DepthStencilState = typeof(SpriteBatch).GetField("depthStencilState", ReflectionUtilities.FlagsPrivateInstance);
+        RasterizerState = typeof(SpriteBatch).GetField("rasterizerState", ReflectionUtilities.FlagsPrivateInstance);
+        Effect = typeof(SpriteBatch).GetField("customEffect", ReflectionUtilities.FlagsPrivateInstance);
+        TransformMatrix = typeof(SpriteBatch).GetField("transformMatrix", ReflectionUtilities.FlagsPrivateInstance);
+        BeginCalled = typeof(SpriteBatch).GetField("beginCalled", ReflectionUtilities.FlagsPrivateInstance);
+        FlushBatch = typeof(SpriteBatch).GetMethod("FlushBatch", ReflectionUtilities.FlagsPrivateInstance);
     }
 
     void ILoadable.Unload() {

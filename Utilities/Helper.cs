@@ -6,11 +6,8 @@ using Terraria;
 using Terraria.DataStructures;
 
 namespace AllBeginningsMod.Utilities; 
-internal static class Helper {
-    public const BindingFlags FlagsAll = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
-    public const BindingFlags FlagsPublicInstance = BindingFlags.Public | BindingFlags.Instance;
-    public const BindingFlags FlagsPrivateInstance = BindingFlags.NonPublic | BindingFlags.Instance;
 
+internal static class Helper {
     public static Matrix WorldTransformationMatrix => Matrix.CreateTranslation(-Main.screenPosition.X, -Main.screenPosition.Y, 0f)
         * Main.GameViewMatrix.TransformationMatrix
         * Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
