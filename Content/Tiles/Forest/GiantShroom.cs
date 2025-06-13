@@ -97,7 +97,7 @@ public sealed class GiantShroom : ModTile {
                         3f;
                 }
                 
-                _squishTimer = 20;
+                _squishTimer = 17;
             }
         }
 
@@ -106,12 +106,9 @@ public sealed class GiantShroom : ModTile {
             
             Vector2 scale = Vector2.One;
             if (_squishTimer > 0) {
-                // This creates a smooth "bloop" effect using a sine wave.
-                // It goes from 0 -> 1 -> 0 over the course of the animation.
                 float progress = 1f - (float)_squishTimer / 20;
                 float sinWave = MathF.Sin(progress * MathHelper.Pi);
 
-                // Apply the squish: Y gets smaller, X gets bigger
                 scale.Y = 1f - sinWave * 0.3f;
                 scale.X = 1f + sinWave * 0.3f;
             }
