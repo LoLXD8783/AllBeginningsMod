@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 namespace AllBeginningsMod.Utilities; 
+
 internal class OldPositionCache {
     public Vector2[] Positions { get; private set; }
     public int Count => Positions.Length;
