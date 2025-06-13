@@ -93,6 +93,7 @@ Mods: {
 			NeutralSunProjectile.DisplayName: Neutral Sun Projectile
 			PhantomProjectile.DisplayName: Phantom Projectile
 			StarWhirlProjectile.DisplayName: Star Whirl Projectile
+			GiantShroomCapDummy.DisplayName: Giant Shroom Cap Dummy
 		}
 
 		Buffs: {

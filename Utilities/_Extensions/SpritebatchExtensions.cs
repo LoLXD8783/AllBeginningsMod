@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Runtime.CompilerServices;
 using Terraria;
+using Terraria.GameContent;
 
 namespace AllBeginningsMod.Utilities;
 
@@ -81,5 +83,60 @@ public static class SpritebatchExtensions {
     public static void End(this SpriteBatch spriteBatch, out SpriteBatchData snapshot) {
         snapshot = spriteBatch.Capture();
         spriteBatch.End();
+    }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    public static void DrawLine(this SpriteBatch sb, Vector2 start, Vector2 end, Color? color = null, int width = 1, Texture2D? texture = null) {
+        var offset = end - start;
+        float angle = (float)Math.Atan2(offset.Y, offset.X);
+        var rect = new Rectangle(
+            (int)Math.Round(start.X), (int)Math.Round(start.Y),
+            (int)offset.Length(), width
+        );
+
+        sb.Draw(texture ?? TextureAssets.BlackTile.Value, rect, null, color ?? Color.White, angle, Vector2.Zero, SpriteEffects.None, 0f);
+    }
+    
+    public static void DrawRect(this SpriteBatch sb, Rectangle rect, Color? color = null, int thickness = 1, Texture2D? texture = null) {
+        var finalColor = color ?? Color.White;
+
+        sb.Draw(
+            texture,
+            new Rectangle(rect.X, rect.Y, rect.Width, thickness),
+            finalColor
+        );
+
+        sb.Draw(
+            texture,
+            new Rectangle(
+                rect.X,
+                rect.Y + rect.Height - thickness,
+                rect.Width,
+                thickness
+            ),
+            finalColor
+        );
+
+        sb.Draw(
+            texture,
+            new Rectangle(
+                rect.X,
+                rect.Y + thickness,
+                thickness,
+                rect.Height - (thickness * 2)
+            ),
+            finalColor
+        );
+
+        sb.Draw(
+            texture,
+            new Rectangle(
+                rect.X + rect.Width - thickness,
+                rect.Y + thickness,
+                thickness,
+                rect.Height - (thickness * 2)
+            ),
+            finalColor
+        );
     }
 }
