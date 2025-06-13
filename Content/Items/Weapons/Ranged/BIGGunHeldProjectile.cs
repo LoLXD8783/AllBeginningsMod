@@ -46,7 +46,7 @@ internal class BIGGunHeldProjectile : HeldProjectile {
     private void DoNormalShoot() {
         if(Main.myPlayer == Player.whoAmI) {
             if(aiTimer < maxNormalShootTime && aiTimer % 6 == 0) {
-                Helper.NewProjectileCheckCollision(
+                ProjectileUtilities.NewProjectileCheckCollision(
                     Projectile.GetSource_FromAI(),
                     Projectile.Center,
                     Projectile.velocity * 30f,

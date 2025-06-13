@@ -223,7 +223,7 @@ internal class NightgauntNPC : ModNPC {
                                 NPC.Center = Target.Center - Vector2.UnitY * 2000f;
                             }
                             else {
-                                NPC.velocity = Helper.InitialVelocityRequiredToHitPosition(
+                                NPC.velocity = MathUtilities.InitialVelocityRequiredToHitPosition(
                                     NPC.Bottom,
                                     Target.Bottom,
                                     Gravity,
@@ -250,7 +250,7 @@ internal class NightgauntNPC : ModNPC {
                             if(NPC.velocity.Y == 0f) {
                                 NPC.noTileCollide = false;
                                 Attack = Attacks.None;
-                                Helper.ForEachPlayerInRange(
+                                MathUtilities.ForEachPlayerInRange(
                                     NPC.Center,
                                     120,
                                     player =>

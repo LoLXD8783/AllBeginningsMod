@@ -43,7 +43,7 @@ internal class StarWhirlProjectile : ModProjectile {
         Projectile.width = (int)(MaxWidth * Projectile.scale);
         Projectile.height = (int)(MaxHeight * Projectile.scale);
         Projectile.Center = new(bastroboy.Center.X, MathHelper.Lerp(Projectile.Center.Y, bastroboy.Center.Y - 130f, 0.1f));
-        Helper.ForEachPlayerInRange(
+        MathUtilities.ForEachPlayerInRange(
             Projectile.Center,
             16 * 100,
             player =>

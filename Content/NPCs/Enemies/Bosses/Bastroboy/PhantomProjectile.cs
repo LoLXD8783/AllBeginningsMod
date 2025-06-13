@@ -43,7 +43,7 @@ internal class PhantomProjectile : ModProjectile {
             initPosition: Projectile.Center
         );
 
-        Helper.ClosestPlayer(Projectile.Center, out Player player);
+        MathUtilities.ClosestPlayer(Projectile.Center, out Player player);
         Vector2 direction = Projectile.Center.DirectionTo(player.Center);
 
         Projectile.velocity += direction.RotatedBy(MathF.Sin(Main.GameUpdateCount * 0.05f) * MathHelper.PiOver2) * 0.2f;

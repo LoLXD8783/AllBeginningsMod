@@ -281,7 +281,7 @@ internal class BastroboyNPC : ModNPC {
         }
 
         Player target = Main.player[NPC.target];
-        initialJumpVelocity = Helper.InitialVelocityRequiredToHitPosition(
+        initialJumpVelocity = MathUtilities.InitialVelocityRequiredToHitPosition(
             NPC.Bottom,
             target.Bottom + target.velocity * 100f * Main.rand.NextFloat(0.5f, 0.95f),
             Gravity,

@@ -45,14 +45,14 @@ internal class DevilVampireAuraProjectile : ModProjectile {
             }
 
             if(Projectile.friendly) {
-                Helper.ForEachNPCInRange(Projectile.Center, Projectile.width / 2f, npc =>
+                MathUtilities.ForEachNPCInRange(Projectile.Center, Projectile.width / 2f, npc =>
                 {
                     npc.AddBuff(ModContent.BuffType<OnGasDebuff>(), 120);
                 });
             }
 
             if(Projectile.hostile) {
-                Helper.ForEachPlayerInRange(Projectile.Center, Projectile.width / 2f, player =>
+                MathUtilities.ForEachPlayerInRange(Projectile.Center, Projectile.width / 2f, player =>
                 {
                     player.AddBuff(ModContent.BuffType<OnGasDebuff>(), 120);
                 });

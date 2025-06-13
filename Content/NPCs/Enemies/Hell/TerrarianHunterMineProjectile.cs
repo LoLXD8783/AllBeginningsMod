@@ -35,7 +35,7 @@ internal class TerrarianHunterMineProjectile : ModProjectile {
             return;
         }
 
-        if(Helper.ClosestPlayer(Projectile.Center, out Player target, player => player.active && !player.dead) > -1) {
+        if(MathUtilities.ClosestPlayer(Projectile.Center, out Player target, player => player.active && !player.dead) > -1) {
             Vector2 direction = Projectile.Center.DirectionTo(target.Center);
             Projectile.velocity = Projectile.velocity.RotatedBy(-Vector3.Cross(direction.ToVector3(), Projectile.velocity.ToVector3()).Z * 0.008f);
         }
@@ -48,7 +48,7 @@ internal class TerrarianHunterMineProjectile : ModProjectile {
 
     public override void OnKill(int timeLeft) {
         if(Main.netMode != NetmodeID.MultiplayerClient) {
-            Helper.ForEachPlayerInRange(
+            MathUtilities.ForEachPlayerInRange(
                 Projectile.Center,
                 100,
                 player => player.Hurt(

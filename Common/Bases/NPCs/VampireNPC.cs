@@ -67,7 +67,7 @@ public abstract class VampireNPC : ModNPC {
                 }
 
                 if(Main.netMode != NetmodeID.MultiplayerClient) {
-                    Helper.ForEachPlayerInRange(
+                    MathUtilities.ForEachPlayerInRange(
                         NPC.Center,
                         ExplosionRange,
                         player => player.Hurt(

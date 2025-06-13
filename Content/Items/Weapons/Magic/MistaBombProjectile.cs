@@ -106,7 +106,7 @@ internal class MistaBombProjectile : ModProjectile {
         }
 
         if(Main.myPlayer == Projectile.owner) {
-            Helper.ForEachNPCInRange(
+            MathUtilities.ForEachNPCInRange(
                 Projectile.Center,
                 225,
                 npc =>
@@ -148,16 +148,16 @@ internal class MistaBombProjectile : ModProjectile {
     public override bool PreDraw(ref Color lightColor) {
         float squashTime = explodingTime - 0.2f;
         float stretch = MathF.Sin(
-            Helper.Lerp3(0f, 0f, MathF.Pow((Progress - squashTime) / (1f - squashTime), 3f) * 30f, Progress, squashTime)
+            MathUtilities.Lerp3(0f, 0f, MathF.Pow((Progress - squashTime) / (1f - squashTime), 3f) * 30f, Progress, squashTime)
         );
-        Vector2 scale = (Vector2.One + new Vector2(-stretch, stretch) * 0.25f) * Helper.Lerp3(1f, 1f, 1.5f, Progress, squashTime);
+        Vector2 scale = (Vector2.One + new Vector2(-stretch, stretch) * 0.25f) * MathUtilities.Lerp3(1f, 1f, 1.5f, Progress, squashTime);
 
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         if(Progress > explodingTime) {
             Projectile.frame = (int)(5f + stretch);
         }
         else {
-            Projectile.frame = (int)Helper.Lerp3(0f, 3f, 6f, Progress, explodingTime);
+            Projectile.frame = (int)MathUtilities.Lerp3(0f, 3f, 6f, Progress, explodingTime);
         }
         Rectangle source = Projectile.SourceRectangle();
 
@@ -176,7 +176,7 @@ internal class MistaBombProjectile : ModProjectile {
             );
         }
 
-        sparkleTrail.Draw(TextureAssets.MagicPixel.Value, Color.White, Helper.WorldTransformationMatrix);
+        sparkleTrail.Draw(TextureAssets.MagicPixel.Value, Color.White, MathUtilities.WorldTransformationMatrix);
 
         Main.spriteBatch.Draw(
             texture,

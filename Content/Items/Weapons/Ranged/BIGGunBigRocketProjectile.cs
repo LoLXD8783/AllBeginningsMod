@@ -43,7 +43,7 @@ internal class BIGGunBigRocketProjectile : ModProjectile {
             return;
         }
 
-        Helper.ForEachNPCInRange(
+        MathUtilities.ForEachNPCInRange(
             Projectile.Center,
             800,
             npc =>
