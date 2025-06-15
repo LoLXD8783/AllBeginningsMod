@@ -94,6 +94,7 @@ Mods: {
 			PhantomProjectile.DisplayName: Phantom Projectile
 			StarWhirlProjectile.DisplayName: Star Whirl Projectile
 			GiantShroomCapDummy.DisplayName: Giant Shroom Cap Dummy
+			TestProj.DisplayName: Test Proj
 		}
 
 		Buffs: {

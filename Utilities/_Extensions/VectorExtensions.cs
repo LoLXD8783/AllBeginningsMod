@@ -5,10 +5,14 @@ using Terraria;
 namespace AllBeginningsMod.Utilities;
 
 public static class VectorExtensions {
-        public static Vector3 ToVector3(this Vector2 vector, float z = 0f) {
+    public static Vector3 ToVector3(this Vector2 vector, float z = 0f) {
         return new Vector3(vector.X, vector.Y, z);
     }
 
+    
+    public static Point ToPoint(this Vector2 vector, float z = 0f) {
+        return new Point((int)vector.X, (int)vector.Y);
+    }
     public static Vector2[] PositionsAround(this Vector2 vector, int count, Func<float, float> radius, out Vector2[] directions, float initialRotation = 0f) {
         Vector2[] positions = new Vector2[count];
         directions = new Vector2[count];
