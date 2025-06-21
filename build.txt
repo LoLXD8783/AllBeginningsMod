@@ -1,7 +1,0 @@
-﻿displayName = All Beginnings
-author = LolXD the one and only
-version = 0.1.0
-hideCode = true
-hideResources = true
-includeSource = false
-includePDB = true
