@@ -114,7 +114,7 @@ internal sealed class GiantShroomCapDummy : ModProjectile {
                     Projectile.position,
                     Projectile.width,
                     Projectile.height / 2,
-                    DustID.Bee,
+                    DustID.Water,
                     Main.LocalPlayer.velocity.X * 0.2f,
                     -2f,
                     80,
