@@ -74,10 +74,11 @@ internal sealed class GiantShroomCapDummy : ModProjectile {
     private const int SQUISH_ANIMATION_DURATION = 60;
     private const float MAX_LEAN_RADIANS = 0.3f;
 
-    private const float IDLE_WOBBLE_AMOUNT_1 = 0.02f;
-    private const float IDLE_WOBBLE_SPEED_1 = 0.8f;
-    private const float IDLE_WOBBLE_AMOUNT_2 = 0.03f;
-    private const float IDLE_WOBBLE_SPEED_2 = 1.5f;
+    private const float IDLE_WOBBLE_AMOUNT = 0.02f;
+    private const float IDLE_WOBBLE_SPEED = 0.8f;
+    
+    private const int HEART_SPAWN_COOLDOWN = 60 * 15;
+    private int _heartSpawnTimer = HEART_SPAWN_COOLDOWN;
 
     public override void SetDefaults() {
         Projectile.width = 70;
@@ -97,6 +98,10 @@ internal sealed class GiantShroomCapDummy : ModProjectile {
         } else {
             Projectile.Kill();
             return;
+        }
+        
+        if (_heartSpawnTimer > 0) {
+            _heartSpawnTimer--;
         }
 
         if (_bounceState == 0 && Main.LocalPlayer.velocity.Y > 0 && Main.LocalPlayer.Hitbox.Intersects(Projectile.Hitbox)) {
@@ -125,6 +130,11 @@ internal sealed class GiantShroomCapDummy : ModProjectile {
             if (Main.LocalPlayer.velocity.X != 0) {
                 Main.LocalPlayer.velocity.X +=
                     (Main.LocalPlayer.velocity.X > 0 ? 1 : -1) * 3f;
+            }
+            
+            if (_heartSpawnTimer <= 0) {
+                Item.NewItem(Projectile.GetSource_FromThis(), Projectile.Center, ItemID.Heart, 3);
+                _heartSpawnTimer = HEART_SPAWN_COOLDOWN;
             }
         }
 
@@ -157,20 +167,18 @@ internal sealed class GiantShroomCapDummy : ModProjectile {
             scale.Y = 1f + jiggleFactor * 0.4f;
             scale.X = 1f - jiggleFactor * 0.4f;
 
-            float leanProgress = _squishTimer / (SQUISH_ANIMATION_DURATION * 1.5f);
+            float leanProgress = Math.Clamp(animationProgress, 0f, 1f);
             float currentLeanFactor = 1f - leanProgress;
             rotation = _leanDirection * MAX_LEAN_RADIANS * currentLeanFactor;
         } 
         else {
             float time = Main.GameUpdateCount * 0.05f;
 
-            float wobbleX1 = (float)Math.Sin(time * IDLE_WOBBLE_SPEED_1);
-            float wobbleX2 = (float)Math.Sin(time * IDLE_WOBBLE_SPEED_2);
-            scale.X = 1 + wobbleX1 * IDLE_WOBBLE_AMOUNT_1 + wobbleX2 * IDLE_WOBBLE_AMOUNT_2;
+            float wobbleX = (float)Math.Sin(time * IDLE_WOBBLE_SPEED);
+            scale.X = 1 + wobbleX * IDLE_WOBBLE_AMOUNT;
 
-            float wobbleY1 = (float)Math.Sin(time * IDLE_WOBBLE_SPEED_1 + 1);
-            float wobbleY2 = (float)Math.Sin(time * IDLE_WOBBLE_SPEED_2 + 1);
-            scale.Y = 1 + wobbleY1 * IDLE_WOBBLE_AMOUNT_1 + wobbleY2 * IDLE_WOBBLE_AMOUNT_2;
+            float wobbleY = (float)Math.Sin(time * IDLE_WOBBLE_SPEED + 1);
+            scale.Y = 1 + wobbleY * IDLE_WOBBLE_AMOUNT;
 
             rotation = 0f;
         }
