@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    
+    <Import Project="..\..\..\tModLoader.targets" />
+    
+    <PropertyGroup>
+        <AssemblyName>AllBeginningsMod</AssemblyName>
+        <TargetFramework>net8.0</TargetFramework>
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <LangVersion>latest</LangVersion>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <AdditionalFiles Remove="Assets\Effects\.compile\**" />
+        <Compile Remove="Assets\Effects\.compile\**" />
+        <EmbeddedResource Remove="Assets\Effects\.compile\**" />
+        <None Remove="Assets\Effects\.compile\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Krafs.Publicizer" Version="2.3.0" PrivateAssets="all" ExcludeAssets="runtime"/>
+    </ItemGroup>
+
+    <ItemGroup Label="Publicized assemblies">
+        <!-- It's reasonable to publicize tModLoader.  Don't include
+             compiler-generated members since it breaks events and some other
+             stuff. -->
+        <Publicize Include="tModLoader" IncludeCompilerGeneratedMembers="false"/>
+        <Publicize Include="FNA" IncludeCompilerGeneratedMembers="false"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AllBeginningsGeneration\AllBeginningsGeneration.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    </ItemGroup>
+    
+</Project>
