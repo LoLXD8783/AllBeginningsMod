@@ -35,6 +35,16 @@ Mods: {
 				DisplayName: BIG Gun
 				Tooltip: ""
 			}
+
+			BigPotItem: {
+				DisplayName: Big Pot Item
+				Tooltip: ""
+			}
+
+			AccentedBlueDynastyShinglesItem: {
+				DisplayName: Accented Blue Dynasty Shingles Item
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -120,5 +130,7 @@ Mods: {
 				TownNPCDialogueName: the Garden Biome
 			}
 		}
+
+		Tiles.BigPotTile.MapEntry: Big Pot Tile
 	}
 }
