@@ -36,10 +36,6 @@ internal class GardenBiome : ModBiome {
                     WorldGen.KillWall(i, j);
                 }
             }
-
-
-
-            AllBeginningsWorld.GardenBounds = bounds;
         }
     }
 }

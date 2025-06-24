@@ -36,5 +36,9 @@
     <ItemGroup>
       <ProjectReference Include="..\AllBeginningsGeneration\AllBeginningsGeneration.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Content\NPCs\Enemies\Bosses\" />
+    </ItemGroup>
     
 </Project>
