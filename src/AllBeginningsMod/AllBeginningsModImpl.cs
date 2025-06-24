@@ -2,4 +2,4 @@
 
 namespace AllBeginningsMod;
 
-public sealed class AllBeginningsMod : Mod;
+public sealed class AllBeginningsModImpl : Mod;

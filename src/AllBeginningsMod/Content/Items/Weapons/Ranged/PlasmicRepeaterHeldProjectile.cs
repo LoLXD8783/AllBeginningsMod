@@ -181,7 +181,7 @@ internal sealed class PlasmicRepeaterHeldProjectile : ModProjectile {
         Main.spriteBatch.End(out SpriteBatchData snapshot);
         Main.spriteBatch.Begin(snapshot with { BlendState = BlendState.Additive });
 
-        Texture2D glowTexture = Mod.Assets.Request<Texture2D>("Assets/Images/Misc/Glow2", AssetRequestMode.ImmediateLoad).Value;
+        Texture2D glowTexture = Mod.Assets.Request<Texture2D>("Assets/Textures/Misc/Glow2", AssetRequestMode.ImmediateLoad).Value;
         Color color = Color.Red * 1f;
         Vector2 glowOrigin = glowTexture.Size() / 2f - Vector2.UnitX * recoilOffset * Player.direction;
 

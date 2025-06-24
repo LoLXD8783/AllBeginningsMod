@@ -76,9 +76,9 @@ internal class DevilVampireAuraProjectile : ModProjectile {
     private Texture2D noiseTexture1;
     private Texture2D noiseTexture2;
     public override bool PreDraw(ref Color lightColor) {
-        baseTexture ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/SmokeGlow", AssetRequestMode.ImmediateLoad).Value;
-        noiseTexture1 ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise2", AssetRequestMode.ImmediateLoad).Value;
-        noiseTexture2 ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/PortalNoise", AssetRequestMode.ImmediateLoad).Value;
+        baseTexture ??= Mod.Assets.Request<Texture2D>("Assets/Textures/Sample/SmokeGlow", AssetRequestMode.ImmediateLoad).Value;
+        noiseTexture1 ??= Mod.Assets.Request<Texture2D>("Assets/Textures/Sample/Noise2", AssetRequestMode.ImmediateLoad).Value;
+        noiseTexture2 ??= Mod.Assets.Request<Texture2D>("Assets/Textures/Sample/PortalNoise", AssetRequestMode.ImmediateLoad).Value;
 
         Renderer.QueueRenderAction(() =>
         {

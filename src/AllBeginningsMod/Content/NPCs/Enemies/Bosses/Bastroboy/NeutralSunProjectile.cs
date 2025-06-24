@@ -126,8 +126,8 @@ internal class NeutralSunProjectile : ModProjectile {
                 Effect effect = EffectLoader.GetEffect("Trail::NeutralSunLaser");
                 effect.Parameters["stretch1"].SetValue(0.4f);
                 effect.Parameters["stretch2"].SetValue(0.8f);
-                effect.Parameters["noise1"].SetValue(Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise3").Value);
-                effect.Parameters["noise2"].SetValue(Mod.Assets.Request<Texture2D>("Assets/Images/Sample/PerlinNoise").Value);
+                effect.Parameters["noise1"].SetValue(Mod.Assets.Request<Texture2D>("Assets/Textures/Sample/Noise3").Value);
+                effect.Parameters["noise2"].SetValue(Mod.Assets.Request<Texture2D>("Assets/Textures/Sample/PerlinNoise").Value);
                 effect.Parameters["transformationMatrix"]
                     .SetValue(
                         Matrix.CreateTranslation(-Main.screenPosition.ToVector3()) *

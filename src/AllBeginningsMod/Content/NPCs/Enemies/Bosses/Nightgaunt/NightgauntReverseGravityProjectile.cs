@@ -74,7 +74,7 @@ internal class NightgauntReverseGravityProjectile : ModProjectile {
     public override bool PreDraw(ref Color lightColor) {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Texture2D colorMaskTexture = ModContent.Request<Texture2D>(Texture + "_ColorMask", AssetRequestMode.ImmediateLoad).Value;
-        Texture2D glowTexture = Mod.Assets.Request<Texture2D>("Assets/Images/Misc/Glow2", AssetRequestMode.ImmediateLoad).Value;
+        Texture2D glowTexture = Mod.Assets.Request<Texture2D>("Assets/Textures/Misc/Glow2", AssetRequestMode.ImmediateLoad).Value;
         Rectangle source = new(0, Projectile.frame * 76, 50, 76);
         Color color = new(185, 140, 183);
         float alpha = 1f - Projectile.alpha / 255f;

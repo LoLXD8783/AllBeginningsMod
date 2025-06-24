@@ -87,12 +87,13 @@ internal class ExplosionVFXProjectile : ModProjectile {
     private Texture2D noiseTexture1;
     private Texture2D noiseTexture2;
     private Effect effect;
+    
     public override bool PreDraw(ref Color lightColor) {
-        glowTexture ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Glow1", AssetRequestMode.ImmediateLoad).Value;
-        flareTexture ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Flare1", AssetRequestMode.ImmediateLoad).Value;
-        smokeTexture ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/SmokeGlow", AssetRequestMode.ImmediateLoad).Value;
-        noiseTexture1 ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/PerlinNoise", AssetRequestMode.ImmediateLoad).Value;
-        noiseTexture2 ??= Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise2", AssetRequestMode.ImmediateLoad).Value;
+        glowTexture = Assets.Assets.Textures.Sample.Glow1.Value;
+        flareTexture = Assets.Assets.Textures.Sample.Flare1.Value;
+        smokeTexture = Assets.Assets.Textures.Sample.SmokeGlow.Value;
+        noiseTexture1 = Assets.Assets.Textures.Sample.PerlinNoise.Value;
+        noiseTexture2 = Assets.Assets.Textures.Sample.Noise2.Value;
 
         Renderer.QueueRenderAction(() =>
         {
@@ -166,7 +167,7 @@ internal class ExplosionVFXProjectile : ModProjectile {
             effect =>
             {
                 effect.Parameters["noise"].SetValue(
-                    ModContent.Request<Texture2D>("AllBeginningsMod/Assets/Images/Sample/Noise3", AssetRequestMode.ImmediateLoad).Value
+                    ModContent.Request<Texture2D>("AllBeginningsMod/Assets/Textures/Sample/Noise3", AssetRequestMode.ImmediateLoad).Value
                 );
 
                 effect.Parameters["strength"].SetValue(0.4f * blobScale);

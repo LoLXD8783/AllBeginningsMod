@@ -394,7 +394,7 @@ internal class TerrarianHunterNPC : ModNPC {
             * Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
         Effect effect = EffectLoader.GetEffect("Trail::Fire");
-        effect.Parameters["sampleTexture"].SetValue(Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise2", AssetRequestMode.ImmediateLoad).Value);
+        effect.Parameters["sampleTexture"].SetValue(Mod.Assets.Request<Texture2D>("Assets/Textures/Sample/Noise2", AssetRequestMode.ImmediateLoad).Value);
         effect.Parameters["transformationMatrix"].SetValue(transformationMatrix);
         effect.Parameters["amp"].SetValue(0.15f);
         effect.Parameters["smooth"].SetValue(0.45f);
@@ -468,7 +468,7 @@ internal class TerrarianHunterNPC : ModNPC {
             spriteBatch.End();
             spriteBatch.Begin(snapshot with { BlendState = BlendState.Additive });
 
-            Texture2D bloomGlowTexture = Mod.Assets.Request<Texture2D>("Assets/Images/Misc/Glow2", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D bloomGlowTexture = Mod.Assets.Request<Texture2D>("Assets/Textures/Misc/Glow2", AssetRequestMode.ImmediateLoad).Value;
             spriteBatch.Draw(
                 bloomGlowTexture,
                 SmallMuzzlePosition - screenPos,

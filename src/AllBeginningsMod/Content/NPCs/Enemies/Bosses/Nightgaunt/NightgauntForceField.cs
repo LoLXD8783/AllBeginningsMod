@@ -77,7 +77,7 @@ internal class NightgauntForceField : ModProjectile {
 
     public override bool PreDraw(ref Color lightColor) {
         Color color = new Color(185, 140, 183) * (1f - Projectile.alpha / 255f) * 0.3f;
-        Texture2D noiseTexture = Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise6", AssetRequestMode.ImmediateLoad).Value;
+        Texture2D noiseTexture = Mod.Assets.Request<Texture2D>("Assets/Textures/Sample/Noise6", AssetRequestMode.ImmediateLoad).Value;
 
         Effect effect = EffectLoader.GetEffect("Pixel::ForceField");
         effect.Parameters["size"].SetValue(0.3f);

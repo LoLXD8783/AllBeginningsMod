@@ -57,8 +57,8 @@ internal class StarWhirlProjectile : ModProjectile {
 
     public override bool PreDraw(ref Color lightColor) {
         Effect effect = EffectLoader.GetEffect("Pixel::BastroboyStarWhirl");
-        Texture2D sampleTexture1 = Mod.Assets.Request<Texture2D>("Assets/Images/Sample/PlasmaNoise", AssetRequestMode.ImmediateLoad).Value;
-        Texture2D sampleTexture2 = Mod.Assets.Request<Texture2D>("Assets/Images/Sample/Noise1", AssetRequestMode.ImmediateLoad).Value;
+        Texture2D sampleTexture1 = Mod.Assets.Request<Texture2D>("Assets/Textures/Sample/PlasmaNoise", AssetRequestMode.ImmediateLoad).Value;
+        Texture2D sampleTexture2 = Mod.Assets.Request<Texture2D>("Assets/Textures/Sample/Noise1", AssetRequestMode.ImmediateLoad).Value;
 
         effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.06f);
         effect.Parameters["holeSize"].SetValue(0.05f);
