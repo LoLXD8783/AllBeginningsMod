@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Runtime.CompilerServices;
 using Terraria;
 
 namespace AllBeginningsMod.Utilities;
@@ -101,5 +102,13 @@ public static class MathUtilities {
 
         player = closest.Value.player;
         return closest.Value.distance;
+    }
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float NormalizeAngle(float angle) {
+        angle %= (2 * MathF.PI);
+        if (angle > MathF.PI) angle -= 2 * MathF.PI;
+        else if (angle <= -MathF.PI) angle += 2 * MathF.PI;
+        return angle;
     }
 }
