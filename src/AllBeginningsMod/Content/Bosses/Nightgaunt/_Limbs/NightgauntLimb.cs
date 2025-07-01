@@ -88,9 +88,7 @@ public class NightgauntLimb {
                 bone.RelativeAngle = ApplyConstraint(bone, targetRelative);
                 
                 //accumulate angle for the next bone on the limb
-                parentAngle = MathUtilities.NormalizeAngle(
-                    parentAngle + bone.RelativeAngle
-                );
+                parentAngle = MathUtilities.NormalizeAngle(parentAngle + bone.RelativeAngle);
             }
         }
         else {
@@ -192,9 +190,7 @@ public class NightgauntLimb {
             Vector2 screenEnd = bone.EndPosition - Main.screenPosition;
         
             Vector2 midPoint = (bone.StartPosition + bone.EndPosition) / 2f;
-            Color lightColor = Lighting.GetColor(
-                midPoint.ToTileCoordinates()
-            );
+            Color lightColor = Lighting.GetColor( midPoint.ToTileCoordinates() );
         
             spriteBatch.DrawLine(
                 screenStart,

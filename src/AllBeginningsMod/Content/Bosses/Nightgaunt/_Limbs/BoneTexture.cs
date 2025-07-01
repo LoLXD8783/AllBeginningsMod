@@ -8,6 +8,8 @@ public enum BoneOrientation {
     Vertical
 }
 
+//todo: should be mutable, or have functions to change the source rect and offset
+
 public readonly struct BoneTexture {
     public readonly Texture2D Texture;
     public readonly Rectangle? SourceRectangle;
